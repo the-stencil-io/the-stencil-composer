@@ -41,7 +41,7 @@ jobs:
       run: ./build-scripts/main-release.sh
       env:
         CI: false
-        NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+        NODE_AUTH_TOKEN: ${{ secrets.BOT_TOKEN }}
         BOT_EMAIL: jocelyn.mutso@gmail.com 
         BOT_NAME: jocelyn.mutso
         
