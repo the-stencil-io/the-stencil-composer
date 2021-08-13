@@ -42,7 +42,7 @@ echo "Project version: '${PROJECT_VERSION}' next: '${PROJECT_VERSION_NEXT}'"
 # Tag and publish
 yarn install
 yarn build
-yarn publish --new-version ${PROJECT_VERSION_NEXT}
+yarn publish --new-version ${PROJECT_VERSION_NEXT}  --access public
 
 git push origin ${branch}
 
