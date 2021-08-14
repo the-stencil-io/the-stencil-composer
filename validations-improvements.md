@@ -2,7 +2,7 @@
 # Article
 
 1. Order number can only be 3 digits and cannot be already in use
-2. Name cannot already be in use
+2. Articles appear in Explorer in order of their Order numbers
 
 
 # Locale
@@ -18,6 +18,7 @@
 1. Ability to add more than one locale to a link / leave locale empty 
 2. Articles associated with Links appear according to their order number in links view
 3. Select "all locales"
+4. Fix LinkRemove (doesn't work)
 
 # Releases
 
@@ -26,6 +27,8 @@
 # Explorer
 
 1. Eliminate scrollbar if contents of explorer items are too long
+2. Style scrollbar
+
 
 
 ---
@@ -34,6 +37,6 @@
 
 1. Link Edit: Description and Value are required fields -- Button is disabled until both values are filled
 2. Article Composer, Article Edit: Be able to de-select ParentId / have this field cleared upon hitting "cancel". 
-3. Articles appear in Explorer in order of their Order numbers
+3. Articles appear in ArticlesView according to their order number
 
 
