@@ -146,7 +146,6 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
                   </TableRow>
                 </TableHead>
 
-
                 <TableBody>
                   {link.body.articles.map((id) => (
                     <TableRow hover key={id} className={classes.row}>

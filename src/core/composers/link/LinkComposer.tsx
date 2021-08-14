@@ -49,8 +49,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='link.composer.title'/></DialogTitle>
-      
+      <DialogTitle><FormattedMessage id='link.composer.title' /></DialogTitle>
+
       <DialogContent>
         <Typography className={classes.heading}>
           <FormControl variant="outlined" className={classes.select} fullWidth>
@@ -74,6 +74,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               {locales.map((locale, index) => (
                 <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
               ))}
+              <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
+
             </Select>
           </FormControl >
 
@@ -85,7 +87,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             variant="outlined"
             value={description}
             onChange={({ target }) => setDescription(target.value)} />
-            
+
           <TextField className={classes.formControl}
             fullWidth
             required

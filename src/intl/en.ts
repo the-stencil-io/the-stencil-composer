@@ -73,6 +73,7 @@ const en = {
   'link.composer.title': 'Create a new link',
   'link.type': 'Type',
   'link.url': 'URL / value',
+  'link.locale.all': 'All locales',
   'link.type.internal': 'Internal (within my domain)',
   'link.type.external': 'External (outside of my domain)',
   'link.type.phone': 'Phone number',

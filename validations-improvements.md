@@ -9,11 +9,15 @@
 
 1. Transform all input to lowercase? OR
 2. Locales can only be recognized two-character language codes (create a fixed list?)
+3. Implement locale disable button. 
+4. Disabled locales' pages are a different color
 
 
 # Link
 
 1. Ability to add more than one locale to a link / leave locale empty 
+2. Articles associated with Links appear according to their order number in links view
+3. Select "all locales"
 
 # Releases
 
@@ -21,6 +25,7 @@
 
 # Explorer
 
+1. Eliminate scrollbar if contents of explorer items are too long
 
 
 ---

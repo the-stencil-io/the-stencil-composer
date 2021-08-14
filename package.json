@@ -38,7 +38,7 @@
     "typescript": "^4.3.2"
   },
   "scripts": {
-    "start": "cp ./.demo/index.tsx ./src/index.tsx && cp ./.demo/react-app-env.d.ts ./src/react-app-env.d.ts && cp -R ./.demo/public/* ./public && react-scripts start",
+    "start": "./build-scripts/start-dev.sh && react-scripts start",
     "build": "rm -rf ./build && tsc",
     "clean": "rm -rf ./build",
     "test": "react-scripts test",

@@ -115,6 +115,8 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
               {locales.map((locale, index) => (
                 <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
               ))}
+              <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
+
             </Select>
           </FormControl>
           <TextField
@@ -144,7 +146,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
       </DialogContent >
       <DialogActions>
         <Button variant="text" onClick={handleClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus  disabled={!content || !description}  ><FormattedMessage id="button.update"/></Button>
+        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!content || !description}  ><FormattedMessage id="button.update" /></Button>
       </DialogActions>
 
     </Dialog >
