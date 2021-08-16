@@ -1,6 +1,6 @@
 import { makeStyles, alpha } from '@material-ui/core/styles';
 
-const useStyles = (props: {drawerWidth: number}) => makeStyles((theme) => ({
+const useStyles = (props: { drawerWidth: number }) => makeStyles((theme) => ({
   root: {
     display: 'flex',
   },
@@ -69,7 +69,7 @@ const useStyles = (props: {drawerWidth: number}) => makeStyles((theme) => ({
     }),
     width: theme.spacing(7),
   },
-  
+
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -108,7 +108,7 @@ const useStyles = (props: {drawerWidth: number}) => makeStyles((theme) => ({
       },
     },
   },
-  
+
   appBarSpacer: theme.mixins.toolbar,
   container: {
   }

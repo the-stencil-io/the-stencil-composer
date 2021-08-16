@@ -11,6 +11,7 @@
 2. Locales can only be recognized two-character language codes (create a fixed list?)
 3. Implement locale disable button. 
 4. Disabled locales' pages are a different color
+5. If one locale is enabled, style the locale value in locale composer to same as dual view
 
 
 # Link
@@ -18,7 +19,6 @@
 1. Ability to add more than one locale to a link / leave locale empty 
 2. Articles associated with Links appear according to their order number in links view
 3. Select "all locales"
-4. Fix LinkRemove (doesn't work)
 
 # Releases
 

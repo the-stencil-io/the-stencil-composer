@@ -11,6 +11,7 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       display: 'flex',
     },
+   
     drawerContainer: {
       overflow: 'auto',
     },
@@ -42,7 +43,7 @@ const Explorer: React.FC<{}> = () => {
     <div className={classes.drawerContainer}>
       { articles.length !== 0 ? null : (
         <div>
-         { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false) } /> : null} 
+          { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
           <Button className={classes.button} variant="contained" color="primary" onClick={() => setOpenArticleComposer(true)} >
             <FormattedMessage id='article.composer.title' />
           </Button>

@@ -35,7 +35,6 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [description, setDescription] = React.useState('');
   const [locale, setLocale] = React.useState('fi');
 
-
   const handleCreate = () => {
     const entity: API.CMS.CreateLink = { type, value, description, locale };
     ide.service.create().link(entity).then(success => {
