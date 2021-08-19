@@ -84,7 +84,8 @@ const ArticlesView: React.FC<{}> = () => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.bold} align="left" colSpan={2}><FormattedMessage id="article.name" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="order" /></TableCell>
+              <TableCell className={classes.bold} align="center"><FormattedMessage id="order" /></TableCell>
+              <TableCell className={classes.bold} align="center"><FormattedMessage id="pages" /></TableCell>
               <TableCell className={classes.bold} align="center"></TableCell>
             </TableRow>
           </TableHead>
@@ -113,7 +114,8 @@ const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ artic
           </IconButton>
         </TableCell>
         <TableCell className={classes.tableCell} align="left">{parentName}{article.body.name}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{article.body.order}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{article.body.order}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{pages.length}</TableCell>
         <TableCell className={classes.tableCell} align="right">
           <ArticleEdit article={article} />
           <IconButton className={classes.iconButton} >

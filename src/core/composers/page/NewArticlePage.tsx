@@ -6,23 +6,27 @@ import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-const NewArticlePage: React.FC<{
+
+
+interface NewArticlePageProps {
   article: API.CMS.Article,
   locale: API.CMS.SiteLocale,
   onClose: () => void,
   onCreate: (page: API.CMS.Page) => void
-}> = ({ article, locale, onClose, onCreate }) => {
-  
+}
+
+const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClose, onCreate }) => {
+
   const ide = Ide.useIde();
 
   const handleCreate = () => {
     const entity: API.CMS.CreatePage = { articleId: article.id, locale: locale.id };
     ide.service.create().page(entity)
-    .then(success => ide.actions.handleLoadSite().then(() => success))
-    .then(success => {
-      onCreate(success);
-      onClose();
-    })
+      .then(success => ide.actions.handleLoadSite().then(() => success))
+      .then(success => {
+        onCreate(success);
+        onClose();
+      })
   }
 
   return (
@@ -30,10 +34,10 @@ const NewArticlePage: React.FC<{
       <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
         <Typography>
-          <FormattedMessage id='newpage.article.info' values={{article: article.body.name, locale: locale.body.value}}/>
+          <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: locale.body.value }} />
         </Typography>
       </DialogContent>
-      
+
       <DialogActions>
         <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
         <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
