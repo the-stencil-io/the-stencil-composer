@@ -41,7 +41,6 @@ const en = {
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
 
-
   'button.cancel': 'Cancel',
   'button.create': 'Create',
   'button.add': 'Add',
@@ -107,6 +106,7 @@ const en = {
   'newpage.article.info': 'Confirm creation of page for: {article} with locale: {locale}',
 
   'pages.save': 'Save pages',
+  'pages.add': 'Add a page',
   
   'release.composer.title': 'Create a new release',
   'release.composer.label': 'Tag Name',

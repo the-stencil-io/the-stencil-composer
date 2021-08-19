@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, IconButton, Typography, Card } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Typography, Card } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -54,7 +54,6 @@ const useRowStyles = makeStyles((theme: Theme) =>
         // paddingLeft: 15
       },
     },
-
     table: {
       margin: theme.spacing(2)
     },
@@ -138,7 +137,7 @@ const Row: React.FC<RowProps> = ({ locale }) => {
     <TableRow key={locale.id} hover className={classes.row}>
       <TableCell align="left">{locale.body.value}</TableCell>
       <TableCell>
-       <LocaleDisable site={site} locale={locale} />
+        <LocaleDisable site={site} locale={locale} />
       </TableCell>
     </TableRow>
   )

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Collapse, Box, Typography } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,6 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import AddIcon from '@material-ui/icons/AddOutlined';
+
 import { FormattedMessage } from 'react-intl';
 
 import { ArticleDeletePage, ArticleDelete, ArticleEdit } from '../article';
@@ -56,7 +58,8 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      color: theme.palette.primary.dark,
+      margin: 2,
+      color: theme.palette.secondary.main,
       "&:hover, &.Mui-focusVisible": {
         backgroundColor: theme.palette.info.main,
         color: theme.palette.background.paper,
@@ -113,6 +116,8 @@ const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ artic
         <TableCell className={classes.tableCell} align="left">{article.body.order}</TableCell>
         <TableCell className={classes.tableCell} align="right">
           <ArticleEdit article={article} />
+          <IconButton className={classes.iconButton} >
+            <Tooltip title={<FormattedMessage id="pages.add" />}><AddIcon /></Tooltip></IconButton>
           <ArticleDelete article={article} />
         </TableCell>
       </TableRow>
