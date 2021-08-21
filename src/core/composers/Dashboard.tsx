@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Button, Card, CardActions, CardContent, Typography, Box, ButtonGroup } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Typography, Box, Tooltip } from '@material-ui/core';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -113,7 +113,7 @@ const Dashboard: React.FC<{}> = () => {
             <Box flexDirection="flex-end">
               <Button variant="contained" color="primary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.create" /></Button>
             </Box>
-              <Button variant="contained" color="secondary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.view" /></Button>
+               <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}><Button variant="contained" color="secondary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.view" /></Button></Tooltip>
           </CardActions>
 
         </Card>

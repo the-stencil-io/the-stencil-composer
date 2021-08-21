@@ -7,9 +7,10 @@ import {
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+
 import { FormattedMessage } from 'react-intl';
 
-import { LocaleComposer, NewArticlePage } from '../composers';
+import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';
 import { API, Ide } from '../deps';
 
 
@@ -86,7 +87,8 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingBottom: 0,
       fontVariant: 'all-small-caps',
       fontWeight: 'bold',
-      lineHeight: 1.1
+      lineHeight: 1,
+      overflow: 'hidden',
     },
     pageButtons: {
       '& > *': {
@@ -150,7 +152,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
     <>
       <ListItem className={classes.itemHover}>
         <ListItemText
-          primary={<Typography 
+          primary={<Typography
             onClick={handleClick}
             noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
@@ -164,7 +166,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
         <TableContainer>
           <Table size="small">
             <TableBody>
-              { pages.length === 0 ? undefined : (
+              {pages.length === 0 ? undefined : (
                 <TableRow className={classes.hoverRow} >
                   <TableCell className={classes.table}>
                     <FormattedMessage id="pages" /> {pages.map((page, index) => (<span className={classes.hoverRow} key={index}
@@ -173,13 +175,13 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
                   </TableCell>
                 </TableRow>
               )}
-              
-              { articlePageOpen ? (<NewArticlePage locale={articlePageOpen} article={article} 
-                  onClose={() => setArticlePageOpen(undefined)}
-                  onCreate={(page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}
-                  />
-                ) : undefined }
-              { canCreate.length === 0 ? undefined : (
+
+              {articlePageOpen ? (<NewArticlePage locale={articlePageOpen} article={article}
+                onClose={() => setArticlePageOpen(undefined)}
+                onCreate={(page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}
+              />
+              ) : undefined}
+              {canCreate.length === 0 ? undefined : (
                 <TableRow className={classes.hoverRow}>
                   <TableCell className={classes.table}>
                     <FormattedMessage id="explorer.pages.create" /> {canCreate.map((locale, index) => (<span className={classes.hoverRow} key={index}
@@ -187,53 +189,61 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
                       <span className={classes.localeSummary}>{locale.body.value}&nbsp;</span></span>))}
                   </TableCell>
                 </TableRow>
+
               )}
 
+              <Table size="small">
+                <TableBody>
+                  <TableRow className={classes.hoverRow}>
 
-              <TableRow className={classes.hoverRow}>
-                <TableCell className={classes.table}>
-                  <FormattedMessage id="explorer.pages.dualview" />
-                  <Switch color="primary" checked={dualView} onClick={() => handleDualView(article)}/>
-                </TableCell>
-              </TableRow>
+                    <TableCell className={classes.table} align="left">
+                      <FormattedMessage id="explorer.pages.dualview" />
+                      <Switch color="primary" checked={dualView} onClick={() => handleDualView(article)} />
+                    </TableCell>
+                    <TableCell className={classes.table} align="right">
+                      <ArticleOptions />
+                    </TableCell>
+                  </TableRow>
 
-              {unsaved ? (<TableRow>
-                <TableCell className={classes.table}>
-                  <div className={classes.pageButtons}>
-                    <Button className={classes.pageButton} fullWidth onClick={handleSavePages}><FormattedMessage id="pages.save" /></Button>
-                  </div>
-                </TableCell>
-              </TableRow>) : null}
+                  {unsaved ? (<TableRow>
+                    <TableCell className={classes.table}>
+                      <div className={classes.pageButtons}>
+                        <Button className={classes.pageButton} fullWidth onClick={handleSavePages}><FormattedMessage id="pages.save" /></Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>) : null}
 
-              { localeOpen ? (<LocaleComposer onClose={() => setLocaleOpen(false)}/>) : undefined }
-              { pages.length === 0 && canCreate.length === 0 ? (
-                <TableRow className={classes.hoverRow} onClick={() => setLocaleOpen(true)}>
-                  <TableCell className={classes.table}>
-                    <FormattedMessage id="explorer.locale.empty" />
-                  </TableCell>
-                </TableRow>
-                ): undefined
-              }
+                  {localeOpen ? (<LocaleComposer onClose={() => setLocaleOpen(false)} />) : undefined}
+                  {pages.length === 0 && canCreate.length === 0 ? (
+                    <TableRow className={classes.hoverRow} onClick={() => setLocaleOpen(true)}>
+                      <TableCell className={classes.table}>
+                        <FormattedMessage id="explorer.locale.empty" />
+                      </TableCell>
+                    </TableRow>
+                  ) : undefined
+                  }
 
-              {links.length === 0 ? undefined : (<TableRow className={classes.hoverRow} >
-                <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
-                  <FormattedMessage id="links" /> <span className={classes.summary}>{links.length}</span>
-                </TableCell>
-              </TableRow>)}
-              
-              {workflows.length === 0 ? undefined : (<TableRow className={classes.hoverRow}>
-                <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}>
-                  <FormattedMessage id="workflows" /> <span className={classes.summary}>{workflows.length}</span>
-                </TableCell>
-              </TableRow>)}
-              
-{/*
+                  {links.length === 0 ? undefined : (<TableRow className={classes.hoverRow} >
+                    <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
+                      <FormattedMessage id="links" /> <span className={classes.summary}>{links.length}</span>
+                    </TableCell>
+                  </TableRow>)}
+
+                  {workflows.length === 0 ? undefined : (<TableRow className={classes.hoverRow}>
+                    <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}>
+                      <FormattedMessage id="workflows" /> <span className={classes.summary}>{workflows.length}</span>
+                    </TableCell>
+                  </TableRow>)}
+
+                  {/*
               <TableRow className={classes.hoverRow} >
                 <TableCell className={classes.table}>
                   <FormattedMessage id="modified" /> <span>9 days ago</span>
                 </TableCell>
               </TableRow>
 */}
+                </TableBody>
+              </Table>
             </TableBody>
           </Table>
         </TableContainer>

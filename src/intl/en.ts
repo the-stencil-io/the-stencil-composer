@@ -65,6 +65,7 @@ const en = {
   'composer.release.desc': 'Create a snapshot of all site content at one certain point of time for testing or production purposes',
 
   'toolbar.dashboard': 'Dashboard',
+  'dashboard.view.helper': 'View, edit, and delete items',
 
   'link.associate.title': 'Associate a link with an Article',
   'link.article.add.title': 'Add link to an Article',
@@ -107,7 +108,7 @@ const en = {
   'newpage.title': 'Create a new page',
   'newpage.info': 'A page consists of localised content and must be associated with an Article.',
   'newpage.article.info': 'Confirm creation of page for: {article} with locale: {locale}',
-
+  
   'pages.save': 'Save pages',
   'pages.add': 'Add a page',
   
