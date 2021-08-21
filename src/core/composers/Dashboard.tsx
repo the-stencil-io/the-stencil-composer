@@ -1,10 +1,10 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Button, Card, CardActions, CardContent, Typography, Box } from '@material-ui/core';
+import { Button, Card, CardActions, CardContent, Typography, Box, ButtonGroup } from '@material-ui/core';
 
 import { FormattedMessage } from 'react-intl';
 
-import { ArticleComposer } from './article';
+import { ArticleComposer, ArticlesView } from './article';
 import { LinkComposer } from './link';
 import { WorkflowComposer } from './workflow';
 import { LocaleComposer } from './locale';
@@ -90,12 +90,13 @@ const createCards: (site: API.CMS.Site) => Record<CardType, CardData> = (_site) 
 
 
 //card view for all CREATE views
-const ComposerSelect: React.FC<{}> = () => {
+const Dashboard: React.FC<{}> = () => {
   const classes = useStyles();
   const { site } = Ide.useIde().session;
   const [open, setOpen] = React.useState<CardType>();
   const handleOpen = (type: CardType) => setOpen(type);
   const handleClose = () => setOpen(undefined);
+  
   const cards = React.useMemo(() => createCards(site), [site]);
 
   return (
@@ -112,6 +113,7 @@ const ComposerSelect: React.FC<{}> = () => {
             <Box flexDirection="flex-end">
               <Button variant="contained" color="primary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.create" /></Button>
             </Box>
+              <Button variant="contained" color="secondary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.view" /></Button>
           </CardActions>
 
         </Card>
@@ -120,4 +122,4 @@ const ComposerSelect: React.FC<{}> = () => {
   );
 }
 
-export { ComposerSelect }
+export { Dashboard }

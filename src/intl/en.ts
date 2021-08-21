@@ -43,6 +43,7 @@ const en = {
 
   'button.cancel': 'Cancel',
   'button.create': 'Create',
+  'button.view': 'View',
   'button.add': 'Add',
   'button.update': 'Update',
   'button.delete': 'Continue and delete',
@@ -62,6 +63,8 @@ const en = {
   'composer.workflow.desc': 'Connect forms and processes',
   'composer.release.title': 'Release',
   'composer.release.desc': 'Create a snapshot of all site content at one certain point of time for testing or production purposes',
+
+  'toolbar.dashboard': 'Dashboard',
 
   'link.associate.title': 'Associate a link with an Article',
   'link.article.add.title': 'Add link to an Article',
@@ -136,7 +139,6 @@ const en = {
   'toolbar.workflows': 'Workflows overview',
   'toolbar.releases': 'Releases',
   'toolbar.locales': 'Locales',
-  'toolbar.createNew': 'Create new',
 };
 
 export default en;

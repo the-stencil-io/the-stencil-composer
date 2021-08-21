@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { Layout, Ide } from '../deps';
 import {
-  PageComposer, ComposerSelect, LinkTable, LinksView, WorkflowsView,
+  PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
   WorkflowsTable, ReleasesView, LocalesView, ArticlesView
 } from './';
 
@@ -44,7 +44,7 @@ const Composer: React.FC<{}> = () => {
   } else if (active.id === 'links') {
     return (<div className={classes.root}><LinksView /></div>)
   } else if (active.id === 'newItem') {
-    return (<div className={classes.root}><ComposerSelect /></div>)
+    return (<div className={classes.root}><Dashboard /></div>)
   } else if (active.id === 'locales') {
     return (<div className={classes.root}><LocalesView /></div>)
   } else if (active.id === 'workflows') {

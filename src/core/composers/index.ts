@@ -1,5 +1,5 @@
 export * from './Composer'
-export * from './ComposerSelect';
+export * from './Dashboard';
 
 
 
