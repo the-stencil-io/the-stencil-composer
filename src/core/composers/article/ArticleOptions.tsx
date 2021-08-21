@@ -3,29 +3,21 @@ import { makeStyles } from '@material-ui/core/styles';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IconButton, Popover } from '@material-ui/core';
 
-import Collapse from '@material-ui/core/Collapse';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import StarBorder from '@material-ui/icons/StarBorder';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
+    width: 'auto',
+    maxWidth: 400,
     backgroundColor: theme.palette.background.paper,
   },
   nested: {
-    paddingLeft: theme.spacing(4),
+    paddingLeft: theme.spacing(3),
   },
 }));
 
@@ -70,40 +62,32 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ }) => {
           aria-labelledby="nested-list-subheader"
           subheader={
             <ListSubheader component="div" id="nested-list-subheader">
-              Nested List Items
-        </ListSubheader>
+            </ListSubheader>
           }
           className={classes.root}
         >
           <ListItem button>
-            <ListItemIcon>
-              <SendIcon />
-            </ListItemIcon>
-            <ListItemText primary="Sent mail" />
+            <ListItemText primary={<FormattedMessage id="rename" />} />
           </ListItem>
           <ListItem button>
-            <ListItemIcon>
-              <DraftsIcon />
-            </ListItemIcon>
-            <ListItemText primary="Drafts" />
+            <ListItemText primary={<FormattedMessage id="reorder" />} />
           </ListItem>
           <ListItem button onClick={handleClick}>
-            <ListItemIcon>
-              <InboxIcon />
-            </ListItemIcon>
-            <ListItemText primary="Inbox" />
-            {open ? <ExpandLess /> : <ExpandMore />}
+            <ListItemText primary={<FormattedMessage id="pages.options" />} />
           </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                <ListItemIcon>
-                  <StarBorder />
-                </ListItemIcon>
-                <ListItemText primary="Starred" />
-              </ListItem>
-            </List>
-          </Collapse>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              <ListItemText secondary={<FormattedMessage id="pages.add" />} />
+            </ListItem>
+
+            <ListItem button className={classes.nested}>
+              <ListItemText secondary={<FormattedMessage id="pages.edit" />} />
+            </ListItem>
+
+            <ListItem button className={classes.nested}>
+              <ListItemText secondary={<FormattedMessage id="pages.delete" />} />
+            </ListItem>
+          </List>
         </List>
       </Popover>
     </>

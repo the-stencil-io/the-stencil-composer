@@ -18,6 +18,8 @@ const en = {
   'modified': 'Modified',
   'releases': 'Releases',
   'options': 'Options',
+  'rename': 'Rename',
+  'reorder': 'Re-order',
   'links': 'Links',
   'workflows': 'Workflows',
   
@@ -40,6 +42,9 @@ const en = {
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
+  
+  'article.options': 'Article options',
+  
 
   'button.cancel': 'Cancel',
   'button.create': 'Create',
@@ -111,6 +116,10 @@ const en = {
   
   'pages.save': 'Save pages',
   'pages.add': 'Add a page',
+  'pages.edit': 'Edit a page',
+  'pages.delete': 'Delete a page',
+  
+  'pages.options': 'Page options',
   
   'release.composer.title': 'Create a new release',
   'release.composer.label': 'Tag Name',
