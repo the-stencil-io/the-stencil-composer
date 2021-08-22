@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-const ArticleEdit: React.FC<{ article: API.CMS.Article}> = ({ article }) => {
+const ArticleEdit: React.FC<{ article: API.CMS.Article, init?: { open: boolean, onClose: () => void } }> = ({ article, init }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -56,37 +56,39 @@ const ArticleEdit: React.FC<{ article: API.CMS.Article}> = ({ article }) => {
   const [name, setName] = React.useState(article.body.name);
   const [order, setOrder] = React.useState(article.body.order);
   const [parentId, setParentId] = React.useState(article.body.parentId);
-  const [open, setOpen] = React.useState(false);
-  
- 
+  const [open, setOpen] = React.useState(init ? init.open : false);
+
   const handleClickOpen = () => {
     setOpen(true);
   };
   const handleClose = () => {
+    if (init) {
+      init.onClose();
+    }
     setOpen(false);
   };
 
 
   const handleCreate = () => {
     const entity: API.CMS.ArticleMutator = { articleId: article.id, name, parentId, order };
-    console.log("entity", entity)
-    ide.service.update().article(entity).then(success => {
-      console.log(success)
+    ide.service.update().article(entity).then(_success => {
       handleClose();
       ide.actions.handleLoadSite();
     });
   }
-    const handleCancel = () => {
+  const handleCancel = () => {
     handleClose();
   }
 
   const articles: API.CMS.Article[] = Object.values(site.articles);
   return (<>
-    <span className={classes.margin}>
+    { init ? null : (<span className={classes.margin}>
       <IconButton className={classes.iconButton} onClick={handleClickOpen}>
         <EditOutlined />
       </IconButton>
-    </span>
+    </span>)}
+
+
     <Dialog open={open} onClose={handleClose} >
       <DialogTitle><FormattedMessage id="article.edit.title" /></DialogTitle>
       <DialogContent>
@@ -100,7 +102,7 @@ const ArticleEdit: React.FC<{ article: API.CMS.Article}> = ({ article }) => {
             >
               {articles.map((article, index) => (
                 <MenuItem key={index} value={article.id}>{article.body.order}{"_"}{article.body.name}</MenuItem>
-              ))}              
+              ))}
               <MenuItem value={""}><FormattedMessage id='article.composer.parent.unselected' /></MenuItem>
             </Select>
           </FormControl >

@@ -97,6 +97,13 @@ const en = {
   'link.removepage.title': 'Remove this link?',
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
+  'link.options': 'Link options',
+  'link.add': 'Add a link',
+  'link.edit': 'Edit a link',
+  'link.remove': 'Remove a link',
+  
+  
+  
   'locale.composer.title': 'Create a new locale',
   'locale.composer.helper': 'Two-letter locale code',
 
@@ -128,7 +135,7 @@ const en = {
  
   'workflow.associate.title': 'Associate a Workflow with an Article',
   
-  'workflow.composer.title': "Add a Workflow",
+  'workflow.composer.title': "Add a workflow",
   'workflow.composer.name': "Localised name",
   'workflow.technicalname': 'Technical name',
   'workflow.composer.select': 'Select existing flow',
@@ -140,6 +147,12 @@ const en = {
   
   'workflow.removepage.title': 'Remove this Workflow?',
   'workflow.removepage': 'Removing the Workflow only removes its association with this article. To delete this item permanently, click the Delete icon.',
+
+  'workflow.options': 'Workflow options',
+  'workflow.add': 'Add a workflow',
+  'workflow.edit': 'Edit a workflow',
+  'workflow.remove': 'Remove a workflow',
+  
 
   'toolbar.articles': 'Articles overview',
   'toolbar.newarticle': 'Create new Article',
