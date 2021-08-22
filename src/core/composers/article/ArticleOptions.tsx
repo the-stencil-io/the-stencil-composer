@@ -58,7 +58,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
   const open = Boolean(anchorEl);
   const id = open ? 'article-popover' : undefined;
-  console.log(dialogOpen)
+
   return (
     <>
       <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />

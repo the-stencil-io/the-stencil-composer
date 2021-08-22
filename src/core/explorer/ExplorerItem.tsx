@@ -148,6 +148,16 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
   const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
   const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
 
+  const getPageLocale = (page: API.CMS.Page) => {
+    try {
+      return site.locales[page.body.locale].body.value;
+    } catch(e) {
+      console.error(page);
+      return 'oops';
+    }
+  }
+  
+
   return (
     <>
       <ListItem className={classes.itemHover}>
@@ -171,7 +181,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
                   <TableCell className={classes.table} colSpan={2}>
                     <FormattedMessage id="pages" /> {pages.map((page, index) => (<span className={classes.hoverRow} key={index}
                       onClick={() => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}>
-                      <span className={classes.localeSummary}>{site.locales[page.body.locale].body.value}&nbsp;</span></span>))}
+                      <span className={classes.localeSummary}>{getPageLocale(page)}&nbsp;</span></span>))}
                   </TableCell>
                 </TableRow>
               )}

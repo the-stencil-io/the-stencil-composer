@@ -68,7 +68,7 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
               label={<FormattedMessage id='article.name' />}
             >
               {articles.map((article, index) => (
-                <MenuItem key={index} value={article.body.name}>{article.body.order}{"_"}{article.body.name}</MenuItem>
+                <MenuItem key={index} value={article.id}>{article.body.order}{"_"}{article.body.name}</MenuItem>
               ))}
             </Select>
           </FormControl >
@@ -80,7 +80,7 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
               label={<FormattedMessage id='locale' />}
             >
               {locales.map((locale, index) => (
-                <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
+                <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
               ))}
             </Select>
           </FormControl >
