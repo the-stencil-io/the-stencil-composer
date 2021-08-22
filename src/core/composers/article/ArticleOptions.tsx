@@ -5,9 +5,10 @@ import { List, IconButton, Popover, ListItemText, ListItem, Divider, ListSubhead
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';
 
-import { API, Ide } from '../../deps';
+import { API } from '../../deps';
 
 import { ArticleEdit } from './';
+import { NewPage } from '../';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -44,7 +45,7 @@ interface ArticleOptionsProps {
 const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage'>(undefined);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -54,14 +55,15 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
     setAnchorEl(null);
   };
   const handleDialogClose = () => setDialogOpen(undefined);
-  
+
   const open = Boolean(anchorEl);
   const id = open ? 'article-popover' : undefined;
-
+  console.log(dialogOpen)
   return (
     <>
-      <ArticleEdit article={article} init={{open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose}} />
-    
+      <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />
+      <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
+
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
       <Popover
@@ -88,11 +90,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
           </ListItem>
 
           <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleEdit')}>
-            <ListItemText secondary={<FormattedMessage id="rename" />} />
-          </ListItem>
-
-          <ListItem button className={classes.nested}>
-            <ListItemText secondary={<FormattedMessage id="reorder" />} />
+            <ListItemText secondary={<FormattedMessage id="article.edit.title" />} />
           </ListItem>
 
           <ListItem className={classes.mainTopic}>
@@ -100,7 +98,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
           </ListItem>
 
           <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => setDialogOpen('NewPage')}>
               <ListItemText secondary={<FormattedMessage id="pages.add" />} />
             </ListItem>
 
