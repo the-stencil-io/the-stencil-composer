@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
   },
   nested: {
     paddingLeft: theme.spacing(3),
-      "&:hover": {
+    "&:hover": {
       color: theme.palette.primary.light
     }
   },
@@ -39,14 +39,12 @@ const useStyles = makeStyles((theme) => ({
 
 interface ArticleOptionsProps {
   article: API.CMS.Article,
-
 }
-type DialogType = undefined | 'ArticleEdit' ;
 
 const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [dialogOpen, setDialogOpen] = React.useState<DialogType>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit'>(undefined);
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -55,15 +53,15 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  
   const handleDialogClose = () => setDialogOpen(undefined);
   
   const open = Boolean(anchorEl);
   const id = open ? 'article-popover' : undefined;
 
-  console.log(dialogOpen)
   return (
     <>
+      <ArticleEdit article={article} init={{open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose}} />
+    
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
       <Popover
@@ -83,10 +81,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
         <List
           component="nav"
           aria-labelledby="nested-list-subheader"
-          subheader={
-            <ListSubheader component="div" id="nested-list-subheader">
-            </ListSubheader>
-          }
           className={classes.root}
         >
           <ListItem className={classes.mainTopicFirst}>
@@ -95,8 +89,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
           <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleEdit')}>
             <ListItemText secondary={<FormattedMessage id="rename" />} />
-            
-            {dialogOpen === 'ArticleEdit' ? <ArticleEdit article={article} init={{open: true, onClose: handleDialogClose}}/> : null}
           </ListItem>
 
           <ListItem button className={classes.nested}>
@@ -151,9 +143,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
             <ListItem button className={classes.nested}>
               <ListItemText secondary={<FormattedMessage id="workflow.remove" />} />
             </ListItem>
-
-
-
           </List>
         </List>
       </Popover>
