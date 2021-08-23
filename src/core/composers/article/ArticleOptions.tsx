@@ -5,15 +5,16 @@ import { List, IconButton, Popover, ListItemText, ListItem, Divider, ListSubhead
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';
 
-import { API } from '../../deps';
+import { API, Ide } from '../../deps';
 
 import { ArticleEdit } from './';
-import { NewPage } from '../';
+import { NewPage, PageEdit, ArticleDeletePage } from '../';
+import { NewLinkArticle } from '../link';
 
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '15rem',
+    width: '18rem',
     backgroundColor: theme.palette.background.paper,
 
   },
@@ -42,11 +43,17 @@ interface ArticleOptionsProps {
   article: API.CMS.Article,
 }
 
-const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
+const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage'>(undefined);
+  
+  const ide = Ide.useIde();
+  const site = ide.session.site;
+    
+  const links: API.CMS.Link[] = Object.values(site.links);  
 
+  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -63,6 +70,8 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
     <>
       <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />
       <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
+      <PageEdit open={dialogOpen === 'PageEdit'} onClose={handleDialogClose} articleId={article.id}/>
+      
 
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
@@ -102,7 +111,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
               <ListItemText secondary={<FormattedMessage id="pages.add" />} />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageEdit')}>
               <ListItemText secondary={<FormattedMessage id="pages.edit" />} />
             </ListItem>
 
@@ -115,15 +124,15 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
             </ListItem>
 
             <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.add" />} />
+              <ListItemText secondary={<FormattedMessage id="link.options.add" />} />
             </ListItem>
 
             <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.edit" />} />
+              <ListItemText secondary={<FormattedMessage id="link.options.edit" />} />
             </ListItem>
 
             <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.remove" />} />
+              <ListItemText secondary={<FormattedMessage id="link.options.remove" />} />
             </ListItem>
 
             <ListItem className={classes.mainTopic}>

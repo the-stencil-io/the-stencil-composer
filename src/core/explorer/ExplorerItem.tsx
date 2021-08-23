@@ -104,7 +104,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ExplorerItemProps {
-  article: API.CMS.Article
+  article: API.CMS.Article,
 }
 
 const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {

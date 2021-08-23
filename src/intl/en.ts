@@ -98,9 +98,9 @@ const en = {
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
   'link.options': 'Link options',
-  'link.add': 'Add a link',
-  'link.edit': 'Edit a link',
-  'link.remove': 'Remove a link',
+  'link.options.add': 'Add links to article',
+  'link.options.edit': 'Edit Article links',
+  'link.options.remove': 'Remove links from this Article',
   
   
   
@@ -124,9 +124,11 @@ const en = {
   'pages.save': 'Save pages',
   'pages.add': 'Add a page',
   'pages.edit': 'Edit a page locale',
+  'pages.edit.info': 'Select a page from this Article and enter a new value for its locale.',
   'pages.delete': 'Delete a page',
   
   'pages.options': 'Page options',
+
   
   'release.composer.title': 'Create a new release',
   'release.composer.label': 'Tag Name',
