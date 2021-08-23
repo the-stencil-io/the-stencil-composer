@@ -11,16 +11,39 @@ import { API, Ide } from '../../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
-      margin: theme.spacing(1),
+      padding: theme.spacing(1),
       backgroundColor: theme.palette.background.paper
     },
-    root: {
+    button: {
+      // padding: 0,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
       fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        backgroundColor: theme.palette.error.dark,
+        color: theme.palette.background.paper,
+        fontWeight: 'bold'
+      }
+    },
+    margin: {
+      paddingRight: theme.spacing(1)
+    },
+    iconButton: {
+      padding: 2,
+      paddingLeft: theme.spacing(1),
+      color: theme.palette.primary.dark,
+      "&:hover, &.Mui-focusVisible": {
+        backgroundColor: theme.palette.info.main,
+        color: theme.palette.background.paper,
+        "& .MuiSvgIcon-root": {
+          color: theme.palette.background.paper,
+        }
+      }
     },
   }),
 );
 
-const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CMS.ArticleId}> = (props) => {
+const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -44,21 +67,20 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
   };
   React.useEffect(() => {
     setOpen(props.open);
-    if(props.articleId){
+    if (props.articleId) {
       setArticleId(props.articleId)
     }
   }, [props]);
-  
+
 
 
   const articles: API.CMS.Article[] = Object.values(site.articles);
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
-  return (
+  return (<>
     <Dialog open={open} onClose={handleClose} >
       <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
-        <Typography>
           <FormattedMessage id='newpage.info' />
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='article.name' /></InputLabel>
@@ -84,7 +106,6 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
               ))}
             </Select>
           </FormControl >
-        </Typography>
       </DialogContent>
 
       <DialogActions>
@@ -92,6 +113,7 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
         <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
       </DialogActions>
     </Dialog>
+  </>
   );
 }
 

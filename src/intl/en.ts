@@ -123,7 +123,7 @@ const en = {
   
   'pages.save': 'Save pages',
   'pages.add': 'Add a page',
-  'pages.edit': 'Edit a page',
+  'pages.edit': 'Edit a page locale',
   'pages.delete': 'Delete a page',
   
   'pages.options': 'Page options',

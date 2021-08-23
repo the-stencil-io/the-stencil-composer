@@ -43,8 +43,6 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
 const ArticleEdit: React.FC<{ article: API.CMS.Article, init?: { open: boolean, onClose: () => void } }> = ({ article, init }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
