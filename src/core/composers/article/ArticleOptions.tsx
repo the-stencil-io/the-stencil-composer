@@ -42,7 +42,7 @@ interface ArticleOptionsProps {
   article: API.CMS.Article,
 }
 
-const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
+const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage' |
@@ -52,9 +52,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
   const ide = Ide.useIde();
   const site = ide.session.site;
     
-  const links: API.CMS.Link[] = Object.values(site.links);  
-
-  
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -73,7 +70,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
       <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
       <PageEdit open={dialogOpen === 'PageEdit'} onClose={handleDialogClose} articleId={article.id}/>
       <PageDelete open={dialogOpen === 'PageDelete'} onClose={handleDialogClose} articleId={article.id}/>     
-      <ArticleLinksEdit open={dialogOpen === 'ArticleLinksEdit'} onClose={handleDialogClose}/> 
+      <ArticleLinksEdit open={dialogOpen === 'ArticleLinksEdit'} onClose={handleDialogClose} articleId={article.id}/> 
 
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>

@@ -20,6 +20,7 @@ const en = {
   'options': 'Options',
   'rename': 'Rename',
   'reorder': 'Re-order',
+  'remove': 'Remove',
   'links': 'Links',
   'workflows': 'Workflows',
   
@@ -38,23 +39,28 @@ const en = {
   'article.delete': 'Deleting this article will remove it and its associated pages globally from the application.',
   'article.deletepage.title': 'Delete this page?',
   'article.deletepage': 'Deleting this page will permanently remove it from the application.',
-  
+  'article.addlink': 'Add this link to Article',
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
   
   'article.options': 'Article options',
+  'article.links.addremove': 'Add and remove Article links',
+  'article.links': 'Article links',
+  'article.links.sitelinks': 'Site links',
+  'article.links.remove': 'Remove this link association with this Article',
   
-
   'button.cancel': 'Cancel',
   'button.create': 'Create',
   'button.view': 'View',
   'button.add': 'Add',
+  'button.addremove': 'Add/Remove',
   'button.update': 'Update',
   'button.delete': 'Continue and delete',
   'button.disable': 'Continue and disable',
   'button.enable': 'Continue and enable',
   'button.remove': 'Continue and remove',
+  'button.apply': 'Apply changes and exit',
 
   'composer.article.title': 'Article',
   'composer.article.desc': 'A group of associated Pages, Links, Workflows, and Locales',
