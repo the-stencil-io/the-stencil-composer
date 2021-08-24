@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-import { ArticleEdit } from './';
+import { ArticleEdit, ArticleLinksEdit } from './';
 import { NewPage, PageEdit, PageDelete } from '../';
 
 
@@ -46,7 +46,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage' |
-    'PageDelete'
+    'PageDelete' | 'ArticleLinksEdit'
   >(undefined);
   
   const ide = Ide.useIde();
@@ -72,7 +72,8 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
       <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />
       <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
       <PageEdit open={dialogOpen === 'PageEdit'} onClose={handleDialogClose} articleId={article.id}/>
-      <PageDelete open={dialogOpen === 'PageDelete'} onClose={handleDialogClose} articleId={article.id}/>      
+      <PageDelete open={dialogOpen === 'PageDelete'} onClose={handleDialogClose} articleId={article.id}/>     
+      <ArticleLinksEdit open={dialogOpen === 'ArticleLinksEdit'} onClose={handleDialogClose}/> 
 
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
@@ -124,7 +125,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
               <ListItemText primary={<FormattedMessage id="resource.options" />} />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleLinksEdit')}>
               <ListItemText secondary={<FormattedMessage id='resource.edit.links' />} />
             </ListItem>
 

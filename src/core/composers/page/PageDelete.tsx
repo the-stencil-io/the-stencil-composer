@@ -49,7 +49,6 @@ const PageDelete: React.FC<{ open: boolean, onClose: () => void, articleId: API.
   const { site } = ide.session;
   const [articleId, setArticleId] = React.useState('');
   const [pageId, setPageId] = React.useState('');
-  const [newLocale, setNewLocale] = React.useState('');
 
   const [open, setOpen] = React.useState(props.open ? props.open : false);
 
