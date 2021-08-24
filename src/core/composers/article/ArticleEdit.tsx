@@ -3,7 +3,7 @@ import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
   Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, IconButton
 } from '@material-ui/core';
-import EditOutlined from '@material-ui/icons/EditOutlined';
+
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -43,50 +43,28 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ArticleEdit: React.FC<{ article: API.CMS.Article, init?: { open: boolean, onClose: () => void } }> = ({ article, init }) => {
+const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void}> = ({ articleId, onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
 
+  const article = site.articles[articleId];
   const [name, setName] = React.useState(article.body.name);
   const [order, setOrder] = React.useState(article.body.order);
   const [parentId, setParentId] = React.useState(article.body.parentId);
-  const [open, setOpen] = React.useState(init ? init.open : false);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    init?.onClose();
-    setOpen(false);
-  };
-  React.useEffect(() => {
-    if (init) {
-      setOpen(init.open);
-    }
-  }, [init]);
 
 
   const handleCreate = () => {
     const entity: API.CMS.ArticleMutator = { articleId: article.id, name, parentId, order };
     ide.service.update().article(entity).then(_success => {
-      handleClose();
+      onClose();
       ide.actions.handleLoadSite();
     });
-  }
-  const handleCancel = () => {
-    handleClose();
   }
 
   const articles: API.CMS.Article[] = Object.values(site.articles);
   return (<>
-    { init ? null : (<span className={classes.margin}>
-      <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-        <EditOutlined />
-      </IconButton>
-    </span>)}
-
-    <Dialog open={open} onClose={handleClose} maxWidth="md" fullWidth={true}>
+    <Dialog open={true} onClose={onClose} maxWidth="md" fullWidth={true}>
       <DialogTitle><FormattedMessage id="article.edit.title" /></DialogTitle>
       <DialogContent >
 
@@ -123,7 +101,7 @@ const ArticleEdit: React.FC<{ article: API.CMS.Article, init?: { open: boolean, 
           onChange={({ target }) => setName(target.value)} />
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={handleCancel} color="primary"><FormattedMessage id="button.cancel" /></Button>
+        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
         <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!name}><FormattedMessage id="button.update" /></Button>
       </DialogActions>
     </Dialog>

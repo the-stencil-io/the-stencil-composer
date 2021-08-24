@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -51,28 +51,13 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
   const [pageId, setPageId] = React.useState('');
   const [newLocale, setNewLocale] = React.useState('');
 
-  const [open, setOpen] = React.useState(props.open ? props.open : false);
-
-
   const handleUpdate = () => {
     const entity: API.CMS.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content };
-    ide.service.update().pages([entity]).then(success => {
-      console.log(success)
+    ide.service.update().pages([entity]).then(_success => {
       props.onClose();
       ide.actions.handleLoadSite();
     })
   }
-
-  const handleClose = () => {
-    props.onClose();
-    setOpen(false);
-  };
-  React.useEffect(() => {
-    setOpen(props.open);
-    if (props.articleId) {
-      setArticleId(props.articleId)
-    }
-  }, [props]);
 
   const articlePages: API.CMS.Page[] = Object.values(site.pages).filter(p => p.body.article === articleId);
   const usedLocales: API.CMS.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
@@ -81,7 +66,7 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
   const valid = pageId && articleId && newLocale;
 
   return (<>
-    <Dialog open={open} onClose={handleClose} >
+    <Dialog open={true} onClose={props.onClose} >
       <DialogTitle><FormattedMessage id='pages.change' /></DialogTitle>
       <DialogContent>
         <FormattedMessage id='pages.change.info' />

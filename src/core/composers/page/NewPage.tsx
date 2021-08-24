@@ -43,14 +43,12 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
+const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
   const [locale, setLocale] = React.useState('');
   const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
-  const [open, setOpen] = React.useState(props.open ? props.open : false);
-
 
   const handleCreate = () => {
     const entity: API.CMS.CreatePage = { articleId, locale };
@@ -61,24 +59,11 @@ const NewPage: React.FC<{ open: boolean, onClose: () => void, articleId?: API.CM
     })
   }
 
-  const handleClose = () => {
-    props.onClose();
-    setOpen(false);
-  };
-  React.useEffect(() => {
-    setOpen(props.open);
-    if (props.articleId) {
-      setArticleId(props.articleId)
-    }
-  }, [props]);
-
-
-
   const articles: API.CMS.Article[] = Object.values(site.articles);
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
   return (<>
-    <Dialog open={open} onClose={handleClose} >
+    <Dialog open={true} onClose={props.onClose} >
       <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
           <FormattedMessage id='newpage.info' />

@@ -51,14 +51,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   
   const ide = Ide.useIde();
   const site = ide.session.site;
-    
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const handleDialogClose = () => setDialogOpen(undefined);
 
   const open = Boolean(anchorEl);
@@ -66,19 +59,19 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
   return (
     <>
-      <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />
-      <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
-      <PageEdit open={dialogOpen === 'PageEdit'} onClose={handleDialogClose} articleId={article.id}/>
-      <PageDelete open={dialogOpen === 'PageDelete'} onClose={handleDialogClose} articleId={article.id}/>     
-      <ArticleLinksEdit open={dialogOpen === 'ArticleLinksEdit'} onClose={handleDialogClose} articleId={article.id}/> 
-
+      { dialogOpen === 'ArticleEdit' ?      <ArticleEdit      articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'NewPage' ?          <NewPage          articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'PageEdit' ?         <PageEdit         articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'PageDelete' ?       <PageDelete       articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} /> : null}
+      
       <FormattedMessage id="options" />
-      <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
+      <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
       <Popover
         id={id}
         open={open}
         anchorEl={anchorEl}
-        onClose={handleClose}
+        onClose={() => setAnchorEl(null)}
         anchorOrigin={{
           vertical: 'bottom',
           horizontal: 'right',

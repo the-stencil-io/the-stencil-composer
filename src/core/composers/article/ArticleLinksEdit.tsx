@@ -57,36 +57,34 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ArticleLinksEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const ArticleLinksEdit: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
-
+  
   const [articleId, setArticleId] = React.useState('');
-  const articleLinks: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(props.articleId));
-  const siteLinks: API.CMS.Link[] = Object.values(site.links);
+  const articleLinks: API.CMS.LinkId[] = Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
+  const [selectedLinks, setSelectedLinks] = React.useState(articleLinks);
+  
+  const links: API.CMS.Link[] = Object.values(site.links);
 
-  const [open, setOpen] = React.useState(props.open ? props.open : false);
+  //check if link is associated with article
 
-  const handleClose = () => {
-    props.onClose();
-    setOpen(false);
-  };
+  const isLink = (links: API.CMS.Link[], article: API.CMS.Article) => {
+    const articleLinks = links
+      .filter(l => l.body.articles[article.id] === props.articleId);
+    return articleLinks.length > 0;
+  }
 
-  React.useEffect(() => {
-    setOpen(props.open);
-    if (props.articleId) {
-      setArticleId(props.articleId)
-    }
-  }, [props]);
+
 
   return (
 
-    <Dialog fullScreen open={open} onClose={handleClose} >
+    <Dialog fullScreen open={true} onClose={props.onClose} >
       <AppBar className={classes.appBar} color="default">
         <Toolbar>
           <Typography variant="h6" className={classes.title}>"Article name"<FormattedMessage id="article.links.addremove" /></Typography>
           <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-          <Button variant="contained" onClick={handleClose} color="primary" autoFocus ><FormattedMessage id='button.apply' /></Button>
+          <Button variant="contained" onClick={props.onClose} color="primary" autoFocus ><FormattedMessage id='button.apply' /></Button>
         </Toolbar>
       </AppBar>
 
@@ -104,15 +102,17 @@ const ArticleLinksEdit: React.FC<{ open: boolean, onClose: () => void, articleId
               </TableRow>
             </TableHead>
             <TableBody>
-              {siteLinks.map((siteLink, index) => (
+              {links.map((link, index) => (
                 <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="left">{siteLink.body.contentType}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{siteLink.body.locale}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{siteLink.body.description}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{siteLink.body.content}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.locale}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+
                   <TableCell className={classes.tableCell} align="center">
-                    <Tooltip title={<FormattedMessage id="article.addlink" />}>
-                    <Checkbox size="small" /></Tooltip></TableCell>
+                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} />
+                  </TableCell>
+
                 </TableRow>
               ))}
             </TableBody>

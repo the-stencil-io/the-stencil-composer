@@ -11,6 +11,8 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import AddIcon from '@material-ui/icons/AddOutlined';
+import EditOutlined from '@material-ui/icons/EditOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -100,33 +102,44 @@ const ArticlesView: React.FC<{}> = () => {
 
 const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ article, site }) => {
   const classes = useRowStyles();
-  const [open, setOpen] = React.useState(false);
+  const [expand, setExpand] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState<"EditArticle"| "DeleteArticle" | undefined>();
   const parentName = article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "";
 
   const pages = Object.values(site.pages).filter(page => page.body.article === article.id);
 
   return (
     <>
+      {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)}/> : null}
+      {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)}/> : null}
+      
       <TableRow key={article.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
-          <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+          <IconButton className={classes.iconButton} size="small" onClick={() => setExpand(!expand)}>
+            {expand ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
         <TableCell className={classes.tableCell} align="left">{parentName}{article.body.name}</TableCell>
         <TableCell className={classes.tableCell} align="center">{article.body.order}</TableCell>
         <TableCell className={classes.tableCell} align="center">{pages.length}</TableCell>
         <TableCell className={classes.tableCell} align="right">
-          <ArticleEdit article={article} />
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("EditArticle")}>
+            <EditOutlined />
+          </IconButton>
           <IconButton className={classes.iconButton} >
-            <Tooltip title={<FormattedMessage id="pages.add" />}><AddIcon /></Tooltip></IconButton>
-          <ArticleDelete article={article} />
+            <Tooltip title={<FormattedMessage id="pages.add" />}>
+              <AddIcon />
+            </Tooltip>
+          </IconButton>
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("DeleteArticle")}>
+            <DeleteOutlinedIcon />
+          </IconButton>
         </TableCell>
       </TableRow>
 
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
+          <Collapse in={expand} timeout="auto" unmountOnExit>
             <Box margin={2}>
               <Table size="small">
                 <TableHead>

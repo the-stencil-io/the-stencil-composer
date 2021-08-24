@@ -64,7 +64,7 @@ const createCards: (site: API.CMS.Site) => Record<CardType, CardData> = (_site) 
   },
 
   page: {
-    composer: (handleClose) => (<NewPage open={true} onClose={handleClose} />),
+    composer: (handleClose) => (<NewPage onClose={handleClose} />),
     title: "composer.page.title",
     desc: "composer.page.desc",
   },
