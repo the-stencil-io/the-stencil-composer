@@ -8,8 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { API, Ide } from '../../deps';
 
 import { ArticleEdit } from './';
-import { NewPage, PageEdit, ArticleDeletePage } from '../';
-import { NewLinkArticle } from '../link';
+import { NewPage, PageEdit, PageDelete, ArticleDeletePage } from '../';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +45,9 @@ interface ArticleOptionsProps {
 const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage' |
+    'PageDelete'
+  >(undefined);
   
   const ide = Ide.useIde();
   const site = ide.session.site;
@@ -71,7 +72,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
       <ArticleEdit article={article} init={{ open: dialogOpen === 'ArticleEdit', onClose: handleDialogClose }} />
       <NewPage open={dialogOpen === 'NewPage'} onClose={handleDialogClose} articleId={article.id} />
       <PageEdit open={dialogOpen === 'PageEdit'} onClose={handleDialogClose} articleId={article.id}/>
-      
+      <PageDelete open={dialogOpen === 'PageDelete'} onClose={handleDialogClose} articleId={article.id}/>      
 
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={handleClick}> <MoreVertIcon /> </IconButton>
@@ -115,7 +116,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
               <ListItemText secondary={<FormattedMessage id="pages.edit" />} />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageDelete')}>
               <ListItemText secondary={<FormattedMessage id="pages.delete" />} />
             </ListItem>
 

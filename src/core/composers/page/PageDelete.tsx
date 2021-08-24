@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const PageDelete: React.FC<{ open: boolean, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -54,9 +54,9 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
   const [open, setOpen] = React.useState(props.open ? props.open : false);
 
 
-  const handleUpdate = () => {
-    const entity: API.CMS.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content };
-    ide.service.update().pages([entity]).then(success => {
+  const handleDelete = () => {
+    //const entity: API.CMS.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content };
+    ide.service.delete().page(pageId).then(success => {
       console.log(success)
       props.onClose();
       ide.actions.handleLoadSite();
@@ -76,15 +76,12 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
 
   const articlePages: API.CMS.Page[] = Object.values(site.pages).filter(p => p.body.article === articleId);
   const usedLocales: API.CMS.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
-  const unusedLocales: API.CMS.SiteLocale[] = Object.values(site.locales).filter(siteLocale => !usedLocales.includes(siteLocale.id));
-
-  const valid = pageId && articleId && newLocale;
 
   return (<>
     <Dialog open={open} onClose={handleClose} >
-      <DialogTitle><FormattedMessage id='pages.edit' /></DialogTitle>
+      <DialogTitle><FormattedMessage id='pages.delete' /></DialogTitle>
       <DialogContent>
-        <FormattedMessage id='pages.edit.info' />
+        <FormattedMessage id='pages.delete.message' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
             className={classes.margin}
@@ -98,29 +95,15 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
             ))}
           </Select>
         </FormControl>
-        
-        <FormControl variant="outlined" className={classes.select} fullWidth>
-          <Select
-            className={classes.margin}
-            variant="outlined"
-            value={newLocale}
-            onChange={({ target }) => setNewLocale(target.value as any)}
-            label={<FormattedMessage id='pages.edit.selectTargetLocale' />}
-          >
-            {unusedLocales.map((unusedLocale, index) => (
-              <MenuItem key={index} value={unusedLocale.id}>{unusedLocale.body.value}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
       </DialogContent>
 
       <DialogActions>
         <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleUpdate} color="primary" autoFocus disabled={!valid}><FormattedMessage id='button.update' /></Button>
+        <Button variant="contained" onClick={handleDelete} color="primary" autoFocus disabled={!pageId}><FormattedMessage id='button.delete' /></Button>
       </DialogActions>
     </Dialog>
   </>
   );
 }
 
-export { PageEdit }
+export { PageDelete }

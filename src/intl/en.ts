@@ -126,6 +126,7 @@ const en = {
   'pages.edit': 'Edit a page locale',
   'pages.edit.info': 'Select a page from this Article and enter a new value for its locale.',
   'pages.delete': 'Delete a page',
+  'pages.delete.message': 'Select a page to delete from this Article.',
   
   'pages.options': 'Page options',
 
