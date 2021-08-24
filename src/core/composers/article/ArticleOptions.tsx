@@ -8,7 +8,7 @@ import { FormattedMessage } from 'react-intl';
 import { API, Ide } from '../../deps';
 
 import { ArticleEdit } from './';
-import { NewPage, PageEdit, PageDelete, ArticleDeletePage } from '../';
+import { NewPage, PageEdit, PageDelete } from '../';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -113,7 +113,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
             </ListItem>
 
             <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageEdit')}>
-              <ListItemText secondary={<FormattedMessage id="pages.edit" />} />
+              <ListItemText secondary={<FormattedMessage id="pages.change" />} />
             </ListItem>
 
             <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageDelete')}>
@@ -121,36 +121,17 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article}) => {
             </ListItem>
 
             <ListItem className={classes.mainTopic}>
-              <ListItemText primary={<FormattedMessage id="link.options" />} />
+              <ListItemText primary={<FormattedMessage id="resource.options" />} />
             </ListItem>
 
             <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.options.add" />} />
+              <ListItemText secondary={<FormattedMessage id='resource.edit.links' />} />
             </ListItem>
 
             <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.options.edit" />} />
+              <ListItemText secondary={<FormattedMessage id="resource.edit.workflows" />} />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="link.options.remove" />} />
-            </ListItem>
-
-            <ListItem className={classes.mainTopic}>
-              <ListItemText primary={<FormattedMessage id="workflow.options" />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="workflow.add" />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="workflow.edit" />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested}>
-              <ListItemText secondary={<FormattedMessage id="workflow.remove" />} />
-            </ListItem>
           </List>
         </List>
       </Popover>

@@ -82,9 +82,9 @@ const PageEdit: React.FC<{ open: boolean, onClose: () => void, articleId: API.CM
 
   return (<>
     <Dialog open={open} onClose={handleClose} >
-      <DialogTitle><FormattedMessage id='pages.edit' /></DialogTitle>
+      <DialogTitle><FormattedMessage id='pages.change' /></DialogTitle>
       <DialogContent>
-        <FormattedMessage id='pages.edit.info' />
+        <FormattedMessage id='pages.change.info' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
             className={classes.margin}

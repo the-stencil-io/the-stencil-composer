@@ -20,7 +20,7 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
       icon: <HomeOutlinedIcon />,
       type: {
         onClick: () => {
-          actions.handleTabAdd({ id: 'newItem', label: "New Item" });
+          actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
         }
       }
     },

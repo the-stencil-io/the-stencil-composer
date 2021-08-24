@@ -151,12 +151,12 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
   const getPageLocale = (page: API.CMS.Page) => {
     try {
       return site.locales[page.body.locale].body.value;
-    } catch(e) {
+    } catch (e) {
       console.error(page);
       return 'oops';
     }
   }
-  
+
 
   return (
     <>
@@ -203,6 +203,19 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
 
               )}
 
+              {links.length === 0 ? undefined : (
+                <TableRow className={classes.hoverRow}>
+                  <TableCell className={classes.table} colSpan={2} onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
+                    <FormattedMessage id="links" /> <span className={classes.summary}>{links.length}</span>
+                  </TableCell>
+                </TableRow>)}
+
+              {workflows.length === 0 ? undefined : (
+                <TableRow className={classes.hoverRow}>
+                  <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })} colSpan={2}>
+                    <FormattedMessage id="workflows" /> <span className={classes.summary}>{workflows.length}</span>
+                  </TableCell>
+                </TableRow>)}
 
               <TableRow className={classes.hoverRow}>
                 <TableCell className={classes.table} align="left">
@@ -231,21 +244,6 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
                 </TableRow>
               ) : undefined
               }
-
-              {links.length === 0 ? undefined : (
-                <TableRow className={classes.hoverRow}>
-                  <TableCell className={classes.table} colSpan={2} onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
-                    <FormattedMessage id="links" /> <span className={classes.summary}>{links.length}</span>
-                  </TableCell>
-                </TableRow>)}
-
-              {workflows.length === 0 ? undefined : (
-                <TableRow className={classes.hoverRow}>
-                  <TableCell className={classes.table} onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })} colSpan={2}>
-                    <FormattedMessage id="workflows" /> <span className={classes.summary}>{workflows.length}</span>
-                  </TableCell>
-                </TableRow>)}
-
             </TableBody>
           </Table>
         </TableContainer>

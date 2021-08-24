@@ -123,8 +123,8 @@ const en = {
   
   'pages.save': 'Save pages',
   'pages.add': 'Add a page',
-  'pages.edit': 'Edit a page locale',
-  'pages.edit.info': 'Select a page from this Article and enter a new value for its locale.',
+  'pages.change': 'Change a page locale',
+  'pages.change.info': 'Select a page from this Article and enter a new value for its locale.',
   'pages.delete': 'Delete a page',
   'pages.delete.message': 'Select a page to delete from this Article.',
   
@@ -136,6 +136,11 @@ const en = {
   'release.composer.note': "Note",
   'release.composer.helper': 'Optional additional information for future reference',
  
+ 
+  'resource.options': 'Resource options',
+  'resource.edit.links': 'Add and remove Article links',
+  'resource.edit.workflows': 'Add and remove Article workflows',
+  
   'workflow.associate.title': 'Associate a Workflow with an Article',
   
   'workflow.composer.title': "Add a workflow",
