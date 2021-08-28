@@ -7,7 +7,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-import { ArticleEdit, ArticleLinksEdit } from './';
+import { ArticleEdit, ArticleLinksEdit, ArticleWorkflowsEdit } from './';
 import { NewPage, PageEdit, PageDelete } from '../';
 
 
@@ -46,7 +46,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage' |
-    'PageDelete' | 'ArticleLinksEdit'
+    'PageDelete' | 'ArticleLinksEdit' | 'ArticleWorkflowsEdit'
   >(undefined);
   
   const ide = Ide.useIde();
@@ -64,6 +64,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'PageEdit' ?         <PageEdit         articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ?       <PageDelete       articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose}/> : null}
       
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
@@ -119,7 +120,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
               <ListItemText secondary={<FormattedMessage id='resource.edit.links' />} />
             </ListItem>
 
-            <ListItem button className={classes.nested}>
+            <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleWorkflowsEdit')}>
               <ListItemText secondary={<FormattedMessage id="resource.edit.workflows" />} />
             </ListItem>
 
