@@ -12,6 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
       padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
       backgroundColor: theme.palette.background.paper
     },
     button: {
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void}> = ({ articleId, onClose }) => {
+const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void }> = ({ articleId, onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
