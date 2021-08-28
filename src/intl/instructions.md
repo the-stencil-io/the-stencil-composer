@@ -1,9 +1,19 @@
 # Translating the menu / buttons
 
-1. There are two files: `en.ts`, and `fi.ts`. Obviously, you'll be working with `fi.ts`  :)
-2. As of this moment, `fi.ts` is a direct copy of `en.ts`
-3. Each line has two parts: A left side and a right side. The left side corresponds the button or menu item to which that translation is matched. You'll be working with the right side, which is the actual text that the user will see.
-3. All you need to do is translate the English content between the single quotes ' ' on the RIGHT SIDE of the item into Finnish. Please try not to delete any commas or quotation marks.
+## Overview
+
+The two files here in this folder (`en.ts` and `fi.ts`) will be used to provide English and Finnish language support for menu items and buttons in the application.
+
+Each line item has two parts:
+
+* LEFT SIDE: The menu items and buttons in the application (blue text in the picture)
+* RIGHT SIDE: The actual text that users will see in the buttons and menus as they use the application (orange text in the picture)
+
+Obviously, you'll be working with `fi.ts`  :)
+
+As of this moment, `fi.ts` is a direct copy of `en.ts`.
+
+**Task**: All you need to do is translate the English content between the single quotes ' ' on the RIGHT SIDE of the item into Finnish. Please try not to delete any commas or quotation marks.
 
 Check out this example screenshot. Each line will need the right side, underlined in red, to be translated:
 
