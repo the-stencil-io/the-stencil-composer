@@ -87,7 +87,6 @@ const Container: React.FC<ContainerProps> = ({ components }) => {
             onClick={handleDrawerOpen}>
             <MenuIcon />
           </IconButton>
-
           <Typography noWrap component="h1" variant="h6" color="inherit" className={classes.title}><Tabs /></Typography>
 
           <div className={classes.search}>
@@ -117,6 +116,7 @@ const Container: React.FC<ContainerProps> = ({ components }) => {
           <div className={classes.toolbarIconSpacer}></div>
           <div className={classes.toolbarIcon}><IconButton onClick={handleDrawerClose}><ChevronLeftIcon /></IconButton></div>
         </div>
+          
 
         <div className={classes.views}>
           <Toolbar open={drawerOpen} setOpen={setDrawerOpen}>{components.toolbar}</Toolbar>
