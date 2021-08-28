@@ -13,8 +13,8 @@ Obviously, you'll be working with `fi.ts`  :)
 
 As of this moment, `fi.ts` is a direct copy of `en.ts`.
 
-**Task**: All you need to do is translate the English content between the single quotes ' ' on the RIGHT SIDE of the item into Finnish. Please try not to delete any commas or quotation marks.
+**Task**: All you need to do is translate the English content between the single quotes ' ' on the RIGHT SIDE of each line item into Finnish. Please try not to delete any commas or quotation marks.
 
-Check out this example screenshot. Each line will need the right side, underlined in red, to be translated:
+Check out this example screenshot with the "to-be translated" part underlined in red.
 
 ![Translation](translation-example.png)
