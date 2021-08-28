@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, alpha } from '@material-ui/core/styles';
-import { List, IconButton, Popover, ListItemText, ListItem, Divider, ListSubheader } from '@material-ui/core';
+import { List, IconButton, Popover, ListItemText, ListItem } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';

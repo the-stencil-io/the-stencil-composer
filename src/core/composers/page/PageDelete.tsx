@@ -60,7 +60,7 @@ const PageDelete: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }>
 
 
   const articlePages: API.CMS.Page[] = Object.values(site.pages).filter(p => p.body.article === props.articleId);
-  const usedLocales: API.CMS.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
+  //const usedLocales: API.CMS.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
 
   return (<>
     <Dialog open={true} onClose={props.onClose} >

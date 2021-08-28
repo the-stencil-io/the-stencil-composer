@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme, Typography, Table, Tooltip, Card, Paper, IconButton } from '@material-ui/core';
+import { makeStyles, Typography, Table, Card } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import TableBody from '@material-ui/core/TableBody';
@@ -103,9 +103,9 @@ const ArticleWorkflowsEdit: React.FC<{onClose: () => void, articleId: API.CMS.Ar
             <TableBody>
               {workflows.map((workflow, index) => (
                 <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary" checked={selectedWorkflows.includes(workflow.id) === true} />
                   </TableCell>
