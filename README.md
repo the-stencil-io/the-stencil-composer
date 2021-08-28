@@ -20,7 +20,10 @@
 
 The Stencil CMS is a content management system designed for composing and managing static content in multiple languages via [Markdown](https://www.markdownguide.org/). 
 
-The Stencil is designed to work hand-in-hand with your organisation's Stencil Portal UI, and it is the main application you will use to manage your static content.
+The Stencil is comprised of two parts: 
+
+* **The Stencil CMS**: This is the main application you will use to manage your static content, designed to work hand-in-hand with your organisation's Stencil Portal UI.
+* **The Stencil Portal UI**: The static content website that your end users will utilise to read your content, fill in forms, receive messages from your organisation, etc.
 
 This platform unifies and consolidates your content, data gathering, and process automation under one roof. 
 
