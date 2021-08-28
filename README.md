@@ -10,6 +10,7 @@
   * [Forms and Workflows](#Forms-and-workflows)
   * [Localisations](#Localisations)
   * [Releases](#Releases)
+* [Intro to the Stencil UI](#Intro-to-UI-Layout)
 * [Creating your first resources](#Creating-your-first-resources)
 * [Deleting and removing resources](#Deleting-and-removing-resources)
 
