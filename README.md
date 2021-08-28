@@ -17,7 +17,9 @@
 
 ### Introduction
 
-The Stencil is a content management system designed for composing and managing static content in multiple languages via [Markdown](https://www.markdownguide.org/). 
+The Stencil CMS is a content management system designed for composing and managing static content in multiple languages via [Markdown](https://www.markdownguide.org/). 
+
+The Stencil is designed to work hand-in-hand with your organisation's Stencil Portal UI, and it is the main application you will use to manage your static content.
 
 This platform unifies and consolidates your content, data gathering, and process automation under one roof. 
 
@@ -111,7 +113,7 @@ et.md
 
 Pages are Markdown files. They are named according to their content language, and contain only content written in that language. For example, a page named `en.md` contains English language content.  
 
-The basic rule is this: 1 page == 1 locale. You can have as many pages per Article as you wish, depending on how many languages you need to represent, currently, there can only be ONE page per Article of the same locale. 
+The basic rule is this: 1 page == 1 locale. You can have as many pages per Article as you wish, depending on how many languages you need to represent, but currently, there can only be ONE page per Article of the same locale. 
 
 Because a Page corresponds directly to a locale, Pages cannot exist if the desired locale doesn't exist. This means that, if you want a page in a language you haven't added yet, you'll need to add that locale first, and only then start creating pages that use it.
 
@@ -121,18 +123,19 @@ A Page does not have a customisable name. The name of a page is always the [two-
 
 A Page is specific to an Article, and it cannot exist outside of an Article. 
 
-In summary, before creating a page, you need to ensure two things:
+In summary, before creating a page, you need to keep three things in mind:
 
 * The Article in which the page will "live" must already exist
 * The locale for the Page's content must already exist
+* The Page must include a Markdown level 1 Header, which will appear as a Topic in your portal's Topic menu.
 
 ---
 
 ### Links
 
-Links can be **internal** or **external**. An internal link connects to pages within your domain, while an external link connects to pages outside your domain.
+Links can be **internal**, **external**, or **phone**. An internal link connects to pages within your domain, while an external link connects to pages outside your domain. A link of type "phone" will display as a telephone number on your Portal UI.
 
-Links can be associated with any articles / pages.  
+Links can be associated with any, all, or no articles / pages.  
 
 Links are localised. The locale you specify for a link when creating it determines that this link will appear only on pages with the same locale. Here is an example situation:
 
