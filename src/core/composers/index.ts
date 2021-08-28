@@ -1,7 +1,5 @@
 export * from './Composer'
-export * from './ComposerSelect';
-
-
+export * from './Dashboard';
 
 export * from './page';
 export * from './link';

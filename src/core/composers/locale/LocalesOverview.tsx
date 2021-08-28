@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: 'flex'
     },
-    cardContent: {
-      flexGrow: 1,
-    },
     root: {
       margin: theme.spacing(1),
       flexWrap: 'wrap',

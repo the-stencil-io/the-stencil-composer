@@ -1,4 +1,4 @@
-const en = {
+const fi = {
 
 
   'pages': 'Pages',
@@ -188,4 +188,4 @@ const en = {
   'toolbar.locales': 'Locales',
 };
 
-export default en;
+export default fi;

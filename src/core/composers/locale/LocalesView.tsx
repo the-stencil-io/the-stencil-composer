@@ -130,7 +130,7 @@ const Row: React.FC<RowProps> = ({ locale }) => {
   }
   */
 
-  const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
+  //const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
 
   return (

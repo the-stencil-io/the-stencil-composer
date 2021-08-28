@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
-  Dialog, Typography, DialogTitle, DialogContent, DialogActions, MenuItem, Select
+  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,27 +11,51 @@ import { API, Ide } from '../../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
-      margin: theme.spacing(1),
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
       backgroundColor: theme.palette.background.paper
     },
-    root: {
+    button: {
+      // padding: 0,
+      backgroundColor: theme.palette.primary.main,
+      color: theme.palette.background.paper,
       fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        backgroundColor: theme.palette.error.dark,
+        color: theme.palette.background.paper,
+        fontWeight: 'bold'
+      }
+    },
+    margin: {
+      paddingRight: theme.spacing(1)
+    },
+    iconButton: {
+      padding: 2,
+      paddingLeft: theme.spacing(1),
+      color: theme.palette.primary.dark,
+      "&:hover, &.Mui-focusVisible": {
+        backgroundColor: theme.palette.info.main,
+        color: theme.palette.background.paper,
+        "& .MuiSvgIcon-root": {
+          color: theme.palette.background.paper,
+        }
+      }
     },
   }),
 );
 
-const NewPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
   const [locale, setLocale] = React.useState('');
-  const [articleId, setArticleId] = React.useState('');
+  const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
 
   const handleCreate = () => {
     const entity: API.CMS.CreatePage = { articleId, locale };
     ide.service.create().page(entity).then(success => {
       console.log(success)
-      onClose();
+      props.onClose();
       ide.actions.handleLoadSite();
     })
   }
@@ -39,11 +63,10 @@ const NewPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const articles: API.CMS.Article[] = Object.values(site.articles);
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
-  return (
-    <Dialog open={true} onClose={onClose} >
+  return (<>
+    <Dialog open={true} onClose={props.onClose} >
       <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
-        <Typography>
           <FormattedMessage id='newpage.info' />
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='article.name' /></InputLabel>
@@ -53,7 +76,7 @@ const NewPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               label={<FormattedMessage id='article.name' />}
             >
               {articles.map((article, index) => (
-                <MenuItem key={index} value={article.body.name}>{article.body.order}{"_"}{article.body.name}</MenuItem>
+                <MenuItem key={index} value={article.id}>{article.body.order}{"_"}{article.body.name}</MenuItem>
               ))}
             </Select>
           </FormControl >
@@ -65,18 +88,18 @@ const NewPage: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               label={<FormattedMessage id='locale' />}
             >
               {locales.map((locale, index) => (
-                <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
+                <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
               ))}
             </Select>
           </FormControl >
-        </Typography>
       </DialogContent>
-      
+
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
+        <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
         <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
       </DialogActions>
     </Dialog>
+  </>
   );
 }
 
