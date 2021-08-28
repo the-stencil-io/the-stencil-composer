@@ -268,7 +268,7 @@ Use the two-letter language code of the locale you want to add: Examples:
 #### Create a Page for your Locale
  
 Once you have created a locale, you need to create a Page for that locale. In the expanded view of your Article, click "Create page" to do this.  
-NOTE: Once you have enabled two locales, you can enable "Dual View", which will allow for side-by-side content editing of two languages at the same time.
+NOTE: Once you have created two or more pages, you can enable "Dual View", which will allow for side-by-side content editing of two languages at the same time.
 
 #### Add Links, Workflows, and additional Locales
 
