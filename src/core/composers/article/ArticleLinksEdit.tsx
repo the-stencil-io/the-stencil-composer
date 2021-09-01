@@ -57,25 +57,20 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const ArticleLinksEdit: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const getArticleLinks: (site:API.CMS.Site, articleId: API.CMS.ArticleId) => API.CMS.LinkId[] = (site, articleId) => {
+  return Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
+}
+
+const ArticleLinksEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
-  
-  const [articleId, setArticleId] = React.useState('');
-  const articleLinks: API.CMS.LinkId[] = Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
-  const [selectedLinks, setSelectedLinks] = React.useState(articleLinks);
-  
+
+  const handleChange = (event: any) => {
+    setSelectedLinks(event.target.checked);
+  };
+
+  const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
   const links: API.CMS.Link[] = Object.values(site.links);
-
-  //check if link is associated with article
-
-  const isLink = (links: API.CMS.Link[], article: API.CMS.Article) => {
-    const articleLinks = links
-      .filter(l => l.body.articles[article.id] === props.articleId);
-    return articleLinks.length > 0;
-  }
-
-
 
   return (
 
@@ -110,7 +105,7 @@ const ArticleLinksEdit: React.FC<{onClose: () => void, articleId: API.CMS.Articl
                   <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
 
                   <TableCell className={classes.tableCell} align="center">
-                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} />
+                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={handleChange}/>
                   </TableCell>
 
                 </TableRow>

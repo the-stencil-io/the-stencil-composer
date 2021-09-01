@@ -24,7 +24,7 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
         }
       }
     },
-    
+
     {
       id: 'toolbar.explorer',
       enabled: true,
