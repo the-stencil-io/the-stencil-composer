@@ -47,52 +47,52 @@ Aikaa ja vaivaa säästyy, kun pidetään sekä yhtä todenmukaista lähdettä, 
 
 ---
 
-### Features
+### Ominaisuudet
 
-* Simple, multi-language content composition with Markdown syntax
-* Simultaneous, side-by-site content editing for two languages (Dual View)
-* Integrate forms and their workflows into static content
-* Versioning and release management system
-* Localisation capability for all content, links, forms, and workflows
+* Yksinkertainen, monikielinen sisältörakenne Markdown syntaksilla
+* Samanaikainen, halkaistun näytön sisällönmuokkaus kahdelle kielelle (Tuplanäkymä)
+* Yhdistä lomakkeet ja niiden työnkulut staattiseksi sisällöksi
+* Versionnin ja julkaisun hallintajärjestelmä 
+* Paikannettavuus kaikelle sisällölle, linkeille, lomakkeille ja työnkuluille 
 
 ---
 
-## Basic User Guide
+## Käyttäjän perusopas
 
-The Stencil is comprised of six different elements, which we can refer to as "Resources". These resources are as follows:
+Stencil koostuu kuudesta eri elementistä, joihin viitataan "resursseina". Resursseja ovat: 
 
-* **Articles**: Containers for grouping related resources  
-* **Pages**: Localised Markdown content, directly connected to Articles   
-* **Links**: Localised internal or external links  
-* **Localisations**: Available languages for content  
-* **Releases**: Versions / Snapshots of complete content state at one point in time
-* **Workflows**: Localised forms and processes connected to Articles / Pages
+* **Artikkelit**: Sisällyttävät ryhmittymiseen liittyvät resurssit 
+* **Sivut**: Paikannettua Markdown-sisältöä, suorassa yhteydessä artikkeleihin   
+* **Linkit**: Paikannettuja sisäisiä tai ulkoisia linkkejä 
+* **Paikannukset**: Saatavilla olevat kielet sisällölle 
+* **Julkaisut**: Versiot / kuvat sisällön kokonaisuudesta annettuna aikana
+* **Työnkulut**: Paikannetut lomakkeet ja prosessit yhteydessä artikkeleihin / sivuihin 
 
 
-### Articles
+### Artikkelit
 
-Articles can be thought of as containers for grouping related elements. An Article is the main "hub" which connects pages(localised content), links, and workflows. 
+Artikkelit voidaan käsittää eräänlaisina lokeroina ryhmittymiseen liittyville elementeille/resursseille. Artikkeli on keskus, joka yhdistää sivut (paikannettu sisältö), linkit ja työnkulut. 
 
 ![Articles](readme-images/stencil-article-association.png)
 
 
 
-An Article **must** have a name (customisable) and at least one page. This name is purely technical and does not appear on the end-user side.  Articles without any pages will not be rendered on the end-user UI.
+Artikkelilla **täytyy** olla nimi (nimi muokattavissa) ja ainakin yksi sivu. Nimellä on vain käytännöllinen tarkoitus, eikä se näy käyttöpuolella lainkaan. Artikkelit, joissa ei ole sivuja eivät kirjaudu käyttöliittymälle.  
 
-An Article **should** have a three-digit number in front of it. This number determines the order it is displayed in the menu.
+Artikkelin edessä **täytyy** olla kolminumeroinen luku. Numero määrittää sen, missä järjestyksessä se näkyy valikossa.  
 
-Example of an Article with name and order number: `100_Housing`
+Esimerkki artikkelin nimestä ja järjestysnumerosta: `100_Housing`
 
-An Article **may** have Links and Workflows associated with it, but this is not required.
+Artikkeliin **voi** olla yhdistetty linkkejä ja työnkulkuja, mutta se ei ole pakollista. 
 
-Articles can be nested up to **two** levels. This means you can have one Parent Article and its Child Article.  Here is an example of a nested Article:
+Artikkeleita voodaan kerrostaa korkeintaan **kahdelle** tasolle. On mahdollista olla yksi emoartikkeli ja yksi tytärartikkeli. Alla esimerkki kerrostetusta artikkelista: 
 
 `150_Construction/100_Building_Permits`
 
-Article display names on the end-user side are taken from the first Markdown Level 1 Header in each Page. 
+Artikkelien käyttöpuolella näkyvät nimet tulevat ensimmäisestä Markdown Level 1 otsikosta kullakin sivulla. 
 
 
-Here is an example situation: You have an Article with two Pages: `en.md` and `et.md`. You want this article to appear to end-users with the name "Animals", but you want to be sure that, if a user has selected the Estonian language, the Estonian word appears instead of English. To do this, you simply give each Page a Level 1 Header with the appropriate name, and the system picks it up.
+Esimerkkitilanne: Sinulla on artikkeli, jolla on kaksi sivua: `en.md` ja `et.md`. Haluat tämän artikkelin näkyvän käyttäjille englanniksi nimellä "Animals", mutta haluat varmistaa, että viron kielen valinneelle käyttäjälle nimi näkyy vironkielisenä: "Loomad". Tehdäksesi näin yksinkertaisesti annat jokaiselle sivulle Level 1 otsikon oikealla nimellä, jolloin järjestelmä ottaa nimet käyttöön. 
 
 en.md
 
