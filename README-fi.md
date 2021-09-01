@@ -37,13 +37,13 @@ Nykypäivänä monikielisen sisällön tuottaminen ja hallinta on olennaista. Ka
 
 Stencilin avulla voit asettaa käännökset, linkit, kielet ja työnkulut kerran ja käyttää näitä resursseja ja niiden käännöksiä laajasti tai yksittäisesti. Jos linkin tekstiä tarvitsee muuttaa, se tehdään **yhdessä** paikassa ja muutokset päivittyvät kaikkialle missä linkkiä käytetään. Tai esimerkiksi on lomake, joka on useassa paikassa sovelluksessasi. Riittää, että lomaketta muokataan kerran, jotta se päivittyy kaikkialle missä se on käytössä. Näin vapautuu enemmän aikaa uuden sisällön tuottamiseen, kun ei tarvitse huolehtia siitä, miten monessa paikassa sisältöä pitää muokata.
 
-**Data gathering and process automation are essential elements of a complete CMS solution**  
+**Datankeruu ja prosessien automatisointi ovat ensisijaisia elementtejä CMS ratkaisun kokonaisuudessa.**  
 
-Presenting users with content is great. What's even better is giving users possibilities to act on that content and designing processes to act upon that data. The Stencil integrates with two other platforms to provide form service and process services. We believe that organisations should be able to control all three of these elements in order to craft the perfect solution to meet their needs.
+Sisällön tarjoaminen käyttäjille on mahtavaa. Parempaa vielä on kuitenkin tarjota käyttäjille mahdollisuus tehdä toimintoja sisällön kanssa sekä suunnitella prosesseja toimimaan tämän datan perusteella. Stencil toimii kahden muun alustan kanssa tarjotakseen lomake- ja prosessipalveluita. Uskomme, että organisaatioiden tulisi pystyä hallitsemaan kaikkia näitä kolmea elementtiä luodakseen täydellisesti tarpeisiinsa sopivan ratkaisun. 
 
-**Version control is essential.**  
+**Versioiden hallinta on ehdottoman tärkeää.**  
 
-Keeping both a single source of truth and an audit history of changes saves time and effort. For that reason, the Stencil's Release functionality allows for simple tagging with notes, so you can revisit your work at any time, troubleshoot, or revert to a prior version.
+Aikaa ja vaivaa säästyy, kun pidetään sekä yhtä todenmukaista lähdettä, että tarkistettua muutoshistoriaa. Tästä syystä Stencilin Release-ominaisuus mahdollistaa yksinkertaisten merkintöjen ja lisähuomioiden tekemisen, jolloin on mahdollista palata aikaisempaan työhön koska tahansa, tehdä vikatarkastuksia tai palauttaa työ aikaisempaan vaiheeseen.  
 
 ---
 
