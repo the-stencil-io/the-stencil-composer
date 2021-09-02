@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 interface NewLinkArticleProps {
-  link: API.CMS.Link;
-  open: boolean;
-  onClose: () => void;
+  link: API.CMS.Link,
+  open: boolean,
+  onClose: () => void
 }
 
-const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ open, link, onClose }) => {
+const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ link, onClose }) => {
   const classes = useStyles();
 
   const ide = Ide.useIde();
@@ -53,7 +53,7 @@ const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ open, link, onClose }) 
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={true} onClose={onClose}>
       <DialogTitle><FormattedMessage id="link.article.add.title" /></DialogTitle>
       <DialogContent>
         <Typography className={classes.root}>

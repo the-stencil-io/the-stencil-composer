@@ -5,8 +5,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles, createStyles, Theme, IconButton } from '@material-ui/core';
+import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -44,40 +43,24 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 interface LinkDeleteProps {
-  site: API.CMS.Site;
-  link: API.CMS.Link;
+  linkId: API.CMS.LinkId,
+  open: boolean,
+  onClose: () => void,
 }
 
-const LinkDelete: React.FC<LinkDeleteProps> = ({ site, link }) => {
-  const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   const ide = Ide.useIde();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleDelete = () => {
-    ide.service.delete().link(link.id).then(success => {
+    ide.service.delete().link(linkId).then(success => {
       console.log(success)
-      handleClose();
+      onClose();
       ide.actions.handleLoadSite();
     })
   }
 
   return (
-    <span className={classes.margin}>
-      <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-        <DeleteOutlinedIcon />
-      </IconButton>
-
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
+      <Dialog open={true} onClose={onClose}>
         <DialogTitle><FormattedMessage id="link.delete.title" /></DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -85,7 +68,7 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ site, link }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant="text" onClick={handleClose} color="primary">
+          <Button variant="text" onClick={onClose} color="primary">
             <FormattedMessage id="button.cancel"/>
           </Button>
           <Button variant="contained" onClick={handleDelete} color="primary" autoFocus>
@@ -93,7 +76,6 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ site, link }) => {
           </Button>
         </DialogActions>
       </Dialog>
-    </span>
   );
 }
 export { LinkDelete }

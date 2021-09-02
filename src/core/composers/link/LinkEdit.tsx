@@ -1,8 +1,7 @@
 import React from 'react';
-import EditOutlined from '@material-ui/icons/EditOutlined';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, IconButton
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions
 } from '@material-ui/core'; import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -48,15 +47,17 @@ const useStyles = makeStyles((theme: Theme) =>
 const linkTypes: API.CMS.LinkType[] = ["internal", "external", "phone"];
 
 interface LinkEditProps {
-  link: API.CMS.Link;
+  link: API.CMS.Link,
+  open: boolean,
+  onClose: () => void,
 }
 
-const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
+const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
 
-  const [open, setOpen] = React.useState(false);
+ 
   const [locale, setLocale] = React.useState(link.body.locale);
   const [content, setContent] = React.useState(link.body.content);
   const [contentType, setContentType] = React.useState(link.body.contentType);
@@ -65,30 +66,18 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
-
   const handleCreate = () => {
     const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: link.body.articles };
     console.log("entity", entity)
     ide.service.update().link(entity).then(success => {
       console.log(success)
-      handleClose();
+      onClose();
       ide.actions.handleLoadSite();
     });
   }
 
   return (<>
-    <span className={classes.margin}>
-      <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-        <EditOutlined />
-      </IconButton>
-    </span>
-    <Dialog open={open} onClose={handleClose}>
+    <Dialog open={true} onClose={onClose}>
       <DialogTitle> <FormattedMessage id="link.edit.title" /></DialogTitle>
       <DialogContent>
         <Typography className={classes.root}>
@@ -145,7 +134,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
         </Typography>
       </DialogContent >
       <DialogActions>
-        <Button variant="text" onClick={handleClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
+        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
         <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!content || !description}  ><FormattedMessage id="button.update" /></Button>
       </DialogActions>
 

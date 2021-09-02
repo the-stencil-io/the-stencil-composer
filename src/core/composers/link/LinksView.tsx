@@ -11,6 +11,9 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import AddIcon from '@material-ui/icons/AddOutlined';
+import EditOutlined from '@material-ui/icons/EditOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
 
 import { FormattedMessage } from 'react-intl';
 
@@ -73,7 +76,7 @@ const LinksView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const links = Object.values(site.links);
-  
+
 
   return (
     <>
@@ -110,10 +113,17 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
   const classes = useRowStyles();
 
   const [open, setOpen] = React.useState(false);
-  const [newLinkArticleOpen, setNewLinkArticleOpen] = React.useState(false);
+  const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
+
 
   return (
     <>
+      {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'LinkEdit'       ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'LinkDelete'     ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+
+
+
       <TableRow key={link.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
@@ -127,11 +137,24 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
         <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
         <TableCell className={classes.tableCell} align="right">
 
-          <LinkEdit link={link} />
-          <IconButton className={classes.iconButton} onClick={() => setNewLinkArticleOpen(true)}>
-            <Tooltip title={<FormattedMessage id="associations.add" />}><AddIcon /></Tooltip></IconButton>
-          <NewLinkArticle link={link} open={newLinkArticleOpen} onClose={() => setNewLinkArticleOpen(false)} />
-          <LinkDelete link={link} site={site} />
+          <Tooltip title={<FormattedMessage id="link.edit.title" />}>
+            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkEdit")}>
+              <EditOutlined />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title={<FormattedMessage id="associations.add" />}>
+            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("NewLinkArticle")}>
+              <AddIcon />
+            </IconButton>
+          </Tooltip>
+
+          <Tooltip title={<FormattedMessage id="link.delete.title" />}>
+            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkDelete")}>
+              <DeleteOutlinedIcon />
+            </IconButton>
+          </Tooltip>
+
         </TableCell>
       </TableRow>
 
