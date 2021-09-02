@@ -50,7 +50,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   >(undefined);
   
   const ide = Ide.useIde();
-  const site = ide.session.site;
 
   const handleDialogClose = () => setDialogOpen(undefined);
 

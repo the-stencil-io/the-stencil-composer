@@ -10,11 +10,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import EditOutlined from '@material-ui/icons/EditOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
+
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 import { WorkflowRemovePage } from './WorkflowRemovePage';
 import { WorkflowDelete } from './WorkflowDelete';
+import { WorkflowEdit } from './WorkflowEdit';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -108,9 +113,13 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
   const classes = useRowStyles();
   const [open, setOpen] = React.useState(false);
   const articles = workflow.body.articles.map(articleId => site.articles[articleId]);
+  const [openDialog, setOpenDialog] = React.useState<"WorkflowEdit" | "WorkflowDelete" | undefined>();
 
   return (
     <>
+      {openDialog === 'WorkflowEdit' ? <WorkflowEdit workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'WorkflowDelete' ? <WorkflowDelete workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
+
       <TableRow key={workflow.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
@@ -121,14 +130,21 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
         <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
         <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
         <TableCell className={classes.tableCell} align="center">{workflow.body.articles.length}</TableCell>
-        <TableCell className={classes.tableCell} align="center"><WorkflowDelete workflow={workflow} /></TableCell>
+        <TableCell className={classes.tableCell} align="right">
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("WorkflowEdit")}>
+            <EditOutlined />
+          </IconButton>
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("WorkflowDelete")}>
+            <DeleteOutlinedIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
 
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={2}>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.column} align="left" style={{ paddingRight: 0 }}><FormattedMessage id="articles" /></TableCell>

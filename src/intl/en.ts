@@ -2,6 +2,8 @@ const en = {
 
   'toolbar.preview': 'Live preview',
   'toolbar.help': 'Help and user documentation',
+  'workflow.edit.title': 'Edit Workflow',
+  
 
 
 
