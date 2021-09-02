@@ -1,5 +1,12 @@
 const en = {
 
+  'toolbar.preview': 'Live preview',
+  'toolbar.help': 'Help and user documentation',
+
+
+
+
+
 
   'pages': 'Pages',
   'articles': 'Articles',

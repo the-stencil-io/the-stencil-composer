@@ -282,7 +282,7 @@ The locale you specify for a link will automatically create the connection betwe
 
 #### Make a release
 
-* When your content is ready, make a new Release. Give it a name and an optional note, and you're ready for publishing. You can always download the JSON of your site at any time.
+When your content is ready, make a new Release. Give it a name and an optional note, and you're ready for publishing. You can always download the JSON of your site at any time.
 
 ## Deleting and Deactivating resources
 

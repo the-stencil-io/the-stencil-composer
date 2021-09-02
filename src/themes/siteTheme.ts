@@ -6,59 +6,59 @@ import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 const palette = {
   type: 'light',
 
-    primary: {
-      main: '#1a237e',
-      contrastText: '#fff',
-      dark: '#000051',
-      light: '#534bae',
-    },
-    secondary: {
-      main: '#c51162',
-      light: '#fd558f',
-      dark: '#8e0038',
-      contrastText: '#fff'
-    },
-    error: {
-      main: '#e53935',
-    },
-    info: {
-      main: '#9b39dc',
-      light: '#d06cff',
-      dark: '#6700a9',
-    },
-    warning: {
-      main: '#ff9800',
-      light: '#ffac33',
-      dark: '#b26a00',
-      contrastText: '#000001',
-    },
-    success: {
-      main: '#4caf50',
-    },
-    text: {
-      primary: 'rgba(0,0,0,0.86)',
-      secondary: 'rgba(0,0,0,0.55)',
-      disabled: 'rgba(0,0,0,0.36)',
-      hint: 'rgba(0,0,0,0.37)',
-    },
-  
+  primary: {
+    main: '#1a237e',
+    contrastText: '#fff',
+    dark: '#000051',
+    light: '#534bae',
+  },
+  secondary: {
+    main: '#c51162',
+    light: '#fd558f',
+    dark: '#8e0038',
+    contrastText: '#fff'
+  },
+  error: {
+    main: '#e53935',
+  },
+  info: {
+    main: '#9b39dc',
+    light: '#d06cff',
+    dark: '#6700a9',
+  },
+  warning: {
+    main: '#ff9800',
+    light: '#ffac33',
+    dark: '#b26a00',
+    contrastText: '#000001',
+  },
+  success: {
+    main: '#4caf50',
+  },
+  text: {
+    primary: 'rgba(0,0,0,0.86)',
+    secondary: 'rgba(0,0,0,0.55)',
+    disabled: 'rgba(0,0,0,0.36)',
+    hint: 'rgba(0,0,0,0.37)',
+  },
+
 }
 
 const siteTheme = createTheme({
   palette: palette as PaletteOptions,
 
   typography: {
-    fontFamily: "'Open Sans', sans-serif",
+    fontFamily: "'IBM Plex Sans Arabic', sans-serif",
     h1: {
       fontSize: "2rem",
       lineHeight: 2,
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 600,
     },
     h2: {
       fontSize: "1.9rem",
       lineHeight: 1,
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 400,
       paddingTop: 15,
       paddingBottom: 15,
@@ -66,7 +66,7 @@ const siteTheme = createTheme({
     h3: {
       fontSize: "1.6rem",
       lineHeight: 1,
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 300,
       paddingTop: 15,
       paddingBottom: 15,
@@ -74,24 +74,24 @@ const siteTheme = createTheme({
     h4: {
       fontSize: "1.3rem",
       lineHeight: 1,
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 300
     },
     h5: {
       fontSize: "1.1rem",
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 300
     },
     h6: {
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 300
     },
     body1: {
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontWeight: 300,
     },
     body2: {
-      fontFamily: "'Open Sans', sans-serif",
+      fontFamily: "'IBM Plex Sans Arabic', sans-serif",
       fontSize: "1rem",
     }
   },
@@ -99,7 +99,7 @@ const siteTheme = createTheme({
 
     MuiCardActions: {
       root: {
-        
+
       }
     },
     MuiListItem: {

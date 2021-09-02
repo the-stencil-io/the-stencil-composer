@@ -61,7 +61,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 2,
       margin: 2,
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.dark,
       "&:hover, &.Mui-focusVisible": {
         backgroundColor: theme.palette.info.main,
         color: theme.palette.background.paper,
@@ -126,7 +126,7 @@ const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ artic
           <IconButton className={classes.iconButton} onClick={() => setOpenDialog("EditArticle")}>
             <EditOutlined />
           </IconButton>
-          <IconButton className={classes.iconButton} >
+          <IconButton className={classes.iconButton}>
             <Tooltip title={<FormattedMessage id="pages.add" />}>
               <AddIcon />
             </Tooltip>

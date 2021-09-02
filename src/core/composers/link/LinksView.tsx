@@ -58,7 +58,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 2,
       margin: 2,
-      color: theme.palette.secondary.main,
+      color: theme.palette.primary.dark,
       "&:hover, &.Mui-focusVisible": {
         backgroundColor: theme.palette.info.main,
         color: theme.palette.background.paper,
