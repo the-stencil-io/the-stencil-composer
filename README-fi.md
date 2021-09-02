@@ -184,54 +184,54 @@ Stencil tarjoaa myös "Locale Usage Overview" (Sijainninkäytön yhteenveto) -om
 
 ### Julkaisut
 
-With versioning and releases, you can keep a history of your content throughout time.  When you make a release in The Stencil, you create a snapshot of your **entire** content state at that point in time. Then, you can apply that release, whether it is a test or a production release. 
+Versioinnin ja julkaisujen avulla on mahdollista seurata sisältösi hirstoriaa. Kun teet Stencilissä julkaisun luot kuvan **koko** sisältösi tilasta sillä hetkellä. Tällöin on mahdollista ottaa julkaisu käyttöön joko testinä tai tuotannon julkaisuna.   
 
-If it turns out that your release isn't what you were expecting, you can easily revert back to a previous release. 
+Jos julkaisu osoittautuu erilaiseksi kuin odotit, se on helposti palautettavissa aikaisemman julkaisun tilaan. 
 
 ---
 
 
-## Intro to UI Layout
+## Stencil-käyttöliittymän esittely
 
 ![Stencil UI](readme-images/stencil-ui.png)  
 
 ### 1: Explorer
 
-Use the Explorer to view Articles and their associated resources.
+Käytä Explorer-ominaisuutta katsellaksesi artikkeleita ja niihin liitettyjä ominaisuuksia.
 
-### 2: Toolbar
+### 2: Työkalupalkki
 
-The Toolbar contains shortcut links to everyday functionalities:
+Työkalupalkki sisältää pikakuvakelinkkejä päivittäisiin toimintoihin:
 
-* Dashboard
-* Articles View
-* Links View
-* Workflows View
-* Releases View
-* Locales View
+* Hallintatyökalu
+* Artikkelinäkymä
+* Linkkinäkymä
+* Työnkulkunäkymä
+* Julkaisunäkymä
+* Sijaintinäkymä
 
-#### Dashboard
+#### Hallintatyökalu
 
-The Dashboard (home icon in the Toolbar) is the centralised location from which you can create and modify Resources.
+Hallintatyökalu (työkalupalkin kotikuvake) on keskeinen paikka, josta luodaan ja muokataan resursseja. 
 
-### 3: Article Options menu
+### 3: Artikkelivalinnat
 
-Expand an Article in the Toolbar and click the three dots icon to open the Article Options menu. From here, you can easily work with Article Resources.
+Suurenna artikkelia työkalupalkissa ja klikkaa kolmen pisteen kuvaketta avataksesi artikkelivalikon. Täältä on mahdollista työstää artikkeliresursseja.
 
-### 4: Tab bar
+### 4: Välilehtivalikko
 
-View all currently open Resources and switch between them smoothly.
+Katsele kaikkia aktiivisia resursseja ja vaihtele niiden välillä helposti.
 
-### 5: Content Editor
+### 5: Sisällönmuokkaus
 
-Edit your content here. In the screenshot above, Dual View is enabled, which allows you to edit two languages side by side. This is useful for translating from one language to the other. 
+Muokkaa sisältöäsi täällä. Ylläolevassa kuvassa on aktivoitu kaksoisnäkymä, mikä mahdollistaa kahden kielen muokkaamisen vierekkäin. Tätä voi hyödyntää erityisesti kääntäessä kieleltä toiselle. 
 
-**NOTE**: Dual View is only available if TWO OR MORE Pages exist in an Article. To enable Dual View:
+**HUOM**: Kaksoisnäkymä on käytettävissä vain artikkeleissa, joissa on KAKSI TAI USEAMPI sivu. Ottaaksesi kaksoisnäkymän käyttöön: 
 
-1. Select one page and open it in the Content Editor
-2. Click the Dual View switch
-3. Click the second page you wish to open in the Content Editor.
-4. To close the second page, simply click the Dual View switch again to deactivate it.
+1. Valitse sivu ja avaa se sisällönmuokkauksessa
+2. Klikkaa kaksoisnäkymäpainiketta
+3. Klikkaa toista sivua, jonka haluat avata sisällönmuokkauksessa
+4. Sulkeaksesi toisen sivun klikkaa kaksoisnäkymäpainiketta uudelleen deaktivoidaksesi sen
 
 ---
 
