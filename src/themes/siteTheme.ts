@@ -1,7 +1,24 @@
 import { createTheme } from "@material-ui/core/styles";
 import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
-
+declare module '@material-ui/core/styles/createPalette' {
+  interface Palette {
+    articleRed: Palette['primary'];
+    pageOrange: Palette['primary'];
+    linkYellow: Palette['primary'];
+    workflowBlue: Palette['primary'];
+    releaseGreen: Palette['primary'];
+    localePurple: Palette['primary'];
+  }
+  interface PaletteOptions {
+    articleRed: Palette['primary'];
+    pageOrange: Palette['primary'];
+    linkYellow: Palette['primary'];
+    workflowBlue: Palette['primary'];
+    releaseGreen: Palette['primary'];
+    localePurple: Palette['primary'];
+  }
+}
 
 const palette = {
   type: 'light',
@@ -41,6 +58,25 @@ const palette = {
     disabled: 'rgba(0,0,0,0.36)',
     hint: 'rgba(0,0,0,0.37)',
   },
+  articleRed: {
+    main: 'rgba(249,20,67,255)'
+  },
+  pageOrange: {
+    main: 'rgba(253,131,68,255)'
+  },
+  linkYellow: {
+    main: 'rgba(253,185,14,255)'
+  },
+  workflowBlue: {
+    main: 'rgba(0,125,223,255)'
+  },
+  releaseGreen: {
+    main: 'rgba(139,196,67,255)'
+  },
+  localePurple: {
+    main: 'rgba(205,123,221,255)'
+  },
+
 
 }
 

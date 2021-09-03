@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
-import { Button, Card, CardActions, CardContent, Typography, Box, Tooltip } from '@material-ui/core';
+import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
+import { Button, Card, CardHeader, CardActions, CardContent, Typography, Box, Tooltip, Avatar } from '@material-ui/core';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { ArticleComposer } from './article';
 import { LinkComposer } from './link';
@@ -13,8 +13,6 @@ import { NewPage } from './page';
 
 import { API, Ide } from '../deps';
 
-
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -23,15 +21,29 @@ const useStyles = makeStyles((theme: Theme) =>
       flexWrap: 'wrap',
       justifyContent: 'center',
     },
+  }),
+);
+
+const useItemStyles = makeStyles((theme: Theme) =>
+  createStyles({
     card: {
       margin: theme.spacing(1),
       width: '400px',
       display: 'flex',
       flexDirection: 'column',
       "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.secondary.dark,
+        color: (props: { color: string }) => props.color,
         fontWeight: 'bold',
       }
+    },
+    cardHeader: {
+      padding: 0,
+
+     },
+    cardAvatar: {
+      marginLeft: theme.spacing(1),
+      backgroundColor: (props: { color: string }) => props.color,
+      textTransform: 'uppercase'
     },
     cardActions: {
       justifyContent: 'flex-start'
@@ -43,81 +55,105 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface CardData {
+  type: CardType;
   title: string;
   desc: string;
+  color: string;
   composer: (handleClose: () => void) => React.ReactChild;
 }
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 
-const createCards: (site: API.CMS.Site) => Record<CardType, CardData> = (_site) => ({
-  article: {
+const createCards: (site: API.CMS.Site, theme: Theme) => CardData[] = (_site, theme) => ([
+  {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
     title: "composer.article.title",
-    desc: "composer.article.desc"
+    desc: "composer.article.desc",
+    color: theme.palette.articleRed?.main,
+    type: "article"
   },
-
-  locale: {
-    composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
-    title: "composer.locale.title",
-    desc: "composer.locale.desc"
-  },
-
-  page: {
+  {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
     title: "composer.page.title",
     desc: "composer.page.desc",
+    color: theme.palette.pageOrange?.main,
+    type: "page"
   },
 
-  link: {
+  {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
     title: "composer.link.title",
-    desc: "composer.link.desc"
+    desc: "composer.link.desc",
+    color: theme.palette.linkYellow?.main,
+    type: "link"
   },
 
-  workflow: {
+  {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
     title: "composer.workflow.title",
-    desc: "composer.workflow.desc"
+    desc: "composer.workflow.desc",
+    color: theme.palette.workflowBlue?.main,
+    type: "workflow"
   },
 
-  release: {
+  {
+    composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
+    title: "composer.locale.title",
+    desc: "composer.locale.desc",
+    color: theme.palette.localePurple?.main,
+    type: "locale"
+  },
+
+  {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
     title: "composer.release.title",
-    desc: "composer.release.desc"
+    desc: "composer.release.desc",
+    color: theme.palette.releaseGreen?.main,
+    type: "release"
   },
-});
+]);
+
+const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
+  const classes = useItemStyles({ color: props.data.color });
+  
+  const title = useIntl().formatMessage({id: props.data.title})
+  return (
+    <Card className={classes.card} variant="elevation">
+      <CardHeader className={classes.cardHeader}
+        avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
+        title={<Typography variant="h2">{title}</Typography>} />
+
+
+      <CardContent className={classes.cardContent}>
+        <Typography color="textSecondary" variant="caption"><FormattedMessage id={props.data.desc} /></Typography>
+      </CardContent>
+
+      <CardActions className={classes.cardActions}>
+        <Box flexDirection="flex-end">
+          <Button variant="contained" color="primary" onClick={props.onCreate}><FormattedMessage id="button.create" /></Button>
+        </Box>
+        <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>
+          <Button variant="contained" color="secondary" onClick={() => console.error("not implemented")}><FormattedMessage id="button.view" /></Button>
+        </Tooltip>
+      </CardActions>
+    </Card>
+  )
+}
 
 
 //card view for all CREATE views
 const Dashboard: React.FC<{}> = () => {
   const classes = useStyles();
+  const theme = useTheme();
   const { site } = Ide.useIde().session;
-  const [open, setOpen] = React.useState<CardType>();
-  const handleOpen = (type: CardType) => setOpen(type);
+  const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-  
-  const cards = React.useMemo(() => createCards(site), [site]);
+  const cards = React.useMemo(() => createCards(site, theme), [site]);
 
   return (
     <div className={classes.root}>
-      {!open ? null : (cards[open].composer(handleClose))}
-      {Object.entries(cards).map((card, index) => (
-        <Card key={index} className={classes.card} variant="elevation">
-
-          <CardContent className={classes.cardContent}>
-            <Typography variant="h6"><FormattedMessage id={card[1].title} /></Typography>
-            <Typography color="textSecondary" variant="caption"><FormattedMessage id={card[1].desc} /></Typography>
-          </CardContent>
-          <CardActions className={classes.cardActions}>
-            <Box flexDirection="flex-end">
-              <Button variant="contained" color="primary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.create" /></Button>
-            </Box>
-               <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}><Button variant="contained" color="secondary" onClick={() => handleOpen(card[0] as any)}><FormattedMessage id="button.view" /></Button></Tooltip>
-          </CardActions>
-
-        </Card>
-      ))}
+      {open === undefined ? null : (cards[open].composer(handleClose))}
+      {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}
     </div>
   );
 }
