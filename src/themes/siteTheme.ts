@@ -3,20 +3,20 @@ import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
 declare module '@material-ui/core/styles/createPalette' {
   interface Palette {
-    articleRed: Palette['primary'];
-    pageOrange: Palette['primary'];
-    linkYellow: Palette['primary'];
-    workflowBlue: Palette['primary'];
-    releaseGreen: Palette['primary'];
-    localePurple: Palette['primary'];
+    article: Palette['primary'];
+    page: Palette['primary'];
+    link: Palette['primary'];
+    workflow: Palette['primary'];
+    release: Palette['primary'];
+    locale: Palette['primary'];
   }
   interface PaletteOptions {
-    articleRed: Palette['primary'];
-    pageOrange: Palette['primary'];
-    linkYellow: Palette['primary'];
-    workflowBlue: Palette['primary'];
-    releaseGreen: Palette['primary'];
-    localePurple: Palette['primary'];
+    article: Palette['primary'];
+    page: Palette['primary'];
+    link: Palette['primary'];
+    workflow: Palette['primary'];
+    release: Palette['primary'];
+    locale: Palette['primary'];
   }
 }
 
@@ -58,22 +58,23 @@ const palette = {
     disabled: 'rgba(0,0,0,0.36)',
     hint: 'rgba(0,0,0,0.37)',
   },
-  articleRed: {
-    main: 'rgba(249,20,67,255)'
+  article: {
+    main: 'rgba(139,196,67,255)'
+
   },
-  pageOrange: {
-    main: 'rgba(253,131,68,255)'
+  page: {
+    main: 'rgba(251, 177, 60, 255)'
   },
-  linkYellow: {
-    main: 'rgba(253,185,14,255)'
+  link: {
+    main: 'rgba(171, 54, 102, 255)'
   },
-  workflowBlue: {
+  workflow: {
     main: 'rgba(0,125,223,255)'
   },
-  releaseGreen: {
-    main: 'rgba(139,196,67,255)'
+  release: {
+    main: '#41ead4'
   },
-  localePurple: {
+  locale: {
     main: 'rgba(205,123,221,255)'
   },
 

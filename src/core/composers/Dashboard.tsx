@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { Button, Card, CardHeader, CardActions, CardContent, Typography, Box, Tooltip, Avatar } from '@material-ui/core';
+import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typography, Box, Tooltip, Avatar } from '@material-ui/core';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -28,29 +28,38 @@ const useItemStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       margin: theme.spacing(1),
+      border: '1px solid',
+      borderColor: (props: { color: string }) => props.color,
       width: '400px',
       display: 'flex',
+      fontWeight: 'bold',
       flexDirection: 'column',
-      "&:hover, &.Mui-focusVisible": {
-        color: (props: { color: string }) => props.color,
-        fontWeight: 'bold',
-      }
     },
     cardHeader: {
       padding: 0,
-
-     },
+    },
     cardAvatar: {
       marginLeft: theme.spacing(1),
       backgroundColor: (props: { color: string }) => props.color,
       textTransform: 'uppercase'
     },
     cardActions: {
-      justifyContent: 'flex-start'
+
     },
     cardContent: {
       flexGrow: 1,
     },
+    button: {
+      fontWeight: 'bold',
+      //color: (props: { color: string }) => props.color,
+      "&:hover, &.Mui-focusVisible": {
+        color: (props: { color: string }) => props.color,
+        fontWeight: 'bold',
+      }
+    },
+    buttonGroup: {
+      width: '100%'
+    }
   }),
 );
 
@@ -58,6 +67,8 @@ interface CardData {
   type: CardType;
   title: string;
   desc: string;
+  buttonCreate: string;
+  buttonViewAll: string;
   color: string;
   composer: (handleClose: () => void) => React.ReactChild;
 }
@@ -69,54 +80,67 @@ const createCards: (site: API.CMS.Site, theme: Theme) => CardData[] = (_site, th
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
     title: "composer.article.title",
     desc: "composer.article.desc",
-    color: theme.palette.articleRed?.main,
-    type: "article"
+    color: theme.palette.article?.main,
+    type: "article",
+    buttonCreate: "article.create",
+    buttonViewAll: "button.view.all.articles"
   },
   {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
     title: "composer.page.title",
     desc: "composer.page.desc",
-    color: theme.palette.pageOrange?.main,
-    type: "page"
+    color: theme.palette.page?.main,
+    type: "page",
+    buttonCreate: "page.create",
+    buttonViewAll: "button.view.all.pages"
   },
 
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
     title: "composer.link.title",
     desc: "composer.link.desc",
-    color: theme.palette.linkYellow?.main,
-    type: "link"
+    color: theme.palette.link?.main,
+    type: "link",
+    buttonCreate: "link.create",
+    buttonViewAll: "button.view.all.links"
   },
 
   {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
     title: "composer.workflow.title",
     desc: "composer.workflow.desc",
-    color: theme.palette.workflowBlue?.main,
-    type: "workflow"
+    color: theme.palette.workflow?.main,
+    type: "workflow",
+    buttonCreate: "workflow.create",
+    buttonViewAll: "button.view.all.workflows"
   },
 
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
     title: "composer.locale.title",
     desc: "composer.locale.desc",
-    color: theme.palette.localePurple?.main,
-    type: "locale"
+    color: theme.palette.locale?.main,
+    type: "locale",
+    buttonCreate: "locale.create",
+    buttonViewAll: "button.view.all.locales"
   },
 
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
     title: "composer.release.title",
     desc: "composer.release.desc",
-    color: theme.palette.releaseGreen?.main,
-    type: "release"
+    color: theme.palette.release?.main,
+    type: "release",
+    buttonCreate: "release.create",
+    buttonViewAll: "button.view.all.releases"
   },
 ]);
 
 const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
   const classes = useItemStyles({ color: props.data.color });
-  
-  const title = useIntl().formatMessage({id: props.data.title})
+
+  const title = useIntl().formatMessage({ id: props.data.title })
+
   return (
     <Card className={classes.card} variant="elevation">
       <CardHeader className={classes.cardHeader}
@@ -125,16 +149,16 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
 
 
       <CardContent className={classes.cardContent}>
-        <Typography color="textSecondary" variant="caption"><FormattedMessage id={props.data.desc} /></Typography>
+        <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
 
       <CardActions className={classes.cardActions}>
-        <Box flexDirection="flex-end">
-          <Button variant="contained" color="primary" onClick={props.onCreate}><FormattedMessage id="button.create" /></Button>
-        </Box>
-        <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>
-          <Button variant="contained" color="secondary" onClick={() => console.error("not implemented")}><FormattedMessage id="button.view" /></Button>
-        </Tooltip>
+        <ButtonGroup variant="text" fullWidth>
+          <Button className={classes.button} onClick={props.onCreate}><FormattedMessage id={props.data.buttonCreate} /></Button>
+          <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>
+            <Button className={classes.button} onClick={() => console.error("not implemented")}><FormattedMessage id={props.data.buttonViewAll} /></Button>
+          </Tooltip>
+        </ButtonGroup>
       </CardActions>
     </Card>
   )
