@@ -113,126 +113,125 @@ et.md
 
 ---
 
-### Pages  
+### Sivut  
 
-Pages are Markdown files. They are named according to their content language, and contain only content written in that language. For example, a page named `en.md` contains English language content.  
+Sivut ovat Markdown-tiedostoja. Ne ovat nimettyjä sisältönsä kielen mukaan ja sisältävät vain määrätyn kielistä sisältöä. Esimerkiksi sivulla `en.md` on vain englanninkielistä sisältöä. 
 
-The basic rule is this: 1 page == 1 locale. You can have as many pages per Article as you wish, depending on how many languages you need to represent, but currently, there can only be ONE page per Article of the same locale. 
+Perussääntö on 1 sivu == 1 sijainti. Artikkelissa voi olla miten paljon sivuja tahansa, riippuen esitettävien kielten määrästä. Kuitenkin on mahdollista olla vain YKSI sivu artikkelia kohti samassa sijainnissa. 
 
-Because a Page corresponds directly to a locale, Pages cannot exist if the desired locale doesn't exist. This means that, if you want a page in a language you haven't added yet, you'll need to add that locale first, and only then start creating pages that use it.
+Koska sivu on suorassa yhteydessä sijaintiin sen olemassaolo on riippuvainen halutun sijainnin olemassaolosta. Jos siis halutaan luoda sivuja kielellä, jota ei olla vielä lisätty on ensin luotava sijainti, jotta voidaan luoda sivuja käyttämään tätä sijaintia. 
 
-A Page **must** have at least 1 Markdown Level 1 Header. The first occurrence of a Level 1 Header within a Page will provide the localised name for the Article that the end user sees in your content portal's Topic menu.
+Sivulla **täytyy** olla ainakin 1 Markdown Level 1 otsikko. Ensimmäinen tällainen otsikko sivulla toimii paikannettuna nimenä arikkelille, jonka käyttäjä näkee sisältövalikossa. 
 
-A Page does not have a customisable name. The name of a page is always the [two-letter language code](https://en.wikipedia.org/wiki/ISO_639-1) corresponding to its content language, followed by `.md` file extension. For example, `sv.md` is a Swedish-language Markdown page.
-
+Sivulla ei ole muokattavaa nimeä. Sivun nimi on aina [kaksikirjaiminen kielitunniste](https://en.wikipedia.org/wiki/ISO_639-1), joka vastaa sivun sisällön kieltä ja jota seuraa `.md` tiedostotunniste. Esimerkiksi `sv.md` on ruotsinkielinen Markdown-sivu.  
 A Page is specific to an Article, and it cannot exist outside of an Article. 
 
-In summary, before creating a page, you need to keep three things in mind:
+Tiivistettynä, ennen sivun luomista on muistettava kolme asiaa: I
 
-* The Article in which the page will "live" must already exist
-* The locale for the Page's content must already exist
-* The Page must include a Markdown level 1 Header, which will appear as a Topic in your portal's Topic menu.
+* Artikkelin, jossa sivun halutaan olevan tulee olla olemassa jo etukäteen. 
+* Sivun sisällön sijainnin tulee olla etukäteen olemassa.
+* Sivulla tulee olla Markdown Level 1 otsikko, joka näyttäytyy sivun aiheena käyttäjille sisältövalikossa. 
 
 ---
 
-### Links
+### Linkit
 
-Links can be **internal**, **external**, or **phone**. An internal link connects to pages within your domain, while an external link connects to pages outside your domain. A link of type "phone" will display as a telephone number on your Portal UI.
+Linkit voivat olla **sisäisiä**, **ulkoisia** tai **puhelinnumeroita**. Sisäinen linkki yhdistyy domainin sisäisille sivuille, kun taas ulkoiset linkit yhdistyvät domainin ulkopuolisille sivuille. "Puhelin" -tyyppiset linkit näyttäytyvät puhelinnumeroina käyttöliittymässä. 
 
-Links can be associated with any, all, or no articles / pages.  
+Linkit voivat liittyä mihin tahansa, kaikkiin tai ei mihinkään artikkeleihin / sivuihin.
 
-Links are localised. The locale you specify for a link when creating it determines that this link will appear only on pages with the same locale. Here is an example situation:
+Linkit ovat paikannettuja. Sijainti, joka linkille määritetään sitä luotaessa määrittää linkit näkymään vain sivuilla, jotka ovat tässä sijainnissa. Alla esimerkkitilanne: 
 
-You have an article: `100_Housing`.  This Article has two pages: `en.md` and `sv.md`. You create a link and set its locale to `en`. You then associate this link with your Article `100_Housing`. Your link will only appear on `en.md`, even though it was applied to the entire Article. If you want this link to appear on `sv.md`, you can give the link this additional localisation.
+On artikkeli `100_Housing`. Artikkelilla on kaksi sivua, `en.md` ja `sv.md`. Luodaan linkki, jonka sijainti on `en`. Linkki yhdistetään artikkeliin `100_Housing`. Linkki tulee näkymään vain sivulla `en.md`, vaikka se yhdistettiin koko artikkeliin. Jos linkin halutaan näkyvän myös sivulla `sv.md` sille tulee antaa tämän mukainen paikannus.
 
-If you want a link to appear on ALL pages of an Article, regardless of language, simply leave the locale field blank.  
+Jos halutaan linkin näkyvän KAIKILLA artikkelin sivuilla, kielestä huolimatta, jätetään sijaintikenttä tyhjäksi linkkiä luodessa. 
 
-Once a link has been created, it is available globally throughout the application.
+Kun linkki on luotu se on saatavilla koko sovelluksessa.
  
-If you don't want a certain link to appear on a page anymore, you can remove a link's association with an Article at any time without deleting the link from the application. 
+Jos jonkin linkin ei haluta näkyvän tietyllä sivulla enää, linkin yhteys Artikkeliin voidaan erottaa poistamatta linkkiä sovelluksesta.  
 
-When you delete a link, it is deleted globally from the application.
-
----
-
-### Forms and Workflows
-
-The Stencil is designed to unify your content, data gathering, and process automation into one consolidated application. In practice, this means that you can set up your static content to point users to your forms, and you can create workflows which specify what happens once those forms are submitted.
-
-For example, your organisation may want to provide a form for users to send an inquiry about a product, and then when a user completes and submits the inquiry form, a notification is sent to an administrator who then performs some action. Or, perhaps something automated should happen when this form is completed. This is all up to you to customise however you need. 
+Kun linkki poistetaan, se poistuu sovelluksesta kokonaan. 
 
 ---
 
-### Localisations
+### Lomakkeet ja työnkulut
 
-Localisations (locales) provide you with the ability to define the languages for your content. You can defined as many locales as you wish. 
+Stencil on suunniteltu kokoamaan sisältösi, datankeruusi ja prosessiesi automatisoinni yhteen vakaaseen sovellukseen. Käytännössä voit siis asettaa staattisen sisältösi ohjaamaan käyttäjät lomakkeittesi pariin ja luoda työnkulkuja määrittämään mitä tapahtuu, kun näihin lomakkeisiin on vastattu.  
+
+Pidetään esimerkkinä tilannetta, jossa organisaatiosi haluaa tarjota käyttäjille lomakkeen, jolla tiedustellaan/kysellään jostain tuotteesta. Kun käyttäjä palauttaa täytetyn lomakkeen, hallinnoija/administraattori saa tästä ilmoituksen ja toimii sen mukaisella tavalla. Tämä reaktio voi olla myös automatisoitu ja on täysin mallinnettavissa tarpeidesi mukaan.  
+
+---
+
+### Paikannukset
+
+Paikannukset (sijainnit) mahdollistavat siältösi kielen määrittämisen. Paikannuksia voidaan määrittää niin paljon kuin on tarpeen.  
   
-Locales are created by specifying the [two-letter language code](https://en.wikipedia.org/wiki/ISO_639-1) of the desired language. These two-letter language codes will be used by the system to generate your Page "names" as well. In practice, this means that, if you create a locale for English (`en`), you will then have the option to create Pages in that locale, and they will automatically be named `en.md`.
+Sijainnit luodaan määrittämällä kieli [kaksikirjaimisen kielitunnisteen](https://en.wikipedia.org/wiki/ISO_639-1) perusteella. Järjestelmä käyttää näitä kielitunnisteita myös nimeämään sivuja. Kun luodaan sijainti englanninkielelle (`en`) ja tähän sijaintiin lisätään sivuja, sivujen nimeksi tulee automaattisesti `en.md`. 
 
-Once a locale has been created, it is available globally throughout the application. You can then start creating / associating content such as pages, links, etc. with this locale.
+Kun sijainti on luotu, se on saatavilla koko sovelluksessa. Tällöin voidaan alkaa luomaan sisältöjä kunten sivuja, linkkejä jne. paikantamalla niitä tähän sijaintiin. 
 
-The Stencil also provides a "Locale Usage Overview" where you can quickly and easily see which Articles have Pages (or don't have) for each of your activated languages. You can also see the Article - Locale usage table, which provides you a site-wide overview of the following:
+Stencil tarjoaa myös "Locale Usage Overview" (Sijainninkäytön yhteenveto) -ominaisuuden, jonka avulla voidaan seurata helposti, millä artikkeleilla on tai ei ole sivuja kullekkin aktivoidulle kielelle. Myös artikkeli - sijainti käyttötaulukko on saatavilla, mikä näyttää koko sivuston yhteenvedon seuraavista asioista: 
 
-* All articles in your site and all Locales for your site
-* Article-Page summary
-  * Articles with no page of a certain locale
-  * Articles with a page of a certain locale, but there is no content
-  * Articles with a page of a certain locale, and there is content
+* Kaikki sivusi artikkelit ja sijainnit 
+* Artikkeli-sivu yhteenveto 
+  * Artikkelit, joilla ei ole tietyn sijainnin sivuja 
+  * Artikkelit, joilla on tietyn sijainnin sivuja, mutta ei sisältöä näillä sivuilla 
+  * Artikkelit, joilla on tietyn sijainnin sivuja, joilla on sisältöä 
 
 ![Locale usage overview](readme-images/locale-usage-overview.png)
 
 ---
 
-### Releases
+### Julkaisut
 
-With versioning and releases, you can keep a history of your content throughout time.  When you make a release in The Stencil, you create a snapshot of your **entire** content state at that point in time. Then, you can apply that release, whether it is a test or a production release. 
+Versioinnin ja julkaisujen avulla on mahdollista seurata sisältösi hirstoriaa. Kun teet Stencilissä julkaisun luot kuvan **koko** sisältösi tilasta sillä hetkellä. Tällöin on mahdollista ottaa julkaisu käyttöön joko testinä tai tuotannon julkaisuna.   
 
-If it turns out that your release isn't what you were expecting, you can easily revert back to a previous release. 
+Jos julkaisu osoittautuu erilaiseksi kuin odotit, se on helposti palautettavissa aikaisemman julkaisun tilaan. 
 
 ---
 
 
-## Intro to UI Layout
+## Stencil-käyttöliittymän esittely
 
 ![Stencil UI](readme-images/stencil-ui.png)  
 
 ### 1: Explorer
 
-Use the Explorer to view Articles and their associated resources.
+Käytä Explorer-ominaisuutta katsellaksesi artikkeleita ja niihin liitettyjä ominaisuuksia.
 
-### 2: Toolbar
+### 2: Työkalupalkki
 
-The Toolbar contains shortcut links to everyday functionalities:
+Työkalupalkki sisältää pikakuvakelinkkejä päivittäisiin toimintoihin:
 
-* Dashboard
-* Articles View
-* Links View
-* Workflows View
-* Releases View
-* Locales View
+* Hallintatyökalu
+* Artikkelinäkymä
+* Linkkinäkymä
+* Työnkulkunäkymä
+* Julkaisunäkymä
+* Sijaintinäkymä
 
-#### Dashboard
+#### Hallintatyökalu
 
-The Dashboard (home icon in the Toolbar) is the centralised location from which you can create and modify Resources.
+Hallintatyökalu (työkalupalkin kotikuvake) on keskeinen paikka, josta luodaan ja muokataan resursseja. 
 
-### 3: Article Options menu
+### 3: Artikkelivalinnat
 
-Expand an Article in the Toolbar and click the three dots icon to open the Article Options menu. From here, you can easily work with Article Resources.
+Suurenna artikkelia työkalupalkissa ja klikkaa kolmen pisteen kuvaketta avataksesi artikkelivalikon. Täältä on mahdollista työstää artikkeliresursseja.
 
-### 4: Tab bar
+### 4: Välilehtivalikko
 
-View all currently open Resources and switch between them smoothly.
+Katsele kaikkia aktiivisia resursseja ja vaihtele niiden välillä helposti.
 
-### 5: Content Editor
+### 5: Sisällönmuokkaus
 
-Edit your content here. In the screenshot above, Dual View is enabled, which allows you to edit two languages side by side. This is useful for translating from one language to the other. 
+Muokkaa sisältöäsi täällä. Ylläolevassa kuvassa on aktivoitu kaksoisnäkymä, mikä mahdollistaa kahden kielen muokkaamisen vierekkäin. Tätä voi hyödyntää erityisesti kääntäessä kieleltä toiselle. 
 
-**NOTE**: Dual View is only available if TWO OR MORE Pages exist in an Article. To enable Dual View:
+**HUOM**: Kaksoisnäkymä on käytettävissä vain artikkeleissa, joissa on KAKSI TAI USEAMPI sivu. Ottaaksesi kaksoisnäkymän käyttöön: 
 
-1. Select one page and open it in the Content Editor
-2. Click the Dual View switch
-3. Click the second page you wish to open in the Content Editor.
-4. To close the second page, simply click the Dual View switch again to deactivate it.
+1. Valitse sivu ja avaa se sisällönmuokkauksessa
+2. Klikkaa kaksoisnäkymäpainiketta
+3. Klikkaa toista sivua, jonka haluat avata sisällönmuokkauksessa
+4. Sulkeaksesi toisen sivun klikkaa kaksoisnäkymäpainiketta uudelleen deaktivoidaksesi sen
 
 ---
 
