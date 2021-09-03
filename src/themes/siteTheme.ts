@@ -60,7 +60,6 @@ const palette = {
   },
   article: {
     main: 'rgba(139,196,67,255)'
-
   },
   page: {
     main: 'rgba(251, 177, 60, 255)'
@@ -72,7 +71,7 @@ const palette = {
     main: 'rgba(0,125,223,255)'
   },
   release: {
-    main: '#41ead4'
+    main: 'rgba(255, 104, 107, 255)'
   },
   locale: {
     main: 'rgba(205,123,221,255)'

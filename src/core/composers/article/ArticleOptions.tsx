@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles, alpha } from '@material-ui/core/styles';
-import { List, IconButton, Popover, ListItemText, ListItem } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { List, IconButton, Popover, ListItemText, ListItem, Theme } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';
@@ -10,6 +10,15 @@ import { API, Ide } from '../../deps';
 import { ArticleEdit, ArticleLinksEdit, ArticleWorkflowsEdit } from './';
 import { NewPage, PageEdit, PageDelete } from '../';
 
+
+const useItemStyles = makeStyles((theme: Theme) => {
+  createStyles({
+    itemBadge: {
+      color: (props: { color: string }) => props.color,
+    }
+  })
+  
+})
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -24,17 +33,14 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   mainTopic: {
-    backgroundColor: alpha(theme.palette.primary.main, 0.5),
-    color: theme.palette.background.paper,
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
     pointerEvents: 'none',
   },
   mainTopicFirst: {
-    backgroundColor: alpha(theme.palette.primary.main, 0.7),
-    color: theme.palette.background.paper,
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
+
   },
 }));
 
