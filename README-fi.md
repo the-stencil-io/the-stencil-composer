@@ -235,83 +235,82 @@ Muokkaa sisältöäsi täällä. Ylläolevassa kuvassa on aktivoitu kaksoisnäky
 
 ---
 
-## Creating your first resources
+## Ensimmäisten resurssien luominen 
 
 
-#### Create an Article
+#### Luo artikkeli
 
-Select "Create an Article" in the Explorer. (Note, this button only appears the first time you add an Article).  OR
+Valitse Explorerissa "Luo artikkeli". (Huom: tämä painike ilmestyy vain lisätessä ensimmäistä artikkelia). TAI
 
-Nagivate to the Dashboard (home icon in the toolbar) and create a new Article.
+Mene hallintatyökaluun (kotikuvake työkalupalkissa) ja luo uusi artikkeli. 
 
-In the dialog window, leave "Parent Article" empty, as you don't have any other Articles yet.
+Dialogi-ikkunassa jätä "Emoartikkeli" tyhjäksi, sillä et ole ottanut vielä muita artikkeleita käyttöösi.
 
-Set the Order Number of your Article. The Order number dictates where the Article will appear in your portal's Topic menu. 
+Aseta artikkelisi järjestysluku. Järjestysluku määrittää artikkelin paikan portaalisi valikossa.
 
-The number must be 3 digits. The lower the number, the higher the Article will appear in the Topic menu. For example, an Article with Order: 100 will appear *before* an Article with Order: 300.
+Luvun tulee olla kolminumeroinen. Mitä pienempi luku, sitä korkeammalle artikkeli ilmestyy valikossa. Esimerkiksi artikkeli, jonka järjestysluku on 100 on valikossa *korkeammalla* kuin artikkeli, jonka järjestysluku on 300.
 
-Once you hit "Create", your first Article will be created in the Explorer. However, you don't yet have any Locales, so you also don't have any Pages. Expand your Article by clicking the expand arrow icon. You will be prompted to create your first Locale.
+Painettuasi "Luo" ensimmäinen artikkelisi luodaan Exploreriin. Et ole kuitenkaan luonut vielä sijainteja, joten sinulla ei myöskään ole vielä sivuja. Suurenna artikkelisi klikkaamalla laajennus-/nuolikuvaketta, ja järjestelmä ehdottaa ensimmäisen sijainnin luomista.
 
-#### Create a Locale
+#### Luo sijainti
 
-You will see a notification that says: "No Locales". Click here to add one, which will enable you to start creating content.
+Näet ilmoituksen: "Ei sijainteja". Paina tästä lisätäksesi ensimmäisen, jotta voit alkaa luomaan sisältöä. 
 
-When creating your locale:
+Kun luot sijaintia:
 
-Use the two-letter language code of the locale you want to add: Examples:
+Käytä kaksikirjaimista kielitunnistetta sen mukaan, minkä kielisen sijainnin haluat luoda. Esim:  
 
-`en` : English  
-`fi` : Finnish  
-`sv` : Swedish  
+`en` : englanti
+`fi` : suomi  
+`sv` : ruotsi  
 
-#### Create a Page for your Locale
+#### Luo sivu sijainnille
  
-Once you have created a locale, you need to create a Page for that locale. In the expanded view of your Article, click "Create page" to do this.  
-NOTE: Once you have created two or more pages, you can enable "Dual View", which will allow for side-by-side content editing of two languages at the same time.
+Kun olet luonut sijainnin voit lisätä siihen sivun artikkelisi laajennetussa näkymässä klikkaamalla "Luo sivu". 
+HUOM: Kun olet luonut kaksi tai useamman sivua voit aktivoida kaksoisnäkymän. Tämä mahdollistaa siis rinnakkaisen sisällön tuottamisen kahdella eri kielellä. 
 
-#### Add Links, Workflows, and additional Locales
+#### Lisää linkkejä, työnkulkuja ja ylimääräisiä sijainteja
 
-Links, Workflows, and additional Locales are added globally. You can create these in whatever order you wish from the Dashboard.
+Linkit, työnkulut ja ylimääräiset sijainnit lisätään globaalisti (koko domainiin). Näitä on mahdollista luoda milloin ja missä järjestyksessä tahansa hallintatyökalussa. 
 
-#### Associate Links and Workflows with Articles and Pages
+#### Yhdistä linkit ja työnkulut artikkeleihin ja sivuihin 
 
-Once Links / Workflows have been created, you can "associate" them with existing Articles. To associate a link or a Workflow with an Article, open the Article Options menu and select "Add and remove Article links" or "Add and remove Article Workflows".
+Kun linkki / työnkulku on luotu, se voidaan yhdistää olemassaolevaan artikkeliin. Valitse artikkelivalikko, josta "Lisää ja poista artikkelilinkkejä" tai "Lisää ja poista artikkelien työnkulkuja". 
 
-The locale you specify for a link will automatically create the connection between that link and the correct Page within that Article.
+Linkille määrittämäsi sijainti luo automaattisen yhteyden linkin ja artikkelissa oikeankielisen sivun välille.
 
-#### Make a release
+#### Luo julkaisu
 
-* When your content is ready, make a new Release. Give it a name and an optional note, and you're ready for publishing. You can always download the JSON of your site at any time.
+* Kun sisältösi on valmista, luo uusi julkaisu. Nimeä se ja kirjoita mahdolliset lisätiedot ja julkaise. Voit ladata sivustosi JSON-tiedoston koska tahansa. 
 
-## Deleting and Deactivating resources
+## Resurssien poistaminen ja deaktivointi
 
-**Important Notes**:
+**TÄRKEÄÄ HUOMIOITAVAA**:
 
-**Deleting** is a global action. The deleted Resource will no longer be available.  
-**Deactivating** is specific to one Resource or a Resource Association. The Resource will still be globally available if you want to use it again later, but it will be hidden from the end-user point of view.
+**Poistaminen** on globaali eli koko sovelluksen kattava toiminto. Poistettu resurssi ei ole enää saatavilla. i
+**Deaktivointi** koskee yhtä resurssia tai resurssiyhteyttä. Resurssi on deaktivoinnin jälkeen edelleen saatavilla koko sovelluksessa esim. uudelleenaktivointia varten, mutta ei näy enää käyttäjäpuolella. 
+* **Artikkeli**: Artikkelit poistetaan globaalisti "Artikkelit"-valikosta.  
+* **Sivu**: Koska sivut eivät voi olla olemassa ilman artikkelia, ne poistetaan artikkelistaan "Artikkelivalinnat"-valikosta. 
 
-* **Article**: Articles are deleted globally via the "Articles" menu option.  
-* **Page**: Because Pages cannot exist outside of Articles, they are deleted from their article via the "Article Options" menu.
+Huomioithan, että artikkelia poistaessa myös **kaikki sen sisältämät sivut** poistuvat. 
 
-Note that when you delete an Article, you also delete **all pages** associated with that Article.
-
-* **Link**: Links are deleted globally via "Links View". 
+* **Linkki**: Linkit poistetaan globaalisti linkkinäkymästä. 
  
-Link / Article associations are deactivated via the "Add and remove Article Links" menu option in Article Options.  
+Linkki-/artikkeliyhteydet deaktivoidaan "Lisää ja poista artikkelilinkkejä" -kohdasta artikkelivalikosta.  
 
-* **Workflow**: Workflows are deleted globally via "Workflows View".
+* **Työnkulku**: Työnkulut poistetaan globaalisti työnkulkunäkymästä.
 
-Workflow / Article associations are deactivated via the "Add and remove Article Workflows" menu option in Article Options.
-
-
-* **Locale**: Locales are deleted globally via the "Locales" menu option.
-
-Locales can be set to "Active" or "Deactivated". If a locale is set to Deactivated, all Resources of that locale will be invisible on the end-user side.  This can be done via "Locales View".
+Työnkulku-/artikkeliyhteydet deaktivoidaan "Lisää ja poista artikkelien työnkulkuja" -kohdasta artikkelivalikosta. 
 
 
-* **Release**: Releases cannot be deleted or edited once they are created.
+* **Sijainti**: Sijainnit poistetaan globaalisti "Sijainnit" -kohdasta.
 
-Previous Releases can be activated if you need to revert to a previous version. They can also be viewed. 
+Sijainteja voidaan hallita "Aktivoi" ja "Deaktivoi" valinnoilla. Jos sijainti on deaktivoitu kaikki sen sijainnin resurssit poistuvat käyttäjänäkymästä. Tämä tehdään sijaintinäkymästä. 
+
+
+* **Julkaisu**: Julkaisuja ei voida poistaa tai muokata niiden tekemisen jälkeen.
+
+Aikaisempia julkaisuja voidaan aktivoida, jos on tarpeellista palata aikaisempaan versioon ja niitä on mahdollista tarkastella muutenkin.  
 
 
 
