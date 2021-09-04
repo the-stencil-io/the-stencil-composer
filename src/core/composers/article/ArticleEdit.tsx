@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup
 } from '@material-ui/core';
 
 import { FormattedMessage } from 'react-intl';
@@ -13,21 +13,20 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
-      backgroundColor: theme.palette.background.paper
+    },
+    title: {
+      backgroundColor: theme.palette.article.main,
+      color: theme.palette.secondary.contrastText,
     },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.article.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      paddingRight: theme.spacing(1)
+    buttonGroup: {
+      color: theme.palette.article.main
     },
     iconButton: {
       padding: 2,
@@ -66,7 +65,7 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
   const articles: API.CMS.Article[] = Object.values(site.articles);
   return (<>
     <Dialog open={true} onClose={onClose} maxWidth="md" fullWidth={true}>
-      <DialogTitle><FormattedMessage id="article.edit.title" /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id="article.edit.title" /></DialogTitle>
       <DialogContent >
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
@@ -102,8 +101,10 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
           onChange={({ target }) => setName(target.value)} />
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!name}><FormattedMessage id="button.update" /></Button>
+        <ButtonGroup variant="text">
+          <Button className={classes.button} onClick={onClose}><FormattedMessage id="button.cancel" /></Button>
+          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!name}><FormattedMessage id="button.update" /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   </>

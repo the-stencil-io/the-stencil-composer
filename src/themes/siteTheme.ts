@@ -74,10 +74,12 @@ const palette = {
     dark: 'rgba(75, 117, 24, 1)'
   },
   release: {
-    main: 'rgba(255, 104, 107, 255)'
+    main: 'rgba(255, 104, 107, 255)',
+    dark: 'rgba(210, 90, 92, 1)'
   },
   locale: {
-    main: 'rgba(205,123,221,255)'
+    main: 'rgba(205,123,221,255)',
+
   },
 
 

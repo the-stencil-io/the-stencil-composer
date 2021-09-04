@@ -58,7 +58,7 @@ const useItemStyles = makeStyles((theme: Theme) =>
       }
     },
     buttonGroup: {
-      width: '100%'
+      width: '100%',
     }
   }),
 );

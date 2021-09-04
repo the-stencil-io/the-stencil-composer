@@ -10,6 +10,7 @@ import { useLayout } from '../context';
 const useStyles = makeStyles((theme) => ({
   tab: {
     flexDirection: 'row-reverse',
+    color: theme.palette.primary.contrastText
   },
   tabLabel: {
     minHeight: 'unset',

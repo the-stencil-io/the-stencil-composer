@@ -34,9 +34,8 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: 3,
       color: theme.palette.secondary.dark,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.background.paper,
-        borderRadius: 3
+       //backgroundColor: theme.palette.primary.main,
+        //color: theme.palette.background.paper,
       }
     },
     localeSummary: {
@@ -50,14 +49,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       marginTop: 1,
-      color: theme.palette.primary.main,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.text.primary,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
+      color: theme.palette.secondary.dark,
     },
     modified: {
       color: theme.palette.text.primary
@@ -95,7 +87,13 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     pageButton: {
-      backgroundColor: theme.palette.info.main
+      backgroundColor: theme.palette.release.main,
+      color: theme.palette.secondary.contrastText,
+      fontWeight: 'bold',
+      "&:hover": {
+        backgroundColor: theme.palette.release.dark,
+        color: theme.palette.secondary.contrastText,
+      }
     }
 
   }),
