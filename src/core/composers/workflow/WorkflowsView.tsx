@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Collapse, Box, Typography } from '@material-ui/core';
+import { makeStyles, Theme, Avatar, createStyles, Collapse, Box, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,7 +14,7 @@ import EditOutlined from '@material-ui/icons/EditOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 import { WorkflowRemovePage } from './WorkflowRemovePage';
@@ -33,6 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.workflow.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -62,9 +68,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.workflow.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.workflow.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -78,11 +84,16 @@ const WorkflowsView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const workflows = Object.values(site.workflows);
+  const title = useIntl().formatMessage({ id: "workflows" });
 
   return (
     <>
-      <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length} </Typography>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length}</Typography>
+      </Box>
 
+      <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length} </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
           <TableHead>

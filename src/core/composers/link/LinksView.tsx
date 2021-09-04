@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Avatar, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,8 +14,7 @@ import AddIcon from '@material-ui/icons/AddOutlined';
 import EditOutlined from '@material-ui/icons/EditOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
-
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { LinkRemovePage, LinkDelete, NewLinkArticle, LinkEdit } from './';
 import { API, Ide } from '../../deps';
@@ -32,6 +31,12 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.link.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -61,9 +66,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 2,
       margin: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.link.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.link.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -76,10 +81,17 @@ const LinksView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const links = Object.values(site.links);
+  const title = useIntl().formatMessage({ id: "links" });
 
 
   return (
     <>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="links" />: {links.length}</Typography>
+      </Box>
+
+
       <Typography variant="h3" className={classes.title}><FormattedMessage id="links" />: {links.length}</Typography>
       <Typography variant="body1" className={classes.title}><FormattedMessage id="links.message" /></Typography>
 
@@ -119,8 +131,8 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-      {openDialog === 'LinkEdit'       ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-      {openDialog === 'LinkDelete'     ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
 
 
 
