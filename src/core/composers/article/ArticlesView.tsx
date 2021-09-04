@@ -17,6 +17,7 @@ import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { ArticleDeletePage, ArticleDelete, ArticleEdit } from '../article';
+
 import { API, Ide } from '../../deps';
 
 
@@ -106,7 +107,7 @@ const ArticlesView: React.FC<{}> = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {articles.map((article, index) => (<Row key={index} article={article} site={site} />))}
+            {articles.map((article, index) => (<ArticleAndPages key={index} article={article} site={site} />))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -114,10 +115,12 @@ const ArticlesView: React.FC<{}> = () => {
   );
 }
 
-const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ article, site }) => {
+
+const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}> = ({ article, site }) => {
   const classes = useRowStyles();
   const [expand, setExpand] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState<"EditArticle" | "DeleteArticle" | undefined>();
+  const [pageId, setPageId] = React.useState<string | undefined>();
+  const [openDialog, setOpenDialog] = React.useState<"EditArticle" | "DeleteArticle" | 'ArticleDeletePage' | undefined>();
   const parentName = article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "";
 
   const pages = Object.values(site.pages).filter(page => page.body.article === article.id);
@@ -126,6 +129,7 @@ const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ artic
     <>
       {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === "ArticleDeletePage" && pageId ? <ArticleDeletePage pageId={pageId} onClose={() => setOpenDialog(undefined)} /> : null}
 
       <TableRow key={article.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
@@ -165,7 +169,10 @@ const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ artic
                   {pages.map((page, key) => (
                     <TableRow hover key={key} className={classes.row}>
                       <TableCell component="th" scope="row" align="left">{site.locales[page.body.locale].body.value}</TableCell>
-                      <TableCell><ArticleDeletePage article={article} page={page} /></TableCell>
+                      <TableCell><IconButton className={classes.iconButton} onClick={() => {
+                        setPageId(page.id);
+                        setOpenDialog("ArticleDeletePage");
+                      }}><DeleteOutlinedIcon /></IconButton></TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

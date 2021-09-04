@@ -90,7 +90,7 @@ const LocalesView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const locales = Object.values(site.locales);
-  const title = useIntl().formatMessage({ id: "releases" });
+  const title = useIntl().formatMessage({ id: "locales" });
 
   return (
     <>
