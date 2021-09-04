@@ -1,6 +1,6 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typography, Box, Tooltip, Avatar } from '@material-ui/core';
+import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typography, Tooltip, Avatar } from '@material-ui/core';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 

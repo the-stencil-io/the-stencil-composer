@@ -24,6 +24,7 @@ const useStyles = makeStyles((theme) => ({
   },
   closeIcon: {
     marginLeft: 5,
+     color: theme.palette.primary.contrastText,
     "&:hover": {
       color: theme.palette.secondary.main
     }

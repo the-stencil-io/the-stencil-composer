@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
+import { makeStyles, Theme, createStyles, Collapse, Box, Typography, Tooltip, Avatar } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -14,10 +14,12 @@ import AddIcon from '@material-ui/icons/AddOutlined';
 import EditOutlined from '@material-ui/icons/EditOutlined';
 import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { ArticleDeletePage, ArticleDelete, ArticleEdit } from '../article';
 import { API, Ide } from '../../deps';
+
+
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,6 +33,12 @@ const useStyles = makeStyles((theme: Theme) =>
       margin: theme.spacing(1),
       color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.article.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -61,9 +69,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 2,
       margin: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.article.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.article.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -72,14 +80,20 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
   }));
 
+
 const ArticlesView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const articles = Object.values(site.articles).sort((a1, a2) => a1.body.order - a2.body.order);
+  const title = useIntl().formatMessage({ id: "articles" });
 
   return (
     <>
-      <Typography variant="h3" className={classes.title}><FormattedMessage id="articles" />: {articles.length}</Typography>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="articles" />: {articles.length}</Typography>
+      </Box>
+
       <Typography variant="body1" className={classes.title}><FormattedMessage id="articles.message" /></Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
@@ -103,16 +117,16 @@ const ArticlesView: React.FC<{}> = () => {
 const Row: React.FC<{ article: API.CMS.Article, site: API.CMS.Site }> = ({ article, site }) => {
   const classes = useRowStyles();
   const [expand, setExpand] = React.useState(false);
-  const [openDialog, setOpenDialog] = React.useState<"EditArticle"| "DeleteArticle" | undefined>();
+  const [openDialog, setOpenDialog] = React.useState<"EditArticle" | "DeleteArticle" | undefined>();
   const parentName = article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "";
 
   const pages = Object.values(site.pages).filter(page => page.body.article === article.id);
 
   return (
     <>
-      {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)}/> : null}
-      {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)}/> : null}
-      
+      {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
+
       <TableRow key={article.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setExpand(!expand)}>
