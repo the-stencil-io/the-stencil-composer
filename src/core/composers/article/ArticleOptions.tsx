@@ -55,8 +55,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
     'PageDelete' | 'ArticleLinksEdit' | 'ArticleWorkflowsEdit'
   >(undefined);
   
-  const ide = Ide.useIde();
-
   const handleDialogClose = () => setDialogOpen(undefined);
 
   const open = Boolean(anchorEl);

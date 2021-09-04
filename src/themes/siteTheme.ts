@@ -24,24 +24,24 @@ const palette = {
   type: 'light',
 
   primary: {
-    main: '#1a237e',
-    contrastText: '#fff',
-    dark: '#000051',
-    light: '#534bae',
+    main: '#f1f2ee',
+    contrastText: '#000',
+    dark: '#E2E4DC',
+    light: '#fff',
   },
   secondary: {
-    main: '#c51162',
-    light: '#fd558f',
-    dark: '#8e0038',
+    main: '#3E668E',
+    light: '#5585B4',
+    dark: '#325171',
     contrastText: '#fff'
   },
   error: {
     main: '#e53935',
   },
   info: {
-    main: '#9b39dc',
-    light: '#d06cff',
-    dark: '#6700a9',
+    main: '#554971',
+    light: '#796AA0',
+    dark: '#413857',
   },
   warning: {
     main: '#ff9800',
@@ -59,16 +59,19 @@ const palette = {
     hint: 'rgba(0,0,0,0.37)',
   },
   article: {
-    main: 'rgba(139,196,67,255)'
+    main: 'rgba(0,125,223,255)',
+    dark: 'rgba(0, 77, 144, 0.99)'
   },
   page: {
-    main: 'rgba(251, 177, 60, 255)'
+    main: 'rgba(251, 177, 60, 255)',
+    dark: 'rgba(224, 141, 7, 1)'
   },
   link: {
     main: 'rgba(171, 54, 102, 255)'
   },
   workflow: {
-    main: 'rgba(0,125,223,255)'
+    main: 'rgba(139,196,67,255)',
+    dark: 'rgba(75, 117, 24, 1)'
   },
   release: {
     main: 'rgba(255, 104, 107, 255)'

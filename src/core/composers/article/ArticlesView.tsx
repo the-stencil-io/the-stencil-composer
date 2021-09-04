@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.main
+      color: theme.palette.text.primary
     },
   }));
 

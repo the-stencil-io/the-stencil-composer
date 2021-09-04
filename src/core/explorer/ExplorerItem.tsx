@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     nameStyle: {
-      color: theme.palette.text.primary,
+      color: theme.palette.article.dark,
       fontWeight: 'bold',
       maxWidth: '260px',
       "&:hover": {
         cursor: 'pointer',
-        color: theme.palette.secondary.dark
+        color: theme.palette.article.main
       }
     },
     summary: {
@@ -40,14 +40,12 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     localeSummary: {
-      color: theme.palette.secondary.dark,
+      color: theme.palette.page.dark,
       paddingLeft: 3,
       paddingRight: 3,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.background.paper,
-        borderRadius: 3
+        color: theme.palette.page.main,
       }
     },
     iconButton: {
@@ -55,7 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.primary.main,
       "&:hover, &.Mui-focusVisible": {
         backgroundColor: theme.palette.primary.light,
-        color: theme.palette.background.paper,
+        color: theme.palette.text.primary,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
         }
