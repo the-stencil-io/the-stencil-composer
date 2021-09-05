@@ -1,12 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import { ButtonGroup, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@material-ui/core';
 import { makeStyles, createStyles, Theme, IconButton } from '@material-ui/core';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -14,14 +10,10 @@ import { API, Ide } from '../../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.link.main,
+        fontWeight: 'bold',
       }
     },
     margin: {
@@ -29,16 +21,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      marginLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
+      margin: 2,
+      color: theme.palette.link.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.link.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
         }
       }
     },
+    title: {
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.secondary.contrastText,
+    },
+    buttonGroup: {
+      color: theme.palette.link.main
+    },
+
   }),
 );
 
@@ -75,24 +75,22 @@ const LinkRemovePage: React.FC<LinkRemovePageProps> = ({ article, locale, link }
         <RemoveCircleOutlineIcon />
       </IconButton>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle><FormattedMessage id="link.removepage.title" /></DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle className={classes.title}><FormattedMessage id="link.removepage.title" /></DialogTitle>
         <DialogContent>
           <DialogContentText>
             <FormattedMessage id="link.removepage" />
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button variant="text" onClick={handleClose} color="primary">
-            <FormattedMessage id="button.cancel" />
-          </Button>
-          <Button variant="contained" onClick={handleDelete} color="primary" autoFocus>
-            <FormattedMessage id="button.remove" />
-
-          </Button>
+          <ButtonGroup className={classes.buttonGroup} variant="text">
+            <Button onClick={handleClose} className={classes.button}>
+              <FormattedMessage id="button.cancel" />
+            </Button>
+            <Button onClick={handleDelete} autoFocus className={classes.button}>
+              <FormattedMessage id="button.remove" />
+            </Button>
+          </ButtonGroup>
         </DialogActions>
       </Dialog>
     </div>
