@@ -16,8 +16,10 @@ const en = {
   'button.view.all.workflows': 'View all Workflows',
   'button.view.all.locales': 'View all locales',
   'button.view.all.releases': 'View all releases',
-
-
+  'toolbar.import': 'Import data',
+  'imports': 'Imports',
+  'imports.select': 'Select a file to import',
+  'imports.import.action': 'Import selected',
 
 
   'pages': 'Pages',

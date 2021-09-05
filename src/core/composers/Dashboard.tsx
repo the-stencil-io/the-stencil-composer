@@ -43,9 +43,6 @@ const useItemStyles = makeStyles((theme: Theme) =>
       backgroundColor: (props: { color: string }) => props.color,
       textTransform: 'uppercase'
     },
-    cardActions: {
-
-    },
     cardContent: {
       flexGrow: 1,
     },
@@ -152,7 +149,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
         <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
 
-      <CardActions className={classes.cardActions}>
+      <CardActions>
         <ButtonGroup variant="text" fullWidth>
           <Button className={classes.button} onClick={props.onCreate}><FormattedMessage id={props.data.buttonCreate} /></Button>
           <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>

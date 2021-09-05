@@ -9,6 +9,7 @@ declare module '@material-ui/core/styles/createPalette' {
     workflow: Palette['primary'];
     release: Palette['primary'];
     locale: Palette['primary'];
+    import: Palette['primary'];
   }
   interface PaletteOptions {
     article: Palette['primary'];
@@ -17,6 +18,7 @@ declare module '@material-ui/core/styles/createPalette' {
     workflow: Palette['primary'];
     release: Palette['primary'];
     locale: Palette['primary'];
+    import: Palette['primary'];
   }
 }
 
@@ -79,8 +81,13 @@ const palette = {
   },
   locale: {
     main: 'rgba(205,123,221,255)',
-
   },
+  import: {
+    main: 'rgba(77, 144, 142)',
+    dark: 'rgba(64, 119, 118)',
+    light: 'rgba(86, 159, 158)',
+    contrastText: '#fff'
+  }
 
 
 }
