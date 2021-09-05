@@ -61,27 +61,28 @@ const palette = {
     hint: 'rgba(0,0,0,0.37)',
   },
   article: {
-    main: '#225281',
-    dark: '#1e4771',
-    light: '#275C91',
+    main: '#127EE2',
+    dark: '#0c5497',
+    light: '#1D88ED',
     contrastText: ' #fff'
   },
   page: {
-    main: '#d741a7',
-    dark: '#b9278b',
-    light: '#df68b9',
+    main: '#aa4b77',
+    dark: '#803859',
+    light: '#BB638C',
     contrastText: '#fff'
+
   },
   link: {
-    main: '#5d8b18',
-    dark: '#527A15',
-    light: '#74AE1E',
+    main: '#8ab800',
+    dark: '#6b8f00',
+    light: '#A8E000',
     contrastText: '#fff'
   },
   workflow: {
-    main: '#6ea3d8',
-    dark: '#3E85CC',
-    light: '#8EB8E1',
+    main: '#8332AC',
+    dark: '#6d298e',
+    light: '#a351cd',
     contrastText: '#fff'
   },
   release: {
@@ -91,9 +92,9 @@ const palette = {
     contrastText: '#fff'
   },
   locale: {
-    main: '#aa4b77',
-    dark: '#803859',
-    light: '#BB638C',
+    main: '#1bc5a3',
+    dark: '#117E68',
+    light: '#1dd7b2',
     contrastText: '#fff'
   },
   import: {
