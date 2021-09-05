@@ -7,14 +7,24 @@ import { API, Ide } from '../../deps';
 const useStyles = () => makeStyles((theme: Theme) =>
   createStyles({
     left: {
-      paddingRight: theme.spacing(1)
+      paddingRight: theme.spacing(1),
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.light,
+      color: theme.palette.page.main,
       fontWeight: 'bold',
+      fontSize: '20pt',
+      textAlign: 'center',
       textTransform: 'uppercase',
     },
+    title2: {
+      margin: theme.spacing(1),
+      color: theme.palette.page.dark,
+      fontWeight: 'bold',
+      fontSize: '20pt',
+      textAlign: 'center',
+      textTransform: 'uppercase',
+    }
   }),
 )();
 
@@ -45,7 +55,7 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
   if (value2 === undefined || !page2) {
     return (
       <div>
-        <div>{ide.session.site.locales[page1.body.locale].body.value}</div>
+        <div className={classes.title}>{ide.session.site.locales[page1.body.locale].body.value}</div>
         <MDEditor value={value1} onChange={handleChange1} />
       </div>
     );
@@ -58,12 +68,12 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
 
   return (
     <Box display="flex" flexDirection="row" flexWrap="wrap">
-      <Box flex="1" className={classes.left}>
+      <Box flex="1" className={classes.left} >
         <div className={classes.title}>{ide.session.site.locales[page1.body.locale].body.value}</div>
         <MDEditor value={value1} onChange={handleChange1} />
       </Box>
       <Box flex="1">
-        <div className={classes.title}>{ide.session.site.locales[page2.body.locale].body.value}</div>
+        <div className={classes.title2}>{ide.session.site.locales[page2.body.locale].body.value}</div>
         <MDEditor value={value2} onChange={handleChange2} />
       </Box>
     </Box>

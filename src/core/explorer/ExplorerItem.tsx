@@ -94,8 +94,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: theme.palette.release.dark,
         color: theme.palette.secondary.contrastText,
       }
-    }
-
+    },
   }),
 );
 
@@ -216,7 +215,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
               <TableRow className={classes.hoverRow}>
                 <TableCell className={classes.table} align="left">
                   <FormattedMessage id="explorer.pages.dualview" />
-                  <Switch color="primary" checked={dualView} onClick={() => handleDualView(article)} />
+                  <Switch checked={dualView} onClick={() => handleDualView(article)} />
                 </TableCell>
                 <TableCell className={classes.table} align="right">
                   <ArticleOptions article={article} />
