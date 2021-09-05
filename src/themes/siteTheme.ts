@@ -61,26 +61,40 @@ const palette = {
     hint: 'rgba(0,0,0,0.37)',
   },
   article: {
-    main: 'rgba(0,125,223,255)',
-    dark: 'rgba(0, 77, 144, 0.99)'
+    main: '#225281',
+    dark: '#1e4771',
+    light: '#275C91',
+    contrastText: ' #fff'
   },
   page: {
-    main: 'rgba(251, 177, 60, 255)',
-    dark: 'rgba(224, 141, 7, 1)'
+    main: '#d741a7',
+    dark: '#b9278b',
+    light: '#df68b9',
+    contrastText: '#fff'
   },
   link: {
-    main: 'rgba(171, 54, 102, 255)'
+    main: '#5d8b18',
+    dark: '#527A15',
+    light: '#74AE1E',
+    contrastText: '#fff'
   },
   workflow: {
-    main: 'rgba(139,196,67,255)',
-    dark: 'rgba(75, 117, 24, 1)'
+    main: '#6ea3d8',
+    dark: '#3E85CC',
+    light: '#8EB8E1',
+    contrastText: '#fff'
   },
   release: {
-    main: 'rgba(255, 104, 107, 255)',
-    dark: 'rgba(210, 90, 92, 1)'
+    main: '#D7901D',
+    dark: '#A26C16',
+    light: '#D7901D',
+    contrastText: '#fff'
   },
   locale: {
-    main: 'rgba(205,123,221,255)',
+    main: '#aa4b77',
+    dark: '#803859',
+    light: '#BB638C',
+    contrastText: '#fff'
   },
   import: {
     main: 'rgba(77, 144, 142)',
