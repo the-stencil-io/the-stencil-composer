@@ -38,7 +38,7 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       ide.actions.handleLoadSite();
     });
   }
-
+  
 
   const locales: API.CMS.Locale[] = Object.values(site.locales).map(l => l.body.value);
 

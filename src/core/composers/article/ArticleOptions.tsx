@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { List, IconButton, Popover, ListItemText, ListItem, Divider } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';

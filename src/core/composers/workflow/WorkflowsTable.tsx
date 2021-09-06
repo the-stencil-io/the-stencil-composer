@@ -63,7 +63,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
           {workflows.map((workflow, index) => (
             <TableRow key={index} hover>
               <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
+              <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
               <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
             </TableRow>
           ))}
