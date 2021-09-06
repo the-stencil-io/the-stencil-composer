@@ -93,13 +93,12 @@ const WorkflowsView: React.FC<{}> = () => {
         <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length}</Typography>
       </Box>
 
-      <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length} </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.bold} align="center" colSpan={2}><FormattedMessage id="workflow.technicalname" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
+              <TableCell className={classes.bold} align="left" colSpan={2}><FormattedMessage id="workflow.technicalname" /></TableCell>
+              <TableCell className={classes.bold} align="center"><FormattedMessage id="locale" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="articles" /></TableCell>
               <TableCell className={classes.bold} align="center"></TableCell>
@@ -138,7 +137,7 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
           </IconButton>
         </TableCell>
         <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{site.locales[workflow.body.locale].body.value}</TableCell>
         <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
         <TableCell className={classes.tableCell} align="center">{workflow.body.articles.length}</TableCell>
         <TableCell className={classes.tableCell} align="right">

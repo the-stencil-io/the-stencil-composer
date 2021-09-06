@@ -91,8 +91,6 @@ const LinksView: React.FC<{}> = () => {
         <Typography variant="h3" className={classes.title}><FormattedMessage id="links" />: {links.length}</Typography>
       </Box>
 
-
-      <Typography variant="h3" className={classes.title}><FormattedMessage id="links" />: {links.length}</Typography>
       <Typography variant="body1" className={classes.title}><FormattedMessage id="links.message" /></Typography>
 
       <TableContainer component={Paper}>
@@ -100,7 +98,7 @@ const LinksView: React.FC<{}> = () => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.bold} align="center" colSpan={2}><FormattedMessage id="link.type" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
+              <TableCell className={classes.bold} align="center"><FormattedMessage id="locale" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="description" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="link.url" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="articles" /></TableCell>
@@ -138,8 +136,8 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{link.body.locale}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{link.body.contentType}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{site.locales[link.body.locale].body.value}</TableCell>
         <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
         <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
         <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
