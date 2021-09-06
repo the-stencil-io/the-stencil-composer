@@ -126,16 +126,12 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
-
-
+ 
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-
-
-
       <TableRow key={link.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>

@@ -71,7 +71,7 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
           {links.map((link, index) => (
             <TableRow hover key={index}>
               <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{link.body.locale}</TableCell>
+              <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
               <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
               <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
             </TableRow>

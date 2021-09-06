@@ -1,12 +1,12 @@
 import React from 'react';
 import {
-  makeStyles, createStyles, Theme, Avatar, Box, Typography, Card, CardHeader, CardContent,
-  CardActions, ButtonGroup, Button, FormControl, Input
+  makeStyles, createStyles, Theme, Avatar, Box, Typography, Card, 
+  CardActions, Button, FormControl, Input
 } from '@material-ui/core';
-import AccountCircle from '@material-ui/icons/AccountCircle';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
+import { Ide } from '../../deps';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -67,6 +67,9 @@ const useStyles = makeStyles((theme: Theme) =>
 const ImportView: React.FC<{}> = () => {
   const classes = useStyles();
   const title = useIntl().formatMessage({ id: "imports" });
+  const [file, setFile] = React.useState<string | undefined>();
+  const ide = Ide.useIde();
+
 
   return (
 
@@ -85,12 +88,27 @@ const ImportView: React.FC<{}> = () => {
               fullWidth
               disableUnderline
               type="file"
+              onChange={(e) => {
+                const file: File = (e.target as any).files[0];
+                const enc = new TextDecoder("utf-8"); 
+                file.arrayBuffer().then(d => setFile(enc.decode(d)));
+              }}
             />
           </FormControl>
 
         </div>
         <CardActions>
-          <Button className={classes.button} variant="contained" ><FormattedMessage id={'imports.import.action'} /></Button>
+          <Button className={classes.button} variant="contained" disabled={!file} 
+            onClick={() => {
+              if(!file) {
+                return;
+              }
+              
+              ide.service.create().importData(file)
+                .then(() => ide.actions.handleLoadSite());
+            }}>
+            <FormattedMessage id={'imports.import.action'} />
+          </Button>
         </CardActions>
       </Card>
     </div>
