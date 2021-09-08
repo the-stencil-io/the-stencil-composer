@@ -14,14 +14,10 @@ import { API, Ide } from '../../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.link.main,
+        fontWeight: 'bold',
       }
     },
     margin: {
@@ -29,16 +25,24 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      marginLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
+      margin: 2,
+      color: theme.palette.link.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.link.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
         }
       }
     },
+    title: {
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.secondary.contrastText,
+    },
+    buttonGroup: {
+      color: theme.palette.link.main
+    },
+
   }),
 );
 
