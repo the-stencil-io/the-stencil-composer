@@ -14,6 +14,10 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: theme.spacing(1),
       backgroundColor: theme.palette.background.paper
     },
+    title: {
+      backgroundColor: theme.palette.page.main,
+      color: theme.palette.secondary.contrastText,
+    },
     button: {
       // padding: 0,
       backgroundColor: theme.palette.primary.main,
@@ -43,11 +47,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-const PageDelete: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const PageDelete: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
-  
+
   const [pageId, setPageId] = React.useState('');
 
   const handleDelete = () => {
@@ -64,7 +68,7 @@ const PageDelete: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }>
 
   return (<>
     <Dialog open={true} onClose={props.onClose} >
-      <DialogTitle><FormattedMessage id='pages.delete' /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='pages.delete' /></DialogTitle>
       <DialogContent>
         <FormattedMessage id='pages.delete.message' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
