@@ -1,7 +1,7 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField, ButtonGroup,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions,
+  Button, Dialog, DialogTitle, DialogContent, DialogActions,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 

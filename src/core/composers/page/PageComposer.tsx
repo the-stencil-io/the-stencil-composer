@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme, Box, useTheme } from '@material-ui/core';
 
-import MDEditor, { ICommand, commands, getCommands } from '@uiw/react-md-editor';
+import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
 import { API, Ide } from '../../deps';
 
 const useStyles = () => makeStyles((theme: Theme) =>
@@ -27,7 +27,7 @@ const getMdCommands = (locale: API.CMS.SiteLocale, color: string) => {
       textTransform: 'uppercase',
     }}>{locale.body.value}</span>),
   };
-  
+
   return [localeTitle, ...getCommands()];
 }
 
@@ -55,12 +55,15 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
   const handleChange1 = (value: string | undefined) => {
     ide.actions.handlePageUpdate(page1.id, value ? value : "");
   }
-  
+
   if (value2 === undefined || !page2) {
     return (
       <div>
-        <MDEditor key={1} value={value1} onChange={handleChange1} 
-          commands={getMdCommands(ide.session.site.locales[page1.body.locale], theme.palette.page.main)} />
+        <MDEditor key={1} value={value1} onChange={handleChange1}
+          commands={getMdCommands(ide.session.site.locales[page1.body.locale], theme.palette.page.main)}
+          textareaProps={{ placeholder: '# Title' }}
+          height={800} 
+          />
       </div>
     );
   }
@@ -73,11 +76,19 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
     <Box display="flex" flexDirection="row" flexWrap="wrap">
       <Box flex="1" className={classes.left}>
         <MDEditor key={2} value={value1} onChange={handleChange1}
-          commands={getMdCommands(ide.session.site.locales[page1.body.locale], theme.palette.page.main)}/>
+          commands={getMdCommands(ide.session.site.locales[page1.body.locale], theme.palette.page.main)}
+          textareaProps={{ placeholder: '# Title' }}
+          height={800} 
+          />
+
       </Box>
       <Box flex="1">
-        <MDEditor key={3} value={value2} onChange={handleChange2} 
-          commands={getMdCommands(ide.session.site.locales[page2.body.locale], theme.palette.page.dark)}/>
+        <MDEditor key={3} value={value2} onChange={handleChange2}
+          commands={getMdCommands(ide.session.site.locales[page2.body.locale], theme.palette.page.dark)}
+          textareaProps={{ placeholder: '# Title' }}
+          height={800} 
+          />
+
       </Box>
     </Box>
   );

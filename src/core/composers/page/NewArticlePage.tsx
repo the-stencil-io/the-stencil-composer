@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
     title: {
       backgroundColor: theme.palette.page.main,
-      color: theme.palette.primary.contrastText,
+      color: theme.palette.page.contrastText,
       fontWeight: 900
     },
   }),
