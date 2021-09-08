@@ -122,14 +122,21 @@ interface RowProps {
 const Row: React.FC<RowProps> = ({ site, link }) => {
   const classes = useRowStyles();
 
+
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
  
+  console.log("Link type " + link.body.contentType)
+  console.log("Link content " + link.body.content);
+  console.log("Link description " +  link.body.description);
+
+
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      
       <TableRow key={link.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
@@ -177,6 +184,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
                 <TableBody>
                   {link.body.articles.map((id) => (
+                    
                     <TableRow hover key={id} className={classes.row}>
                       <TableCell component="th" scope="row" align="left">
                         {site.articles[id].body.name}
