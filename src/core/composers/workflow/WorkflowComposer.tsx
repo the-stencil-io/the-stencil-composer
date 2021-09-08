@@ -1,22 +1,34 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions,
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      backgroundColor: theme.palette.workflow.main,
+      color: theme.palette.secondary.contrastText,
+    },
     select: {
-      margin: theme.spacing(1),
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
-    heading: {
+    button: {
       fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.workflow.main,
+        fontWeight: 'bold',
+      }
+    },
+    buttonGroup: {
+      color: theme.palette.workflow.main
     },
   }),
 );
@@ -47,10 +59,8 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='workflow.composer.title' /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='workflow.composer.title' /></DialogTitle>
       <DialogContent>
-
-        <Typography className={classes.heading}>
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='locale' /></InputLabel>
             <Select
@@ -84,12 +94,13 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             fullWidth
             value={name}
             onChange={({ target }) => setName(target.value)} />
-        </Typography>
       </DialogContent>
       
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!name}><FormattedMessage id='button.add' /></Button>
+      <ButtonGroup className={classes.buttonGroup} variant="text" >
+        <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+        <Button onClick={handleCreate} autoFocus disabled={!name || !content} className={classes.button}><FormattedMessage id='button.add' /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   );

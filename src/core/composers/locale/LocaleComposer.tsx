@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  makeStyles, createStyles, Theme, TextField,
+  makeStyles, createStyles, Theme, TextField, ButtonGroup,
   Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
@@ -10,13 +10,25 @@ import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
+    title: {
+      backgroundColor: theme.palette.locale.main,
+      color: theme.palette.secondary.contrastText,
     },
-    input: {
-      margin: theme.spacing(1),
-      padding: 0,
+    select: {
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
+    },
+    button: {
+      fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.locale.main,
+        fontWeight: 'bold',
+      }
+    },
+    buttonGroup: {
+      color: theme.palette.locale.main
     },
   }),
 );
@@ -44,12 +56,9 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='locale.composer.title'/></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='locale.composer.title'/></DialogTitle>
       <DialogContent>
-
-        <Typography className={classes.root}>
           <TextField 
-            className={classes.input} 
             helperText={<FormattedMessage id='locale.composer.helper' />}
             placeholder="en" 
             variant="outlined" 
@@ -57,12 +66,13 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             required
             value={locale}
             onChange={({ target }) => setLocale(target.value as any)} />
-        </Typography>
 
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale || locales.includes(locale) || locale.length !== 2}><FormattedMessage id='button.create' /></Button>
+      <ButtonGroup variant="text" className={classes.buttonGroup}>
+        <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+        <Button onClick={handleCreate} className={classes.button} autoFocus disabled={!locale || locales.includes(locale) || locale.length !== 2}><FormattedMessage id='button.create' /></Button>
+      </ButtonGroup>
       </DialogActions>
     </Dialog>
   );
