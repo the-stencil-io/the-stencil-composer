@@ -34,7 +34,7 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: 3,
       color: theme.palette.secondary.dark,
       "&:hover, &.Mui-focusVisible": {
-       //backgroundColor: theme.palette.primary.main,
+        //backgroundColor: theme.palette.primary.main,
         //color: theme.palette.background.paper,
       }
     },
@@ -99,31 +99,22 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ExplorerItemProps {
-  article: API.CMS.Article,
+  article: API.CMS.Article;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
+const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
   const { handleInTab, findTab, handleDualView } = Ide.useNav();
   const ide = Ide.useIde();
   const site = ide.session.site;
   const unsaved = Ide.useUnsaved(article);
-  const [open, setOpen] = React.useState(false);
   const [localeOpen, setLocaleOpen] = React.useState(false);
   const [articlePageOpen, setArticlePageOpen] = React.useState<API.CMS.SiteLocale>();
   const dualView = findTab(article)?.data?.dualView ? true : false;
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
-  const handleExpand = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  }
 
   const handleSavePages = () => {
     const unsaved: API.CMS.PageMutator[] = Object.values(ide.session.pages)
@@ -156,15 +147,13 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
   return (
     <>
       <ListItem className={classes.itemHover}>
-        <ListItemText
-          primary={<Typography
-            onClick={handleClick}
-            noWrap
+        <ListItemText onClick={() => setOpen(!open)}
+          primary={<Typography noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
         />
         {open ?
-          <IconButton className={classes.iconButton} onClick={handleClose}><ExpandLess /></IconButton> :
-          <IconButton className={classes.iconButton} onClick={handleExpand}><ExpandMore /></IconButton>}
+          <IconButton className={classes.iconButton} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
+          <IconButton className={classes.iconButton} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>

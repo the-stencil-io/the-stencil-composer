@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, Theme, makeStyles, Button } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
-import { Ide } from '../deps';
+import { Ide, API } from '../deps';
 import { ArticleComposer } from '../composers';
 import { ExplorerItem } from './ExplorerItem'
 
@@ -35,8 +35,10 @@ const Explorer: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const articles = Object.values(site.articles).sort((a1, a2) => a1.body.order - a2.body.order);
-
   const [openArticleComposer, setOpenArticleComposer] = React.useState(false);
+  const [activeArticleId, setActiveArticleId] = React.useState<API.CMS.ArticleId | undefined>(
+    articles.length === 1 ? articles[0].id : undefined
+  );
 
 
   return (
@@ -49,7 +51,15 @@ const Explorer: React.FC<{}> = () => {
           </Button>
         </div>)
       }
-      {articles.map((article, index) => (<ExplorerItem key={index} article={article} />))}
+      {articles.map((article, index) => (<ExplorerItem key={index} article={article} 
+        open={article.id === activeArticleId} 
+        setOpen={(value: boolean) => {
+          if(value === true) {
+            setActiveArticleId(article.id);
+          } else {
+            setActiveArticleId(undefined);
+          }
+      }} />))}
     </div>
   );
 }
