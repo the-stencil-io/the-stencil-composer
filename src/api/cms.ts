@@ -143,15 +143,18 @@ declare namespace CMS {
     content?: string
   }
   interface CreateLink { 
-    type: "internal" | "external";
+    type: "internal" | "external" | string;
     value: string;
     locale: LocaleId;
     description: string; 
+    articles: ArticleId[]
   }
+  
   interface CreateWorkflow { 
     name: string;
     locale: LocaleId; 
-    content: string; 
+    content: string;
+    articles: ArticleId[] 
   }
   interface CreateRelease {
     name: string,

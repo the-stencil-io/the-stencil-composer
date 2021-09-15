@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup,
+  ListItemText, Checkbox
 } from '@material-ui/core'; import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -60,12 +61,13 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
   const [content, setContent] = React.useState(link.body.content);
   const [contentType, setContentType] = React.useState(link.body.contentType);
   const [description, setDescription] = React.useState(link.body.description);
-
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
-
+  const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>(link.body.articles);
+  const articles: API.CMS.Article[] = locale ? ide.session.getArticlesForLocale(locale) : Object.values(site.articles);
+  
 
   const handleCreate = () => {
-    const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: link.body.articles };
+    const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: articleId };
     console.log("entity", entity)
     ide.service.update().link(entity).then(success => {
       console.log(success)
@@ -96,13 +98,27 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
           <InputLabel ><FormattedMessage id="locale" /></InputLabel>
           <Select
             value={locale}
-            onChange={({ target }) => setLocale(target.value as any)}
             label={<FormattedMessage id="locale" />}
-          >
-            {locales.map((locale, index) => (
-              <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
-            ))}
+            onChange={({ target }) => {
+              const locale: API.CMS.LocaleId = target.value as any;
+              if (articleId) {
+                const newArticleId = [...articleId]
+                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
+                for (const nextId of articleId) {
+                  if (!articlesForNewLocale.includes(nextId)) {
+                    const index = newArticleId.indexOf(nextId);
+                    newArticleId.splice(index, 1);
+                  }
+                }
+                setArticleId(newArticleId);
+              }
+              setLocale(locale);
+            }}>
+          
             <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
+            {locales.map((locale, index) => (
+              <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
+            ))}
 
           </Select>
         </FormControl>
@@ -129,7 +145,27 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
             value={content}
             onChange={({ target }) => setContent(target.value as any)} />
         </FormControl>
+        <FormControl variant="outlined" className={classes.select} fullWidth>
+          <InputLabel><FormattedMessage id='link.composer.select.article' /></InputLabel>
+          <Select
+            multiline
+            multiple
+            onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
+            value={articleId}
+            label={<FormattedMessage id='link.composer.select.article' />}
+            renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
+          >
+            {articles.map((article, index) => (
 
+
+              <MenuItem key={index} value={article.id}>
+                <Checkbox checked={articleId.indexOf(article.id) > -1} />
+                <ListItemText primary={article.body.name} />
+
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </DialogContent >
       <DialogActions>
         <ButtonGroup variant="text">
