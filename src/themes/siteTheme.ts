@@ -26,10 +26,10 @@ const palette = {
   type: 'light',
 
   primary: {
-    main: '#f1f2ee',
-    contrastText: '#000',
-    dark: '#E2E4DC',
-    light: '#fff',
+    main: '#607196',
+    contrastText: '#fff',
+    dark: '#404c64',
+    light: '#7686a7',
   },
   secondary: {
     main: '#3E668E',
