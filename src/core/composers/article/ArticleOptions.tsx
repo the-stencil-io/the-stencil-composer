@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     width: '18rem',
     height: '25rem',
   },
-
   spacing: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
@@ -26,13 +25,11 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.article.main,
-    color: theme.palette.article.contrastText
   },
   page: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.page.main,
-    color: theme.palette.page.contrastText
   },
 }));
 

@@ -180,7 +180,7 @@ const siteTheme = createTheme({
         marginBottom: 0,
       },
       primary: {
-        //color: palette.text.main,
+        color: palette.text.primary,
         "&:hover": {
           color: palette.primary.dark,
           fontWeight: 'bold',
@@ -189,7 +189,7 @@ const siteTheme = createTheme({
 
       secondary: {
         fontSize: '.9rem',
-        //color: palette.text.main,
+        color: palette.text.primary,
         "&:hover": {
           color: palette.primary.dark,
           fontWeight: 'bold',

@@ -121,7 +121,6 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           >
             {articles.map((article, index) => (
 
-
               <MenuItem key={index} value={article.id}>
                 <Checkbox checked={articleId.indexOf(article.id) > -1} />
                 <ListItemText primary={article.body.name} />

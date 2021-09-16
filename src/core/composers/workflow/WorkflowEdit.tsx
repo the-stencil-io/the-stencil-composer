@@ -1,7 +1,8 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, Checkbox, ListItemText
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, Checkbox, ListItemText,
+  ButtonGroup
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
@@ -11,12 +12,25 @@ import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      backgroundColor: theme.palette.workflow.main,
+      color: theme.palette.secondary.contrastText,
+    },
     select: {
-      margin: theme.spacing(1),
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
-    heading: {
+    button: {
       fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.workflow.main,
+        fontWeight: 'bold',
+      }
+    },
+    buttonGroup: {
+      color: theme.palette.workflow.main
     },
   }),
 );
@@ -50,10 +64,9 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
 
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='workflow.edit.title' /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='workflow.edit.title' /></DialogTitle>
       <DialogContent>
 
-        <Typography className={classes.heading}>
 
           <TextField className={classes.select}
             label={<FormattedMessage id='workflow.composer.technicalname' />}
@@ -66,20 +79,20 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='locale' /></InputLabel>
             <Select onChange={({ target }) => {
-                const locale: API.CMS.LocaleId = target.value as any;
-                if (articleId) {
-                  const newArticleId = [...articleId]
-                  const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
-                  for (const nextId of articleId) {
-                    if (!articlesForNewLocale.includes(nextId)) {
-                      const index = newArticleId.indexOf(nextId);
-                      newArticleId.splice(index, 1);
-                    }
+              const locale: API.CMS.LocaleId = target.value as any;
+              if (articleId) {
+                const newArticleId = [...articleId]
+                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
+                for (const nextId of articleId) {
+                  if (!articlesForNewLocale.includes(nextId)) {
+                    const index = newArticleId.indexOf(nextId);
+                    newArticleId.splice(index, 1);
                   }
-                  setArticleId(newArticleId);
                 }
-                setLocale(target.value as any);
-              }}
+                setArticleId(newArticleId);
+              }
+              setLocale(target.value as any);
+            }}
               value={locale}
               label={<FormattedMessage id='locale' />}
             >
@@ -96,7 +109,6 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
             fullWidth
             value={name}
             onChange={({ target }) => setName(target.value)} />
-        </Typography>
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel><FormattedMessage id='workflow.composer.select.article' /></InputLabel>
@@ -122,8 +134,10 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
       </DialogContent>
 
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!name}><FormattedMessage id='button.add' /></Button>
+      <ButtonGroup variant="text">
+        <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+        <Button onClick={handleCreate} autoFocus disabled={!name} className={classes.button}><FormattedMessage id='button.add' /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   );

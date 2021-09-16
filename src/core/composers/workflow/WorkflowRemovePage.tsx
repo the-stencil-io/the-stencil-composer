@@ -26,9 +26,9 @@ const useStyles = makeStyles((theme: Theme) =>
     iconButton: {
       padding: 2,
       margin: 2,
-      color: theme.palette.link.main,
+      color: theme.palette.workflow.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.link.main,
+        backgroundColor: theme.palette.workflow.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -36,11 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
       }
     },
     title: {
-      backgroundColor: theme.palette.link.main,
+      backgroundColor: theme.palette.workflow.main,
       color: theme.palette.secondary.contrastText,
     },
     buttonGroup: {
-      color: theme.palette.link.main
+      color: theme.palette.workflow.main
     },
 
   }),

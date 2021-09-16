@@ -101,7 +101,7 @@ const WorkflowsView: React.FC<{}> = () => {
               <TableCell className={classes.bold} align="center"><FormattedMessage id="locale" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="articles" /></TableCell>
-              <TableCell className={classes.bold} align="center"></TableCell>
+              <TableCell className={classes.bold} align="center" width="10%"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>

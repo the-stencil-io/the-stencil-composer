@@ -80,7 +80,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const LinksView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const links = Object.values(site.links);
+  const links = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
   const title = useIntl().formatMessage({ id: "links" });
 
 
@@ -148,7 +148,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
         <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
         <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
         <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
-        <TableCell className={classes.tableCell} align="right">
+        <TableCell className={classes.tableCell} align="right" width="10%">
 
           <Tooltip title={<FormattedMessage id="link.edit.title" />}>
             <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkEdit")}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  makeStyles, createStyles, Theme, FormControl, Button,
+  makeStyles, createStyles, Theme, FormControl, Button, ButtonGroup,
   Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
@@ -10,40 +10,30 @@ import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    select: {
-      padding: theme.spacing(1),
-      backgroundColor: theme.palette.background.paper
-    },
     title: {
       backgroundColor: theme.palette.page.main,
       color: theme.palette.secondary.contrastText,
     },
+    select: {
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.background.paper
+    },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.page.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      margin: theme.spacing(1)
+    buttonGroup: {
+      color: theme.palette.page.main
     },
-    iconButton: {
-      padding: 2,
-      paddingLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
+    delete: {
+      color: theme.palette.error.main,
+      fontWeight: 'bold'
+    }
   }),
 );
 
@@ -73,7 +63,7 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }
         <FormattedMessage id='pages.delete.message' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
-            className={classes.margin}
+            className={classes.select}
             variant="outlined"
             value={pageId}
             onChange={({ target }) => setPageId(target.value as any)}
@@ -87,8 +77,10 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }
       </DialogContent>
 
       <DialogActions>
-        <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleDelete} color="primary" autoFocus disabled={!pageId}><FormattedMessage id='button.delete' /></Button>
+        <ButtonGroup variant="text">
+          <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+          <Button onClick={handleDelete} autoFocus disabled={!pageId} className={classes.delete}><FormattedMessage id='button.delete' /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   </>
