@@ -13,24 +13,36 @@ import { NewPage, PageEdit, PageDelete } from '../';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '18rem',
-    height: '25rem',
+    width: '20rem',
+    height: '22rem',
   },
   spacing: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
     pointerEvents: 'none',
+
   },
   article: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.article.main,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
   },
   page: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.page.main,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
   },
+  resource: {
+    marginBottom: theme.spacing(1),
+    pointerEvents: 'none',
+    backgroundColor: theme.palette.primary.light,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
+  }
 }));
 
 interface ArticleOptionsProps {
@@ -79,17 +91,14 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
           className={classes.root}
         >
           <ListItem className={classes.article}>
-            <ListItemText primary={<FormattedMessage id="article.options" />} />
-          </ListItem>
+            <FormattedMessage id="article.options" /></ListItem>
 
           <ListItem button onClick={() => setDialogOpen('ArticleEdit')}>
             <ListItemText><FormattedMessage id="article.edit.title" /></ListItemText>
           </ListItem>
           <Divider className={classes.spacing} />
 
-          <ListItem className={classes.page}>
-            <ListItemText primary={<FormattedMessage id="pages.options" />} />
-          </ListItem>
+          <ListItem className={classes.page}><FormattedMessage id="pages.options" /></ListItem>
 
           <ListItem button onClick={() => setDialogOpen('NewPage')}>
             <ListItemText><FormattedMessage id="pages.add" /></ListItemText>
@@ -104,9 +113,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
           </ListItem>
           <Divider className={classes.spacing} />
 
-          <ListItem className={classes.spacing}>
-            <ListItemText primary={<FormattedMessage id="resource.options" />} />
-          </ListItem>
+          <ListItem className={classes.resource}><FormattedMessage id="resource.options" /></ListItem>
 
           <ListItem button onClick={() => setDialogOpen('ArticleLinksEdit')}>
             <ListItemText><FormattedMessage id='resource.edit.links' /></ListItemText>
