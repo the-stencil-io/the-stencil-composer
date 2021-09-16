@@ -1,5 +1,9 @@
 const en = {
 
+
+  'composer.select.article': 'Select articles',
+
+
   'toolbar.preview': 'Live preview',
   'toolbar.help': 'Help and user documentation',
   'workflow.edit.title': 'Edit Workflow',

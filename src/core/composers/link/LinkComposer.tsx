@@ -124,13 +124,13 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           onChange={({ target }) => setValue(target.value)} />
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='link.composer.select.article' /></InputLabel>
+          <InputLabel><FormattedMessage id='composer.select.article' /></InputLabel>
           <Select
             multiline
             multiple
             onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
-            label={<FormattedMessage id='link.composer.select.article' />}
+            label={<FormattedMessage id='composer.select.article' />}
             renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           >
             {articles.map((article, index) => (
