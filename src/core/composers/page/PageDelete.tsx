@@ -17,7 +17,6 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
-      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
     button: {
