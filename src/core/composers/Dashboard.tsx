@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typogr
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ArticleComposer } from './article';
+import { ArticleComposer, ArticlesView } from './article';
 import { LinkComposer } from './link';
 import { WorkflowComposer } from './workflow';
 import { LocaleComposer } from './locale';
@@ -68,6 +68,7 @@ interface CardData {
   buttonViewAll: string;
   color: string;
   composer: (handleClose: () => void) => React.ReactChild;
+  //viewAll: (handleClose: () => void) => React.ReactChild;
 }
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
@@ -75,6 +76,7 @@ type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 const createCards: (site: API.CMS.Site, theme: Theme) => CardData[] = (_site, theme) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
+    viewAll: () => (<ArticlesView />),
     title: "composer.article.title",
     desc: "composer.article.desc",
     color: theme.palette.article?.main,

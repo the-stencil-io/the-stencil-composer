@@ -10,7 +10,7 @@ import { useLayout } from '../context';
 const useStyles = makeStyles((theme) => ({
   tab: {
     flexDirection: 'row-reverse',
-    color: theme.palette.primary.contrastText
+    color: theme.palette.primary.dark
   },
   tabLabel: {
     minHeight: 'unset',
@@ -25,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
   },
   closeIcon: {
     marginLeft: 5,
-     color: theme.palette.primary.contrastText,
+     color: theme.palette.primary.main,
     "&:hover": {
-      color: theme.palette.secondary.main
+      color: theme.palette.secondary.light
     }
   }
 }));

@@ -51,7 +51,8 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
 
-  const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
+  const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id))
+    .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
 
   return (

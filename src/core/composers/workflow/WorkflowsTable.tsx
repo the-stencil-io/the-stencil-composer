@@ -51,7 +51,8 @@ interface WorkflowsTableProps {
 const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
+  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id))
+    .sort((o1, o2) => o1.body.name.localeCompare(o2.body.name));
 
   return (
     <>
