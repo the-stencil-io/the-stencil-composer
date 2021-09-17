@@ -207,7 +207,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
                   <Switch checked={dualView} onClick={() => handleDualView(article)} />
                 </TableCell>
                 <TableCell className={classes.table} align="right">
-                  <ArticleOptions article={article} />
+                  <ArticleOptions article={article}/>
                 </TableCell>
               </TableRow>
 

@@ -72,7 +72,7 @@ const getArticleLinks: (site: API.CMS.Site, articleId: API.CMS.ArticleId) => API
   return Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
 }
 
-const ArticleLinksEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const ArticleLinksEdit: React.FC<{ article: API.CMS.Article, onClose: () => void, articleId: API.CMS.ArticleId}> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
 
@@ -83,12 +83,13 @@ const ArticleLinksEdit: React.FC<{ onClose: () => void, articleId: API.CMS.Artic
   const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
   const links: API.CMS.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
+  
   return (
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
-      <AppBar className={classes.appBar} color="default">
+      <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>"Article name"<FormattedMessage id="article.links.addremove" /></Typography>
+          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="article.links.addremove" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
             <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
             <Button className={classes.button} onClick={props.onClose} autoFocus ><FormattedMessage id='button.apply' /></Button>

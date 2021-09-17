@@ -67,8 +67,8 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'NewPage' ? <NewPage articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
+      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article}/> : null}
 
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>

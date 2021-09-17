@@ -51,7 +51,7 @@ const Explorer: React.FC<{}> = () => {
           </Button>
         </div>)
       }
-      {articles.map((article, index) => (<ExplorerItem key={index} article={article} 
+      {articles.map((article, index) => (<ExplorerItem key={index} article={article}
         open={article.id === activeArticleId} 
         setOpen={(value: boolean) => {
           if(value === true) {

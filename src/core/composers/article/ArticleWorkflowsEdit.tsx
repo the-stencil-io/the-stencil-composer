@@ -69,7 +69,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ArticleWorkflowsEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const ArticleWorkflowsEdit: React.FC<{article: API.CMS.Article, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
 
@@ -79,25 +79,24 @@ const ArticleWorkflowsEdit: React.FC<{ onClose: () => void, articleId: API.CMS.A
 
   const workflows: API.CMS.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.content.localeCompare(o2.body.content));
 
-   //check if workflow is associated with article
+  //check if workflow is associated with article
 
   const isWorkflow = (workflows: API.CMS.Workflow[], article: API.CMS.Article) => {
     const articleWorkflows = workflows
       .filter(w => w.body.articles[article.id] === props.articleId);
     return articleWorkflows.length > 0;
   }
-
-
-
+  
   return (
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>Article Name + <FormattedMessage id="article.workflows.addremove" /></Typography>
-          <ButtonGroup className={classes.buttonGroup}  variant="text">
-          <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={props.onClose} className={classes.button} autoFocus ><FormattedMessage id='button.apply' /></Button>
+          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}
+          <FormattedMessage id="article.workflows.addremove" /></Typography>
+          <ButtonGroup className={classes.buttonGroup} variant="text">
+            <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+            <Button onClick={props.onClose} className={classes.button} autoFocus ><FormattedMessage id='button.apply' /></Button>
           </ButtonGroup>
         </Toolbar>
       </AppBar>
