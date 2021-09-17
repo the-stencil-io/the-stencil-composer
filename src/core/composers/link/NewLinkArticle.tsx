@@ -2,7 +2,7 @@ import React from 'react';
 
 import {
   makeStyles, createStyles, Theme, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup
 } from '@material-ui/core';
 
 import { FormattedMessage } from 'react-intl';
@@ -11,24 +11,35 @@ import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
+   select: {
+      marginTop: theme.spacing(3),
     },
-    select: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.background.paper
+     title: {
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.secondary.contrastText,
+      fontWeight: 300
+    },
+    button: {
+      fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.link.main,
+        fontWeight: 'bold',
+      }
+    },
+    buttonGroup: {
+      color: theme.palette.link.main
     },
   }),
 );
 
 
 interface NewLinkArticleProps {
-  link: API.CMS.Link;
-  open: boolean;
-  onClose: () => void;
+  link: API.CMS.Link,
+  open: boolean,
+  onClose: () => void
 }
 
-const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ open, link, onClose }) => {
+const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ link, onClose }) => {
   const classes = useStyles();
 
   const ide = Ide.useIde();
@@ -53,10 +64,10 @@ const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ open, link, onClose }) 
   }
 
   return (
-    <Dialog open={open} onClose={onClose}>
-      <DialogTitle><FormattedMessage id="link.article.add.title" /></DialogTitle>
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle className={classes.title}><FormattedMessage id="link.article.add.title" /></DialogTitle>
       <DialogContent>
-        <Typography className={classes.root}>
+
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='link.article.select' /></InputLabel>
             <Select
@@ -69,15 +80,17 @@ const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ open, link, onClose }) 
               ))}
             </Select>
           </FormControl >
-        </Typography>
       </DialogContent>
+      
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary">
+      <ButtonGroup className={classes.buttonGroup} variant="text">
+        <Button className={classes.button} onClick={onClose}>
           <FormattedMessage id="button.cancel" />
         </Button>
-        <Button variant="contained" color="primary" autoFocus onClick={() => handleUpdate()} disabled={errors ? true : false}>
+        <Button className={classes.button} autoFocus onClick={() => handleUpdate()} disabled={errors ? true : false}>
           <FormattedMessage id="button.add" />
         </Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   );

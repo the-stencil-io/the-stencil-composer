@@ -1,11 +1,30 @@
 import React from 'react';
 import {
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup,
+  makeStyles, Theme, createStyles,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
+
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    button: {
+      fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.page.main,
+        fontWeight: 'bold',
+        }
+    },
+
+    title: {
+      backgroundColor: theme.palette.page.main,
+      color: theme.palette.page.contrastText,
+      fontWeight: 900
+    },
+  }),
+);
 
 
 interface NewArticlePageProps {
@@ -16,7 +35,7 @@ interface NewArticlePageProps {
 }
 
 const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClose, onCreate }) => {
-
+  const classes = useStyles();
   const ide = Ide.useIde();
 
   const handleCreate = () => {
@@ -31,7 +50,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClos
 
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
+      <DialogTitle className={classes.title} ><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
         <Typography>
           <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: locale.body.value }} />
@@ -39,8 +58,10 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClos
       </DialogContent>
 
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
+        <ButtonGroup variant="text">
+          <Button className={classes.button} onClick={onClose}><FormattedMessage id='button.cancel' /></Button>
+          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   );

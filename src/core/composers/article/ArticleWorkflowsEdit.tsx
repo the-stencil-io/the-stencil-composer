@@ -1,13 +1,10 @@
 import React from 'react';
-import { makeStyles, Typography, Table, Card } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  makeStyles, Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
+  TableRow, TableHead
+} from '@material-ui/core';
 
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import Checkbox from '@material-ui/core/Checkbox';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { FormattedMessage } from 'react-intl';
@@ -22,6 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'relative',
+    backgroundColor: theme.palette.workflow.main,
+    color: theme.palette.secondary.contrastText,
   },
   card: {
     margin: theme.spacing(1),
@@ -50,22 +49,35 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+
   },
   tableCell: {
     paddingTop: 0,
     paddingBottom: 0,
-  }
+  },
+  button: {
+    fontWeight: 'bold',
+    color: theme.palette.background.paper,
+    "&:hover, &.Mui-focusVisible": {
+      color: theme.palette.background.paper,
+      backgroundColor: theme.palette.workflow.dark,
+      fontWeight: 'bold',
+    }
+  },
+  buttonGroup: {
+    color: theme.palette.article.main
+  },
 }));
 
-const ArticleWorkflowsEdit: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const ArticleWorkflowsEdit: React.FC<{article: API.CMS.Article, onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
-  
+
   const [articleId, setArticleId] = React.useState('');
   const articleWorkflows: API.CMS.WorkflowId[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(articleId)).map(w => w.id);
   const [selectedWorkflows, setSelectedWorkflows] = React.useState(articleWorkflows);
-  
-  const workflows: API.CMS.Workflow[] = Object.values(site.workflows);
+
+  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.content.localeCompare(o2.body.content));
 
   //check if workflow is associated with article
 
@@ -74,17 +86,18 @@ const ArticleWorkflowsEdit: React.FC<{onClose: () => void, articleId: API.CMS.Ar
       .filter(w => w.body.articles[article.id] === props.articleId);
     return articleWorkflows.length > 0;
   }
-
-
-
+  
   return (
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
-      <AppBar className={classes.appBar} color="default">
+      <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>"Article Name + "<FormattedMessage id="article.workflows.addremove" /></Typography>
-          <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-          <Button variant="contained" onClick={props.onClose} color="primary" autoFocus ><FormattedMessage id='button.apply' /></Button>
+          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}
+          <FormattedMessage id="article.workflows.addremove" /></Typography>
+          <ButtonGroup className={classes.buttonGroup} variant="text">
+            <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+            <Button onClick={props.onClose} className={classes.button} autoFocus ><FormattedMessage id='button.apply' /></Button>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
 
@@ -104,7 +117,7 @@ const ArticleWorkflowsEdit: React.FC<{onClose: () => void, articleId: API.CMS.Ar
               {workflows.map((workflow, index) => (
                 <TableRow hover key={index}>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary" checked={selectedWorkflows.includes(workflow.id) === true} />

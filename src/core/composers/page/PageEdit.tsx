@@ -1,47 +1,38 @@
 import React from 'react';
 import {
-  makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
-  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select
+  makeStyles, createStyles, Theme, FormControl, Button,
+  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
+  ButtonGroup
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      backgroundColor: theme.palette.page.main,
+      color: theme.palette.secondary.contrastText,
+    },
     select: {
       padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.page.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      margin: theme.spacing(1)
-    },
-    iconButton: {
-      padding: 2,
-      paddingLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
+    buttonGroup: {
+      color: theme.palette.page.main
     },
   }),
 );
+
 
 const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
@@ -67,12 +58,12 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
 
   return (<>
     <Dialog open={true} onClose={props.onClose} >
-      <DialogTitle><FormattedMessage id='pages.change' /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='pages.change' /></DialogTitle>
       <DialogContent>
         <FormattedMessage id='pages.change.info' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
-            className={classes.margin}
+            className={classes.select}
             variant="outlined"
             value={pageId}
             onChange={({ target }) => setPageId(target.value as any)}
@@ -86,7 +77,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
         
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
-            className={classes.margin}
+            className={classes.select}
             variant="outlined"
             value={newLocale}
             onChange={({ target }) => setNewLocale(target.value as any)}
@@ -100,8 +91,10 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
       </DialogContent>
 
       <DialogActions>
-        <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleUpdate} color="primary" autoFocus disabled={!valid}><FormattedMessage id='button.update' /></Button>
+      <ButtonGroup variant="text">
+        <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
+        <Button className={classes.button} onClick={handleUpdate} autoFocus disabled={!valid}><FormattedMessage id='button.update' /></Button>
+     </ButtonGroup>
       </DialogActions>
     </Dialog>
   </>

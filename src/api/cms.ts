@@ -85,7 +85,7 @@ declare namespace CMS {
       articles: ArticleId[],
       contentType: LinkType,
       content: LocalisedContent, //url, phone number
-      locale: Locale,
+      locale: LocaleId,
       description: string //text that user sees
     }
   }
@@ -93,7 +93,7 @@ declare namespace CMS {
   interface LinkMutator {
     linkId: LinkId,
     content: LocalisedContent, 
-    locale: Locale, 
+    locale: LocaleId, 
     type: LinkType,
     description: string,
     articles: ArticleId[],
@@ -104,7 +104,7 @@ declare namespace CMS {
     body: {
       articles: ArticleId[],
       name: string,
-      locale: Locale,
+      locale: LocaleId,
       content: LocalisedContent
     }
   }
@@ -112,7 +112,7 @@ declare namespace CMS {
   interface WorkflowMutator {
     workflowId: WorkflowId, 
     name: string, 
-    locale: Locale, 
+    locale: LocaleId, 
     content: LocalisedContent,
     articles: ArticleId[]
   }
@@ -139,19 +139,22 @@ declare namespace CMS {
   }
   interface CreatePage {
     articleId: ArticleId;
-    locale: Locale;
+    locale: LocaleId;
     content?: string
   }
   interface CreateLink { 
-    type: "internal" | "external";
+    type: "internal" | "external" | string;
     value: string;
-    locale: Locale;
+    locale: LocaleId;
     description: string; 
+    articles: ArticleId[]
   }
+  
   interface CreateWorkflow { 
     name: string;
-    locale: Locale; 
-    content: string; 
+    locale: LocaleId; 
+    content: string;
+    articles: ArticleId[] 
   }
   interface CreateRelease {
     name: string,
@@ -160,6 +163,7 @@ declare namespace CMS {
   
   interface CreateBuilder {
     site(): Promise<Site>;
+    importData(init: string): Promise<void>;
     release(init: CreateRelease): Promise<Release>;
     locale(init: CreateLocale): Promise<SiteLocale>;
     article(init: CreateArticle): Promise<Article>;

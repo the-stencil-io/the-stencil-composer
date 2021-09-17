@@ -43,14 +43,14 @@ const useStyles = (props: { drawerWidth: number }) => makeStyles((theme) => ({
     }),
   },
   menuButton: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   menuButtonHidden: {
     display: 'none',
   },
   title: {
     flexGrow: 1,
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.main,
   },
   drawerPaper: {
     position: 'relative',

@@ -106,6 +106,9 @@ class MockCreateBuilder implements API.CMS.CreateBuilder {
   async site(): Promise<API.CMS.Site> {
     return getSite();
   }
+  async importData(init: string): Promise<void> {
+    return init as any;
+  }
   async release(init: API.CMS.CreateRelease): Promise<API.CMS.Release> {
     return init as any;
   }

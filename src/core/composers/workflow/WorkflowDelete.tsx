@@ -1,98 +1,88 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
-import { makeStyles, createStyles, Theme, IconButton } from '@material-ui/core';
+import {
+  Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle,
+  makeStyles, Theme, createStyles, ButtonGroup
+}
+  from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
+
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    root: {
+      fontWeight: 'bold',
+    },
+    title: {
+      backgroundColor: theme.palette.workflow.main,
+      color: theme.palette.secondary.contrastText,
+    },
+    select: {
+      margin: theme.spacing(1),
+      color: theme.palette.primary.contrastText,
+      backgroundColor: theme.palette.background.paper
+    },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.workflow.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      marginRight: theme.spacing(1)
+    buttonGroup: {
+      color: theme.palette.workflow.main
     },
-    iconButton: {
-      padding: 2,
-      marginLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
+    delete: {
+      color: theme.palette.error.main,
+      fontWeight: 'bold'
+    }
   }),
 );
 
 
+
+
 interface WorkflowDeleteProps {
-  workflow: API.CMS.Workflow;
+  workflow: API.CMS.Workflow,
+  onClose: () => void,
 }
 
-const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow }) => {
+const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) => {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
   const ide = Ide.useIde();
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+
 
   const handleDelete = () => {
     ide.service.delete().workflow(workflow.id).then(success => {
       console.log(success)
-      handleClose();
+      onClose();
       ide.actions.handleLoadSite();
     })
   }
 
   return (
-    <div className={classes.margin}>
-      <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-        <DeleteOutlinedIcon />
-      </IconButton>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle><FormattedMessage id="workflow.delete.title" /></DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <FormattedMessage id="workflow.delete" />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="text" onClick={handleClose} color="primary">
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle className={classes.title}><FormattedMessage id="workflow.delete.title" /></DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          <FormattedMessage id="workflow.delete" />
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <ButtonGroup variant="text" className={classes.buttonGroup}>
+          <Button onClick={onClose} className={classes.button}>
             <FormattedMessage id="button.cancel" />
           </Button>
-          <Button variant="contained" onClick={handleDelete} color="primary" autoFocus>
+          <Button onClick={handleDelete} autoFocus className={classes.delete}>
             <FormattedMessage id="button.delete" />
           </Button>
-        </DialogActions>
-      </Dialog>
-    </div>
+        </ButtonGroup>
+      </DialogActions>
+    </Dialog>
   );
 }
 export { WorkflowDelete }

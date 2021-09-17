@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.main
+      color: theme.palette.link.dark,
     },
     tableCell: {
       paddingTop: 0,
@@ -51,14 +51,15 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
 
-  const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
+  const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id))
+    .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
 
   return (
     <>
    <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /> </Typography>
     <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table" >
+      <Table className={classes.table} size="small" >
         <TableHead>
           <TableRow>
             <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type"/></TableCell>
@@ -71,7 +72,7 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
           {links.map((link, index) => (
             <TableRow hover key={index}>
               <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{link.body.locale}</TableCell>
+              <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
               <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
               <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
             </TableRow>

@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles, alpha } from '@material-ui/core/styles';
-import { List, IconButton, Popover, ListItemText, ListItem } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { List, IconButton, Popover, ListItemText, ListItem, Divider } from '@material-ui/core';
 
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { FormattedMessage } from 'react-intl';
 
-import { API, Ide } from '../../deps';
+import { API } from '../../deps';
 
 import { ArticleEdit, ArticleLinksEdit, ArticleWorkflowsEdit } from './';
 import { NewPage, PageEdit, PageDelete } from '../';
@@ -13,29 +13,36 @@ import { NewPage, PageEdit, PageDelete } from '../';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '18rem',
-    backgroundColor: theme.palette.background.paper,
-
+    width: '20rem',
+    height: '22rem',
   },
-  nested: {
-    paddingLeft: theme.spacing(3),
-    "&:hover": {
-      color: theme.palette.primary.light
-    }
-  },
-  mainTopic: {
-    backgroundColor: alpha(theme.palette.primary.main, 0.5),
-    color: theme.palette.background.paper,
+  spacing: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
     pointerEvents: 'none',
+
   },
-  mainTopicFirst: {
-    backgroundColor: alpha(theme.palette.primary.main, 0.7),
-    color: theme.palette.background.paper,
+  article: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
+    backgroundColor: theme.palette.article.main,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
   },
+  page: {
+    marginBottom: theme.spacing(1),
+    pointerEvents: 'none',
+    backgroundColor: theme.palette.page.main,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
+  },
+  resource: {
+    marginBottom: theme.spacing(1),
+    pointerEvents: 'none',
+    backgroundColor: theme.palette.primary.light,
+    fontWeight: 'bold',
+    color: theme.palette.background.paper
+  }
 }));
 
 interface ArticleOptionsProps {
@@ -48,9 +55,6 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'NewLinkArticle' | 'ArticleDeletePage' |
     'PageDelete' | 'ArticleLinksEdit' | 'ArticleWorkflowsEdit'
   >(undefined);
-  
-  const ide = Ide.useIde();
-  const site = ide.session.site;
 
   const handleDialogClose = () => setDialogOpen(undefined);
 
@@ -59,13 +63,13 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
   return (
     <>
-      { dialogOpen === 'ArticleEdit' ?      <ArticleEdit      articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'NewPage' ?          <NewPage          articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'PageEdit' ?         <PageEdit         articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'PageDelete' ?       <PageDelete       articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose}/> : null}
-      
+      { dialogOpen === 'ArticleEdit' ? <ArticleEdit articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'NewPage' ? <NewPage articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
+      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article}/> : null}
+
       <FormattedMessage id="options" />
       <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
       <Popover
@@ -84,48 +88,43 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
         <List
           component="nav"
-          aria-labelledby="nested-list-subheader"
           className={classes.root}
         >
-          <ListItem className={classes.mainTopicFirst}>
-            <ListItemText primary={<FormattedMessage id="article.options" />} />
+          <ListItem className={classes.article}>
+            <FormattedMessage id="article.options" /></ListItem>
+
+          <ListItem button onClick={() => setDialogOpen('ArticleEdit')}>
+            <ListItemText><FormattedMessage id="article.edit.title" /></ListItemText>
+          </ListItem>
+          <Divider className={classes.spacing} />
+
+          <ListItem className={classes.page}><FormattedMessage id="pages.options" /></ListItem>
+
+          <ListItem button onClick={() => setDialogOpen('NewPage')}>
+            <ListItemText><FormattedMessage id="pages.add" /></ListItemText>
           </ListItem>
 
-          <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleEdit')}>
-            <ListItemText secondary={<FormattedMessage id="article.edit.title" />} />
+          <ListItem button onClick={() => setDialogOpen('PageEdit')}>
+            <ListItemText><FormattedMessage id="pages.change" /></ListItemText>
           </ListItem>
 
-          <ListItem className={classes.mainTopic}>
-            <ListItemText primary={<FormattedMessage id="pages.options" />} />
+          <ListItem button onClick={() => setDialogOpen('PageDelete')}>
+            <ListItemText><FormattedMessage id="pages.delete" /></ListItemText>
+          </ListItem>
+          <Divider className={classes.spacing} />
+
+          <ListItem className={classes.resource}><FormattedMessage id="resource.options" /></ListItem>
+
+          <ListItem button onClick={() => setDialogOpen('ArticleLinksEdit')}>
+            <ListItemText><FormattedMessage id='resource.edit.links' /></ListItemText>
           </ListItem>
 
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested} onClick={() => setDialogOpen('NewPage')}>
-              <ListItemText secondary={<FormattedMessage id="pages.add" />} />
-            </ListItem>
+          <ListItem button onClick={() => setDialogOpen('ArticleWorkflowsEdit')}>
+            <ListItemText><FormattedMessage id="resource.edit.workflows" /></ListItemText>
+          </ListItem>
 
-            <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageEdit')}>
-              <ListItemText secondary={<FormattedMessage id="pages.change" />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested} onClick={() => setDialogOpen('PageDelete')}>
-              <ListItemText secondary={<FormattedMessage id="pages.delete" />} />
-            </ListItem>
-
-            <ListItem className={classes.mainTopic}>
-              <ListItemText primary={<FormattedMessage id="resource.options" />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleLinksEdit')}>
-              <ListItemText secondary={<FormattedMessage id='resource.edit.links' />} />
-            </ListItem>
-
-            <ListItem button className={classes.nested} onClick={() => setDialogOpen('ArticleWorkflowsEdit')}>
-              <ListItemText secondary={<FormattedMessage id="resource.edit.workflows" />} />
-            </ListItem>
-
-          </List>
         </List>
+
       </Popover>
     </>
   );

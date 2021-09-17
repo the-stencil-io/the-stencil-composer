@@ -6,6 +6,8 @@ import LinkIcon from '@material-ui/icons/Link';
 import TranslateIcon from '@material-ui/icons/Translate';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
+import ImportExportIcon from '@material-ui/icons/ImportExport';
 
 import { Explorer } from '../explorer';
 
@@ -24,7 +26,7 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
         }
       }
     },
-    
+
     {
       id: 'toolbar.explorer',
       enabled: true,
@@ -77,6 +79,25 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
       type: {
         onClick: () => {
           actions.handleTabAdd({ id: 'locales', label: "Locales" });
+        }
+      }
+    },
+
+    {
+      id: 'toolbar.import',
+      icon: <ImportExportIcon />,
+      type: {
+        onClick: () => {
+          actions.handleTabAdd({ id: 'import', label: 'Import' });
+        }
+      }
+    },
+    {
+      id: 'toolbar.help',
+      icon: <HelpOutlineOutlinedIcon />,
+      type: {
+        onClick: () => {
+          actions.handleTabAdd({ id: 'help', label: "Help" });
         }
       }
     },

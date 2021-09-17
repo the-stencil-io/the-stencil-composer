@@ -1,50 +1,38 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
-  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select
+  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
+  ButtonGroup, Typography
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    title: {
+      backgroundColor: theme.palette.page.main,
+      color: theme.palette.secondary.contrastText,
+    },
     select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
+      color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.page.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      paddingRight: theme.spacing(1)
-    },
-    iconButton: {
-      padding: 2,
-      paddingLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
+    buttonGroup: {
+      color: theme.palette.page.main
     },
   }),
 );
 
-const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
+const NewPage: React.FC<{ onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -64,9 +52,11 @@ const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> =
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
   return (<>
-    <Dialog open={true} onClose={props.onClose} >
-      <DialogTitle><FormattedMessage id='newpage.title' /></DialogTitle>
+    <Dialog open={true} onClose={props.onClose}>
+      <DialogTitle className={classes.title} ><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
+        <Typography component={'div'}>
+
           <FormattedMessage id='newpage.info' />
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='article.name' /></InputLabel>
@@ -92,11 +82,14 @@ const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> =
               ))}
             </Select>
           </FormControl >
+        </Typography>
       </DialogContent>
 
       <DialogActions>
-        <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
+        <ButtonGroup variant="text" className={classes.buttonGroup}>
+          <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+          <Button onClick={handleCreate} autoFocus disabled={!locale} className={classes.button}><FormattedMessage id='button.create' /></Button>
+        </ButtonGroup>
       </DialogActions>
     </Dialog>
   </>

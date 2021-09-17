@@ -20,6 +20,9 @@ class CreateBuilderImpl implements API.CMS.CreateBuilder {
   async site(): Promise<API.CMS.Site> {
     return this._backend.fetch(`/`, { method: "POST" }).then((data) => data as any)
   }
+  async importData(init: string): Promise<void> {
+    return this._backend.fetch(`/migrations`, { method: "POST", body: init}).then((data) => data as any)
+  }
   async release(init: API.CMS.CreateRelease): Promise<API.CMS.Release> {
     return this._backend.fetch(`/releases`, { method: "POST", body: JSON.stringify(init) }).then((data) => data as any)
   }

@@ -1,22 +1,31 @@
 import React from 'react';
 import {
   makeStyles, createStyles, Theme, TextField,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions,
+  Button, Dialog, ButtonGroup, DialogTitle, DialogContent, DialogActions,
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    formControl: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.background.paper
+    title: {
+      backgroundColor: theme.palette.release.main,
+      color: theme.palette.secondary.contrastText,
     },
-    heading: {
+    button: {
       fontWeight: 'bold',
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.release.main,
+        fontWeight: 'bold',
+      }
     },
+    buttonGroup: {
+      color: theme.palette.release.main
+    },
+    spacing: {
+      marginTop: theme.spacing(3)
+    }
   }),
 );
 
@@ -37,39 +46,36 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   }
   return (
     <Dialog open={true} onClose={onClose} >
-      <DialogTitle><FormattedMessage id='release.composer.title' /></DialogTitle>
+      <DialogTitle className={classes.title}><FormattedMessage id='release.composer.title' /></DialogTitle>
       <DialogContent>
+        <TextField
+          className={classes.spacing}
+          fullWidth
+          label={<FormattedMessage id='release.composer.label' />}
+          variant="outlined"
+          onChange={({ target }) => setName(target.value as any)}
+        />
+        <TextField
+          className={classes.spacing}
+          fullWidth
+          label={<FormattedMessage id='release.composer.note' />}
+          helperText={<FormattedMessage id='release.composer.helper' />}
+          variant="outlined"
+          onChange={({ target }) => setNote(target.value as any)} />
+        <TextField
+          className={classes.spacing}
+          disabled
+          label={<FormattedMessage id='date' />}
+          defaultValue={new Date().toISOString()}
+          variant="outlined"
+          fullWidth />
 
-        <Typography className={classes.heading}>
-          <TextField
-            className={classes.formControl}
-            fullWidth
-            id="outlined-basic"
-            label={<FormattedMessage id='release.composer.label' />}
-            variant="outlined"
-            onChange={({ target }) => setName(target.value as any)}
-          />
-          <TextField
-            className={classes.formControl}
-            fullWidth
-            id="outlined-basic"
-            label={<FormattedMessage id='release.composer.note' />}
-            helperText={<FormattedMessage id='release.composer.helper' />}
-            variant="outlined"
-            onChange={({ target }) => setNote(target.value as any)} />
-          <TextField
-            className={classes.formControl}
-            disabled
-            id="outlined-basic"
-            label={<FormattedMessage id='date' />}
-            defaultValue={new Date().toISOString()}
-            variant="outlined"
-            fullWidth />
-        </Typography>
       </DialogContent>
       <DialogActions>
-        <Button variant="text" onClick={onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!name}><FormattedMessage id='button.create' /></Button>
+      <ButtonGroup variant="text" className={classes.buttonGroup}>
+        <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+        <Button onClick={handleCreate} className={classes.button} disabled={!name}><FormattedMessage id='button.create' /></Button>
+      </ButtonGroup>
       </DialogActions>
     </Dialog>
   );

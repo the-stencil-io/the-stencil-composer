@@ -20,12 +20,12 @@ const useStyles = makeStyles((theme: Theme) =>
       width: '100%',
     },
     nameStyle: {
-      color: theme.palette.text.primary,
+      color: theme.palette.article.dark,
       fontWeight: 'bold',
       maxWidth: '260px',
       "&:hover": {
         cursor: 'pointer',
-        color: theme.palette.secondary.dark
+        color: theme.palette.article.main
       }
     },
     summary: {
@@ -34,32 +34,22 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingRight: 3,
       color: theme.palette.secondary.dark,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.background.paper,
-        borderRadius: 3
+        //backgroundColor: theme.palette.primary.main,
+        //color: theme.palette.background.paper,
       }
     },
     localeSummary: {
-      color: theme.palette.secondary.dark,
+      color: theme.palette.page.dark,
       paddingLeft: 3,
       paddingRight: 3,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.main,
-        color: theme.palette.background.paper,
-        borderRadius: 3
+        color: theme.palette.page.main,
       }
     },
     iconButton: {
       marginTop: 1,
-      color: theme.palette.primary.main,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.light,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
+      color: theme.palette.secondary.dark,
     },
     modified: {
       color: theme.palette.text.primary
@@ -97,38 +87,34 @@ const useStyles = makeStyles((theme: Theme) =>
       },
     },
     pageButton: {
-      backgroundColor: theme.palette.info.main
-    }
-
+      backgroundColor: theme.palette.release.main,
+      color: theme.palette.secondary.contrastText,
+      fontWeight: 'bold',
+      "&:hover": {
+        backgroundColor: theme.palette.release.dark,
+        color: theme.palette.secondary.contrastText,
+      }
+    },
   }),
 );
 
 interface ExplorerItemProps {
-  article: API.CMS.Article,
+  article: API.CMS.Article;
+  open: boolean;
+  setOpen: (open: boolean) => void;
 }
 
-const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
+const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
   const { handleInTab, findTab, handleDualView } = Ide.useNav();
   const ide = Ide.useIde();
   const site = ide.session.site;
   const unsaved = Ide.useUnsaved(article);
-  const [open, setOpen] = React.useState(false);
   const [localeOpen, setLocaleOpen] = React.useState(false);
   const [articlePageOpen, setArticlePageOpen] = React.useState<API.CMS.SiteLocale>();
   const dualView = findTab(article)?.data?.dualView ? true : false;
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
 
-  const handleExpand = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  }
 
   const handleSavePages = () => {
     const unsaved: API.CMS.PageMutator[] = Object.values(ide.session.pages)
@@ -161,15 +147,13 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
   return (
     <>
       <ListItem className={classes.itemHover}>
-        <ListItemText
-          primary={<Typography
-            onClick={handleClick}
-            noWrap
+        <ListItemText onClick={() => setOpen(!open)}
+          primary={<Typography noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
         />
         {open ?
-          <IconButton className={classes.iconButton} onClick={handleClose}><ExpandLess /></IconButton> :
-          <IconButton className={classes.iconButton} onClick={handleExpand}><ExpandMore /></IconButton>}
+          <IconButton className={classes.iconButton} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
+          <IconButton className={classes.iconButton} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -220,10 +204,10 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article }) => {
               <TableRow className={classes.hoverRow}>
                 <TableCell className={classes.table} align="left">
                   <FormattedMessage id="explorer.pages.dualview" />
-                  <Switch color="primary" checked={dualView} onClick={() => handleDualView(article)} />
+                  <Switch checked={dualView} onClick={() => handleDualView(article)} />
                 </TableCell>
                 <TableCell className={classes.table} align="right">
-                  <ArticleOptions article={article} />
+                  <ArticleOptions article={article}/>
                 </TableCell>
               </TableRow>
 

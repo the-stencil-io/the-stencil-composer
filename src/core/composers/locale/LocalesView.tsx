@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Typography, Card } from '@material-ui/core';
+import { makeStyles, Theme, Avatar, Box, createStyles, Typography, Card } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,7 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { LocalesOverview } from './LocalesOverview';
 import { LocaleDisable } from './LocaleDisable';
@@ -43,8 +43,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.main
+      color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.locale.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -68,9 +74,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.release.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.release.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -84,29 +90,35 @@ const LocalesView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
   const locales = Object.values(site.locales);
+  const title = useIntl().formatMessage({ id: "locales" });
 
   return (
+    <>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="locales" />: {locales.length}</Typography>
+      </Box>
 
-    <div className={classes.container} >
-      <Card className={classes.card}>
-        <Typography variant="h3" className={classes.title}><FormattedMessage id="locales" /> </Typography>
-        <TableContainer component={Paper}>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="status" /></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {locales.map((locale, index) => (<Row key={index} site={site} locale={locale} />))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Card>
-      <LocalesOverview site={site} />
-    </div>
-
+      <div className={classes.container} >
+        <Card className={classes.card}>
+          <Typography variant="h3" className={classes.title}><FormattedMessage id="locales" /> </Typography>
+          <TableContainer component={Paper}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
+                  <TableCell className={classes.bold} align="left"><FormattedMessage id="status" /></TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody >
+                {locales.map((locale, index) => (<Row key={index} site={site} locale={locale} />))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+        <LocalesOverview site={site} />
+      </div>
+    </>
   );
 }
 

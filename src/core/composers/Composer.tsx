@@ -3,7 +3,8 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core';
 import { Layout, Ide } from '../deps';
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
-  WorkflowsTable, ReleasesView, LocalesView, ArticlesView
+  WorkflowsTable, ReleasesView, LocalesView, ArticlesView, ImportView, 
+  HelpView
 } from './';
 
 const useStyles = (props: { y: number }) => makeStyles((theme: Theme) =>
@@ -37,20 +38,25 @@ const Composer: React.FC<{}> = () => {
     return null;
   }
 
-  //composers which are not linked directly with an article
+  //composers which are NOT linked directly with an article
   const active = tabs[layout.session.history.open];
   if (active.id === 'releases') {
     return (<div className={classes.root}><ReleasesView /></div>);
   } else if (active.id === 'links') {
-    return (<div className={classes.root}><LinksView /></div>)
+    return (<div className={classes.root}><LinksView /></div>);
   } else if (active.id === 'newItem') {
-    return (<div className={classes.root}><Dashboard /></div>)
+    return (<div className={classes.root}><Dashboard /></div>);
   } else if (active.id === 'locales') {
-    return (<div className={classes.root}><LocalesView /></div>)
+    return (<div className={classes.root}><LocalesView /></div>);
   } else if (active.id === 'workflows') {
-    return (<div className={classes.root}><WorkflowsView /></div>)
+    return (<div className={classes.root}><WorkflowsView /></div>);
   } else if (active.id === 'articles') {
-    return (<div className={classes.root}><ArticlesView /></div>)
+    return (<div className={classes.root}><ArticlesView /></div>);
+  } else if (active.id === 'import') {
+    return (<div className={classes.root}><ImportView /></div>);
+    
+  } else if (active.id === 'help') {
+    return (<div className={classes.root}><HelpView /></div>);
   }
 
   //article-based composers

@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Collapse, Box, Typography } from '@material-ui/core';
+import { makeStyles, Theme, Avatar, createStyles, Collapse, Box, Typography } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -10,11 +10,16 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { FormattedMessage } from 'react-intl';
+import EditOutlined from '@material-ui/icons/EditOutlined';
+import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+
+
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 import { WorkflowRemovePage } from './WorkflowRemovePage';
 import { WorkflowDelete } from './WorkflowDelete';
+import { WorkflowEdit } from './WorkflowEdit';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,8 +31,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.main
+      color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.workflow.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -57,9 +68,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.workflow.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.workflow.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -72,21 +83,25 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const WorkflowsView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const workflows = Object.values(site.workflows);
+  const workflows = Object.values(site.workflows).sort((o1, o2) => o1.body.content.localeCompare(o2.body.content));
+  const title = useIntl().formatMessage({ id: "workflows" });
 
   return (
     <>
-      <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length} </Typography>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length}</Typography>
+      </Box>
 
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.bold} align="center" colSpan={2}><FormattedMessage id="workflow.technicalname" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
+              <TableCell className={classes.bold} align="left" colSpan={2}><FormattedMessage id="workflow.technicalname" /></TableCell>
+              <TableCell className={classes.bold} align="center"><FormattedMessage id="locale" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="articles" /></TableCell>
-              <TableCell className={classes.bold} align="center"></TableCell>
+              <TableCell className={classes.bold} align="center" width="10%"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -108,27 +123,38 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
   const classes = useRowStyles();
   const [open, setOpen] = React.useState(false);
   const articles = workflow.body.articles.map(articleId => site.articles[articleId]);
+  const [openDialog, setOpenDialog] = React.useState<"WorkflowEdit" | "WorkflowDelete" | undefined>();
 
   return (
     <>
+      {openDialog === 'WorkflowEdit' ? <WorkflowEdit workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'WorkflowDelete' ? <WorkflowDelete workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
+
       <TableRow key={workflow.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{workflow.body.locale}</TableCell>
         <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{site.locales[workflow.body.locale].body.value}</TableCell>
+        <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
         <TableCell className={classes.tableCell} align="center">{workflow.body.articles.length}</TableCell>
-        <TableCell className={classes.tableCell} align="center"><WorkflowDelete workflow={workflow} /></TableCell>
+        <TableCell className={classes.tableCell} align="right">
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("WorkflowEdit")}>
+            <EditOutlined />
+          </IconButton>
+          <IconButton className={classes.iconButton} onClick={() => setOpenDialog("WorkflowDelete")}>
+            <DeleteOutlinedIcon />
+          </IconButton>
+        </TableCell>
       </TableRow>
 
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={2}>
-              <Table size="small" aria-label="purchases">
+              <Table size="small">
                 <TableHead>
                   <TableRow>
                     <TableCell className={classes.column} align="left" style={{ paddingRight: 0 }}><FormattedMessage id="articles" /></TableCell>

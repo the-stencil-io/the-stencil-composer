@@ -1,15 +1,12 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  makeStyles, Avatar, Theme, Box, createStyles, Typography, IconButton, Table, TableBody, 
+  TableCell, TableContainer, TableRow, TableHead
+} from '@material-ui/core';
+
 import Paper from '@material-ui/core/Paper';
 import GetAppIcon from '@material-ui/icons/GetApp';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
@@ -23,8 +20,14 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       margin: theme.spacing(1),
-      color: theme.palette.primary.main
+      color: theme.palette.text.primary
     },
+    avatar: {
+      alignSelf: "center",
+      marginLeft: theme.spacing(1),
+      backgroundColor: theme.palette.release.main,
+      textTransform: 'uppercase'
+    }
   }));
 
 const useRowStyles = makeStyles((theme: Theme) =>
@@ -47,9 +50,9 @@ const useRowStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       padding: 2,
-      color: theme.palette.primary.dark,
+      color: theme.palette.release.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.release.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -62,9 +65,15 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const ReleasesView: React.FC<{}> = () => {
   const classes = useStyles();
   const releases = Object.values(Ide.useSite().releases);
+  const title = useIntl().formatMessage({ id: "releases" });
 
   return (
     <>
+      <Box display="flex">
+        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
+        <Typography variant="h3" className={classes.title}><FormattedMessage id="releases" />: {releases.length}</Typography>
+      </Box>
+
       <Typography variant="h3" className={classes.title}><FormattedMessage id="releases" /> </Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">

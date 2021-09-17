@@ -1,13 +1,9 @@
 import React from 'react';
-import { makeStyles, Typography, Table, Card } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import Checkbox from '@material-ui/core/Checkbox';
+import {
+  makeStyles, Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
+  TableCell, Checkbox, TableHead, TableRow
+} from '@material-ui/core';
 
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import { FormattedMessage } from 'react-intl';
@@ -22,6 +18,8 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'relative',
+    backgroundColor: theme.palette.article.main,
+    color: theme.palette.secondary.contrastText,
   },
   card: {
     margin: theme.spacing(1),
@@ -50,41 +48,52 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+
   },
   tableCell: {
     paddingTop: 0,
     paddingBottom: 0,
-  }
+  },
+  button: {
+    fontWeight: 'bold',
+    color: theme.palette.background.paper,
+    "&:hover, &.Mui-focusVisible": {
+      color: theme.palette.background.paper,
+      backgroundColor: theme.palette.article.dark,
+      fontWeight: 'bold',
+    }
+  },
+  buttonGroup: {
+    color: theme.palette.article.main
+  },
 }));
 
-const ArticleLinksEdit: React.FC<{onClose: () => void, articleId: API.CMS.ArticleId }> = (props) => {
+const getArticleLinks: (site: API.CMS.Site, articleId: API.CMS.ArticleId) => API.CMS.LinkId[] = (site, articleId) => {
+  return Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
+}
+
+const ArticleLinksEdit: React.FC<{ article: API.CMS.Article, onClose: () => void, articleId: API.CMS.ArticleId}> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
+
+  const handleChange = (event: any) => {
+    setSelectedLinks(event.target.checked);
+  };
+
+  const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
+  const links: API.CMS.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
+
   
-  const [articleId, setArticleId] = React.useState('');
-  const articleLinks: API.CMS.LinkId[] = Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
-  const [selectedLinks, setSelectedLinks] = React.useState(articleLinks);
-  
-  const links: API.CMS.Link[] = Object.values(site.links);
-
-  //check if link is associated with article
-
-  const isLink = (links: API.CMS.Link[], article: API.CMS.Article) => {
-    const articleLinks = links
-      .filter(l => l.body.articles[article.id] === props.articleId);
-    return articleLinks.length > 0;
-  }
-
-
-
   return (
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
-      <AppBar className={classes.appBar} color="default">
+      <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>"Article name"<FormattedMessage id="article.links.addremove" /></Typography>
-          <Button variant="text" onClick={props.onClose} color="primary"><FormattedMessage id='button.cancel' /></Button>
-          <Button variant="contained" onClick={props.onClose} color="primary" autoFocus ><FormattedMessage id='button.apply' /></Button>
+          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="article.links.addremove" /></Typography>
+          <ButtonGroup variant="text" className={classes.buttonGroup}>
+            <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
+            <Button className={classes.button} onClick={props.onClose} autoFocus ><FormattedMessage id='button.apply' /></Button>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
 
@@ -105,12 +114,12 @@ const ArticleLinksEdit: React.FC<{onClose: () => void, articleId: API.CMS.Articl
               {links.map((link, index) => (
                 <TableRow hover key={index}>
                   <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{link.body.locale}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
 
                   <TableCell className={classes.tableCell} align="center">
-                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} />
+                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={handleChange} />
                   </TableCell>
 
                 </TableRow>

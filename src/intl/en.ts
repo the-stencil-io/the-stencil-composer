@@ -1,6 +1,31 @@
 const en = {
 
 
+  'composer.select.article': 'Select articles',
+
+
+  'toolbar.preview': 'Live preview',
+  'toolbar.help': 'Help and user documentation',
+  'workflow.edit.title': 'Edit Workflow',
+
+  'article.create': 'Create Article',
+  'page.create': 'Create Page',
+  'link.create': 'Create link',
+  'workflow.create': 'Create Workflow',
+  'locale.create': 'Create locale',
+  'release.create': 'Create release',
+  'button.view.all.articles': 'View all Articles',
+  'button.view.all.pages': 'View all Pages',
+  'button.view.all.links': 'View all Links',
+  'button.view.all.workflows': 'View all Workflows',
+  'button.view.all.locales': 'View all locales',
+  'button.view.all.releases': 'View all releases',
+  'toolbar.import': 'Import data',
+  'imports': 'Imports',
+  'imports.select': 'Select a file to import',
+  'imports.import.action': 'Import selected',
+
+
   'pages': 'Pages',
   'articles': 'Articles',
   'workflows': 'Workflows',

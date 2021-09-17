@@ -1,41 +1,39 @@
 import React from 'react';
-import EditOutlined from '@material-ui/icons/EditOutlined';
 import {
   makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, IconButton
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup,
+  ListItemText, Checkbox
 } from '@material-ui/core'; import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
-    },
     select: {
-      margin: theme.spacing(1),
-      backgroundColor: theme.palette.background.paper
+      padding: theme.spacing(1),
+      marginTop: theme.spacing(3),
+    },
+    title: {
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.secondary.contrastText,
+      fontWeight: 300
     },
     button: {
-      // padding: 0,
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
+        color: theme.palette.link.main,
+        fontWeight: 'bold',
       }
     },
-    margin: {
-      marginRight: theme.spacing(1)
+    buttonGroup: {
+      color: theme.palette.link.main
     },
     iconButton: {
       padding: 2,
-      marginLeft: theme.spacing(1),
+      paddingLeft: theme.spacing(1),
       color: theme.palette.primary.dark,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
+        backgroundColor: theme.palette.link.main,
         color: theme.palette.background.paper,
         "& .MuiSvgIcon-root": {
           color: theme.palette.background.paper,
@@ -48,105 +46,132 @@ const useStyles = makeStyles((theme: Theme) =>
 const linkTypes: API.CMS.LinkType[] = ["internal", "external", "phone"];
 
 interface LinkEditProps {
-  link: API.CMS.Link;
+  link: API.CMS.Link,
+  open: boolean,
+  onClose: () => void,
 }
 
-const LinkEdit: React.FC<LinkEditProps> = ({ link }) => {
+const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
 
-  const [open, setOpen] = React.useState(false);
+
   const [locale, setLocale] = React.useState(link.body.locale);
   const [content, setContent] = React.useState(link.body.content);
   const [contentType, setContentType] = React.useState(link.body.contentType);
   const [description, setDescription] = React.useState(link.body.description);
-
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
-
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>(link.body.articles);
+  const articles: API.CMS.Article[] = locale ? ide.session.getArticlesForLocale(locale) : Object.values(site.articles);
+  
 
   const handleCreate = () => {
-    const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: link.body.articles };
+    const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: articleId };
     console.log("entity", entity)
     ide.service.update().link(entity).then(success => {
       console.log(success)
-      handleClose();
+      onClose();
       ide.actions.handleLoadSite();
     });
   }
 
   return (<>
-    <span className={classes.margin}>
-      <IconButton className={classes.iconButton} onClick={handleClickOpen}>
-        <EditOutlined />
-      </IconButton>
-    </span>
-    <Dialog open={open} onClose={handleClose}>
-      <DialogTitle> <FormattedMessage id="link.edit.title" /></DialogTitle>
+    <Dialog open={true} onClose={onClose}>
+      <DialogTitle className={classes.title}> <FormattedMessage id="link.edit.title" /></DialogTitle>
       <DialogContent>
-        <Typography className={classes.root}>
-          <FormControl variant="outlined" className={classes.select} fullWidth>
-            <InputLabel ><FormattedMessage id="link.type" /></InputLabel>
-            <Select
-              value={contentType}
-              onChange={({ target }) => setContentType(target.value as any)}
-              label={<FormattedMessage id="link.type" />}
-            >
-              {linkTypes.map((link, index) => (
-                <MenuItem key={index} value={link}>{link}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
 
-          <FormControl variant="outlined" className={classes.select} fullWidth>
-            <InputLabel ><FormattedMessage id="locale" /></InputLabel>
-            <Select
-              value={locale}
-              onChange={({ target }) => setLocale(target.value as any)}
-              label={<FormattedMessage id="locale" />}
-            >
-              {locales.map((locale, index) => (
-                <MenuItem key={index} value={locale.body.value}>{locale.body.value}</MenuItem>
-              ))}
-              <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
+        <FormControl variant="outlined" className={classes.select} fullWidth>
+          <InputLabel ><FormattedMessage id="link.type" /></InputLabel>
+          <Select
+            value={contentType}
+            onChange={({ target }) => setContentType(target.value as any)}
+            label={<FormattedMessage id="link.type" />}
+          >
+            {linkTypes.map((link, index) => (
+              <MenuItem key={index} value={link}>{link}</MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-            </Select>
-          </FormControl>
+        <FormControl variant="outlined" className={classes.select} fullWidth>
+          <InputLabel ><FormattedMessage id="locale" /></InputLabel>
+          <Select
+            value={locale}
+            label={<FormattedMessage id="locale" />}
+            onChange={({ target }) => {
+              const locale: API.CMS.LocaleId = target.value as any;
+              if (articleId) {
+                const newArticleId = [...articleId]
+                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
+                for (const nextId of articleId) {
+                  if (!articlesForNewLocale.includes(nextId)) {
+                    const index = newArticleId.indexOf(nextId);
+                    newArticleId.splice(index, 1);
+                  }
+                }
+                setArticleId(newArticleId);
+              }
+              setLocale(locale);
+            }}>
+          
+            <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
+            {locales.map((locale, index) => (
+              <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
+            ))}
+
+          </Select>
+        </FormControl>
+        <TextField
+          label={<FormattedMessage id="link.composer.descriptionlabel" />}
+          variant="outlined"
+          placeholder={link.body.description}
+          helperText={<FormattedMessage id="link.composer.descriptionhelper" />}
+          fullWidth
+          required
+          className={classes.select}
+          value={description}
+          onChange={({ target }) => setDescription(target.value as any)} />
+
+        <FormControl variant="outlined" fullWidth>
           <TextField
-            label={<FormattedMessage id="link.composer.descriptionlabel" />}
+            label={<FormattedMessage id="link.content" />}
             variant="outlined"
-            placeholder={link.body.description}
-            helperText={<FormattedMessage id="link.composer.descriptionhelper" />}
-            fullWidth
             required
+            placeholder={link.body.content}
+            helperText={<FormattedMessage id="link.composer.valuehelper" />}
+            fullWidth
             className={classes.select}
-            value={description}
-            onChange={({ target }) => setDescription(target.value as any)} />
+            value={content}
+            onChange={({ target }) => setContent(target.value as any)} />
+        </FormControl>
+        <FormControl variant="outlined" className={classes.select} fullWidth>
+          <InputLabel><FormattedMessage id='link.composer.select.article' /></InputLabel>
+          <Select
+            multiline
+            multiple
+            onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
+            value={articleId}
+            label={<FormattedMessage id='link.composer.select.article' />}
+            renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
+          >
+            {articles.map((article, index) => (
 
-          <FormControl variant="outlined" fullWidth>
-            <TextField
-              label={<FormattedMessage id="link.content" />}
-              variant="outlined"
-              required
-              placeholder={link.body.content}
-              helperText={<FormattedMessage id="link.composer.valuehelper" />}
-              fullWidth
-              className={classes.select}
-              value={content}
-              onChange={({ target }) => setContent(target.value as any)} />
-          </FormControl>
-        </Typography>
+
+              <MenuItem key={index} value={article.id}>
+                <Checkbox checked={articleId.indexOf(article.id) > -1} />
+                <ListItemText primary={article.body.name} />
+
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
       </DialogContent >
       <DialogActions>
-        <Button variant="text" onClick={handleClose} color="primary"><FormattedMessage id="button.cancel" /></Button>
-        <Button variant="contained" onClick={handleCreate} color="primary" autoFocus disabled={!content || !description}  ><FormattedMessage id="button.update" /></Button>
+        <ButtonGroup variant="text">
+          <Button className={classes.button} onClick={onClose}><FormattedMessage id="button.cancel" /></Button>
+          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!content || !description}  ><FormattedMessage id="button.update" /></Button>
+        </ButtonGroup>
       </DialogActions>
 
     </Dialog >
