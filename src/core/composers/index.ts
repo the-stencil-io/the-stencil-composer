@@ -8,3 +8,4 @@ export * from './article';
 export * from './locale';
 export * from './release';
 export * from './import';
+export * from './help';
