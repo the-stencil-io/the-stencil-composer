@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typogr
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ArticleComposer, ArticlesView } from './article';
+import { ArticleComposer } from './article';
 import { LinkComposer } from './link';
 import { WorkflowComposer } from './workflow';
 import { LocaleComposer } from './locale';

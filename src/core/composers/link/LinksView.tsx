@@ -126,11 +126,11 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
  
-  console.log("Link type " + link.body.contentType)
+ /* console.log("Link type " + link.body.contentType)
   console.log("Link content " + link.body.content);
   console.log("Link description " +  link.body.description);
 
-
+*/
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}

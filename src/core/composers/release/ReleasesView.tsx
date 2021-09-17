@@ -1,12 +1,9 @@
 import React from 'react';
-import { makeStyles, Avatar, Theme, Box, createStyles, Typography } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
+import {
+  makeStyles, Avatar, Theme, Box, createStyles, Typography, IconButton, Table, TableBody, 
+  TableCell, TableContainer, TableRow, TableHead
+} from '@material-ui/core';
+
 import Paper from '@material-ui/core/Paper';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import { FormattedMessage, useIntl } from 'react-intl';
