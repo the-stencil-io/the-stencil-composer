@@ -11,7 +11,6 @@ import { API, Ide } from '../../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     select: {
-      padding: theme.spacing(1),
       marginTop: theme.spacing(3),
     },
     title: {

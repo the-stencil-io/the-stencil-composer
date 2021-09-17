@@ -10,9 +10,6 @@ import { API, Ide } from '../../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
-    },
     title: {
       backgroundColor: theme.palette.article.main,
       color: theme.palette.secondary.contrastText,
@@ -27,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover, &.Mui-focusVisible": {
         color: theme.palette.article.main,
         fontWeight: 'bold',
-        }
+      }
     },
     buttonGroup: {
       color: theme.palette.article.main
@@ -63,13 +60,15 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const articles: API.CMS.Article[] = Object.values(site.articles);
 
   return (
-    <Dialog  open={true} onClose={onClose} >
+    <Dialog open={true} onClose={onClose} >
       <DialogTitle className={classes.title}><FormattedMessage id='article.composer.title' /></DialogTitle>
 
       <DialogContent>
-        <Typography className={classes.root}>
+     
+        <Typography component={'div'}>
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='article.composer.parent' /></InputLabel>
+            
             <Select
               value={parentId}
               onChange={({ target }) => setParentId(target.value as any)}
@@ -80,27 +79,27 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               ))}
               <MenuItem value={""}><FormattedMessage id='article.composer.parent.unselected' /></MenuItem>
             </Select>
+            
           </FormControl >
+            <TextField
+              fullWidth
+              className={classes.select}
+              value={order}
+              type={"number"}
+              variant="outlined"
+              placeholder="100"
+              helperText={<FormattedMessage id='article.composer.orderhelper' />}
+              onChange={({ target }) => setOrder(target.value as any)}
+            />
 
-          <TextField
-            fullWidth
-            className={classes.select}
-            value={order}
-            type={"number"}
-            variant="outlined"
-            placeholder="100"
-            helperText={<FormattedMessage id='article.composer.orderhelper' />}
-            onChange={({ target }) => setOrder(target.value as any)}
-          />
-
-          <TextField
-            className={classes.select}
-            label={<FormattedMessage id='article.name' />}
-            variant="outlined"
-            fullWidth
-            required
-            value={name}
-            onChange={({ target }) => setName(target.value)} />
+            <TextField
+              className={classes.select}
+              label={<FormattedMessage id='article.name' />}
+              variant="outlined"
+              fullWidth
+              required
+              value={name}
+              onChange={({ target }) => setName(target.value)} />
         </Typography>
 
       </DialogContent>
@@ -113,6 +112,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
       </DialogActions>
     </Dialog>
+
   );
 }
 

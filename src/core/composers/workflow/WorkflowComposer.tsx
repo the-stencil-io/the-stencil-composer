@@ -7,7 +7,6 @@ import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
-
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
@@ -15,8 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.secondary.contrastText,
     },
     select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },

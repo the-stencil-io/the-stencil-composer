@@ -11,7 +11,7 @@ import { LocaleComposer } from './locale';
 import { ReleaseComposer } from './release';
 import { NewPage } from './page';
 
-import { API, Ide } from '../deps';
+import { API, Ide, Layout } from '../deps';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -68,15 +68,15 @@ interface CardData {
   buttonViewAll: string;
   color: string;
   composer: (handleClose: () => void) => React.ReactChild;
-  //viewAll: (handleClose: () => void) => React.ReactChild;
+  //viewer: (() => void) => xxx;
 }
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 
-const createCards: (site: API.CMS.Site, theme: Theme) => CardData[] = (_site, theme) => ([
+const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, theme) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
-    viewAll: () => (<ArticlesView />),
+    viewer: () => (<ArticlesView />),
     title: "composer.article.title",
     desc: "composer.article.desc",
     color: theme.palette.article?.main,
@@ -145,7 +145,6 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
       <CardHeader className={classes.cardHeader}
         avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
         title={<Typography variant="h2">{title}</Typography>} />
-
 
       <CardContent className={classes.cardContent}>
         <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>

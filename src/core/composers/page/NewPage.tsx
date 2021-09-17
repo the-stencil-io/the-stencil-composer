@@ -2,7 +2,7 @@ import React from 'react';
 import {
   makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
-  ButtonGroup
+  ButtonGroup, Typography
 } from '@material-ui/core';
 import { FormattedMessage } from 'react-intl';
 
@@ -15,8 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.secondary.contrastText,
     },
     select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
     },
@@ -33,8 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
+const NewPage: React.FC<{ onClose: () => void, articleId?: API.CMS.ArticleId }> = (props) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
@@ -57,6 +55,8 @@ const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> =
     <Dialog open={true} onClose={props.onClose}>
       <DialogTitle className={classes.title} ><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
+        <Typography component={'div'}>
+
           <FormattedMessage id='newpage.info' />
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='article.name' /></InputLabel>
@@ -82,12 +82,13 @@ const NewPage: React.FC<{onClose: () => void, articleId?: API.CMS.ArticleId }> =
               ))}
             </Select>
           </FormControl >
+        </Typography>
       </DialogContent>
 
       <DialogActions>
-      <ButtonGroup variant="text" className={classes.buttonGroup}>
-        <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-        <Button onClick={handleCreate} autoFocus disabled={!locale} className={classes.button}><FormattedMessage id='button.create' /></Button>
+        <ButtonGroup variant="text" className={classes.buttonGroup}>
+          <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+          <Button onClick={handleCreate} autoFocus disabled={!locale} className={classes.button}><FormattedMessage id='button.create' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>
