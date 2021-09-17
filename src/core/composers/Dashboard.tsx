@@ -67,16 +67,17 @@ interface CardData {
   buttonCreate: string;
   buttonViewAll: string;
   color: string;
+  onView: () => void;
   composer: (handleClose: () => void) => React.ReactChild;
   //viewer: (() => void) => xxx;
 }
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 
-const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, theme) => ([
+const createCards: ( site: API.CMS.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
-    viewer: () => (<ArticlesView />),
+    onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
     title: "composer.article.title",
     desc: "composer.article.desc",
     color: theme.palette.article?.main,
@@ -86,6 +87,7 @@ const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, t
   },
   {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
+    onView: () => console.log("nothing to see here"),
     title: "composer.page.title",
     desc: "composer.page.desc",
     color: theme.palette.page?.main,
@@ -96,6 +98,7 @@ const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, t
 
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
+    onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
     title: "composer.link.title",
     desc: "composer.link.desc",
     color: theme.palette.link?.main,
@@ -106,6 +109,7 @@ const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, t
 
   {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
+    onView: () => layout.actions.handleTabAdd({ id: 'workflows', label: "Workflows" }),
     title: "composer.workflow.title",
     desc: "composer.workflow.desc",
     color: theme.palette.workflow?.main,
@@ -116,6 +120,7 @@ const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, t
 
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
+    onView: () => layout.actions.handleTabAdd({ id: 'locales', label: "Locales" }),
     title: "composer.locale.title",
     desc: "composer.locale.desc",
     color: theme.palette.locale?.main,
@@ -126,6 +131,7 @@ const createCards: ( site: API.CMS.Site, theme: Theme) => CardData[] = (_site, t
 
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
+    onView: () => layout.actions.handleTabAdd({ id: 'releases', label: "Releases" }),
     title: "composer.release.title",
     desc: "composer.release.desc",
     color: theme.palette.release?.main,
@@ -154,7 +160,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
         <ButtonGroup variant="text" fullWidth>
           <Button className={classes.button} onClick={props.onCreate}><FormattedMessage id={props.data.buttonCreate} /></Button>
           <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>
-            <Button className={classes.button} onClick={() => console.error("not implemented")}><FormattedMessage id={props.data.buttonViewAll} /></Button>
+            <Button className={classes.button} onClick={props.data.onView}><FormattedMessage id={props.data.buttonViewAll} /></Button>
           </Tooltip>
         </ButtonGroup>
       </CardActions>
@@ -167,10 +173,11 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
 const Dashboard: React.FC<{}> = () => {
   const classes = useStyles();
   const theme = useTheme();
+  const layout = Layout.useContext();
   const { site } = Ide.useIde().session;
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-  const cards = React.useMemo(() => createCards(site, theme), [site]);
+  const cards = React.useMemo(() => createCards(site, theme, layout), [site, layout]);
 
   return (
     <div className={classes.root}>
