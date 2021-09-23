@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+import { makeStyles, createStyles, } from '@mui/styles';
 import { Layout, Ide } from '../deps';
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
