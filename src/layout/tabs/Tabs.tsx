@@ -1,7 +1,7 @@
 import React from 'react';
 
-import {Tabs as MaterialTabs, Tab as MaterialTab, makeStyles} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import {Tabs as MaterialTabs, Tab as MaterialTab, makeStyles} from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { useLayout } from '../context';
 

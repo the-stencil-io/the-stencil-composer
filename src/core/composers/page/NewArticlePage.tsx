@@ -2,7 +2,7 @@ import React from 'react';
 import {
   Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup,
   makeStyles, Theme, createStyles,
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';

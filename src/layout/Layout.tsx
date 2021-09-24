@@ -3,11 +3,11 @@ import clsx from 'clsx';
 
 import { 
   CssBaseline, Drawer, AppBar, Toolbar as MaterialToolbar, Typography, IconButton, InputBase 
-} from '@material-ui/core';
+} from '@mui/material';
 
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import SearchIcon from '@material-ui/icons/Search';
+import MenuIcon from '@mui/icons-material//Menu';
+import ChevronLeftIcon from '@mui/icons-material//ChevronLeft';
+import SearchIcon from '@mui/icons-material/Search';
 
 import Badges from './badges';
 import Tabs from './tabs';

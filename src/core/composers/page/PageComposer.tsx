@@ -1,5 +1,5 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme, Box, useTheme } from '@material-ui/core';
+import { makeStyles, createStyles, Theme, Box, useTheme } from '@mui/material';
 
 import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
 import { API, Ide } from '../../deps';

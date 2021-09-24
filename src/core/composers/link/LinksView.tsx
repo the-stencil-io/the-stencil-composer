@@ -1,18 +1,18 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Avatar, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import AddIcon from '@material-ui/icons/AddOutlined';
-import EditOutlined from '@material-ui/icons/EditOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { makeStyles, Theme, createStyles, Avatar, Collapse, Box, Typography, Tooltip } from '@mui/material';
+import IconButton from '@mui/material/IconButton';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AddIcon from '@mui/icons-material/AddOutlined';
+import EditOutlined from '@mui/icons-material/EditOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 

@@ -2,11 +2,11 @@ import React from 'react';
 import {
   makeStyles, Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
   TableRow, TableHead
-} from '@material-ui/core';
+} from '@mui/material';
 
-import Checkbox from '@material-ui/core/Checkbox';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+import Checkbox from '@mui/material/Checkbox';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
