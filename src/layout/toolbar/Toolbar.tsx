@@ -3,7 +3,7 @@ import React from 'react';
 import {
   makeStyles, withStyles, createStyles, Theme,
   List, ListItem, Tooltip, IconButton, Badge, Avatar, Box
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { FormattedMessage } from 'react-intl';
 

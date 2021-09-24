@@ -1,8 +1,9 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
+  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
   Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 

@@ -3,7 +3,7 @@ import {
   makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
   ButtonGroup, Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';

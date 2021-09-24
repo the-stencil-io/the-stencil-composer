@@ -2,10 +2,10 @@ import React from 'react';
 import {
   makeStyles, Avatar, Theme, Box, createStyles, Typography, IconButton, Table, TableBody, 
   TableCell, TableContainer, TableRow, TableHead
-} from '@material-ui/core';
+} from '@mui/material';
 
-import Paper from '@material-ui/core/Paper';
-import GetAppIcon from '@material-ui/icons/GetApp';
+import Paper from '@mui/material/Paper';
+import GetAppIcon from '@mui/icons-material/GetApp';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { API, Ide } from '../../deps';

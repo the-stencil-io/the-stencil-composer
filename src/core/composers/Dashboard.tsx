@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
-import {
-  Button, ButtonGroup, Card, CardHeader, CardActions, CardContent,
-  Typography, Tooltip, Avatar, Box
-} from '@material-ui/core';
 
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import { makeStyles, createStyles, useTheme } from '@mui/styles';
+import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
+  Typography, Tooltip, Avatar, Box } from '@mui/material';
+
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
 
 import { FormattedMessage, useIntl } from 'react-intl';
 

@@ -1,5 +1,6 @@
 import React from 'react';
-import { createStyles, Theme, makeStyles, Button, alpha } from '@material-ui/core';
+
+import { createStyles, Theme, makeStyles, Button, alpha } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Ide, API } from '../deps';
 import { ArticleComposer } from '../composers';

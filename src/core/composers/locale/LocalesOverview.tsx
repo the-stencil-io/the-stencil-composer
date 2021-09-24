@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme, Typography, Table, Tooltip, Card, Paper } from '@material-ui/core';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
-import CheckCircleOutlineIcon from '@material-ui/icons/CheckCircleOutline';
-import ErrorOutlineIcon from '@material-ui/icons/ErrorOutline';
+import { makeStyles, createStyles, Theme, Typography, Table, Tooltip, Card, Paper } from '@mui/material';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableRow from '@mui/material/TableRow';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { FormattedMessage } from 'react-intl';
 
 import { API } from '../../deps';

@@ -2,7 +2,7 @@ import React from 'react';
 import {
   makeStyles, createStyles, Theme, Avatar, Box, Typography, Card, 
   CardActions, Button, FormControl, Input
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 

@@ -1,13 +1,13 @@
 import React from 'react';
 
-import LibraryBooksOutlinedIcon from '@material-ui/icons/LibraryBooksOutlined';
-import NewReleasesOutlinedIcon from '@material-ui/icons/NewReleasesOutlined';
-import LinkIcon from '@material-ui/icons/Link';
-import TranslateIcon from '@material-ui/icons/Translate';
-import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
-import HelpOutlineOutlinedIcon from '@material-ui/icons/HelpOutlineOutlined';
-import ImportExportIcon from '@material-ui/icons/ImportExport';
+import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
+import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
+import LinkIcon from '@mui/icons-material/Link';
+import TranslateIcon from '@mui/icons-material/Translate';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
+import ImportExportIcon from '@mui/icons-material/ImportExport';
 
 import { Explorer } from '../explorer';
 

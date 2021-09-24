@@ -1,7 +1,8 @@
-import { createTheme } from "@material-ui/core/styles";
-import { PaletteOptions } from '@material-ui/core/styles/createPalette';
+import { createTheme } from "@mui/material/styles";
+//import { PaletteOptions } from "@mui/system";
+//import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
-declare module '@material-ui/core/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface Palette {
     article: Palette['primary'];
     page: Palette['primary'];

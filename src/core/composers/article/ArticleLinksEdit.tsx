@@ -1,9 +1,12 @@
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 import {
-  makeStyles, Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
-  TableCell, Checkbox, TableHead, TableRow, AppBar, Toolbar
-} from '@material-ui/core';
+  Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
+  TableCell, Checkbox, TableHead, TableRow
+} from '@mui/material';
 
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -77,7 +80,7 @@ const getArticleLinks: (site: API.CMS.Site, articleId: API.CMS.ArticleId) => API
 interface ArticleLinksEditProps {
   article: API.CMS.Article,
   articleId: API.CMS.ArticleId,
-  onClose: () => void, 
+  onClose: () => void,
 }
 
 

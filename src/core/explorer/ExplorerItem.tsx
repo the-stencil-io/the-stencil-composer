@@ -3,11 +3,11 @@ import {
   makeStyles, Theme, createStyles, Typography, TableContainer,
   Table, TableRow, TableCell, TableBody, IconButton,
   Button, ListItem, ListItemText, Collapse, Switch
-} from '@material-ui/core';
+} from '@mui/material';
 
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
 import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';

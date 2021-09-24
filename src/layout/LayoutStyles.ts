@@ -1,4 +1,5 @@
-import { makeStyles, alpha } from '@material-ui/core/styles';
+import { makeStyles } from '@mui/styles';
+import { alpha } from '@mui/material/styles';
 
 const useStyles = (props: { drawerWidth: number }) => makeStyles((theme) => ({
   root: {

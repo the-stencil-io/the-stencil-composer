@@ -1,16 +1,19 @@
 import React from 'react';
 import {
-  makeStyles, Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
-  TableRow, TableHead, Checkbox, AppBar, Toolbar
-} from '@material-ui/core';
+  makeStyles, Typography, Table, Card, Dialog, Button, ButtonGroup,
+  TableBody, TableCell, TableRow, TableHead, Theme
+} from '@mui/material';
 
+import Checkbox from '@mui/material/Checkbox';
+import AppBar from '@mui/material/AppBar';
+import Toolbar from '@mui/material/Toolbar';
 
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     margin: theme.spacing(2),
@@ -152,9 +155,9 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
                   <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
-          
-                  <Checkbox size="small" color="secondary" 
-                      checked={selectedWorkflows.includes(workflow.id) === true} 
+
+                    <Checkbox size="small" color="secondary"
+                      checked={selectedWorkflows.includes(workflow.id) === true}
                       onChange={(event) => handleChange(event, workflow.id)} />
                   </TableCell>
 
