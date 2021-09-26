@@ -1,5 +1,8 @@
 import { createTheme, PaletteOptions } from "@mui/material/styles";
 
+//import { PaletteOptions } from "@mui/system";
+//import { PaletteOptions } from '@material-ui/core/styles/createPalette';
+
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -106,7 +109,10 @@ const palette = {
     contrastText: '#fff'
   },
   activeItem: {
-    main: '#edf6f9'
+    main: '#edf6f9',
+    dark: '#edf6f9',
+    light: '#edf6f9',
+    contrastText: '#000'
   }
 
 
@@ -186,12 +192,12 @@ const siteTheme = createTheme({
 
     MuiListItemText: {
       styleOverrides: {
-          root: {
-            paddingTop: 0,
-            paddingBottom: 0,
-            marginTop: 0,
-            marginBottom: 0,
-          },
+        root: {
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0,
+          marginBottom: 0,
+        },
         primary: {
           color: palette.text.primary,
           "&:hover": {
@@ -199,7 +205,7 @@ const siteTheme = createTheme({
             fontWeight: 'bold',
           }
         },
-  
+
         secondary: {
           fontSize: '.9rem',
           color: palette.text.primary,
@@ -208,12 +214,12 @@ const siteTheme = createTheme({
             fontWeight: 'bold',
           }
         }
-        
+
       }
     },
 
     MuiButton: {
-      
+
       styleOverrides: {
         root: {
           fontVariant: 'body2',
@@ -222,9 +228,9 @@ const siteTheme = createTheme({
           borderWidth: '2px solid !important',
         }
       },
-          defaultProps: {
-          variant: 'outlined',
-          }
+      defaultProps: {
+        variant: 'outlined',
+      }
     },
 
     MuiPaper: {
@@ -235,9 +241,9 @@ const siteTheme = createTheme({
           transition: 'unset'
         }
       },
-        defaultProps: {
-          square: true,
-        }
+      defaultProps: {
+        square: true,
+      }
     },
 
 
