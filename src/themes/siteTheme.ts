@@ -1,4 +1,4 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, PaletteOptions } from "@mui/material/styles";
 //import { PaletteOptions } from "@mui/system";
 //import { PaletteOptions } from '@material-ui/core/styles/createPalette';
 
