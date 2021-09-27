@@ -1,9 +1,28 @@
 import API from '../';
 
-const createService = (init: {store?: API.CMS.Store, url?: string}): API.CMS.Service => {
-  const backend: API.CMS.Store = init.url ? store(init.url): init.store as any;
-  const getSite = async () => backend.fetch("/").then((data) => data as any)
+const createService = (init: { store?: API.CMS.Store, url?: string }): API.CMS.Service => {
+  const backend: API.CMS.Store = init.url ? store(init.url) : init.store as any;
   
+  const getSite: () => Promise<API.CMS.Site> = async () => backend.fetch("/").then((data) => data as any)
+    .catch(resp => {
+
+        // finish error handling
+
+      const result: API.CMS.Site = {
+        contentType: 'NO_CONNECTION',
+        name: "not-connected",
+        articles: {},
+        links: {},
+        locales: {},
+        pages: {},
+        releases: {},
+        workflows: {}
+      };
+      
+      return result;
+    })
+
+
   return {
     getSite,
     create: () => new CreateBuilderImpl(backend),
@@ -21,7 +40,7 @@ class CreateBuilderImpl implements API.CMS.CreateBuilder {
     return this._backend.fetch(`/`, { method: "POST" }).then((data) => data as any)
   }
   async importData(init: string): Promise<void> {
-    return this._backend.fetch(`/migrations`, { method: "POST", body: init}).then((data) => data as any)
+    return this._backend.fetch(`/migrations`, { method: "POST", body: init }).then((data) => data as any)
   }
   async release(init: API.CMS.CreateRelease): Promise<API.CMS.Release> {
     return this._backend.fetch(`/releases`, { method: "POST", body: JSON.stringify(init) }).then((data) => data as any)
@@ -106,7 +125,7 @@ const store: (initUrl: string) => API.CMS.Store = (initUrl: string) => ({
         "Content-Type": "application/json;charset=UTF-8"
       }
     };
-  
+
     const url = initUrl;
     const finalInit: RequestInit = Object.assign(defRef, req ? req : {});
 
@@ -126,7 +145,7 @@ const store: (initUrl: string) => API.CMS.Store = (initUrl: string) => ({
           });
         }
         return response.json();
-      })
+      });
   }
 });
 
