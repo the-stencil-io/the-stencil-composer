@@ -215,11 +215,11 @@ const siteTheme = createTheme({
           borderRadius: 0,
           textTransform: 'capitalize',
           borderWidth: '2px solid !important',
-        },
+        }
       },
           defaultProps: {
           variant: 'outlined',
-          },
+          }
     },
 
     MuiPaper: {
@@ -228,11 +228,11 @@ const siteTheme = createTheme({
           elevation: 1,
           borderColor: palette.secondary.main,
           transition: 'unset'
-        },
+        }
       },
         defaultProps: {
           square: true,
-        },
+        }
     },
 
 
