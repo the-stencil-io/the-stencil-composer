@@ -48,8 +48,11 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: API.CMS.ArticleId }> 
     })
   }
 
+  const definedLocales: API.CMS.LocaleId[] = Object.values(ide.session.site.pages)
+    .filter(p => p.body.article === articleId).map(p => p.body.locale);
+
   const articles: API.CMS.Article[] = Object.values(site.articles);
-  const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
+  const locales: API.CMS.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
 
   return (<>
     <Dialog open={true} onClose={props.onClose}>
@@ -72,14 +75,18 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: API.CMS.ArticleId }> 
           </FormControl >
           <FormControl variant="outlined" className={classes.select} fullWidth>
             <InputLabel><FormattedMessage id='locale' /></InputLabel>
+
+
             <Select
               value={locale}
               onChange={({ target }) => setLocale(target.value as any)}
               label={<FormattedMessage id='locale' />}
             >
-              {locales.map((locale, index) => (
-                <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
+          
+            {locales.map((locale) => ( 
+              <MenuItem value={locale.id}>{locale.body.value}</MenuItem>
               ))}
+          
             </Select>
           </FormControl >
         </Typography>

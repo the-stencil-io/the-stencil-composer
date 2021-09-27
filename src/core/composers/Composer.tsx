@@ -34,6 +34,10 @@ const Composer: React.FC<{}> = () => {
   const classes = useStyles(layout.session.dimensions);
   const tabs = layout.session.tabs;
 
+  if(site.contentType === "NO_CONNECTION") {
+    return (<div>{site.contentType}</div>); 
+  }
+
   if (tabs.length === 0) {
     return null;
   }

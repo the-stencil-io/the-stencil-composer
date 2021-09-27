@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
+    fontWeight: 500
 
   },
   tableCell: {

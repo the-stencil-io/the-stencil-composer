@@ -14,7 +14,7 @@ declare namespace CMS {
   
   interface Site {
     name: string,
-    contentType: "OK" | "NOT_CREATED" | "EMPTY" | "ERRORS",
+    contentType: "OK" | "NOT_CREATED" | "EMPTY" | "ERRORS" | "NO_CONNECTION",
     locales: Record<string, SiteLocale>,
     pages: Record<PageId, Page>,
     links: Record<LinkId, Link>,
@@ -68,6 +68,7 @@ declare namespace CMS {
     parentId?: ArticleId, 
     name: string, 
     order: number
+    links: LinkId[] | undefined
   }
 
   interface Release {

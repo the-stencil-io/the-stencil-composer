@@ -1,6 +1,11 @@
 import React from 'react';
 import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
-import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Typography, Tooltip, Avatar } from '@material-ui/core';
+import {
+  Button, ButtonGroup, Card, CardHeader, CardActions, CardContent,
+  Typography, Tooltip, Avatar, Box
+} from '@material-ui/core';
+
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -56,6 +61,11 @@ const useItemStyles = makeStyles((theme: Theme) =>
     },
     buttonGroup: {
       width: '100%',
+    },
+    box: {
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      paddingRight: theme.spacing(2),
     }
   }),
 );
@@ -74,7 +84,7 @@ interface CardData {
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 
-const createCards: ( site: API.CMS.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
+const createCards: (site: API.CMS.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
@@ -150,7 +160,13 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
     <Card className={classes.card} variant="elevation">
       <CardHeader className={classes.cardHeader}
         avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
-        title={<Typography variant="h2">{title}</Typography>} />
+        title={
+          <Box display="flex" className={classes.box}>
+            <Typography variant="h2">{title}</Typography>
+            <Tooltip title={"Item help: Coming soon!"}><HelpOutlineIcon fontSize="small" /></Tooltip>
+          </Box>
+        }
+      />
 
       <CardContent className={classes.cardContent}>
         <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>

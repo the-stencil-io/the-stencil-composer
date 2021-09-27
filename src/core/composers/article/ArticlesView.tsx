@@ -19,6 +19,7 @@ import { FormattedMessage, useIntl } from 'react-intl';
 import { ArticleDeletePage, ArticleDelete, ArticleEdit } from '../article';
 
 import { API, Ide } from '../../deps';
+import { NewPage } from '../page';
 
 
 
@@ -120,7 +121,7 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
   const classes = useRowStyles();
   const [expand, setExpand] = React.useState(false);
   const [pageId, setPageId] = React.useState<string | undefined>();
-  const [openDialog, setOpenDialog] = React.useState<"EditArticle" | "DeleteArticle" | 'ArticleDeletePage' | undefined>();
+  const [openDialog, setOpenDialog] = React.useState<"EditArticle" | "DeleteArticle" | 'ArticleDeletePage' | 'NewPage' | undefined>();
   const parentName = article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "";
 
   const pages = Object.values(site.pages).filter(page => page.body.article === article.id);
@@ -130,6 +131,8 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
       {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === "ArticleDeletePage" && pageId ? <ArticleDeletePage pageId={pageId} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === "NewPage" ? <NewPage articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
+
 
       <TableRow key={article.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
@@ -139,14 +142,18 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
         </TableCell>
         <TableCell className={classes.tableCell} align="left">{parentName}{article.body.name}</TableCell>
         <TableCell className={classes.tableCell} align="center">{article.body.order}</TableCell>
-        <TableCell className={classes.tableCell} align="center">{pages.length}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{
+          pages.map(p => site.locales[p.body.locale])
+               .map(l => l.body.value)
+               .join("/") }
+        </TableCell>
         <TableCell className={classes.tableCell} align="right">
           <IconButton className={classes.iconButton} onClick={() => setOpenDialog("EditArticle")}>
             <EditOutlined />
           </IconButton>
           <IconButton className={classes.iconButton}>
             <Tooltip title={<FormattedMessage id="pages.add" />}>
-              <AddIcon />
+              <AddIcon onClick={() => setOpenDialog('NewPage')} />
             </Tooltip>
           </IconButton>
           <IconButton className={classes.iconButton} onClick={() => setOpenDialog("DeleteArticle")}>
@@ -186,7 +193,4 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
 }
 
 export { ArticlesView }
-
-
-
 

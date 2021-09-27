@@ -20,29 +20,33 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
     pointerEvents: 'none',
-
   },
   article: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.article.main,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
   },
   page: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.page.main,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
   },
   resource: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.primary.light,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
-  }
+  },
+  iconButtonArrow: {
+    marginTop: 1,
+    padding: 0,
+    color: theme.palette.secondary.dark,
+  },
 }));
 
 interface ArticleOptionsProps {
@@ -68,10 +72,10 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
-      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article}/> : null}
+      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
 
       <FormattedMessage id="options" />
-      <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
+      <IconButton className={classes.iconButtonArrow} onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
       <Popover
         id={id}
         open={open}
