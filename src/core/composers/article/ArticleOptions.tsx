@@ -15,33 +15,31 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '20rem',
     height: '22rem',
-    fontWeight: 300
   },
   spacing: {
     marginBottom: theme.spacing(1),
     marginTop: theme.spacing(1),
     pointerEvents: 'none',
-
   },
   article: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.article.main,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
   },
   page: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.page.main,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
   },
   resource: {
     marginBottom: theme.spacing(1),
     pointerEvents: 'none',
     backgroundColor: theme.palette.primary.light,
-    fontWeight: 'bold',
+    fontWeight: 500,
     color: theme.palette.background.paper
   }
 }));
