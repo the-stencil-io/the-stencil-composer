@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     */
     nameStyle: {
+      fontWeight: 400,
       color: theme.palette.text.primary,
       maxWidth: '260px',
       "&:hover": {
