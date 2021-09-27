@@ -68,6 +68,7 @@ declare namespace CMS {
     parentId?: ArticleId, 
     name: string, 
     order: number
+    links: LinkId[] | undefined
   }
 
   interface Release {

@@ -54,7 +54,7 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
 
 
   const handleCreate = () => {
-    const entity: API.CMS.ArticleMutator = { articleId: article.id, name, parentId, order };
+    const entity: API.CMS.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined };
     ide.service.update().article(entity).then(_success => {
       onClose();
       ide.actions.handleLoadSite();

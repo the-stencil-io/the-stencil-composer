@@ -15,6 +15,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: '20rem',
     height: '22rem',
+    fontWeight: 300
   },
   spacing: {
     marginBottom: theme.spacing(1),
