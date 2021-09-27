@@ -142,7 +142,11 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
         </TableCell>
         <TableCell className={classes.tableCell} align="left">{parentName}{article.body.name}</TableCell>
         <TableCell className={classes.tableCell} align="center">{article.body.order}</TableCell>
-        <TableCell className={classes.tableCell} align="center">{pages.length}</TableCell>
+        <TableCell className={classes.tableCell} align="center">{
+          pages.map(p => site.locales[p.body.locale])
+               .map(l => l.body.value)
+               .join("/") }
+        </TableCell>
         <TableCell className={classes.tableCell} align="right">
           <IconButton className={classes.iconButton} onClick={() => setOpenDialog("EditArticle")}>
             <EditOutlined />
@@ -190,10 +194,3 @@ const ArticleAndPages: React.FC<{ article: API.CMS.Article, site: API.CMS.Site}>
 
 export { ArticlesView }
 
-
-
-
-
-function newFunction(openDialog: string | undefined) {
-    return openDialog === "NewPage";
-}

@@ -41,7 +41,12 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.primary.light,
     fontWeight: 500,
     color: theme.palette.background.paper
-  }
+  },
+  iconButtonArrow: {
+    marginTop: 1,
+    padding: 0,
+    color: theme.palette.secondary.dark,
+  },
 }));
 
 interface ArticleOptionsProps {
@@ -67,10 +72,10 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
-      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article}/> : null}
+      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit articleId={article.id} onClose={handleDialogClose} article={article} /> : null}
 
       <FormattedMessage id="options" />
-      <IconButton color="secondary" onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
+      <IconButton className={classes.iconButtonArrow} onClick={(event: any) => setAnchorEl(event.currentTarget)}> <MoreVertIcon /> </IconButton>
       <Popover
         id={id}
         open={open}

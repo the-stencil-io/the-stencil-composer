@@ -7,7 +7,7 @@ import {
 
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-
+import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
 import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';
@@ -17,15 +17,16 @@ import { API, Ide } from '../deps';
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      width: '100%',
+      paddingTop: theme.spacing(0.5),
+      paddingBottom: theme.spacing(0.5),
     },
-    /*
+    
     activeItem: {
-      backgroundColor: theme.palette.activeItem.main
+      paddingBottom: theme.spacing(1),
     },
-    */
+    
     nameStyle: {
-      fontWeight: 400,
+      fontWeight: 500,
       color: theme.palette.text.primary,
       maxWidth: '260px',
       "&:hover": {
@@ -64,11 +65,8 @@ const useStyles = makeStyles((theme: Theme) =>
     modified: {
       color: theme.palette.text.primary
     },
-    divider: {
-      marginTop: 4,
-    },
     hoverRow: {
-      fontWeight: 'bold',
+      fontWeight: 300,
       textTransform: 'uppercase',
       "&:hover": {
         fontWeight: 'bold',
@@ -155,8 +153,9 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
 
 
   return (
-    <>
+    <div className={classes.root}>
       <ListItem className={classes.itemHover}>
+        {article.body.parentId ? <SubdirectoryArrowRightIcon /> : null}
         <ListItemText onClick={() => setOpen(!open)}
           primary={<Typography noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
@@ -167,9 +166,19 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <TableContainer>
+        <TableContainer className={classes.activeItem}>
           <Table size="small">
             <TableBody>
+              <TableRow className={classes.hoverRow}>
+                <TableCell className={classes.table} align="left">
+                  <FormattedMessage id="explorer.pages.dualview" />
+                  <Switch size="small" checked={dualView} onClick={() => handleDualView(article)} />
+                </TableCell>
+                <TableCell className={classes.table} align="right">
+                  <ArticleOptions article={article} />
+                </TableCell>
+              </TableRow>
+
               {pages.length === 0 ? undefined : (
                 <TableRow className={classes.hoverRow} >
                   <TableCell className={classes.table} colSpan={2}>
@@ -211,16 +220,6 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
                   </TableCell>
                 </TableRow>)}
 
-              <TableRow className={classes.hoverRow}>
-                <TableCell className={classes.table} align="left">
-                  <FormattedMessage id="explorer.pages.dualview" />
-                  <Switch checked={dualView} onClick={() => handleDualView(article)} />
-                </TableCell>
-                <TableCell className={classes.table} align="right">
-                  <ArticleOptions article={article} />
-                </TableCell>
-              </TableRow>
-
               {unsaved ? (<TableRow>
                 <TableCell className={classes.table} colSpan={2}>
                   <div className={classes.pageButtons}>
@@ -242,9 +241,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
           </Table>
         </TableContainer>
       </Collapse>
-      <Divider className={classes.divider} />
-
-    </>
+    </div>
   );
 }
 
