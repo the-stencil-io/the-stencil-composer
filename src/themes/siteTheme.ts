@@ -1,6 +1,5 @@
 import { createTheme, PaletteOptions } from "@mui/material/styles";
 
-
 declare module '@mui/material/styles' {
   interface Palette {
     article: Palette['primary'];
