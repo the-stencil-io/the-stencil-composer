@@ -1,8 +1,8 @@
 import React from 'react';
 import clsx from 'clsx';
 
-import { 
-  CssBaseline, Drawer, AppBar, Toolbar as MaterialToolbar, Typography, IconButton, InputBase 
+import {
+  CssBaseline, Drawer, AppBar, Toolbar as MaterialToolbar, Typography, IconButton, InputBase
 } from '@material-ui/core';
 
 import MenuIcon from '@material-ui/icons/Menu';
@@ -116,7 +116,7 @@ const Container: React.FC<ContainerProps> = ({ components }) => {
           <div className={classes.toolbarIconSpacer}></div>
           <div className={classes.toolbarIcon}><IconButton onClick={handleDrawerClose}><ChevronLeftIcon /></IconButton></div>
         </div>
-          
+
 
         <div className={classes.views}>
           <Toolbar open={drawerOpen} setOpen={setDrawerOpen}>{components.toolbar}</Toolbar>

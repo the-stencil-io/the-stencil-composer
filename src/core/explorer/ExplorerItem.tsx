@@ -19,14 +19,18 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       width: '100%',
     },
+    /*
+    activeItem: {
+      backgroundColor: theme.palette.activeItem.main
+    },
+    */
     nameStyle: {
-      color: theme.palette.article.dark,
-      fontWeight: 'bold',
+      color: theme.palette.text.primary,
       maxWidth: '260px',
       "&:hover": {
         cursor: 'pointer',
-        color: theme.palette.article.main
-      }
+        color: theme.palette.article.dark
+      },
     },
     summary: {
       fontWeight: 'bold',
@@ -49,6 +53,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     iconButton: {
       marginTop: 1,
+      color: theme.palette.secondary.dark,
+    },
+    iconButtonArrow: {
+      marginTop: 1,
+      padding: 0,
       color: theme.palette.secondary.dark,
     },
     modified: {
@@ -152,8 +161,8 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
         />
         {open ?
-          <IconButton className={classes.iconButton} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
-          <IconButton className={classes.iconButton} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
+          <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
+          <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
@@ -207,7 +216,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
                   <Switch checked={dualView} onClick={() => handleDualView(article)} />
                 </TableCell>
                 <TableCell className={classes.table} align="right">
-                  <ArticleOptions article={article}/>
+                  <ArticleOptions article={article} />
                 </TableCell>
               </TableRow>
 

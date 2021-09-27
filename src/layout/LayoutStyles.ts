@@ -54,6 +54,7 @@ const useStyles = (props: { drawerWidth: number }) => makeStyles((theme) => ({
   },
   drawerPaper: {
     position: 'relative',
+    overflowX: 'hidden',
     whiteSpace: 'nowrap',
     width: props.drawerWidth,
     transition: theme.transitions.create('width', {
