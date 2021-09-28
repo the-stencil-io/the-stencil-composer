@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, Theme, Avatar, Box, createStyles, Typography, Card } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Theme, Avatar, Box, Typography, Card } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';

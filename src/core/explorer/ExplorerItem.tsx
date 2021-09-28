@@ -1,6 +1,7 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, Theme, createStyles, Typography, TableContainer,
+  Theme, Typography, TableContainer,
   Table, TableRow, TableCell, TableBody, IconButton,
   Button, ListItem, ListItemText, Collapse, Switch
 } from '@mui/material';
@@ -20,11 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(0.5),
       paddingBottom: theme.spacing(0.5),
     },
-    
+
     activeItem: {
       paddingBottom: theme.spacing(1),
     },
-    
+
     nameStyle: {
       fontWeight: 500,
       color: theme.palette.text.primary,

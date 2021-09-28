@@ -1,15 +1,16 @@
 import React from 'react';
-import { makeStyles, IconButton, Theme, createStyles } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import VisibilityIcon from '@material-ui/icons/Visibility';
-import CheckCircleIcon from '@material-ui/icons/CheckCircle';
-import EditIcon from '@material-ui/icons/Edit';
-import Paper from '@material-ui/core/Paper';
+import { createStyles, makeStyles } from '@mui/styles';
+import { IconButton, Theme } from '@mui/material';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import VisibilityIcon from '@mui/icons-material//Visibility';
+import CheckCircleIcon from '@mui/icons-material//CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
+import Paper from '@mui/material/Paper';
 import { FormattedMessage } from 'react-intl';
 
 

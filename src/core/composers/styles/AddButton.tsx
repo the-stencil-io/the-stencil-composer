@@ -1,7 +1,8 @@
 import React from 'react';
-import Button from '@material-ui/core/Button';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import AddIcon from '@material-ui/icons/Add';
+import Button from '@mui/material/Button';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Theme } from '@mui/material/styles';
+import AddIcon from '@mui/icons-material//Add';
 
 
 const useStyles = makeStyles((theme: Theme) =>
