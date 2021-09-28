@@ -1,6 +1,7 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, Theme, createStyles, Divider, Typography, TableContainer,
+  Theme, Divider, Typography, TableContainer,
   Table, TableRow, TableCell, TableBody, IconButton,
   Button, ListItem, ListItemText, Collapse, Switch
 } from '@mui/material';

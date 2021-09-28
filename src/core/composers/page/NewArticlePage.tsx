@@ -1,7 +1,7 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup,
-  makeStyles, Theme, createStyles,
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup, Theme,
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 

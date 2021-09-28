@@ -6,7 +6,8 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 
-import { makeStyles, createStyles, Theme, Switch } from '@mui/material';
+import { createStyles, makeStyles } from '@mui/styles';
+import { Theme, Switch } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';

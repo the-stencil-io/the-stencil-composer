@@ -1,4 +1,9 @@
-import { createTheme, PaletteOptions } from "@mui/material/styles";
+import { createTheme, PaletteOptions, Theme } from "@mui/material/styles";
+
+declare module '@mui/styles/defaultTheme' {
+  interface DefaultTheme extends Theme {}
+  
+}
 
 declare module '@mui/material/styles' {
   interface Palette {
@@ -180,12 +185,12 @@ const siteTheme = createTheme({
 
     MuiListItemText: {
       styleOverrides: {
-          root: {
-            paddingTop: 0,
-            paddingBottom: 0,
-            marginTop: 0,
-            marginBottom: 0,
-          },
+        root: {
+          paddingTop: 0,
+          paddingBottom: 0,
+          marginTop: 0,
+          marginBottom: 0,
+        },
         primary: {
           color: palette.text.primary,
           "&:hover": {
@@ -193,7 +198,7 @@ const siteTheme = createTheme({
             fontWeight: 'bold',
           }
         },
-  
+
         secondary: {
           fontSize: '.9rem',
           color: palette.text.primary,
@@ -202,12 +207,12 @@ const siteTheme = createTheme({
             fontWeight: 'bold',
           }
         }
-        
+
       }
     },
 
     MuiButton: {
-      
+
       styleOverrides: {
         root: {
           fontVariant: 'body2',
@@ -216,9 +221,9 @@ const siteTheme = createTheme({
           borderWidth: '2px solid !important',
         }
       },
-          defaultProps: {
-          variant: 'outlined',
-          }
+      defaultProps: {
+        variant: 'outlined',
+      }
     },
 
     MuiPaper: {
@@ -229,9 +234,9 @@ const siteTheme = createTheme({
           transition: 'unset'
         }
       },
-        defaultProps: {
-          square: true,
-        }
+      defaultProps: {
+        square: true,
+      }
     },
 
 

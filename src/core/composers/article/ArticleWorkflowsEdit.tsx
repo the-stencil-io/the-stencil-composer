@@ -1,6 +1,7 @@
 import React from 'react';
+import { makeStyles } from '@mui/styles';
 import {
-  makeStyles, Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
+  Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
   TableRow, TableHead
 } from '@mui/material';
 
