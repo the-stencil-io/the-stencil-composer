@@ -193,7 +193,8 @@ const Dashboard: React.FC<{}> = () => {
   const { site } = Ide.useIde().session;
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-  const cards = React.useMemo(() => createCards(site, theme, layout), [site, layout, theme]);
+
+  const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
 
   return (
     <div className={classes.root}>
