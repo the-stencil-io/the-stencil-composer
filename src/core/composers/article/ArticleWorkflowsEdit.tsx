@@ -115,7 +115,7 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
       .then(() => props.onClose());
-      console.log("saving selected workflows" + selectedWorkflows);
+    console.log("saving selected workflows" + selectedWorkflows);
 
   }
 
@@ -152,7 +152,10 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
                   <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
-                    <Checkbox size="small" color="secondary" checked={selectedWorkflows.includes(workflow.id) === true} onChange={(event) => handleChange(event, workflow.id)} />
+          
+                  <Checkbox size="small" color="secondary" 
+                      checked={selectedWorkflows.includes(workflow.id) === true} 
+                      onChange={(event) => handleChange(event, workflow.id)} />
                   </TableCell>
 
                 </TableRow>

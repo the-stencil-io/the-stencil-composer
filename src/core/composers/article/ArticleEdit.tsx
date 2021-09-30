@@ -75,11 +75,14 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
             label={<FormattedMessage id="article.edit.parent" />}
           >
             {articles.map((article, index) => (
-              <MenuItem key={index} value={article.id}>{article.body.order}{"_"}{article.body.name}</MenuItem>
+              <MenuItem key={index} value={article.id}>
+                        
+              {article.body.order}{"_"}{article.body.name}</MenuItem>
             ))}
-            <MenuItem value={""}><FormattedMessage id='article.composer.parent.unselected' /></MenuItem>
+            <MenuItem value={"None"}><FormattedMessage id='article.composer.parent.unselected' /></MenuItem>
           </Select>
         </FormControl>
+        
         <TextField
           type={"number"}
           label={<FormattedMessage id="order" />}
@@ -90,6 +93,7 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
           className={classes.select}
           value={order}
           onChange={({ target }) => setOrder(target.value as any)} />
+          
         <TextField
           className={classes.select}
           label={<FormattedMessage id="article.name" />}
@@ -98,6 +102,7 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
           required
           value={name}
           onChange={({ target }) => setName(target.value)} />
+          
       </DialogContent>
       <DialogActions>
         <ButtonGroup variant="text">

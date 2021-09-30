@@ -3,6 +3,7 @@ const en = {
   'pages.edit.selectpage': 'Select page',
   'pages.edit.selectTargetLocale': 'Select target locale',
 
+
   'composer.select.article': 'Select articles',
 
 
