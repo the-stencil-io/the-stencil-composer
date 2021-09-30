@@ -1,5 +1,9 @@
 const fi = {
 
+  
+  'pages.edit.selectpage': 'Select page',
+  'pages.edit.selectTargetLocale': 'Select target locale',
+
   'composer.select.article': 'Select articles',
 
   'toolbar.preview': 'Live preview',
