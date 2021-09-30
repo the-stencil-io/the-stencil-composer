@@ -27,7 +27,7 @@ declare module '@mui/material/styles' {
 }
 
 const palette = {
-  type: 'light',
+  mode: 'light',
 
   primary: {
     main: '#607196',
