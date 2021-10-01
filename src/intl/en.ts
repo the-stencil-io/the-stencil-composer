@@ -4,7 +4,7 @@ const en = {
   'composer.select.article': 'Select articles',
 
 
-  'toolbar.preview': 'Live preview',
+  'toolbar.preview': 'Live preview', //not in use
   'toolbar.help': 'Help and user documentation',
   'workflow.edit.title': 'Edit Workflow',
 
@@ -55,8 +55,8 @@ const en = {
   'remove': 'Remove',
 
 
-  'explorer.pages': 'Pages',
-  'explorer.pages.create': 'Create Page',
+  'explorer.pages': 'Pages', //not in use
+  'explorer.pages.create': 'Create Page', 
   'explorer.pages.dualview': 'Dual View',
   'explorer.locale.empty': 'No Locales',
 
@@ -78,20 +78,20 @@ const en = {
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
 
   'article.options': 'Article options',
-  'article.addlink': 'Add this link to Article',
+  'article.addlink': 'Add this link to Article', //not in use
   'article.links.addremove': 'Add and remove Article links',
-  'article.links': 'Article links',
+  'article.links': 'Article links', //not in use
   'article.links.sitelinks': 'Site links',
-  'article.links.remove': 'Remove this link association with this Article',
+  'article.links.remove': 'Remove this link association with this Article', //not in use
 
   'article.workflows.addremove': 'Add and remove Article Workflows',
   'article.workflows': 'Article Workflows',
-  'article.workflows.add': 'Associate this Workflow with this Article',
-  'article.workflows.remove': 'Remove this Workflow association with this Article',
+  'article.workflows.add': 'Associate this Workflow with this Article', //not in use
+  'article.workflows.remove': 'Remove this Workflow association with this Article', //not in use
 
   'button.cancel': 'Cancel',
   'button.create': 'Create',
-  'button.view': 'View',
+  'button.view': 'View', //not in use
   'button.add': 'Add',
   'button.addremove': 'Add/Remove',
   'button.update': 'Update',
@@ -117,7 +117,7 @@ const en = {
   'toolbar.dashboard': 'Dashboard',
   'dashboard.view.helper': 'View, edit, and delete items',
 
-  'link.associate.title': 'Associate a link with an Article',
+  'link.associate.title': 'Associate a link with an Article', //not in use
   'link.article.add.title': 'Add link to an Article',
   'link.article.select': 'Select Article',
   'links.message': 'Expand rows to view Link - Article associations',
