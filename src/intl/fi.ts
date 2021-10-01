@@ -1,8 +1,10 @@
 const fi = {
 
+
   'composer.select.article': 'Select articles',
 
-  'toolbar.preview': 'Live preview',
+
+  'toolbar.preview': 'Live preview', //not in use
   'toolbar.help': 'Help and user documentation',
   'workflow.edit.title': 'Edit Workflow',
 
@@ -53,7 +55,7 @@ const fi = {
   'remove': 'Irrota',
 
 
-  'explorer.pages': 'Sivut',
+  'explorer.pages': 'Sivut', //not in use
   'explorer.pages.create': 'Luo sivu',
   'explorer.pages.dualview': 'Kaksoisnäkymä',
   'explorer.locale.empty': 'Ei sijainteja',
@@ -76,20 +78,20 @@ const fi = {
   'article.edit.orderhelper': 'Kolmenumeroinen luku järjestelyyn',
 
   'article.options': 'Artikkelivalinnat',
-  'article.addlink': 'Lisää tämä linkki artikkeliin',
+  'article.addlink': 'Lisää tämä linkki artikkeliin', //not in use
   'article.links.addremove': 'Lisää ja poista artikkelilinkkejä',
-  'article.links': 'Artikkelilinkit',
+  'article.links': 'Artikkelilinkit', //not in use
   'article.links.sitelinks': 'Sivustolinkit',
-  'article.links.remove': 'Irrota/poista linkkiyhteys tähän artikkeliin',
+  'article.links.remove': 'Irrota/poista linkkiyhteys tähän artikkeliin', //not in use
 
   'article.workflows.addremove': 'Lisää ja poista artikkelien työnkulkuja',
   'article.workflows': 'Artikkelien työnkulut',
-  'article.workflows.add': 'Yhdistä tämä työnkulku tähän artikkeliin',
-  'article.workflows.remove': 'Poista tämän työnkulun yhteys tähän artikkeliin',
+  'article.workflows.add': 'Yhdistä tämä työnkulku tähän artikkeliin', //not in use
+  'article.workflows.remove': 'Poista tämän työnkulun yhteys tähän artikkeliin', //not in use
 
   'button.cancel': 'Peruuta',
   'button.create': 'Luo',
-  'button.view': 'Katsele',
+  'button.view': 'Katsele', //not in use
   'button.add': 'Lisää',
   'button.addremove': 'Lisää/Irrota',
   'button.update': 'Päivitä',
@@ -115,7 +117,7 @@ const fi = {
   'toolbar.dashboard': 'Hallintatyökalu',
   'dashboard.view.helper': 'Katsele, muokkaa ja poista sisältöjä',
 
-  'link.associate.title': 'Yhdistä linkki artikkeliin',
+  'link.associate.title': 'Yhdistä linkki artikkeliin', //not in use
   'link.article.add.title': 'Lisää linkki artikkeliin',
   'link.article.select': 'Valitse artikkeli',
   'links.message': 'Suurenna rivejä tarkastellaksesi linkki-artikkeli yhteyksiä',
@@ -141,9 +143,9 @@ const fi = {
   'link.removepage': 'Linkin irrottaminen poistaa vain sen yhteyden tähän artikkeliin. Poistaaksesi kohteen pysyvästi, valitse "Poista".',
 
   'link.options': 'Linkkivalinnat',
-  'link.options.add': 'Lisää artikkeliin linkkejä',
-  'link.options.edit': 'Muokkaa artikkelin linkkejä',
-  'link.options.remove': 'Irrota linkit artikkelista',
+  'link.options.add': 'Lisää artikkeliin linkkejä', //not in use
+  'link.options.edit': 'Muokkaa artikkelin linkkejä', //not in use
+  'link.options.remove': 'Irrota linkit artikkelista', //not in use
 
   'locale.composer.title': 'Luo uusi sijainti',
   'locale.composer.helper': 'Kaksikirjaiminen sijaintitunniste',
@@ -180,14 +182,14 @@ const fi = {
   'resource.edit.links': 'Lisää ja poista artikkelilinkkejä',
   'resource.edit.workflows': 'Lisää ja poista artikkelityönkulkuja',
 
-  'workflow.associate.title': 'Yhdistä työnkulku artikkeliin',
+  'workflow.associate.title': 'Yhdistä työnkulku artikkeliin', //not in use
 
   'workflow.composer.title': "Lisää työnkulku",
   'workflow.composer.name': "Paikannettu nimi",
   'workflow.technicalname': 'Tekninen nimi',
   'workflow.composer.select': 'Valitse olemassaoleva työnkulku',
   'workflow.composer.helper': 'Käyttäjille näytettävä nimi',
-  'workflow.composer.placeholder': 'Lupahakemus',
+  'workflow.composer.placeholder': 'Lupahakemus', //not in use
 
   'workflow.delete.title': 'Poista tämä työnkulku pyvyvästi?',
   'workflow.delete': 'Työnkulun poistaminen poistaa sen koko sovelluksesta.',
@@ -195,15 +197,15 @@ const fi = {
   'workflow.removepage.title': 'Irrota tämä työnkulku?',
   'workflow.removepage': 'Työnkulun irrottaminen poistaa vain sen yhteyden tähän artikkeliin. Poistaaksesi kohteen kokonaan/pysyvästi, valitse "Poista".',
 
-  'workflow.options': 'Työnkulun valinnat',
-  'workflow.add': 'Lisää työnkulku',
+  'workflow.options': 'Työnkulun valinnat', //not in use
+  'workflow.add': 'Lisää työnkulku', //not in use
   'workflow.edit': 'Muokkaa työnkulkua',
-  'workflow.remove': 'Irrota työnkulku',
+  'workflow.remove': 'Irrota työnkulku', //not in use
 
 
   'toolbar.articles': 'Artikkeliyhteenveto',
-  'toolbar.newarticle': 'Luo uusi artikkeli',
-  'toolbar.newlocale': 'Lisää uusi sijainti',
+  'toolbar.newarticle': 'Luo uusi artikkeli', //not in use
+  'toolbar.newlocale': 'Lisää uusi sijainti', //not in use
   'toolbar.explorer': 'Explorer',
   'toolbar.links': 'Linkkiyhteenveto',
   'toolbar.workflows': 'Työnkulkuyhteenveto',

@@ -143,9 +143,9 @@ const en = {
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
   'link.options': 'Link options',
-  'link.options.add': 'Add links to article',
-  'link.options.edit': 'Edit Article links',
-  'link.options.remove': 'Remove links from this Article',
+  'link.options.add': 'Add links to article', //not in use
+  'link.options.edit': 'Edit Article links', //not in use
+  'link.options.remove': 'Remove links from this Article', //not in use
 
   'locale.composer.title': 'Create a new locale',
   'locale.composer.helper': 'Two-letter locale code',
@@ -182,14 +182,14 @@ const en = {
   'resource.edit.links': 'Add and remove Article links',
   'resource.edit.workflows': 'Add and remove Article workflows',
 
-  'workflow.associate.title': 'Associate a Workflow with an Article',
+  'workflow.associate.title': 'Associate a Workflow with an Article', //not in use
 
   'workflow.composer.title': "Add a workflow",
   'workflow.composer.name': "Localised name",
   'workflow.technicalname': 'Technical name',
   'workflow.composer.select': 'Select existing Workflow',
   'workflow.composer.helper': 'Name to be displayed to users',
-  'workflow.composer.placeholder': 'Permit application form',
+  'workflow.composer.placeholder': 'Permit application form', //not in use
 
   'workflow.delete.title': 'Permanently delete this workflow?',
   'workflow.delete': 'Deleting this workflow will remove it globally from the application.',
@@ -197,15 +197,15 @@ const en = {
   'workflow.removepage.title': 'Remove this Workflow?',
   'workflow.removepage': 'Removing the Workflow only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
-  'workflow.options': 'Workflow options',
-  'workflow.add': 'Add a workflow',
+  'workflow.options': 'Workflow options', //not in use
+  'workflow.add': 'Add a workflow', //not in use
   'workflow.edit': 'Edit a workflow',
-  'workflow.remove': 'Remove a workflow',
+  'workflow.remove': 'Remove a workflow', //not in use
 
 
   'toolbar.articles': 'Articles overview',
-  'toolbar.newarticle': 'Create new Article',
-  'toolbar.newlocale': 'Add new Locale',
+  'toolbar.newarticle': 'Create new Article', //not in use
+  'toolbar.newlocale': 'Add new Locale', //not in use
   'toolbar.explorer': 'Explorer',
   'toolbar.links': 'Links overview',
   'toolbar.workflows': 'Workflows overview',
