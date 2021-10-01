@@ -1,11 +1,10 @@
 import React from 'react';
 import {
   makeStyles, Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
-  TableCell, Checkbox, TableHead, TableRow
+  TableCell, Checkbox, TableHead, TableRow, AppBar, Toolbar
 } from '@material-ui/core';
 
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
+
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -69,45 +68,56 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
 const getArticleLinks: (site: API.CMS.Site, articleId: API.CMS.ArticleId) => API.CMS.LinkId[] = (site, articleId) => {
   return Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
 }
 
-const ArticleLinksEdit: React.FC<{ article: API.CMS.Article, onClose: () => void, articleId: API.CMS.ArticleId}> = (props) => {
+
+interface ArticleLinksEditProps {
+  article: API.CMS.Article,
+  articleId: API.CMS.ArticleId,
+  onClose: () => void, 
+}
+
+
+const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
   const classes = useStyles();
   const site = Ide.useSite();
+
   const { service, actions } = Ide.useIde();
   const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
+
   const links: API.CMS.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
-  
+
   const handleChange = (event: any, id: API.CMS.LinkId) => {
-    const selected: boolean = event.target.checked; 
-    
+    const selected: boolean = event.target.checked;
     const newLinks: API.CMS.LinkId[] = [...selectedLinks];
     const currentIndex = newLinks.indexOf(id);
-     
-    if(selected && currentIndex < 0) {
+
+    if (selected && currentIndex < 0) {
       newLinks.push(id);
-    } else if(selected === false && currentIndex > -1) {
+    } else if (selected === false && currentIndex > -1) {
       newLinks.splice(currentIndex, 1);
     }
     setSelectedLinks(newLinks);
   };
-  
+
   const handleSave = () => {
     const article = site.articles[props.articleId]
-    const entity: API.CMS.ArticleMutator = { 
-      articleId: article.id, 
-      name: article.body.name, 
-      parentId: article.body.parentId, 
+    const entity: API.CMS.ArticleMutator = {
+      articleId: article.id,
+      name: article.body.name,
+      parentId: article.body.parentId,
       order: article.body.order,
-      links: [...selectedLinks]
+      links: [...selectedLinks],
+      workflows: undefined
     };
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
       .then(() => props.onClose());
   }
-  
+
   return (
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
@@ -142,7 +152,7 @@ const ArticleLinksEdit: React.FC<{ article: API.CMS.Article, onClose: () => void
                   <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
-                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={(event) => handleChange(event, link.id)} /> 
+                    <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={(event) => handleChange(event, link.id)} />
                   </TableCell>
 
                 </TableRow>

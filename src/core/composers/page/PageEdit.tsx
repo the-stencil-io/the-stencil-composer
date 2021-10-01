@@ -38,7 +38,8 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
-  const [articleId, setArticleId] = React.useState('');
+  const articleId = props.articleId;
+ // const [articleId, setArticleId] = React.useState('');
   const [pageId, setPageId] = React.useState('');
   const [newLocale, setNewLocale] = React.useState('');
 

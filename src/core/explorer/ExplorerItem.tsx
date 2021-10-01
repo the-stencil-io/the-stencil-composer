@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  makeStyles, Theme, createStyles, Divider, Typography, TableContainer,
+  makeStyles, Theme, createStyles, Typography, TableContainer,
   Table, TableRow, TableCell, TableBody, IconButton,
   Button, ListItem, ListItemText, Collapse, Switch
 } from '@material-ui/core';

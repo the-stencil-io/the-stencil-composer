@@ -1,5 +1,11 @@
 const fi = {
 
+<<<<<<< HEAD
+=======
+  
+  'pages.edit.selectpage': 'Select page',
+  'pages.edit.selectTargetLocale': 'Select target locale',
+>>>>>>> f7ae322fbcb9ebb79f26dc345260ff50121b1082
 
   'composer.select.article': 'Select articles',
 

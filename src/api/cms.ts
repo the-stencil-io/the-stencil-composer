@@ -67,8 +67,9 @@ declare namespace CMS {
     articleId: ArticleId, 
     parentId?: ArticleId, 
     name: string, 
-    order: number
-    links: LinkId[] | undefined
+    order: number,
+    links: LinkId[] | undefined,
+    workflows: WorkflowId[] | undefined,
   }
 
   interface Release {
