@@ -1,13 +1,8 @@
 import { createTheme, PaletteOptions, Theme } from "@mui/material/styles";
 
 declare module '@mui/styles/defaultTheme' {
-  interface DefaultTheme extends Theme {}
-  
+  interface DefaultTheme extends Theme { }
 }
-
-//import { PaletteOptions } from "@mui/system";
-//import { PaletteOptions } from '@material-ui/core/styles/createPalette';
-
 
 declare module '@mui/material/styles' {
   interface Palette {
