@@ -1,11 +1,9 @@
 import React from 'react';
-
 import { makeStyles, createStyles, useTheme } from '@mui/styles';
 import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
   Typography, Tooltip, Avatar, Box } from '@mui/material';
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -193,7 +191,6 @@ const Dashboard: React.FC<{}> = () => {
   const { site } = Ide.useIde().session;
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-
   const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
 
   return (
