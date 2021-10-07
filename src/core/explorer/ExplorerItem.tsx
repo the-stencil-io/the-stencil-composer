@@ -103,6 +103,11 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.secondary.contrastText,
       }
     },
+    order: {
+      marginRight: theme.spacing(1),
+      fontSize: '9pt',
+      
+    }
   }),
 );
 
@@ -155,6 +160,8 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
   return (
     <div className={classes.root}>
       <ListItem className={classes.itemHover}>
+      <div className={classes.order}>{article.body.order}</div>
+    
         {article.body.parentId ? <SubdirectoryArrowRightIcon /> : null}
         <ListItemText onClick={() => setOpen(!open)}
           primary={<Typography noWrap
