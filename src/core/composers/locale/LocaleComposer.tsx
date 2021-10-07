@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       backgroundColor: theme.palette.locale.main,
       color: theme.palette.secondary.contrastText,
+      marginBottom: theme.spacing(2)
     },
     select: {
       padding: theme.spacing(1),

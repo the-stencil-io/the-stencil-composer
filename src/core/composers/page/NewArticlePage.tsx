@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       backgroundColor: theme.palette.page.main,
       color: theme.palette.page.contrastText,
-      fontWeight: 900
+      fontWeight: 900,
+      marginBottom: theme.spacing(2)
     },
   }),
 );

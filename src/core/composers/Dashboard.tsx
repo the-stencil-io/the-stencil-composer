@@ -51,6 +51,7 @@ const useItemStyles = makeStyles((theme: Theme) =>
     },
     button: {
       fontWeight: 'bold',
+      color: theme.palette.text.primary,
       //color: (props: { color: string }) => props.color,
       "&:hover, &.Mui-focusVisible": {
         color: (props: { color: string }) => props.color,

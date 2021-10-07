@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabLabel: {
     minHeight: 'unset',
-    textTransform: 'unset'
+    textTransform: 'uppercase'
   },
   close: {
     marginBottom: 'unset !important',
@@ -52,9 +52,9 @@ const Tabs: React.FC<{}> = () => {
     actions.handleTabClose(activeTab);
   };
     
-  return (<MaterialTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
+  return (<MaterialTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"> 
       { tabs.map((tab, index) => (
-        <MaterialTab key={index} value={index}
+        <MaterialTab key={index} value={index} wrapped={true}
           label={tab.label} 
           classes={{wrapped: classes.tab, labelIcon: classes.tabLabel}}
           icon={(<>
