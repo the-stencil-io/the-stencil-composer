@@ -146,7 +146,7 @@ const en = {
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
   'link.options': 'Link options',
-  'link.options.add': 'Add links to article', //not in use
+  'link.options.add': 'Add links to article', 
   'link.options.edit': 'Edit Article links', //not in use
   'link.options.remove': 'Remove links from this Article', //not in use
 

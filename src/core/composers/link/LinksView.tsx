@@ -1,14 +1,10 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Avatar, Collapse, Box, Typography, Tooltip } from '@mui/material';
-import IconButton from '@mui/material/IconButton';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import {
+  Theme, Avatar, Collapse, Box, Typography, Tooltip, IconButton, Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow, Paper
+} from '@mui/material';
+
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import AddIcon from '@mui/icons-material/AddOutlined';
@@ -126,18 +122,18 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
- 
- /* console.log("Link type " + link.body.contentType)
-  console.log("Link content " + link.body.content);
-  console.log("Link description " +  link.body.description);
 
-*/
+  /* console.log("Link type " + link.body.contentType)
+   console.log("Link content " + link.body.content);
+   console.log("Link description " +  link.body.description);
+ 
+ */
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-      
+
       <TableRow key={link.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
@@ -185,7 +181,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
                 <TableBody>
                   {link.body.articles.map((id) => (
-                    
+
                     <TableRow hover key={id} className={classes.row}>
                       <TableCell component="th" scope="row" align="left">
                         {site.articles[id].body.name}

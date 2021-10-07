@@ -66,6 +66,7 @@ const Composer: React.FC<{}> = () => {
 
   //article-based composers
   const article = site.articles[active.id];
+  const link = site.links[active.id];
   const tab: Ide.Tab = active;
   if (!tab.data || !tab.data.nav) {
     return null;
