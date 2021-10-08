@@ -85,12 +85,12 @@ const en = {
 
   'article.options': 'Article options',
   'article.addlink': 'Add this link to Article', //not in use
-  'article.links.addremove': 'Add and remove Article links',
+  'article.links.addremove': 'Add or remove Article links',
   'article.links': 'Article links', //not in use
   'article.links.sitelinks': 'Site links',
   'article.links.remove': 'Remove this link association with this Article', //not in use
 
-  'article.workflows.addremove': 'Add and remove Article Workflows',
+  'article.workflows.addremove': 'Add or remove Article Workflows',
   'article.workflows': 'Article Workflows',
   'article.workflows.add': 'Associate this Workflow with this Article', //not in use
   'article.workflows.remove': 'Remove this Workflow association with this Article', //not in use

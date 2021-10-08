@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
   },
   appBar: {
     position: 'relative',
-    backgroundColor: theme.palette.article.main,
+    backgroundColor: theme.palette.link.main,
     color: theme.palette.secondary.contrastText,
   },
   card: {
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
-    fontWeight: 500
+    fontWeight: 'bold'
 
   },
   tableCell: {
@@ -63,12 +63,12 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.background.paper,
     "&:hover, &.Mui-focusVisible": {
       color: theme.palette.background.paper,
-      backgroundColor: theme.palette.article.dark,
+      backgroundColor: theme.palette.link.dark,
       fontWeight: 'bold',
     }
   },
   buttonGroup: {
-    color: theme.palette.article.main
+    color: theme.palette.link.main
   },
 }));
 
@@ -127,7 +127,7 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
     <Dialog fullScreen open={true} onClose={props.onClose} >
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="article.links.addremove" /></Typography>
+          <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="article.links.addremove" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
             <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
             <Button className={classes.button} onClick={handleSave} autoFocus ><FormattedMessage id='button.apply' /></Button>

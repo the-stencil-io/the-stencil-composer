@@ -97,9 +97,9 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
 
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.titleBox}>
-          <Typography variant="h6" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /></Typography>
+          <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /></Typography>
           <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleLinksEdit")}><AddIcon />
-            <FormattedMessage id='link.addremove' /></Button>
+            <FormattedMessage id='article.links.addremove' /></Button>
         </Toolbar>
       </AppBar>
       <TableContainer component={Paper}>
