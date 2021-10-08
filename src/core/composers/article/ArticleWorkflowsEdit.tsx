@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
-    fontWeight: 500
+    fontWeight: 'bold'
 
   },
   tableCell: {
@@ -127,7 +127,7 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
     <Dialog fullScreen open={true} onClose={props.onClose} >
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6" className={classes.title}>{props.article.body.name}{": "}
+          <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}
             <FormattedMessage id="article.workflows.addremove" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
             <Button onClick={props.onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>

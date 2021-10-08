@@ -13,12 +13,12 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     title: {
       backgroundColor: theme.palette.page.main,
-      color: theme.palette.secondary.contrastText,
+      color: theme.palette.page.contrastText,
       marginBottom: theme.spacing(2)
     },
     select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
+     padding: theme.spacing(1),
+      marginTop: theme.spacing(1),
       backgroundColor: theme.palette.background.paper
     },
     button: {
