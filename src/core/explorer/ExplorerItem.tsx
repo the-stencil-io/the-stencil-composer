@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
 import ExpandMore from '@mui/icons-material/ExpandMore';
+
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
@@ -167,11 +168,12 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
           primary={<Typography noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
         />
+             
         {open ?
           <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
           <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
-
+ 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <TableContainer className={classes.activeItem}>
           <Table size="small">
