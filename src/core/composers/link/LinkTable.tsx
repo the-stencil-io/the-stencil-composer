@@ -9,7 +9,6 @@ import {
 
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditOutlined from '@mui/icons-material/EditOutlined';
-import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -76,10 +75,10 @@ interface LinkTableProps {
   article: API.CMS.Article,
 }
 
-const LinkTable: React.FC<LinkTableProps> = ({article}) => {
+const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit' >(undefined);
 
   const handleDialogClose = () => setDialogOpen(undefined);
 
@@ -87,17 +86,17 @@ const LinkTable: React.FC<LinkTableProps> = ({article}) => {
     .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
 
+  //  { dialogOpen === 'LinkEdit' ? <LinkEdit link={link} open={true} onClose={handleDialogClose}/> : null}
 
   return (
     <>
       { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit article={article} articleId={article.id} onClose={handleDialogClose} /> : null}
 
-
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.titleBox}>
           <Typography variant="h6" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /></Typography>
           <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleLinksEdit")}><AddIcon />
-            <FormattedMessage id='link.options.add' /></Button>
+            <FormattedMessage id='link.addremove' /></Button>
         </Toolbar>
       </AppBar>
       <TableContainer component={Paper}>
@@ -120,8 +119,7 @@ const LinkTable: React.FC<LinkTableProps> = ({article}) => {
                 <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
                 <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
                 <TableCell className={classes.tableCell} align="right">
-                  <IconButton className={classes.iconButton}><EditOutlined onClick={() => setDialogOpen('LinkEdit')}/></IconButton>
-                  <IconButton className={classes.iconButton}><RemoveCircleOutlineIcon /></IconButton>
+                  <IconButton className={classes.iconButton}><EditOutlined onClick={() => setDialogOpen('LinkEdit')} /></IconButton>
                 </TableCell>
 
               </TableRow>

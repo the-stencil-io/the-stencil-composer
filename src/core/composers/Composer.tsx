@@ -66,7 +66,6 @@ const Composer: React.FC<{}> = () => {
 
   //article-based composers
   const article = site.articles[active.id];
-  const link = site.links[active.id];
   const tab: Ide.Tab = active;
   if (!tab.data || !tab.data.nav) {
     return null;
@@ -79,7 +78,7 @@ const Composer: React.FC<{}> = () => {
     const locale2 = tab.data.nav.value2 as string;
     composer = (<PageComposer key={article.id + "-" + locale1 + "-" + locale2} article={article} locale1={locale1} locale2={locale2}/>);
   } else if (tab.data.nav.type === "ARTICLE_LINKS") {
-    composer = (<LinkTable key={article.id + "-links"} article={article} />)
+    composer = (<LinkTable key={article.id + "-links"} article={article}/>)
   } else if (tab.data.nav.type === "ARTICLE_WORKFLOWS") {
     composer = (<WorkflowsTable key={article.id + "-workflows"} article={article} />)
   } else {

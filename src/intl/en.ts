@@ -1,5 +1,8 @@
 const en = {
   
+  
+  'link.addremove': 'Add or remove links',
+  
   'pages.edit.selectpage': 'Select page',
   'pages.edit.selectTargetLocale': 'Select target locale',
 
