@@ -73,24 +73,27 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface LinkTableProps {
   article: API.CMS.Article,
+
 }
 
 const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit' >(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit'>(undefined);
+  const [link, setLink] = React.useState<undefined | API.CMS.Link>()
 
-  const handleDialogClose = () => setDialogOpen(undefined);
+  const handleDialogClose = () => {
+     setDialogOpen(undefined);
+     setLink(undefined);
+  }
 
   const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id))
     .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
-
-  //  { dialogOpen === 'LinkEdit' ? <LinkEdit link={link} open={true} onClose={handleDialogClose}/> : null}
-
   return (
     <>
       { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit article={article} articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'LinkEdit' && link ? <LinkEdit link={link} open={true} onClose={handleDialogClose} /> : null}
 
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.titleBox}>
@@ -119,7 +122,11 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
                 <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
                 <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
                 <TableCell className={classes.tableCell} align="right">
-                  <IconButton className={classes.iconButton}><EditOutlined onClick={() => setDialogOpen('LinkEdit')} /></IconButton>
+                  <IconButton className={classes.iconButton}><EditOutlined onClick={() => {
+                    setLink(link)
+                    setDialogOpen('LinkEdit')
+                    
+                  }} /></IconButton>
                 </TableCell>
 
               </TableRow>
