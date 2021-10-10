@@ -1,7 +1,8 @@
 import React from 'react';
 
-import {Tabs as MaterialTabs, Tab as MaterialTab, makeStyles} from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@mui/styles';
+import { Tabs as MaterialTabs, Tab as MaterialTab } from '@mui/material';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { useLayout } from '../context';
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
   tabLabel: {
     minHeight: 'unset',
-    textTransform: 'unset'
+    textTransform: 'uppercase'
   },
   close: {
     marginBottom: 'unset !important',
@@ -51,11 +52,11 @@ const Tabs: React.FC<{}> = () => {
     actions.handleTabClose(activeTab);
   };
     
-  return (<MaterialTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
+  return (<MaterialTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"> 
       { tabs.map((tab, index) => (
-        <MaterialTab key={index} value={index}
+        <MaterialTab key={index} value={index} wrapped={true}
           label={tab.label} 
-          classes={{wrapper: classes.tab, labelIcon: classes.tabLabel}}
+          classes={{wrapped: classes.tab, labelIcon: classes.tabLabel}}
           icon={(<>
             <CloseIcon color="disabled" className={classes.closeIcon} onClick={(e) => handleTabClose(e, index)}/>
             <span className={classes.closeSpacing}></span></>)} 

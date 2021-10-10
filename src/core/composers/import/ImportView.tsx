@@ -1,8 +1,9 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, Avatar, Box, Typography, Card, 
+  Theme, Avatar, Box, Typography, Card, 
   CardActions, Button, FormControl, Input
-} from '@material-ui/core';
+} from '@mui/material';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 

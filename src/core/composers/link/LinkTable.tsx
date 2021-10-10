@@ -1,13 +1,19 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Typography } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+
+import { makeStyles, createStyles } from '@mui/styles';
+import {
+  Theme, Typography, Table, TableBody, TableCell, Box,
+  TableContainer, TableRow, TableHead, Paper, IconButton,
+  AppBar, Toolbar, Button
+} from '@mui/material';
+
+import AddIcon from '@mui/icons-material/AddOutlined';
+import EditOutlined from '@mui/icons-material/EditOutlined';
+
 import { FormattedMessage } from 'react-intl';
+
+import { ArticleLinksEdit } from '../article/ArticleLinksEdit';
+import { LinkEdit } from './LinkEdit';
 
 import { API, Ide } from '../../deps';
 
@@ -16,15 +22,21 @@ const useStyles = makeStyles((theme: Theme) =>
     table: {
       minWidth: 650,
     },
+    titleBox: {
+      display: 'flex',
+      justifyContent: 'space-between',
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.link.contrastText
+    },
     iconButton: {
       padding: 2,
-      marginLeft: theme.spacing(3),
-      color: theme.palette.primary.dark,
+      marginRight: 2,
+      color: theme.palette.link.main,
       "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
+        backgroundColor: theme.palette.link.main,
+        color: theme.palette.link.contrastText,
         "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
+          color: theme.palette.link.contrastText,
         }
       }
     },
@@ -32,54 +44,96 @@ const useStyles = makeStyles((theme: Theme) =>
       fontWeight: 'bold',
     },
     title: {
-      margin: theme.spacing(1),
-      color: theme.palette.link.dark,
+      paddingLeft: theme.spacing(1),
+      color: theme.palette.link.contrastText,
+      fontWeight: 'bold'
     },
     tableCell: {
       paddingTop: 0,
       paddingBottom: 0
-    }
+    },
+    button: {
+      fontWeight: 'bold',
+      color: theme.palette.background.paper,
+      "&:hover, &.Mui-focusVisible": {
+        color: theme.palette.background.paper,
+        backgroundColor: theme.palette.link.dark,
+        fontWeight: 'bold',
+      }
+    },
+    appBar: {
+      position: 'relative',
+      backgroundColor: theme.palette.link.main,
+      color: theme.palette.secondary.contrastText,
+    },
+
   }));
 
 
 
 interface LinkTableProps {
-  article: API.CMS.Article
+  article: API.CMS.Article,
+
 }
 
 const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const site = Ide.useSite();
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit'>(undefined);
+  const [link, setLink] = React.useState<undefined | API.CMS.Link>()
+
+  const handleDialogClose = () => {
+     setDialogOpen(undefined);
+     setLink(undefined);
+  }
 
   const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id))
     .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
 
-
   return (
     <>
-   <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /> </Typography>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" >
-        <TableHead>
-          <TableRow>
-            <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type"/></TableCell>
-            <TableCell className={classes.bold} align="left"><FormattedMessage id="locale"/></TableCell>
-            <TableCell className={classes.bold} align="left"><FormattedMessage id="description"/></TableCell>
-            <TableCell className={classes.bold} align="left"><FormattedMessage id="value"/></TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {links.map((link, index) => (
-            <TableRow hover key={index}>
-              <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
-              <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit article={article} articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'LinkEdit' && link ? <LinkEdit link={link} open={true} onClose={handleDialogClose} /> : null}
+
+      <AppBar className={classes.appBar}>
+        <Toolbar className={classes.titleBox}>
+          <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /></Typography>
+          <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleLinksEdit")}><AddIcon />
+            <FormattedMessage id='article.links.addremove' /></Button>
+        </Toolbar>
+      </AppBar>
+      <TableContainer component={Paper}>
+        <Table className={classes.table} size="small" >
+          <TableHead>
+            <TableRow>
+              <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
+              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
+              <TableCell className={classes.bold} align="left"><FormattedMessage id="description" /></TableCell>
+              <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
+              <TableCell className={classes.bold} align="right" />
+
             </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer >
+          </TableHead>
+          <TableBody>
+            {links.map((link, index) => (
+              <TableRow hover key={index}>
+                <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
+                <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
+                <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
+                <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+                <TableCell className={classes.tableCell} align="right">
+                  <IconButton className={classes.iconButton}><EditOutlined onClick={() => {
+                    setLink(link)
+                    setDialogOpen('LinkEdit')
+                    
+                  }} /></IconButton>
+                </TableCell>
+
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer >
     </>
   );
 }

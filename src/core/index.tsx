@@ -1,6 +1,5 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core';
-
+import { makeStyles } from '@mui/styles';
 import { API, Layout } from './deps';
 import { Composer } from './composers';
 import { toolbar } from './toolbar';

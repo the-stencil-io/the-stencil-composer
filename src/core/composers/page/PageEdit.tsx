@@ -1,9 +1,10 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, FormControl, Button,
+  Theme, FormControl, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
   ButtonGroup
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -13,12 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       backgroundColor: theme.palette.page.main,
       color: theme.palette.secondary.contrastText,
+      marginBottom: theme.spacing(2)
     },
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
       color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
+      //backgroundColor: theme.palette.background.paper
     },
     button: {
       fontWeight: 'bold',
@@ -38,7 +40,8 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
-  const [articleId, setArticleId] = React.useState('');
+  const articleId = props.articleId;
+ // const [articleId, setArticleId] = React.useState('');
   const [pageId, setPageId] = React.useState('');
   const [newLocale, setNewLocale] = React.useState('');
 

@@ -1,9 +1,10 @@
 import React from 'react';
+import { makeStyles, createStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
+  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
   Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup,
   ListItemText, Checkbox
-} from '@material-ui/core'; import { FormattedMessage } from 'react-intl';
+} from '@mui/material'; import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
 
@@ -146,13 +147,13 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
             onChange={({ target }) => setContent(target.value as any)} />
         </FormControl>
         <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='link.composer.select.article' /></InputLabel>
+          <InputLabel><FormattedMessage id='link.article.select' /></InputLabel>
           <Select
             multiline
             multiple
             onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
-            label={<FormattedMessage id='link.composer.select.article' />}
+            label={<FormattedMessage id='link.article.select' />}
             renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           >
             {articles.map((article, index) => (

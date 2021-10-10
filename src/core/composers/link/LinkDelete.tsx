@@ -1,7 +1,7 @@
 
 import React from 'react';
-import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { makeStyles, createStyles, Theme } from '@material-ui/core';
+import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Theme } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';

@@ -1,13 +1,14 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, Theme, createStyles, Divider, Typography, TableContainer,
+  Theme, Typography, TableContainer,
   Table, TableRow, TableCell, TableBody, IconButton,
   Button, ListItem, ListItemText, Collapse, Switch
-} from '@material-ui/core';
+} from '@mui/material';
+import ExpandLess from '@mui/icons-material/ExpandLess';
+import ExpandMore from '@mui/icons-material/ExpandMore';
 
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import SubdirectoryArrowRightIcon from '@material-ui/icons/SubdirectoryArrowRight';
+import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
 import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';
@@ -20,11 +21,11 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(0.5),
       paddingBottom: theme.spacing(0.5),
     },
-    
+
     activeItem: {
       paddingBottom: theme.spacing(1),
     },
-    
+
     nameStyle: {
       fontWeight: 500,
       color: theme.palette.text.primary,
@@ -103,6 +104,11 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.secondary.contrastText,
       }
     },
+    order: {
+      marginRight: theme.spacing(1),
+      fontSize: '9pt',
+      
+    }
   }),
 );
 
@@ -155,16 +161,19 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
   return (
     <div className={classes.root}>
       <ListItem className={classes.itemHover}>
+      <div className={classes.order}>{article.body.order}</div>
+    
         {article.body.parentId ? <SubdirectoryArrowRightIcon /> : null}
         <ListItemText onClick={() => setOpen(!open)}
           primary={<Typography noWrap
             variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
         />
+             
         {open ?
           <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(false)}><ExpandLess /></IconButton> :
           <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
-
+ 
       <Collapse in={open} timeout="auto" unmountOnExit>
         <TableContainer className={classes.activeItem}>
           <Table size="small">

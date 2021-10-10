@@ -1,7 +1,8 @@
 import React from 'react';
-import { ButtonGroup, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, } from '@material-ui/core';
-import { makeStyles, createStyles, Theme, IconButton } from '@material-ui/core';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import { ButtonGroup, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Theme, IconButton } from '@mui/material';
+import { makeStyles, createStyles } from '@mui/styles';
+
+import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
 import { FormattedMessage } from 'react-intl';
 

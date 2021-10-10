@@ -1,12 +1,13 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles } from '@material-ui/core';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { makeStyles, createStyles } from '@mui/styles';
+import { Theme } from "@mui/material/styles";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material//TableBody';
+import TableCell from '@mui/material//TableCell';
+import TableContainer from '@mui/material//TableContainer';
+import TableHead from '@mui/material//TableHead';
+import TableRow from '@mui/material//TableRow';
+import Paper from '@mui/material//Paper';
 import { FormattedMessage } from 'react-intl';
 
 

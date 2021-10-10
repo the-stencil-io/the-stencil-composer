@@ -1,18 +1,15 @@
 import React from 'react';
-import { makeStyles, Theme, createStyles, Avatar, Collapse, Box, Typography, Tooltip } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import AddIcon from '@material-ui/icons/AddOutlined';
-import EditOutlined from '@material-ui/icons/EditOutlined';
-import DeleteOutlinedIcon from '@material-ui/icons/DeleteOutlined';
+import { createStyles, makeStyles } from '@mui/styles';
+import {
+  Theme, Avatar, Collapse, Box, Typography, Tooltip, IconButton, Table, TableBody, TableCell, TableContainer,
+  TableHead, TableRow, Paper
+} from '@mui/material';
+
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import AddIcon from '@mui/icons-material/AddOutlined';
+import EditOutlined from '@mui/icons-material/EditOutlined';
+import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -125,18 +122,18 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
- 
- /* console.log("Link type " + link.body.contentType)
-  console.log("Link content " + link.body.content);
-  console.log("Link description " +  link.body.description);
 
-*/
+  /* console.log("Link type " + link.body.contentType)
+   console.log("Link content " + link.body.content);
+   console.log("Link description " +  link.body.description);
+ 
+ */
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-      
+
       <TableRow key={link.id} hover className={classes.row}>
         <TableCell className={classes.expandRow}>
           <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
@@ -184,7 +181,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
 
                 <TableBody>
                   {link.body.articles.map((id) => (
-                    
+
                     <TableRow hover key={id} className={classes.row}>
                       <TableCell component="th" scope="row" align="left">
                         {site.articles[id].body.name}

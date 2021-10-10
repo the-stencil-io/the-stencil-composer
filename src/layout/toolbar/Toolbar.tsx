@@ -1,9 +1,10 @@
 import React from 'react';
 
+import { createStyles, makeStyles, withStyles } from '@mui/styles';
+
 import {
-  makeStyles, withStyles, createStyles, Theme,
-  List, ListItem, Tooltip, IconButton, Badge, Avatar, Box
-} from '@material-ui/core';
+  Theme, List, ListItem, Tooltip, IconButton, Badge, Avatar, Box
+} from '@mui/material';
 
 import { FormattedMessage } from 'react-intl';
 

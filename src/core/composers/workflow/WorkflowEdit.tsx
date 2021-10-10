@@ -1,9 +1,10 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, MenuItem, Select,
+  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
   Button, Dialog, DialogTitle, DialogContent, DialogActions, Checkbox, ListItemText,
   ButtonGroup
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -69,8 +70,8 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
 
 
           <TextField className={classes.select}
-            label={<FormattedMessage id='workflow.composer.technicalname' />}
-            helperText={<FormattedMessage id='workflow.composer.technicalname' />}
+            label={<FormattedMessage id='workflow.technicalname' />}
+            helperText={<FormattedMessage id='workflow.technicalname' />}
             variant="outlined"
             fullWidth
             value={technicalname}
@@ -111,14 +112,14 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
             onChange={({ target }) => setName(target.value)} />
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='workflow.composer.select.article' /></InputLabel>
+          <InputLabel><FormattedMessage id='composer.select.article' /></InputLabel>
           <Select
             multiline
             multiple
             disabled={!locale}
             onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
-            label={<FormattedMessage id='workflow.composer.select.article' />}
+            label={<FormattedMessage id='composer.select.article' />}
             renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           >
             {articles.map((article, index) => (

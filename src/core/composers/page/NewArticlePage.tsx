@@ -1,8 +1,8 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup,
-  makeStyles, Theme, createStyles,
-} from '@material-ui/core';
+  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup, Theme,
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       backgroundColor: theme.palette.page.main,
       color: theme.palette.page.contrastText,
-      fontWeight: 900
+      fontWeight: 900,
+      marginBottom: theme.spacing(2)
     },
   }),
 );

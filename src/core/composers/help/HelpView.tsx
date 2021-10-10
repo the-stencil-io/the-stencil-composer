@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Typography } from '@material-ui/core';
+import { List, Typography } from '@mui/material';
 
 
 

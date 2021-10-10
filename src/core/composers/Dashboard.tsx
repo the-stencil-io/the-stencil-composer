@@ -1,11 +1,9 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme, useTheme } from '@material-ui/core/styles';
-import {
-  Button, ButtonGroup, Card, CardHeader, CardActions, CardContent,
-  Typography, Tooltip, Avatar, Box
-} from '@material-ui/core';
+import { makeStyles, createStyles, useTheme } from '@mui/styles';
+import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
+  Typography, Tooltip, Avatar, Box } from '@mui/material';
 
-import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -53,6 +51,7 @@ const useItemStyles = makeStyles((theme: Theme) =>
     },
     button: {
       fontWeight: 'bold',
+      color: theme.palette.text.primary,
       //color: (props: { color: string }) => props.color,
       "&:hover, &.Mui-focusVisible": {
         color: (props: { color: string }) => props.color,
@@ -193,7 +192,7 @@ const Dashboard: React.FC<{}> = () => {
   const { site } = Ide.useIde().session;
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-  const cards = React.useMemo(() => createCards(site, theme, layout), [site, layout]);
+  const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
 
   return (
     <div className={classes.root}>

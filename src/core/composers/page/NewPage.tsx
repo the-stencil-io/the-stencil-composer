@@ -1,9 +1,10 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, InputLabel, FormControl, Button,
+  Theme, InputLabel, FormControl, Button,
   Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
   ButtonGroup, Typography
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';
@@ -13,6 +14,7 @@ const useStyles = makeStyles((theme: Theme) =>
     title: {
       backgroundColor: theme.palette.page.main,
       color: theme.palette.secondary.contrastText,
+      marginBottom: theme.spacing(2)
     },
     select: {
       marginTop: theme.spacing(2),

@@ -1,9 +1,10 @@
 import React from 'react';
+import { createStyles, makeStyles } from '@mui/styles';
 import {
-  makeStyles, createStyles, Theme, TextField, InputLabel, FormControl, ButtonGroup,
+  Theme, TextField, InputLabel, FormControl, ButtonGroup,
   MenuItem, Select, Button, Dialog, DialogTitle, DialogContent, DialogActions,
   Typography, Checkbox, ListItemText
-} from '@material-ui/core';
+} from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { API, Ide } from '../../deps';

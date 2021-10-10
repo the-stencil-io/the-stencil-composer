@@ -1,5 +1,6 @@
 import React from 'react';
-import { makeStyles, createStyles, Theme } from '@material-ui/core';
+import { Theme } from '@mui/material';
+import { makeStyles, createStyles, } from '@mui/styles';
 import { Layout, Ide } from '../deps';
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
@@ -77,7 +78,7 @@ const Composer: React.FC<{}> = () => {
     const locale2 = tab.data.nav.value2 as string;
     composer = (<PageComposer key={article.id + "-" + locale1 + "-" + locale2} article={article} locale1={locale1} locale2={locale2}/>);
   } else if (tab.data.nav.type === "ARTICLE_LINKS") {
-    composer = (<LinkTable key={article.id + "-links"} article={article} />)
+    composer = (<LinkTable key={article.id + "-links"} article={article}/>)
   } else if (tab.data.nav.type === "ARTICLE_WORKFLOWS") {
     composer = (<WorkflowsTable key={article.id + "-workflows"} article={article} />)
   } else {

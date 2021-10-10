@@ -1,8 +1,8 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { List, IconButton, Popover, ListItemText, ListItem, Divider } from '@material-ui/core';
+import { makeStyles } from '@mui/styles';
+import { List, IconButton, Popover, ListItemText, ListItem, Divider } from '@mui/material';
 
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import { FormattedMessage } from 'react-intl';
 
 import { API } from '../../deps';
