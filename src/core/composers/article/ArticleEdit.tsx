@@ -14,6 +14,13 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       marginTop: theme.spacing(3),
     },
+    selectMain: {
+      
+    },
+    selectSub: {
+      marginLeft: theme.spacing(2),
+      color: theme.palette.article.dark,
+    },
     title: {
       backgroundColor: theme.palette.article.main,
       color: theme.palette.secondary.contrastText,
@@ -62,7 +69,20 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
     });
   }
 
-  const articles: API.CMS.Article[] = Object.values(site.articles);
+  const articles: API.CMS.Article[] = Object.values(site.articles)
+    .sort((a1, a2) => {
+      if(a1.body.parentId && a1.body.parentId === a2.body.parentId) {
+        const children = a1.body.order - a2.body.order;
+        if(children === 0) {
+          return a1.body.name.localeCompare(a2.body.name);
+        }
+        return children;
+      }
+      
+      return  (a1.body.parentId ? site.articles[a1.body.parentId].body.order + 1 : a1.body.order ) 
+            - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order );
+    });
+  
   return (<>
     <Dialog open={true} onClose={onClose} maxWidth="md" fullWidth={true}>
       <DialogTitle className={classes.title}><FormattedMessage id="article.edit.title" /></DialogTitle>
@@ -76,9 +96,9 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
             label={<FormattedMessage id="article.edit.parent" />}
           >
             {articles.map((article, index) => (
-              <MenuItem key={index} value={article.id}>
-                        
-              {article.body.order}{"_"}{article.body.name}</MenuItem>
+              <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : classes.selectMain}>
+                {article.body.order} - {article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "" }{article.body.name}
+              </MenuItem>
             ))}
             <MenuItem value={"None"}><FormattedMessage id='article.composer.parent.unselected' /></MenuItem>
           </Select>
