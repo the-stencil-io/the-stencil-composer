@@ -119,7 +119,6 @@ interface RowProps {
 const Row: React.FC<RowProps> = ({ site, link }) => {
   const classes = useRowStyles();
 
-
   const [open, setOpen] = React.useState(false);
   const [openDialog, setOpenDialog] = React.useState<'NewLinkArticle' | 'LinkDelete' | 'LinkEdit' | undefined>();
 
@@ -134,72 +133,73 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
       {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
 
-      <TableRow key={link.id} hover className={classes.row}>
-        <TableCell className={classes.expandRow}>
-          <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </TableCell>
-        <TableCell className={classes.tableCell} align="center">{link.body.contentType}</TableCell>
-        <TableCell className={classes.tableCell} align="center">{site.locales[link.body.locale].body.value}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
-        <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
-        <TableCell className={classes.tableCell} align="right" width="10%">
-
-          <Tooltip title={<FormattedMessage id="link.edit.title" />}>
-            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkEdit")}>
-              <EditOutlined />
+        <TableRow key={link.id} hover className={classes.row}>
+          <TableCell className={classes.expandRow}>
+            <IconButton className={classes.iconButton} size="small" onClick={() => setOpen(!open)}>
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
-          </Tooltip>
+          </TableCell>
+          
+          <TableCell className={classes.tableCell} align="center">{link.body.contentType}</TableCell>
+          <TableCell className={classes.tableCell} align="center">{site.locales[link.body.locale].body.value}</TableCell>
+          <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
+          <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+          <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
+          <TableCell className={classes.tableCell} align="right" width="10%">
 
-          <Tooltip title={<FormattedMessage id="associations.add" />}>
-            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("NewLinkArticle")}>
-              <AddIcon />
-            </IconButton>
-          </Tooltip>
+            <Tooltip title={<FormattedMessage id="link.edit.title" />}>
+              <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkEdit")}>
+                <EditOutlined />
+              </IconButton>
+            </Tooltip>
 
-          <Tooltip title={<FormattedMessage id="link.delete.title" />}>
-            <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkDelete")}>
-              <DeleteOutlinedIcon />
-            </IconButton>
-          </Tooltip>
+            <Tooltip title={<FormattedMessage id="associations.add" />}>
+              <IconButton className={classes.iconButton} onClick={() => setOpenDialog("NewLinkArticle")}>
+                <AddIcon />
+              </IconButton>
+            </Tooltip>
 
-        </TableCell>
-      </TableRow>
+            <Tooltip title={<FormattedMessage id="link.delete.title" />}>
+              <IconButton className={classes.iconButton} onClick={() => setOpenDialog("LinkDelete")}>
+                <DeleteOutlinedIcon />
+              </IconButton>
+            </Tooltip>
 
-      <TableRow>
-        <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <Box margin={2}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow>
-                    <TableCell className={classes.column} align="left" style={{ paddingRight: 0 }}><FormattedMessage id="articles" /></TableCell>
-                  </TableRow>
-                </TableHead>
+          </TableCell>
+        </TableRow>
 
-                <TableBody>
-                  {link.body.articles.map((id) => (
-
-                    <TableRow hover key={id} className={classes.row}>
-                      <TableCell component="th" scope="row" align="left">
-                        {site.articles[id].body.name}
-                      </TableCell>
-                      <TableCell>
-                        <LinkRemovePage link={link} article={site.articles[id]} locale={link.body.locale} />
-                      </TableCell>
-                      <TableCell>
-                      </TableCell>
-
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={7}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={2}>
+                <Table size="small">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell className={classes.column} align="left" style={{ paddingRight: 0 }}><FormattedMessage id="articles" /></TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </Box>
-          </Collapse>
-        </TableCell>
-      </TableRow>
+                  </TableHead>
+
+                  <TableBody>
+                    {link.body.articles.map((id) => (
+
+                      <TableRow hover key={id} className={classes.row}>
+                        <TableCell component="th" scope="row" align="left">
+                          {site.articles[id].body.name}
+                        </TableCell>
+                        <TableCell>
+                          <LinkRemovePage link={link} article={site.articles[id]} locale={link.body.locale} />
+                        </TableCell>
+                        <TableCell>
+                        </TableCell>
+
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
     </>
   )
 }

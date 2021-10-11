@@ -100,7 +100,7 @@ const ArticlesView: React.FC<{}> = () => {
       <Typography variant="body1" className={classes.title}><FormattedMessage id="articles.message" /></Typography>
       <TableContainer component={Paper}>
         <Table className={classes.table} size="small">
-          <TableHead>
+          <TableHead >
             <TableRow>
               <TableCell className={classes.bold} align="left" colSpan={2}><FormattedMessage id="article.name" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="order" /></TableCell>

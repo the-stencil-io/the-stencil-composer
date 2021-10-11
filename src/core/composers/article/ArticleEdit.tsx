@@ -20,7 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
     selectSub: {
       marginLeft: theme.spacing(2),
       color: theme.palette.article.dark,
-      fontWeight: 'bold'
     },
     title: {
       backgroundColor: theme.palette.article.main,
