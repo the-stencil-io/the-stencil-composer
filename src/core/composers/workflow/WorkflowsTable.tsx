@@ -2,15 +2,17 @@ import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
   Theme, Typography, Table, TableBody, TableCell, TableContainer,
-  TableHead, TableRow, Paper, AppBar, Toolbar, Button, IconButton
+  TableHead, TableRow, Paper, AppBar, Toolbar, Button, IconButton, ButtonGroup
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/AddOutlined';
 import EditOutlined from '@mui/icons-material/EditOutlined';
+import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
 import { FormattedMessage } from 'react-intl';
 
 import { ArticleWorkflowsEdit } from '../article/ArticleWorkflowsEdit';
+import { WorkflowComposer } from './WorkflowComposer';
 import { WorkflowEdit } from './WorkflowEdit';
 import { API, Ide } from '../../deps';
 
@@ -58,6 +60,9 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 'bold',
       }
     },
+    icon: {
+      marginRight: theme.spacing(1)
+    },
     appBar: {
       position: 'relative',
       backgroundColor: theme.palette.workflow.main,
@@ -78,7 +83,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
   const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id))
     .sort((o1, o2) => o1.body.name.localeCompare(o2.body.name));
 
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleWorkflowsEdit' | 'WorkflowEdit'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleWorkflowsEdit' | 'WorkflowEdit' | 'WorkflowComposer' | 'WorkflowRemovePage'>(undefined);
 
 
   const handleDialogClose = () => {
@@ -93,12 +98,17 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
     <>
       { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit article={article} articleId={article.id} onClose={() => handleDialogClose()} /> : null}
       { dialogOpen === 'WorkflowEdit' && workflow ? <WorkflowEdit workflow={workflow} onClose={() => handleDialogClose()} /> : null}
+      { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
 
       <AppBar className={classes.appBar}>
         <Toolbar className={classes.titleBox}>
           <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="workflows" /> </Typography>
-          <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleWorkflowsEdit")}><AddIcon />
-            <FormattedMessage id='article.workflows.addremove' /></Button>
+          <ButtonGroup >
+            <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleWorkflowsEdit")}><AddIcon className={classes.icon} />
+              <FormattedMessage id='article.workflows.addremove' /></Button>
+            <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("WorkflowComposer")}><WorkOutlineOutlinedIcon className={classes.icon} />
+              <FormattedMessage id='workflow.create' /></Button>
+          </ButtonGroup>
         </Toolbar>
       </AppBar>
 
@@ -118,12 +128,15 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
                 <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
                 <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
                 <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
-                <TableCell align="right"><IconButton className={classes.iconButton}>
-                  <EditOutlined onClick={() => {
-                    setDialogOpen('WorkflowEdit')
-                    setWorkflow(workflow)
-                  }
-                  } /></IconButton></TableCell>
+                <TableCell align="right">
+                  <IconButton className={classes.iconButton}>
+                    <EditOutlined onClick={() => {
+                      setDialogOpen('WorkflowEdit')
+                      setWorkflow(workflow)
+                    }
+                    } />
+                  </IconButton>
+                </TableCell>
               </TableRow>
             ))}
           </TableBody>
