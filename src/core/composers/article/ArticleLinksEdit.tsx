@@ -5,12 +5,14 @@ import {
   Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
   TableCell, Checkbox, TableHead, TableRow
 } from '@mui/material';
-
+import AddIcon from '@mui/icons-material/Add';
+import CloseIcon from '@mui/icons-material/Close';
+import CheckIcon from '@mui/icons-material/Check';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 
 import { FormattedMessage } from 'react-intl';
-
+import { LinkComposer } from '../link/LinkComposer';
 import { API, Ide } from '../../deps';
 
 
@@ -121,16 +123,21 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
       .then(_success => actions.handleLoadSite())
       .then(() => props.onClose());
   }
+  
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkComposer'>(undefined);
 
   return (
+<>
+  { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={() => setDialogOpen(undefined)} /> : null}
 
     <Dialog fullScreen open={true} onClose={props.onClose} >
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="article.links.addremove" /></Typography>
+          <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="resource.edit.links" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
-            <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
-            <Button className={classes.button} onClick={handleSave} autoFocus ><FormattedMessage id='button.apply' /></Button>
+            <Button className={classes.button} onClick={props.onClose}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
+            <Button className={classes.button} onClick={() => setDialogOpen('LinkComposer')} autoFocus ><AddIcon /><FormattedMessage id='link.composer.title' /></Button>
+            <Button className={classes.button} onClick={handleSave} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
           </ButtonGroup>
         </Toolbar>
       </AppBar>
@@ -166,6 +173,7 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
         </Card>
       </div>
     </Dialog>
+    </>
   );
 }
 

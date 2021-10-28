@@ -1,8 +1,11 @@
 const en = {
-  
-  
+
+  'resource.options': 'Resource options',
+  'resource.edit.links': 'Create, add, remove Article links',
+  'resource.edit.workflows': 'Create, add, remove Article workflows',
+
   'link.addremove': 'Add or remove links',
-  
+
   'pages.edit.selectpage': 'Select page',
   'pages.edit.selectTargetLocale': 'Select target locale',
 
@@ -17,7 +20,7 @@ const en = {
   'article.create': 'Create Article',
   'page.create': 'Create Page',
   'link.create': 'Create link',
-  'workflow.create': 'Create Workflow',
+  'workflow.create': 'Create a new Workflow',
   'locale.create': 'Create locale',
   'release.create': 'Create release',
   'button.view.all.articles': 'View all Articles',
@@ -62,7 +65,7 @@ const en = {
 
 
   'explorer.pages': 'Pages', //not in use
-  'explorer.pages.create': 'Create Page', 
+  'explorer.pages.create': 'Create Page',
   'explorer.pages.dualview': 'Dual View',
   'explorer.locale.empty': 'No Locales',
 
@@ -149,7 +152,7 @@ const en = {
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',
 
   'link.options': 'Link options',
-  'link.options.add': 'Add links to article', 
+  'link.options.add': 'Add links to article',
   'link.options.edit': 'Edit Article links', //not in use
   'link.options.remove': 'Remove links from this Article', //not in use
 
@@ -183,10 +186,6 @@ const en = {
   'release.composer.label': 'Tag Name',
   'release.composer.note': "Note",
   'release.composer.helper': 'Optional additional information for future reference',
-
-  'resource.options': 'Resource options',
-  'resource.edit.links': 'Add and remove Article links',
-  'resource.edit.workflows': 'Add and remove Article workflows',
 
   'workflow.associate.title': 'Associate a Workflow with an Article', //not in use
 

@@ -1,7 +1,9 @@
 import React from 'react';
 import { makeStyles, createStyles, useTheme } from '@mui/styles';
-import { Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
-  Typography, Tooltip, Avatar, Box } from '@mui/material';
+import {
+  Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
+  Typography, Tooltip, Avatar, Box
+} from '@mui/material';
 
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 
@@ -104,7 +106,6 @@ const createCards: (site: API.CMS.Site, theme: Theme, layout: Layout.Session.Con
     buttonCreate: "page.create",
     buttonViewAll: "button.view.all.pages"
   },
-
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
