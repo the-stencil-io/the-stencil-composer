@@ -91,7 +91,7 @@ const ArticleEdit: React.FC<{ articleId: API.CMS.ArticleId, onClose: () => void 
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel ><FormattedMessage id="article.edit.parent" /></InputLabel>
           <Select
-            value={parentId}
+            value={parentId ? parentId : ''}
             onChange={({ target }) => setParentId(target.value as any)}
             label={<FormattedMessage id="article.edit.parent" />}
           >

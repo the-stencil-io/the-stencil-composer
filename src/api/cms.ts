@@ -154,7 +154,7 @@ declare namespace CMS {
   
   interface CreateWorkflow { 
     name: string;
-    locale: LocaleId; 
+    locales: LocaleId[]; 
     content: string;
     articles: ArticleId[] 
   }

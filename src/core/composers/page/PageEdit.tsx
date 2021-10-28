@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
-      color: theme.palette.primary.contrastText,
+      //color: theme.palette.primary.contrastText,
       //backgroundColor: theme.palette.background.paper
     },
     button: {
@@ -58,7 +58,6 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
   const unusedLocales: API.CMS.SiteLocale[] = Object.values(site.locales).filter(siteLocale => !usedLocales.includes(siteLocale.id));
 
   const valid = pageId && articleId && newLocale;
-
   return (<>
     <Dialog open={true} onClose={props.onClose} >
       <DialogTitle className={classes.title}><FormattedMessage id='pages.change' /></DialogTitle>
@@ -73,7 +72,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
             label={<FormattedMessage id='pages.edit.selectpage' />}
           >
             {articlePages.map((articlePage, index) => (
-              <MenuItem key={index} value={articlePage.id}>{site.locales[articlePage.body.locale].body.value}</MenuItem>
+              <MenuItem key={articlePage.id} value={articlePage.id}>{site.locales[articlePage.body.locale].body.value}</MenuItem>
             ))}
           </Select>
         </FormControl>
@@ -87,7 +86,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: API.CMS.ArticleId }> 
             label={<FormattedMessage id='pages.edit.selectTargetLocale' />}
           >
             {unusedLocales.map((unusedLocale, index) => (
-              <MenuItem key={index} value={unusedLocale.id}>{unusedLocale.body.value}</MenuItem>
+              <MenuItem key={unusedLocale.id} value={unusedLocale.id}>{unusedLocale.body.value}</MenuItem>
             ))}
           </Select>
         </FormControl>

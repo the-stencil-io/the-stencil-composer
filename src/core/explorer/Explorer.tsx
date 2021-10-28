@@ -78,15 +78,15 @@ const Explorer: React.FC<{}> = () => {
         </div>)
       }
       {articles.map((article, index) => [
-        (<div className={index % 2 === 0 ? classes.article : ''}>
-        <ExplorerItem key={index}
-          article={article}
-          open={article.id === activeArticleId}
-          setOpen={(value) => setOpen(value, article)}
-        />
+        (<div key={index} className={index % 2 === 0 ? classes.article : ''}>
+          <ExplorerItem key={index}
+            article={article}
+            open={article.id === activeArticleId}
+            setOpen={(value) => setOpen(value, article)}
+          />
         </div>),
         ...getChildrenArticles(article).map((child, childIndex) => (
-          (<div className={index % 2 === 0 ? classes.article : ''}>
+          (<div className={index % 2 === 0 ? classes.article : ''} key={childIndex + "-" + index + "-c"}>
             <ExplorerItem key={childIndex + "-" + index + "-c"}
               article={child}
               open={child.id === activeArticleId}

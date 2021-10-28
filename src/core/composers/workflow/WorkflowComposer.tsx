@@ -37,14 +37,16 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
+  const siteLocales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>([]);
-  const [locale, setLocale] = React.useState('');
+  
+  const [locales, setLocales] = React.useState<API.CMS.LocaleId[]>([]);
   const [technicalname, setTechnicalname] = React.useState('');
   const [name, setName] = React.useState('');
 
   const handleCreate = () => {
-    const entity: API.CMS.CreateWorkflow = { content: technicalname, locale, name, articles: articleId };
+    const entity: API.CMS.CreateWorkflow = { content: technicalname, locales, name, articles: articleId };
     ide.service.create().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -52,9 +54,8 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     })
   }
 
-  
-  const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
-  const articles: API.CMS.Article[] = ide.session.getArticlesForLocale(locale);
+
+  const articles: API.CMS.Article[] = ide.session.getArticlesForLocales(locales);
 
   return (
     <Dialog open={true} onClose={onClose} >
@@ -63,12 +64,13 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel><FormattedMessage id='locale' /></InputLabel>
-          <Select onChange={({ target }) => {
-
-              const locale: API.CMS.LocaleId = target.value as any;
+          <Select
+            multiple
+            onChange={({ target }) => {
+              const locale: API.CMS.LocaleId[] = target.value as any;
               if (articleId) {
                 const newArticleId = [...articleId]
-                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
+                const articlesForNewLocale = ide.session.getArticlesForLocales(locale).map(article => article.id);
                 for (const nextId of articleId) {
                   if (!articlesForNewLocale.includes(nextId)) {
                     const index = newArticleId.indexOf(nextId);
@@ -78,13 +80,13 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 setArticleId(newArticleId);
               }
 
-              setLocale(locale);
+              setLocales(locale);
             }}
-            value={locale}
+            value={locales}
             label={<FormattedMessage id='locale' />}
           >
             <MenuItem key={-1} value={''}><FormattedMessage id='locale' /></MenuItem>
-            {locales.map((locale, index) => (
+            {siteLocales.map((locale, index) => (
               <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
             ))}
           </Select>
@@ -112,7 +114,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <Select
             multiline
             multiple
-            disabled={!locale}
+            disabled={!locales.length}
             onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
             label={<FormattedMessage id='composer.select.article' />}
@@ -133,7 +135,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <DialogActions>
         <ButtonGroup className={classes.buttonGroup} variant="text" >
           <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={handleCreate} autoFocus disabled={!name || !technicalname || articleId.length === 0} className={classes.button}><FormattedMessage id='button.add' /></Button>
+          <Button onClick={handleCreate} autoFocus disabled={!name || !technicalname} className={classes.button}><FormattedMessage id='button.add' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>
