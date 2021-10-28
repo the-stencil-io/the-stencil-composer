@@ -147,7 +147,7 @@ declare namespace CMS {
   interface CreateLink { 
     type: "internal" | "external" | string;
     value: string;
-    locale: LocaleId;
+    locales: LocaleId[];
     description: string; 
     articles: ArticleId[]
   }

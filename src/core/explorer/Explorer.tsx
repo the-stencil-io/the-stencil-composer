@@ -78,7 +78,8 @@ const Explorer: React.FC<{}> = () => {
         </div>)
       }
       {articles.map((article, index) => [
-        (<div className={index % 2 === 0 ? classes.article : ''}><ExplorerItem key={index}
+        (<div className={index % 2 === 0 ? classes.article : ''}>
+        <ExplorerItem key={index}
           article={article}
           open={article.id === activeArticleId}
           setOpen={(value) => setOpen(value, article)}
@@ -93,7 +94,6 @@ const Explorer: React.FC<{}> = () => {
             />
           </div>)
         ))
-
       ]
       )}
     </div>

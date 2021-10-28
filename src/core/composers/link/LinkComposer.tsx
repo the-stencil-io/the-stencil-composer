@@ -3,7 +3,7 @@ import { createStyles, makeStyles } from '@mui/styles';
 import {
   Theme, TextField, InputLabel, FormControl, ButtonGroup,
   MenuItem, Select, Button, Dialog, DialogTitle, DialogContent, DialogActions,
-  Typography, Checkbox, ListItemText
+  Typography, Checkbox, ListItemText, FormHelperText
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
@@ -41,16 +41,17 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const classes = useStyles();
   const ide = Ide.useIde();
   const { site } = ide.session;
+  const siteLocales: API.CMS.SiteLocale[] = Object.values(site.locales);
 
   const [type, setType] = React.useState<'internal' | 'external'>('internal');
   const [value, setValue] = React.useState('');
   const [description, setDescription] = React.useState('');
-  const [locale, setLocale] = React.useState('');
+  const [locales, setLocales] = React.useState<API.CMS.LocaleId[]>([]);
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>([]);
-  const articles: API.CMS.Article[] = locale ? ide.session.getArticlesForLocale(locale) : Object.values(site.articles);
+  const articles: API.CMS.Article[] = locales ? ide.session.getArticlesForLocales(locales) : Object.values(site.articles);
 
   const handleCreate = () => {
-    const entity: API.CMS.CreateLink = { type, value, description, locale, articles: articleId };
+    const entity: API.CMS.CreateLink = { type, value, description, locales, articles: articleId };
     ide.service.create().link(entity).then(success => {
       console.log(success)
       onClose();
@@ -58,12 +59,11 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     })
   }
 
-  const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
+
 
   return (
     <Dialog open={true} onClose={onClose} >
       <DialogTitle className={classes.title}><FormattedMessage id='link.composer.title' /></DialogTitle>
-
       <DialogContent>
         <Typography component={'div'}>
 
@@ -78,33 +78,37 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <MenuItem value="phone"><FormattedMessage id='link.type.phone' /></MenuItem>
             </Select>
           </FormControl >
-          <FormControl variant="outlined" className={classes.select} fullWidth>
-            <InputLabel><FormattedMessage id='locale' /></InputLabel>
-            <Select value={locale} label={<FormattedMessage id='locale' />} onChange={({ target }) => {
-              const locale: API.CMS.LocaleId = target.value as any;
-              if (articleId) {
-                const newArticleId = [...articleId]
-                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
-                for (const nextId of articleId) {
-                  if (!articlesForNewLocale.includes(nextId)) {
-                    const index = newArticleId.indexOf(nextId);
-                    newArticleId.splice(index, 1);
-                  }
-                }
-                setArticleId(newArticleId);
-              }
-              setLocale(locale);
-            }}>
 
-              <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
-              {locales.map((locale, index) => (
+          <FormControl variant="outlined" className={classes.select} fullWidth >
+            <InputLabel><FormattedMessage id='locale' /></InputLabel>
+            <Select
+              multiple
+              value={locales} label={<FormattedMessage id='locale' />} onChange={({ target }) => {
+                const locale: API.CMS.LocaleId[] = target.value as any;
+                if (articleId) {
+                  const newArticleId = [...articleId]
+                  const articlesForNewLocale = ide.session.getArticlesForLocales(locale).map(article => article.id);
+                  for (const nextId of articleId) {
+                    if (!articlesForNewLocale.includes(nextId)) {
+                      const index = newArticleId.indexOf(nextId);
+                      newArticleId.splice(index, 1);
+                    }
+                  }
+                  setArticleId(newArticleId);
+                }
+                setLocales(locale);
+              }}>
+
+              {siteLocales.map((locale, index) => (
                 <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
               ))}
 
             </Select>
+            <FormHelperText><FormattedMessage id="select.multiple" /></FormHelperText>
+
           </FormControl >
 
-          <TextField 
+          <TextField
             className={classes.select}
             fullWidth
             required
@@ -114,7 +118,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             value={description}
             onChange={({ target }) => setDescription(target.value)} />
 
-          <TextField 
+          <TextField
             className={classes.select}
             fullWidth
             required
@@ -150,7 +154,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <DialogActions>
         <ButtonGroup variant="text" className={classes.buttonGroup}>
           <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={handleCreate} className={classes.button} autoFocus disabled={!value || !locale || !description}><FormattedMessage id='button.create' /></Button>
+          <Button onClick={handleCreate} className={classes.button} autoFocus disabled={!value || !locales.length || !description}><FormattedMessage id='button.create' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>

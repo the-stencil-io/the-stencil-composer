@@ -37,6 +37,7 @@ declare namespace Ide {
     pages: Record<API.CMS.PageId, PageUpdate>;
     
     getArticlesForLocale(locale: API.CMS.LocaleId): API.CMS.Article[];
+    getArticlesForLocales(locales: API.CMS.LocaleId[]): API.CMS.Article[];
     
     withPage(page: API.CMS.PageId): Session;
     withPageValue(page: API.CMS.PageId, value: API.CMS.LocalisedContent): Session;

@@ -68,7 +68,6 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
       <DialogTitle className={classes.title}><FormattedMessage id='workflow.edit.title' /></DialogTitle>
       <DialogContent>
 
-
           <TextField className={classes.select}
             label={<FormattedMessage id='workflow.technicalname' />}
             helperText={<FormattedMessage id='workflow.technicalname' />}
@@ -101,7 +100,6 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
                 <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
               ))}
             </Select>
-
           </FormControl>
           <TextField className={classes.select}
             label={<FormattedMessage id='workflow.composer.name' />}

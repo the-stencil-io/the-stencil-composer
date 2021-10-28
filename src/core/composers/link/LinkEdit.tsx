@@ -65,7 +65,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>(link.body.articles);
   const articles: API.CMS.Article[] = locale ? ide.session.getArticlesForLocale(locale) : Object.values(site.articles);
-  
+
 
   const handleCreate = () => {
     const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: articleId };
@@ -115,7 +115,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
               }
               setLocale(locale);
             }}>
-          
+
             <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
             {locales.map((locale, index) => (
               <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
@@ -151,9 +151,9 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
           <Select
             multiline
             multiple
-            onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
             label={<FormattedMessage id='link.article.select' />}
+            onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             renderValue={(selected) => (selected as API.CMS.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           >
             {articles.map((article, index) => (

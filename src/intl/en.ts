@@ -1,5 +1,6 @@
 const en = {
 
+  'select.multiple': 'Select one or many items',
   'resource.options': 'Resource options',
   'resource.edit.links': 'Create, add, remove Article links',
   'resource.edit.workflows': 'Create, add, remove Article workflows',
@@ -116,10 +117,10 @@ const en = {
   'composer.locale.desc': 'Add, activate, and deactivate content languages globally',
   'composer.page.title': 'Page',
   'composer.page.desc': 'One file representing one language and its associated links and workflows within an Article',
-  'composer.link.title': 'Link',
-  'composer.link.desc': 'Internal links connect to content within your domain, and external links connect to content outside your domain',
-  'composer.workflow.title': 'Workflow',
-  'composer.workflow.desc': 'Connect forms and processes',
+  'composer.link.title': 'Hyperlink',
+  'composer.link.desc': 'Create links to webpages you own, webpages of other organisations, and your telephone numbers',
+  'composer.workflow.title': 'Workflow Link',
+  'composer.workflow.desc': 'Create links to your workflows (forms)',
   'composer.release.title': 'Release',
   'composer.release.desc': 'Create a snapshot of all site content at one certain point of time for testing or production purposes',
 

@@ -31,6 +31,17 @@ class SessionData implements Ide.Session {
       return false;
     }) : []
   }
+  getArticlesForLocales(locales: API.CMS.LocaleId[]): API.CMS.Article[] {
+    const pages = Object.values(this._site.pages)
+    return locales && locales.length > 0 ? Object.values(this._site.articles).filter(article => {
+      for (const page of pages) {
+        if (page.body.article === article.id && locales.includes(page.body.locale)) {
+          return true;
+        }
+      }
+      return false;
+    }) : []
+  }
   
   
   withSite(site: API.CMS.Site) {
