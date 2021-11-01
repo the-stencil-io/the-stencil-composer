@@ -50,10 +50,9 @@ const NewLinkArticle: React.FC<NewLinkArticleProps> = ({ link, onClose }) => {
     
   const handleUpdate = () => {
     const entity: API.CMS.LinkMutator = { 
-      content: link.body.content, 
-      description: link.body.description, 
+      value: link.body.value,
+      labels: undefined,
       linkId: link.id, 
-      locale: link.body.locale,
       type: link.body.contentType,
       articles: [...link.body.articles, articleId]
     };

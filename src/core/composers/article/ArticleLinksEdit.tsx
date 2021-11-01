@@ -94,7 +94,7 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
   const { service, actions } = Ide.useIde();
   const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
 
-  const links: API.CMS.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
+  const links: API.CMS.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   const handleChange = (event: any, id: API.CMS.LinkId) => {
     const selected: boolean = event.target.checked;
@@ -149,8 +149,6 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
             <TableHead>
               <TableRow>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="description" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
               </TableRow>
@@ -159,9 +157,7 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
               {links.map((link, index) => (
                 <TableRow hover key={index}>
                   <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={(event) => handleChange(event, link.id)} />
                   </TableCell>

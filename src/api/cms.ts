@@ -86,37 +86,40 @@ declare namespace CMS {
     body: {
       articles: ArticleId[],
       contentType: LinkType,
-      content: LocalisedContent, //url, phone number
-      locale: LocaleId,
-      description: string //text that user sees
+      value: string, //url, phone number
+      labels: LocaleLabel[],
     }
   }
   
+ interface LocaleLabel {
+   locale: LocaleId;     // locale id
+   labelValue: LocalisedContent; // translation in locale
+  }
+  
+  
   interface LinkMutator {
     linkId: LinkId,
-    content: LocalisedContent, 
-    locale: LocaleId, 
     type: LinkType,
-    description: string,
-    articles: ArticleId[],
+    value: string,
+    articles: ArticleId[] | undefined,
+    labels: LocaleLabel[] | undefined,
   }
 
   interface Workflow {
     id: WorkflowId,
     body: {
       articles: ArticleId[],
-      name: string,
-      locale: LocaleId,
-      content: LocalisedContent
+      value: string,
+      labels: LocaleLabel[],
     }
   }
   
   interface WorkflowMutator {
     workflowId: WorkflowId, 
-    name: string, 
-    locale: LocaleId, 
-    content: LocalisedContent,
-    articles: ArticleId[]
+    value: string, 
+    articles: ArticleId[] | undefined,
+    labels: LocaleLabel[] | undefined,
+    devMode: boolean | undefined
   }
 
   interface FetchIntegration {
@@ -148,15 +151,16 @@ declare namespace CMS {
     type: "internal" | "external" | string;
     value: string;
     locales: LocaleId[];
-    description: string; 
+    labelValue: LocalisedContent; 
     articles: ArticleId[]
   }
   
   interface CreateWorkflow { 
-    name: string;
+    value: string;
     locales: LocaleId[]; 
-    content: string;
-    articles: ArticleId[] 
+    labelValue: LocalisedContent;
+    articles: ArticleId[];
+    devMode: boolean | undefined 
   }
   interface CreateRelease {
     name: string,

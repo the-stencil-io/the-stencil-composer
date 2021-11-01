@@ -96,7 +96,7 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
   const { service, actions } = Ide.useIde();
   const [selectedWorkflows, setSelectedWorkflows] = React.useState(getArticleWorkflows(site, props.articleId))
 
-  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.content.localeCompare(o2.body.content));
+  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   const handleChange = (event: any, id: API.CMS.WorkflowId) => {
     const selected: boolean = event.target.checked;
@@ -153,17 +153,13 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
               <TableHead>
                 <TableRow>
                   <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
-                  <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
-                  <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
                   <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {workflows.map((workflow, index) => (
                   <TableRow hover key={index}>
-                    <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
-                    <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
-                    <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
+                    <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                     <TableCell className={classes.tableCell} align="center">
 
                       <Checkbox size="small" color="secondary"

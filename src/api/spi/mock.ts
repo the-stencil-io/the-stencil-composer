@@ -41,33 +41,33 @@ const pages: API.CMS.Page[] = [
 ];
 
 const links: API.CMS.Link[] = [
-  { id: "l1", body: { articles: ["a1", "a2", "a2.4"], contentType: "internal", description: "new housing developments", content: "http://www.housing-sipoo.fi/fi", locale: "fi" }},
-  { id: "l2", body: { articles: ["a1"], contentType: "internal", description: "new housing developments", content: "http://www.housing-sipoo.fi/en", locale: "en" }},
-  { id: "l3", body: { articles: ["a1"], contentType: "external", description: "move to finland", content: "http://www.finland.fi", locale: "fi" }},
-  { id: "l4", body: { articles: ["a1"], contentType: "phone", description: "office phone", content: "+664-5277-7733", locale: "en" }},
-  { id: "l5", body: { articles: ["a1"], contentType: "phone", description: "päätilintarkastajan puhelin", content: "+664-4321-1223", locale: "fi" }},
-  { id: "l6", body: { articles: ["a1"], contentType: "internal", description: "about the service", content: "http://www.us/service/about", locale: "en" }},
-  { id: "l7", body: { articles: ["a2"], contentType: "phone", description: "secretary phone", content: "+664-4185-6512", locale: "fi" }},
-  { id: "l8", body: { articles: ["a2"], contentType: "phone", description: "manager phone", content: "+124-2241-1188", locale: "en" }},
-  { id: "l9", body: { articles: ["a2"], contentType: "internal", description: "hospital information", content: "http://www.hospitals.com", locale: "fi" }},
-  { id: "l10", body: { articles: ["a2"], contentType: "external", description: "terveys", content: "http://www.health.fi", locale: "fi" }},
-  { id: "l11", body: { articles: ["a2"], contentType: "internal", description: "elder care", content: "http://www.vanhukset.fi", locale: "fi" }},
-  { id: "l12", body: { articles: ["a2"], contentType: "phone", description: "secretary phone", content: "+664-4185-6512", locale: "fi" }},
-  { id: "l13", body: { articles: ["a2"], contentType: "phone", description: "manager phone", content: "+124-2241-1188", locale: "en" }},
-  { id: "l14", body: { articles: ["a2"], contentType: "internal", description: "general information", content: "http://www.example.com", locale: "fi" }},
-  { id: "l15", body: { articles: ["a2"], contentType: "external", description: "vocational training", content: "http://www.adult-learning.com", locale: "fi" }},
-  { id: "l16", body: { articles: ["a2"], contentType: "internal", description: "education", content: "http://www.learn.fi", locale: "fi" }},
+  { id: "l1", body: { articles: ["a1", "a2", "a2.4"], contentType: "internal", value: "http://www.housing-sipoo.fi/fi", labels: [{locale: "fi", labelValue: "new housing developments"}] }},
+  { id: "l2", body: { articles: ["a1"], contentType: "internal",               value: "http://www.housing-sipoo.fi/en", labels: [{locale: "en", labelValue: "new housing developments"}] }},
+  { id: "l3", body: { articles: ["a1"], contentType: "external",               value: "http://www.finland.fi",          labels: [{locale: "fi", labelValue: "move to finland"}]}},
+  { id: "l4", body: { articles: ["a1"], contentType: "phone",                  value: "+664-5277-7733",                 labels: [{locale: "en", labelValue: "office phone"}]}},
+  { id: "l5", body: { articles: ["a1"], contentType: "phone",                  value: "+664-4321-1223",                 labels: [{locale: "fi", labelValue: "päätilintarkastajan puhelin"}]}},
+  { id: "l6", body: { articles: ["a1"], contentType: "internal",               value: "http://www.us/service/about",    labels: [{locale: "en", labelValue: "about the service"}]}},
+  { id: "l7", body: { articles: ["a2"], contentType: "phone",                  value: "+664-4185-6512",                 labels: [{locale: "fi", labelValue: "secretary phone"}]}},
+  { id: "l8", body: { articles: ["a2"], contentType: "phone",                  value: "+124-2241-1188",                 labels: [{locale: "en", labelValue: "manager phone"}]}},
+  { id: "l9", body: { articles: ["a2"], contentType: "internal",               value: "http://www.hospitals.com",       labels: [{locale: "fi", labelValue: "hospital information"}]}},
+  { id: "l10", body: { articles: ["a2"], contentType: "external",              value: "http://www.health.fi",           labels: [{locale: "fi", labelValue: "terveys"}]}},
+  { id: "l11", body: { articles: ["a2"], contentType: "internal",              value: "http://www.vanhukset.fi",        labels: [{locale: "fi", labelValue: "elder care"}]}},
+  { id: "l12", body: { articles: ["a2"], contentType: "phone",                 value: "+664-4185-6512",                 labels: [{locale: "fi", labelValue: "main secretary phone"}]}},
+  { id: "l13", body: { articles: ["a2"], contentType: "phone",                 value: "+124-2241-1188",                 labels: [{locale: "en", labelValue: "main manager phone"}]}},
+  { id: "l14", body: { articles: ["a2"], contentType: "internal",              value: "http://www.example.com",         labels: [{locale:"fi", labelValue:"general information"}]}},
+  { id: "l15", body: { articles: ["a2"], contentType: "external",              value: "http://www.adult-learning.com",  labels: [{locale: "fi", labelValue: "vocational training"}]}},
+  { id: "l16", body: { articles: ["a2"], contentType: "internal",              value: "http://www.learn.fi",            labels: [{locale: "fi", labelValue:"education"}]}},
 
 
 ];
 
 const workflows: API.CMS.Workflow[] = [
-  { id: "w1", body: { articles: ["a1"], name: "generalProcess1", content: "General Inquiry", locale: "en" }},
-  { id: "w2", body: { articles: ["a1"], name: "greatFlow", content: "Default Form", locale: "en" }},
-  { id: "w3", body: { articles: ["a1"], name: "inquiryMgr", content: "Super good question", locale: "en" }},
-  { id: "w4", body: { articles: ["a1.2"], name: "generalProcess1", content: "General Process", locale: "fi" }},
-  { id: "w5", body: { articles: ["a1.3"], name: "greatFlow", content: "Default Flow", locale: "en" }},
-  { id: "w6", body: { articles: ["a1.3"], name: "inquiryMgr", content: "General Question", locale: "fi" }},
+  { id: "w1", body: { articles: ["a1"],   value: "generalProcess1",   labels: [{locale: "fi", labelValue:"General Inquiry"}]}},
+  { id: "w2", body: { articles: ["a1"],   value: "greatFlow",         labels: [{locale: "en", labelValue:"Default Form"}]}},
+  { id: "w3", body: { articles: ["a1"],   value: "inquiryMgr",        labels: [{locale: "en", labelValue:"Super good question"}]}},
+  { id: "w4", body: { articles: ["a1.2"], value: "generalProcess1", labels: [{locale: "fi", labelValue:"General Process"}]}},
+  { id: "w5", body: { articles: ["a1.3"], value: "greatFlow",       labels: [{locale: "en", labelValue:"Default Flow"}]}},
+  { id: "w6", body: { articles: ["a1.3"], value: "inquiryMgr",      labels: [{locale: "fi", labelValue:"General Question"}]}}, 
 ];
 
 const locales: API.CMS.SiteLocale[] = [

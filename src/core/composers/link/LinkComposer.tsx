@@ -45,20 +45,19 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const [type, setType] = React.useState<'internal' | 'external'>('internal');
   const [value, setValue] = React.useState('');
-  const [description, setDescription] = React.useState('');
+  const [labelValue, setLabelValue] = React.useState('');
   const [locales, setLocales] = React.useState<API.CMS.LocaleId[]>([]);
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>([]);
   const articles: API.CMS.Article[] = locales ? ide.session.getArticlesForLocales(locales) : Object.values(site.articles);
 
   const handleCreate = () => {
-    const entity: API.CMS.CreateLink = { type, value, description, locales, articles: articleId };
+    const entity: API.CMS.CreateLink = { type, value, labelValue, locales, articles: articleId };
     ide.service.create().link(entity).then(success => {
       console.log(success)
       onClose();
       ide.actions.handleLoadSite();
     })
   }
-
 
 
   return (
@@ -115,8 +114,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             label={<FormattedMessage id='link.composer.descriptionlabel' />}
             helperText={<FormattedMessage id='link.composer.descriptionhelper' />}
             variant="outlined"
-            value={description}
-            onChange={({ target }) => setDescription(target.value)} />
+            value={labelValue}
+            onChange={({ target }) => setLabelValue(target.value)} />
 
           <TextField
             className={classes.select}
@@ -154,7 +153,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <DialogActions>
         <ButtonGroup variant="text" className={classes.buttonGroup}>
           <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={handleCreate} className={classes.button} autoFocus disabled={!value || !locales.length || !description}><FormattedMessage id='button.create' /></Button>
+          <Button onClick={handleCreate} className={classes.button} autoFocus disabled={!value || !locales.length || !labelValue}><FormattedMessage id='button.create' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>

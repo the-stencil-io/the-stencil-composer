@@ -77,7 +77,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const LinksView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const links = Object.values(site.links).sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
+  const links = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
   const title = useIntl().formatMessage({ id: "links" });
 
 
@@ -95,8 +95,6 @@ const LinksView: React.FC<{}> = () => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.bold} align="center" colSpan={2}><FormattedMessage id="link.type" /></TableCell>
-              <TableCell className={classes.bold} align="center"><FormattedMessage id="locale" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="description" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="link.url" /></TableCell>
               <TableCell className={classes.bold} align="center"><FormattedMessage id="articles" /></TableCell>
               <TableCell className={classes.bold} align="center"></TableCell>
@@ -141,9 +139,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
           </TableCell>
           
           <TableCell className={classes.tableCell} align="center">{link.body.contentType}</TableCell>
-          <TableCell className={classes.tableCell} align="center">{site.locales[link.body.locale].body.value}</TableCell>
-          <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
-          <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+          <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
           <TableCell className={classes.tableCell} align="center">{link.body.articles.length}</TableCell>
           <TableCell className={classes.tableCell} align="right" width="10%">
 
@@ -187,7 +183,9 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
                           {site.articles[id].body.name}
                         </TableCell>
                         <TableCell>
+                        {"hahah remove mis missing"/*
                           <LinkRemovePage link={link} article={site.articles[id]} locale={link.body.locale} />
+                         */} 
                         </TableCell>
                         <TableCell>
                         </TableCell>

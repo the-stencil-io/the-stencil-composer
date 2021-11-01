@@ -57,18 +57,16 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
   const ide = Ide.useIde();
   const { site } = ide.session;
 
-
-  const [locale, setLocale] = React.useState(link.body.locale);
-  const [content, setContent] = React.useState(link.body.content);
+  const [locale, setLocale] = React.useState(link.body.labels[0].locale);
+  const [value, setValue] = React.useState(link.body.value);
   const [contentType, setContentType] = React.useState(link.body.contentType);
-  const [description, setDescription] = React.useState(link.body.description);
   const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>(link.body.articles);
   const articles: API.CMS.Article[] = locale ? ide.session.getArticlesForLocale(locale) : Object.values(site.articles);
 
 
   const handleCreate = () => {
-    const entity: API.CMS.LinkMutator = { linkId: link.id, content, locale, type: contentType, description, articles: articleId };
+    const entity: API.CMS.LinkMutator = { linkId: link.id, value, type: contentType, articles: articleId, labels: undefined };
     console.log("entity", entity)
     ide.service.update().link(entity).then(success => {
       console.log(success)
@@ -123,28 +121,18 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
 
           </Select>
         </FormControl>
-        <TextField
-          label={<FormattedMessage id="link.composer.descriptionlabel" />}
-          variant="outlined"
-          placeholder={link.body.description}
-          helperText={<FormattedMessage id="link.composer.descriptionhelper" />}
-          fullWidth
-          required
-          className={classes.select}
-          value={description}
-          onChange={({ target }) => setDescription(target.value as any)} />
 
         <FormControl variant="outlined" fullWidth>
           <TextField
             label={<FormattedMessage id="link.content" />}
             variant="outlined"
             required
-            placeholder={link.body.content}
+            placeholder={link.body.value}
             helperText={<FormattedMessage id="link.composer.valuehelper" />}
             fullWidth
             className={classes.select}
-            value={content}
-            onChange={({ target }) => setContent(target.value as any)} />
+            value={value}
+            onChange={({ target }) => setValue(target.value as any)} />
         </FormControl>
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel><FormattedMessage id='link.article.select' /></InputLabel>
@@ -171,7 +159,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
       <DialogActions>
         <ButtonGroup variant="text">
           <Button className={classes.button} onClick={onClose}><FormattedMessage id="button.cancel" /></Button>
-          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!content || !description}  ><FormattedMessage id="button.update" /></Button>
+          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!value}  ><FormattedMessage id="button.update" /></Button>
         </ButtonGroup>
       </DialogActions>
 

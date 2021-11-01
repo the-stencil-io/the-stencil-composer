@@ -47,13 +47,11 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
   const { site } = ide.session;
 
   const [articleId, setArticleId] = React.useState<API.CMS.ArticleId[]>(workflow.body.articles);
-  const [locale, setLocale] = React.useState(workflow.body.locale);
-  const [technicalname, setTechnicalname] = React.useState(workflow.body.content);
-  const [name, setName] = React.useState(workflow.body.name);
-  const articles: API.CMS.Article[] = ide.session.getArticlesForLocale(locale);
+  const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
+  const articles: API.CMS.Article[] = ide.session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
 
   const handleCreate = () => {
-    const entity: API.CMS.WorkflowMutator = { workflowId: workflow.id, locale, name, content: technicalname, articles: articleId };
+    const entity: API.CMS.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels: undefined, devMode: undefined };
     ide.service.update().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -61,60 +59,24 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
     })
   }
 
-  const locales: API.CMS.SiteLocale[] = Object.values(site.locales);
-
   return (
     <Dialog open={true} onClose={onClose} >
       <DialogTitle className={classes.title}><FormattedMessage id='workflow.edit.title' /></DialogTitle>
       <DialogContent>
 
-          <TextField className={classes.select}
-            label={<FormattedMessage id='workflow.technicalname' />}
-            helperText={<FormattedMessage id='workflow.technicalname' />}
-            variant="outlined"
-            fullWidth
-            value={technicalname}
-            onChange={({ target }) => setTechnicalname(target.value)} />
-
-          <FormControl variant="outlined" className={classes.select} fullWidth>
-            <InputLabel><FormattedMessage id='locale' /></InputLabel>
-            <Select onChange={({ target }) => {
-              const locale: API.CMS.LocaleId = target.value as any;
-              if (articleId) {
-                const newArticleId = [...articleId]
-                const articlesForNewLocale = ide.session.getArticlesForLocale(locale).map(article => article.id);
-                for (const nextId of articleId) {
-                  if (!articlesForNewLocale.includes(nextId)) {
-                    const index = newArticleId.indexOf(nextId);
-                    newArticleId.splice(index, 1);
-                  }
-                }
-                setArticleId(newArticleId);
-              }
-              setLocale(target.value as any);
-            }}
-              value={locale}
-              label={<FormattedMessage id='locale' />}
-            >
-              {locales.map((locale, index) => (
-                <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <TextField className={classes.select}
-            label={<FormattedMessage id='workflow.composer.name' />}
-            helperText={<FormattedMessage id='workflow.composer.helper' />}
-            variant="outlined"
-            fullWidth
-            value={name}
-            onChange={({ target }) => setName(target.value)} />
+        <TextField className={classes.select}
+          label={<FormattedMessage id='workflow.technicalname' />}
+          helperText={<FormattedMessage id='workflow.technicalname' />}
+          variant="outlined"
+          fullWidth
+          value={technicalname}
+          onChange={({ target }) => setTechnicalname(target.value)} />
 
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel><FormattedMessage id='composer.select.article' /></InputLabel>
           <Select
             multiline
             multiple
-            disabled={!locale}
             onChange={({ target }) => setArticleId(target.value as API.CMS.ArticleId[])}
             value={articleId}
             label={<FormattedMessage id='composer.select.article' />}
@@ -133,9 +95,9 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
       </DialogContent>
 
       <DialogActions>
-      <ButtonGroup variant="text">
-        <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-        <Button onClick={handleCreate} autoFocus disabled={!name} className={classes.button}><FormattedMessage id='button.add' /></Button>
+        <ButtonGroup variant="text">
+          <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
+          <Button onClick={handleCreate} autoFocus disabled={!technicalname} className={classes.button}><FormattedMessage id='button.add' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>

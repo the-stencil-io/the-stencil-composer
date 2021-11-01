@@ -81,7 +81,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
   const site = Ide.useSite();
 
   const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id))
-    .sort((o1, o2) => o1.body.name.localeCompare(o2.body.name));
+    .sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleWorkflowsEdit' | 'WorkflowEdit' | 'WorkflowComposer' | 'WorkflowRemovePage'>(undefined);
 
@@ -116,8 +116,6 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
         <Table className={classes.table} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
               <TableCell align="right" />
             </TableRow>
@@ -125,9 +123,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
           <TableBody>
             {workflows.map((workflow, index) => (
               <TableRow key={index} hover>
-                <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
-                <TableCell className={classes.tableCell} align="left">{site.locales[workflow.body.locale].body.value}</TableCell>
-                <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
+                <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                 <TableCell align="right">
                   <IconButton className={classes.iconButton}>
                     <EditOutlined onClick={() => {

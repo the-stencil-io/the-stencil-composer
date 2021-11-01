@@ -93,7 +93,7 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   }
 
   const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id))
-    .sort((o1, o2) => o1.body.description.localeCompare(o2.body.description));
+    .sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   return (
     <>
@@ -117,20 +117,16 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
           <TableHead>
             <TableRow>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="description" /></TableCell>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
               <TableCell className={classes.bold} align="right" />
-
             </TableRow>
           </TableHead>
           <TableBody>
             {links.map((link, index) => (
               <TableRow hover key={index}>
                 <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-                <TableCell className={classes.tableCell} align="left">{site.locales[link.body.locale].body.value}</TableCell>
-                <TableCell className={classes.tableCell} align="left">{link.body.description}</TableCell>
-                <TableCell className={classes.tableCell} align="left">{link.body.content}</TableCell>
+
+                <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
                 <TableCell className={classes.tableCell} align="right">
                   <IconButton className={classes.iconButton}><EditOutlined onClick={() => {
                     setLink(link)

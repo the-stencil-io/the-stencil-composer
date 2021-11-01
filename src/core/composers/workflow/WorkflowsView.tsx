@@ -84,7 +84,7 @@ const useRowStyles = makeStyles((theme: Theme) =>
 const WorkflowsView: React.FC<{}> = () => {
   const classes = useStyles();
   const site = Ide.useSite();
-  const workflows = Object.values(site.workflows).sort((o1, o2) => o1.body.content.localeCompare(o2.body.content));
+  const workflows = Object.values(site.workflows).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
   const title = useIntl().formatMessage({ id: "workflows" });
 
   return (
@@ -137,9 +137,7 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
             {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
           </IconButton>
         </TableCell>
-        <TableCell className={classes.tableCell} align="left">{workflow.body.content}</TableCell>
-        <TableCell className={classes.tableCell} align="center">{site.locales[workflow.body.locale].body.value}</TableCell>
-        <TableCell className={classes.tableCell} align="left">{workflow.body.name}</TableCell>
+        <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
         <TableCell className={classes.tableCell} align="center">{workflow.body.articles.length}</TableCell>
         <TableCell className={classes.tableCell} align="right">
           <IconButton className={classes.iconButton} onClick={() => setOpenDialog("WorkflowEdit")}>
@@ -170,7 +168,10 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
                       </TableCell>
 
                       <TableCell align="left">
-                        <WorkflowRemovePage locale={workflow.body.locale} workflow={workflow} article={article} />
+                        {"hahaha missing to"
+                          // <WorkflowRemovePage locale={workflow.body.locale} workflow={workflow} article={article} />
+                          
+                        }
                       </TableCell>
 
                     </TableRow>

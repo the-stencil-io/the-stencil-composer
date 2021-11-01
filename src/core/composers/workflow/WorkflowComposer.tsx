@@ -46,7 +46,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [name, setName] = React.useState('');
 
   const handleCreate = () => {
-    const entity: API.CMS.CreateWorkflow = { content: technicalname, locales, name, articles: articleId };
+    const entity: API.CMS.CreateWorkflow = { value: technicalname, locales, labelValue: name, articles: articleId, devMode: undefined };
     ide.service.create().workflow(entity).then(success => {
       console.log(success)
       onClose();
