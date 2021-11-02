@@ -1,4 +1,5 @@
-export * from './Composer'
+export * from './Main';
+export * from './Secondary';
 export * from './Dashboard';
 
 export * from './page';

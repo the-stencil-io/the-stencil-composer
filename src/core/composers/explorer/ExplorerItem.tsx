@@ -11,8 +11,8 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
-import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';
-import { API, Ide } from '../deps';
+import { LocaleComposer, NewArticlePage, ArticleOptions } from '../';
+import { API, Ide } from '../../deps';
 
 
 const useStyles = makeStyles((theme: Theme) =>

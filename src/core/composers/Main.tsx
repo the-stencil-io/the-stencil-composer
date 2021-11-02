@@ -1,42 +1,41 @@
 import React from 'react';
 import { Theme } from '@mui/material';
-import { makeStyles, createStyles, } from '@mui/styles';
+import { makeStyles } from '@mui/styles';
 import { Layout, Ide } from '../deps';
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
-  WorkflowsTable, ReleasesView, LocalesView, ArticlesView, ImportView, 
+  WorkflowsTable, ReleasesView, LocalesView, ArticlesView, ImportView,
   HelpView
 } from './';
 
-const useStyles = (props: { y: number }) => makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      height: `${props.y}px`,
-      padding: theme.spacing(1)
-    },
-    left: {
-      display: 'flex',
-      padding: '1vw',
-      backgroundColor: theme.palette.background.paper,
-      height: '100%',
-    },
-    right: {
-      flexGrow: 1,
-      padding: '1vw',
-      backgroundColor: theme.palette.background.default,
-    },
-  }),
-)();
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    height: `100%`,
+    padding: theme.spacing(1)
+  },
+  left: {
+    display: 'flex',
+    padding: '1vw',
+    backgroundColor: theme.palette.background.paper,
+    height: '100%',
+  },
+  right: {
+    flexGrow: 1,
+    padding: '1vw',
+    backgroundColor: theme.palette.background.default,
+  },
+}),
+);
 
 
-const Composer: React.FC<{}> = () => {
+const Main: React.FC<{}> = () => {
   const layout = Layout.useContext();
   const site = Ide.useSite();
-  const classes = useStyles(layout.session.dimensions);
+  const classes = useStyles();
   const tabs = layout.session.tabs;
 
-  if(site.contentType === "NO_CONNECTION") {
-    return (<div>{site.contentType}</div>); 
+  if (site.contentType === "NO_CONNECTION") {
+    return (<div>{site.contentType}</div>);
   }
 
   if (tabs.length === 0) {
@@ -59,7 +58,7 @@ const Composer: React.FC<{}> = () => {
     return (<div className={classes.root}><ArticlesView /></div>);
   } else if (active.id === 'import') {
     return (<div className={classes.root}><ImportView /></div>);
-    
+
   } else if (active.id === 'help') {
     return (<div className={classes.root}><HelpView /></div>);
   }
@@ -76,9 +75,9 @@ const Composer: React.FC<{}> = () => {
   if (tab.data.nav.type === "ARTICLE_PAGES") {
     const locale1 = tab.data.nav.value as string;
     const locale2 = tab.data.nav.value2 as string;
-    composer = (<PageComposer key={article.id + "-" + locale1 + "-" + locale2} article={article} locale1={locale1} locale2={locale2}/>);
+    composer = (<PageComposer key={article.id + "-" + locale1 + "-" + locale2} article={article} locale1={locale1} locale2={locale2} />);
   } else if (tab.data.nav.type === "ARTICLE_LINKS") {
-    composer = (<LinkTable key={article.id + "-links"} article={article}/>)
+    composer = (<LinkTable key={article.id + "-links"} article={article} />)
   } else if (tab.data.nav.type === "ARTICLE_WORKFLOWS") {
     composer = (<WorkflowsTable key={article.id + "-workflows"} article={article} />)
   } else {
@@ -87,6 +86,6 @@ const Composer: React.FC<{}> = () => {
 
   return (<div className={classes.root} key={article.id}>{composer}</div>)
 }
-export { Composer }
+export { Main }
 
 
