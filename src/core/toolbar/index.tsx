@@ -4,7 +4,8 @@ import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
 import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
 import LinkIcon from '@mui/icons-material/Link';
 import TranslateIcon from '@mui/icons-material/Translate';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import WorkTwoToneIcon from '@mui/icons-material/WorkTwoTone';
+import MenuBookTwoToneIcon from '@mui/icons-material/MenuBookTwoTone';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
@@ -35,7 +36,7 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
 
     {
       id: 'toolbar.articles',
-      icon: <LibraryBooksOutlinedIcon />,
+      icon: <MenuBookTwoToneIcon />,
       type: {
         onClick: () => {
           actions.handleTabAdd({ id: 'articles', label: "Articles" });
@@ -55,7 +56,7 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
 
     {
       id: 'toolbar.workflows',
-      icon: <WorkOutlineIcon />,
+      icon: <WorkTwoToneIcon />,
       type: {
         onClick: () => {
           actions.handleTabAdd({ id: 'workflows', label: "Workflows" });

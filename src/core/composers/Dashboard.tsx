@@ -33,11 +33,10 @@ const useItemStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       margin: theme.spacing(1),
-      border: '1px solid',
+    //  border: '1px solid',
       borderColor: (props: { color: string }) => props.color,
       width: '400px',
       display: 'flex',
-      fontWeight: 'bold',
       flexDirection: 'column',
     },
     cardHeader: {
@@ -157,7 +156,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
   const title = useIntl().formatMessage({ id: props.data.title })
 
   return (
-    <Card className={classes.card} variant="elevation">
+    <Card className={classes.card} raised>
       <CardHeader className={classes.cardHeader}
         avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
         title={
