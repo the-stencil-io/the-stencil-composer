@@ -6,6 +6,7 @@ import { IntlProvider } from 'react-intl'
 import { siteTheme } from './themes/siteTheme'
 
 const locale = "en";
+//const service = API.mock();
 const service = API.service({url: "http://localhost:8080/q/ide-services"});
 
 ReactDOM.render(

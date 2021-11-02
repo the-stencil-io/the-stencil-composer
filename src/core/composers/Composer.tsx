@@ -5,7 +5,7 @@ import { Layout, Ide } from '../deps';
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
   WorkflowsTable, ReleasesView, LocalesView, ArticlesView, ImportView, 
-  HelpView
+  HelpView, GraphView
 } from './';
 
 const useStyles = (props: { y: number }) => makeStyles((theme: Theme) =>
@@ -59,7 +59,9 @@ const Composer: React.FC<{}> = () => {
     return (<div className={classes.root}><ArticlesView /></div>);
   } else if (active.id === 'import') {
     return (<div className={classes.root}><ImportView /></div>);
-    
+  } else if (active.id === 'graph') {
+    return (<div className={classes.root}><GraphView /></div>);
+        
   } else if (active.id === 'help') {
     return (<div className={classes.root}><HelpView /></div>);
   }

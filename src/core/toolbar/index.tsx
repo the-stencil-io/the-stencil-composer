@@ -8,7 +8,7 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
-
+import PieChartIcon from '@mui/icons-material/PieChart';
 import { Explorer } from '../explorer';
 
 import { Layout } from '../deps';
@@ -89,6 +89,16 @@ const toolbar = (actions: Layout.Session.Actions): Layout.Session.ToolbarItem[] 
       type: {
         onClick: () => {
           actions.handleTabAdd({ id: 'import', label: 'Import' });
+        }
+      }
+    },
+    
+    {
+      id: 'toolbar.graph',
+      icon: <PieChartIcon />,
+      type: {
+        onClick: () => {
+          actions.handleTabAdd({ id: 'graph', label: "Graph" });
         }
       }
     },
