@@ -1,10 +1,10 @@
 import React from 'react';
 
-import { API, Layout } from '../deps';
+import { StencilClient, Layout } from '../';
 import { ReducerDispatch, Reducer } from './Reducer';
 import { SessionData, ImmutableTabData } from './SessionData';
 
-declare namespace Ide {
+declare namespace Composer {
 
   type NavType = "ARTICLE_LINKS" | "ARTICLE_WORKFLOWS" | "ARTICLE_PAGES";
 
@@ -27,106 +27,122 @@ declare namespace Ide {
 
   interface PageUpdate {
     saved: boolean;
-    origin: API.CMS.Page;
-    value: API.CMS.LocalisedContent;
-    withValue(value: API.CMS.LocalisedContent): PageUpdate;
+    origin: StencilClient.Page;
+    value: StencilClient.LocalisedContent;
+    withValue(value: StencilClient.LocalisedContent): PageUpdate;
   }
 
   interface Session {
-    site: API.CMS.Site,
-    pages: Record<API.CMS.PageId, PageUpdate>;
+    site: StencilClient.Site,
+    pages: Record<StencilClient.PageId, PageUpdate>;
     
-    getArticlesForLocale(locale: API.CMS.LocaleId): API.CMS.Article[];
-    getArticlesForLocales(locales: API.CMS.LocaleId[]): API.CMS.Article[];
+    getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
+    getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[];
     
-    withPage(page: API.CMS.PageId): Session;
-    withPageValue(page: API.CMS.PageId, value: API.CMS.LocalisedContent): Session;
-    withoutPages(pages: API.CMS.PageId[]): Session;
+    withPage(page: StencilClient.PageId): Session;
+    withPageValue(page: StencilClient.PageId, value: StencilClient.LocalisedContent): Session;
+    withoutPages(pages: StencilClient.PageId[]): Session;
     
-    withSite(site: API.CMS.Site): Session;
+    withSite(site: StencilClient.Site): Session;
   }
 
   interface Actions {
     handleLoad(): Promise<void>;
     handleLoadSite(): Promise<void>;
-    handlePageUpdate(page: API.CMS.PageId, value: API.CMS.LocalisedContent): void;
-    handlePageUpdateRemove(pages: API.CMS.PageId[]): void;
+    handlePageUpdate(page: StencilClient.PageId, value: StencilClient.LocalisedContent): void;
+    handlePageUpdateRemove(pages: StencilClient.PageId[]): void;
   }
 
   interface ContextType {
     session: Session;
     actions: Actions;
-    service: API.CMS.Service;
+    service: StencilClient.Service;
   }
 }
 
-namespace Ide {
+namespace Composer {
   const sessionData = new SessionData({});
 
-  export const createTab = (props: { nav: Ide.Nav, page?: API.CMS.Page  }) => new ImmutableTabData(props);
+  export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page  }) => new ImmutableTabData(props);
 
-  export const IdeContext = React.createContext<ContextType>({
+  export const ComposerContext = React.createContext<ContextType>({
     session: sessionData,
     actions: {} as Actions,
-    service: {} as API.CMS.Service
+    service: {} as StencilClient.Service
   });
   
-  export const useUnsaved = (article: API.CMS.Article) => {
-    const ide: ContextType = React.useContext(IdeContext);
+  export const useUnsaved = (article: StencilClient.Article) => {
+    const ide: ContextType = React.useContext(ComposerContext);
+    return isInsaved(article, ide);
+  }
+  
+  const isInsaved = (article: StencilClient.Article, ide: ContextType): boolean => {
     const unsaved = Object.values(ide.session.pages).filter(p => !p.saved).filter(p => p.origin.body.article === article.id);
     return unsaved.length > 0
   }
 
-  export const useIde = () => {
-    const result: ContextType = React.useContext(IdeContext);
-    return result;
+  export const useComposer = () => {
+    const result: ContextType = React.useContext(ComposerContext);
+    const isArticleUnsaved = (article: StencilClient.Article): boolean => isInsaved(article, result);
+    
+    return {session: result.session, service: result.service, actions: result.actions, site: result.session.site, isArticleUnsaved};
   }
 
   export const useSite = () => {
-    const result: ContextType = React.useContext(IdeContext);
+    const result: ContextType = React.useContext(ComposerContext);
     return result.session.site;
   }
 
-  export const useNav = () => {
+  export const useSession = () => {
+    const result: ContextType = React.useContext(ComposerContext);
+    return result.session;
+  }
+
+  export const useLayout = () => {
     const layout = Layout.useContext();
+    return layout;
+  } 
+
+  export const useNav = () => {
+    const layout = useLayout();
     
-    const handleInTab = (props: {article: API.CMS.Article, type: Ide.NavType, locale?: string}) => {
+    const handleInTab = (props: {article: StencilClient.Article, type: Composer.NavType, locale?: string}) => {
       const nav = { type: props.type, value: props.locale };
-      const tab: Ide.Tab = {
+      const tab: Composer.Tab = {
         id: props.article.id,
         label: props.type === "ARTICLE_PAGES" ? <ArticlePagesTab article={props.article} /> : props.article.body.name, 
-        data: Ide.createTab({ nav })
+        data: Composer.createTab({ nav })
       };
 
       const oldTab = layout.session.findTab(props.article.id);
       if (oldTab !== undefined) {
-        layout.actions.handleTabData(props.article.id, (oldData: Ide.TabData) => oldData.withNav(nav));
+        layout.actions.handleTabData(props.article.id, (oldData: Composer.TabData) => oldData.withNav(nav));
       }
       layout.actions.handleTabAdd(tab);
     }
 
-    const findTab = (article: API.CMS.Article): Ide.Tab | undefined => {
+    const findTab = (article: StencilClient.Article): Composer.Tab | undefined => {
       const oldTab = layout.session.findTab(article.id);
       if (oldTab !== undefined) {
         const tabs = layout.session.tabs;
         const active = tabs[layout.session.history.open];
-        const tab: Ide.Tab = active;
+        const tab: Composer.Tab = active;
         return tab;
       }
       return undefined;
     }
     
-    const handleDualView = (article: API.CMS.Article) => {
+    const handleDualView = (article: StencilClient.Article) => {
       const oldTab = layout.session.findTab(article.id);
       if (oldTab !== undefined) {
-        layout.actions.handleTabData(article.id, (oldData: Ide.TabData) => oldData.withDualView(!oldData.dualView));
+        layout.actions.handleTabData(article.id, (oldData: Composer.TabData) => oldData.withDualView(!oldData.dualView));
       }
     }
 
     return { handleInTab, findTab, handleDualView };
   }
   
-  export const Provider: React.FC<{ children: React.ReactNode, service: API.CMS.Service }> = ({ children, service }) => {
+  export const Provider: React.FC<{ children: React.ReactNode, service: StencilClient.Service }> = ({ children, service }) => {
     const [session, dispatch] = React.useReducer(Reducer, sessionData);
     const actions = React.useMemo(() => {
       console.log("init ide dispatch");
@@ -138,16 +154,16 @@ namespace Ide {
       actions.handleLoad();
     }, [service, actions]);
 
-    return (<IdeContext.Provider value={{ session, actions, service }}>{children}</IdeContext.Provider>);
+    return (<ComposerContext.Provider value={{ session, actions, service }}>{children}</ComposerContext.Provider>);
   };
 }
 
-const ArticlePagesTab: React.FC<{article: API.CMS.Article}> = ({ article }) => {
-  const unsaved = Ide.useUnsaved(article);
+const ArticlePagesTab: React.FC<{article: StencilClient.Article}> = ({ article }) => {
+  const unsaved = Composer.useUnsaved(article);
   return <span>{article.body.name}{unsaved ? " *": ""}</span>;
 }
 
 
 
-export default Ide;
+export default Composer;
 

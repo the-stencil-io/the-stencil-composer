@@ -15,7 +15,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 
 import { FormattedMessage } from 'react-intl';
-import { Layout } from '../deps';
+import { Composer, StencilClient } from '../context';
 
 
 const ToolbarItem: React.FC<{
@@ -39,7 +39,7 @@ const ToolbarItem: React.FC<{
 }
 
 const Toolbar: React.FC<{}> = () => {
-  const { actions } = Layout.useContext();
+  const {actions} = Composer.useLayout();
   const theme = useTheme();
   return (
     <List dense={true} disablePadding sx={{ width: `calc(${theme.spacing(7)} + 1px)` }}>

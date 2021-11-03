@@ -1,32 +1,41 @@
 import React from 'react';
-import { API, Layout } from './deps';
-import { Main, Secondary } from './composers';
+import { Main } from './Main';
+import { Secondary } from './Secondary';
+import StencilClient from './client';
 import Toolbar from './toolbar';
-import Ide from './context';
+import {Composer} from './context';
 import messages from '../intl';
+import Layout from '../layout';
 
-interface CMSEditorProps {
-  service: API.CMS.Service,
+
+interface StencilComposerProps {
+  service: StencilClient.Service,
 };
 
-
-const Components: React.FC<{ service: API.CMS.Service }> = ({ service }) => {
-  
-  return (<Layout.Container 
-    main={<Main />}
-    secondary={<Secondary />} 
-    toolbar={<Toolbar />} />)}
-
-
-const CMSEditor: React.FC<CMSEditorProps> = ({ service }) => {
+const StencilComposer: React.FC<StencilComposerProps> = ({ service }) => {
   return (
     <Layout.Provider>
-      <Ide.Provider service={service} >
-        <Components service={service} />
-      </Ide.Provider>
+      <Composer.Provider service={service} >
+        <Layout.Container
+          main={<Main />}
+          secondary={<Secondary />}
+          toolbar={<Toolbar />} />
+      </Composer.Provider>
     </Layout.Provider>
   );
 }
 
-export type { CMSEditorProps };
-export { CMSEditor, API, messages };
+export type { StencilComposerProps };
+export { StencilComposer, StencilClient, messages, Layout };
+export * from './Main';
+export * from './Secondary';
+export * from './Dashboard';
+
+export * from './page';
+export * from './link';
+export * from './workflow';
+export * from './article';
+export * from './locale';
+export * from './release';
+export * from './import';
+export * from './help';
