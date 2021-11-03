@@ -1,58 +1,41 @@
 import React from 'react';
-import { makeStyles } from '@mui/styles';
-import { API, Layout } from './deps';
-import { Composer } from './composers';
-import { toolbar } from './toolbar';
-import Ide from './context';
+import { Main } from './Main';
+import { Secondary } from './Secondary';
+import StencilClient from './client';
+import Toolbar from './toolbar';
+import {Composer} from './context';
 import messages from '../intl';
+import Layout from '../layout';
 
-interface CMSEditorProps {
-  service: API.CMS.Service,
+
+interface StencilComposerProps {
+  service: StencilClient.Service,
 };
 
-
-const Components: React.FC<{ service: API.CMS.Service }> = ({ service }) => {
-  const layout = Layout.useContext();
-
-  return (
-    <Layout.Container components={{
-      search: (_value: string) => console.log("Search"),
-      header: (<Header></Header>),
-      content: (<Composer />),
-      toolbar: toolbar(layout.actions),
-      badges: []
-    }} />);
-}
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    display: 'flex',
-    padding: 0,
-    margin: 0
-  },
-}));
-
-interface HeaderProps {
-
-}
-const Header: React.FC<HeaderProps> = () => {
-  const classes = useStyles();
-
-  return (
-    <div className={classes.root}>
-
-    </div>
-  )
-}
-const CMSEditor: React.FC<CMSEditorProps> = ({ service }) => {
+const StencilComposer: React.FC<StencilComposerProps> = ({ service }) => {
   return (
     <Layout.Provider>
-      <Ide.Provider service={service} >
-        <Components service={service} />
-      </Ide.Provider>
+      <Composer.Provider service={service} >
+        <Layout.Container
+          main={<Main />}
+          secondary={<Secondary />}
+          toolbar={<Toolbar />} />
+      </Composer.Provider>
     </Layout.Provider>
   );
 }
 
-export type { CMSEditorProps };
-export { CMSEditor, API, messages };
+export type { StencilComposerProps };
+export { StencilComposer, StencilClient, messages, Layout };
+export * from './Main';
+export * from './Secondary';
+export * from './Dashboard';
+
+export * from './page';
+export * from './link';
+export * from './workflow';
+export * from './article';
+export * from './locale';
+export * from './release';
+export * from './import';
+export * from './help';

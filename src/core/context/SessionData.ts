@@ -1,13 +1,13 @@
 import Ide from './ide';
-import { API } from '../deps';
+import StencilClient from '../client';
 
 class SessionData implements Ide.Session {
-  private _site: API.CMS.Site;
-  private _pages: Record<API.CMS.PageId, Ide.PageUpdate>;
+  private _site: StencilClient.Site;
+  private _pages: Record<StencilClient.PageId, Ide.PageUpdate>;
 
   constructor(props: {
-    site?: API.CMS.Site,
-    pages?: Record<API.CMS.PageId, Ide.PageUpdate>
+    site?: StencilClient.Site,
+    pages?: Record<StencilClient.PageId, Ide.PageUpdate>
   }) {
 
     this._site = props.site ? props.site : { name: "", contentType: "OK", releases: {}, articles: {}, links: {}, locales: {}, pages: {}, workflows: {} };
@@ -20,7 +20,7 @@ class SessionData implements Ide.Session {
   get pages() {
     return this._pages;
   }
-  getArticlesForLocale(locale: API.CMS.LocaleId): API.CMS.Article[] {
+  getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[] {
     const pages = Object.values(this._site.pages)
     return locale ? Object.values(this._site.articles).filter(article => {
       for (const page of pages) {
@@ -31,7 +31,7 @@ class SessionData implements Ide.Session {
       return false;
     }) : []
   }
-  getArticlesForLocales(locales: API.CMS.LocaleId[]): API.CMS.Article[] {
+  getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[] {
     const pages = Object.values(this._site.pages)
     return locales && locales.length > 0 ? Object.values(this._site.articles).filter(article => {
       for (const page of pages) {
@@ -44,10 +44,10 @@ class SessionData implements Ide.Session {
   }
   
   
-  withSite(site: API.CMS.Site) {
+  withSite(site: StencilClient.Site) {
     return new SessionData({ site: site });
   }
-  withoutPages(pageIds: API.CMS.PageId[]): Ide.Session {
+  withoutPages(pageIds: StencilClient.PageId[]): Ide.Session {
     const pages = {};
     for(const page of Object.values(this._pages)) {
       if(pageIds.includes(page.origin.id)) {
@@ -57,7 +57,7 @@ class SessionData implements Ide.Session {
     }
     return new SessionData({ site: this._site, pages });
   } 
-  withPage(page: API.CMS.PageId): Ide.Session {
+  withPage(page: StencilClient.PageId): Ide.Session {
     if (this._pages[page]) {
       return this;
     }
@@ -66,7 +66,7 @@ class SessionData implements Ide.Session {
     pages[page] = new ImmutablePageUpdate({origin, saved: true, value: origin.body.content});
     return new SessionData({ site: this._site, pages });
   }
-  withPageValue(page: API.CMS.PageId, value: API.CMS.LocalisedContent): Ide.Session {
+  withPageValue(page: StencilClient.PageId, value: StencilClient.LocalisedContent): Ide.Session {
     const session = this.withPage(page);
     const pageUpdate = session.pages[page];
 
@@ -79,13 +79,13 @@ class SessionData implements Ide.Session {
 
 class ImmutablePageUpdate implements Ide.PageUpdate {
   private _saved: boolean;
-  private _origin: API.CMS.Page;
-  private _value: API.CMS.LocalisedContent;
+  private _origin: StencilClient.Page;
+  private _value: StencilClient.LocalisedContent;
 
   constructor(props: {
     saved: boolean;
-    origin: API.CMS.Page;
-    value: API.CMS.LocalisedContent;
+    origin: StencilClient.Page;
+    value: StencilClient.LocalisedContent;
   }) {
     this._saved = props.saved;
     this._origin = props.origin;
@@ -101,7 +101,7 @@ class ImmutablePageUpdate implements Ide.PageUpdate {
   get value() {
     return this._value;
   }
-  withValue(value: API.CMS.LocalisedContent): Ide.PageUpdate {
+  withValue(value: StencilClient.LocalisedContent): Ide.PageUpdate {
     return new ImmutablePageUpdate({saved: false, origin: this._origin, value});
   }
 }

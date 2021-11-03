@@ -4,31 +4,16 @@ import Session from './Session';
 class SessionData implements Session.InstanceMutator {  
   private _tabs: Session.Tab<any>[];
   private _history: Session.History;
-  private _dialogId?: string;
-  private _linkId?: string;
-  private _dimensions: {x: number, y: number};
-  private _search;
+  private _secondary?: string;
   
   constructor(props: {
       tabs?: Session.Tab<any>[], 
-      history?: Session.History, 
-      dialogId?: string,
-      linkId?: string,
-      search?: string,
-      dimensions?: {x: number, y: number}}) {
+      history?: Session.History,
+      secondary?: string}) {
     
+    this._secondary = props.secondary;
     this._tabs = props.tabs ? props.tabs : [];
     this._history = props.history ? props.history : { open: 0 };
-    this._dialogId = props.dialogId;
-    this._linkId = props.linkId;
-    this._dimensions = props.dimensions ? props.dimensions : {x: 0, y: 0};
-    this._search = props.search ? props.search : '';
-  }
-  get linkId() {
-    return this._linkId;
-  }
-  get search() {
-    return this._search;
   }
   get tabs(): readonly Session.Tab<any>[] {
     return this._tabs;
@@ -36,28 +21,13 @@ class SessionData implements Session.InstanceMutator {
   get history() {
     return this._history;
   }
-  get dialogId() {
-    return this._dialogId;
-  }
-  get dimensions() {
-    return this._dimensions;
+  get secondary() {
+    return this._secondary;
   }
   private next(history: Session.History, tabs?: Session.Tab<any>[]): Session.InstanceMutator {
     const newTabs = tabs ? tabs : this.tabs;
-    return new SessionData({dimensions: this._dimensions, dialogId: this.dialogId, linkId: this._linkId, search: this._search, tabs: [...newTabs], history});
+    return new SessionData({tabs: [...newTabs], history, secondary: this._secondary});
   }
-  withSearch(search?: string): Session.InstanceMutator {
-    return new SessionData({dimensions: this._dimensions, tabs: this._tabs, history: this._history, dialogId: this._dialogId, linkId: this._linkId, search});
-  }
-  withDialog(dialogId?: string): Session.InstanceMutator {
-    return new SessionData({dimensions: this._dimensions, tabs: this._tabs, history: this._history, linkId: this._linkId, search: this._search, dialogId});
-  }  
-  withLink(linkId?: string): Session.InstanceMutator {
-    return new SessionData({dimensions: this._dimensions, tabs: this._tabs, history: this._history, dialogId: this._dialogId, search: this._search, linkId});
-  }  
-  withDimensions(dimensions: {x: number, y: number}): Session.InstanceMutator {
-    return new SessionData({dimensions: {x: dimensions.x, y: dimensions.y}, tabs: this._tabs, history: this._history, dialogId: this._dialogId, search: this._search, linkId: this._linkId});
-  }    
   withTabData(tabId: string, updateCommand: (oldData: any) => any): Session.InstanceMutator {
     const tabs: Session.Tab<any>[] = [];
     for(const tab of this.tabs) {
@@ -97,6 +67,9 @@ class SessionData implements Session.InstanceMutator {
       index++
     }
     return undefined;
+  }
+  withSecondary(newItemId?: string): Session.InstanceMutator {
+    return new SessionData({ secondary: newItemId, tabs: this._tabs, history: this._history });
   }
   getTabData<T>(tabId: string): T {
     const tabIndex = this.findTab(tabId);

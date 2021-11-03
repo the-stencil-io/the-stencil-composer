@@ -1,133 +1,76 @@
 import React from 'react';
-import clsx from 'clsx';
 
-import { 
-  CssBaseline, Drawer, AppBar, Toolbar as MaterialToolbar, Typography, IconButton, InputBase 
-} from '@mui/material';
+import {CssBaseline, Toolbar, Typography, IconButton, Box, useTheme} from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 
-import MenuIcon from '@mui/icons-material//Menu';
-import ChevronLeftIcon from '@mui/icons-material//ChevronLeft';
-import SearchIcon from '@mui/icons-material/Search';
-
-import Badges from './badges';
-import Tabs from './tabs';
-import { Toolbar } from './toolbar';
-
-import useStyles from './LayoutStyles';
-import { useLayout, Session } from './context';
-
+import StyledAppBar from './Appbar';
+import StyledDrawer from './Drawer';
+import Tabs from './Tabs';
 
 interface ContainerProps {
-  components: {
-    header: React.ReactElement;
-    content: React.ReactElement;
-    search: (searchString: string) => void;
-    toolbar: Session.ToolbarItem[];
-    badges: {
-      label: string;
-      icon: React.ReactElement;
-      onClick: () => React.ReactElement;
-    }[]
-
-  }
+  main: React.ReactElement;
+  secondary: React.ReactElement;
+  toolbar: React.ReactElement;
 };
 
 const drawerWidth = 400;
-const Container: React.FC<ContainerProps> = ({ components }) => {
-  const classes = useStyles({ drawerWidth });
+const contentStyle = { flexGrow: 1, overflow: "auto", height: "85vh" };
 
-  const { actions, session } = useLayout();
-  const ref = React.createRef<HTMLDivElement>();
+
+const Container: React.FC<ContainerProps> = (components) => {
   const [drawerOpen, setDrawerOpen] = React.useState(false);
-  const [dimensions, setDimensions] = React.useState<boolean>(false);
-
-  // dimensions
-  React.useEffect(() => {
-
-    setTimeout(() => {
-      if (ref.current) {
-        const { width, height } = ref.current.getBoundingClientRect();
-        const x = width;
-        const y = height - 64; //toolbar
-        if (session.dimensions.x === x && session.dimensions.y === y) {
-          return;
-        }
-
-        actions.handleDimensions({ x, y });
-        setDimensions(true)
-      }
-    }, 500);
-
-
-  }, [ref, actions, setDimensions, session.dimensions, drawerOpen, dimensions]);
-
-
-
-  React.useLayoutEffect(() => {
-    const update = () => setDimensions(false);
-    window.addEventListener('resize', update)
-    return () => window.removeEventListener('resize', update);
-  }, [actions, dimensions, setDimensions, session.dimensions])
-
-  // Drawer
-  const handleDrawerOpen = () => {
-    setDrawerOpen(true)
-  };
-  const handleDrawerClose = () => {
-    setDrawerOpen(false)
-  };
-
+  const theme = useTheme();
   return (
-    <div className={classes.root}>
+    <Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
       <CssBaseline />
-      <AppBar position="absolute" className={clsx(classes.appBar, drawerOpen && classes.appBarShift)}>
-        <MaterialToolbar>
-          <IconButton edge="start" color="inherit"
-            className={clsx(classes.menuButton, drawerOpen && classes.menuButtonHidden)}
-            onClick={handleDrawerOpen}>
+      <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
+        <Toolbar>
+          <IconButton edge="start" color="inherit" onClick={() => setDrawerOpen(true)}
+            sx={{ color: theme.palette.secondary.main, display: drawerOpen ? 'none' : undefined }}>
             <MenuIcon />
           </IconButton>
-          <Typography noWrap component="h1" variant="h6" color="inherit" className={classes.title}><Tabs /></Typography>
+          <Typography noWrap component="h1" variant="h6" color="inherit" sx={{ flexGrow: 1 }}>
+            <Tabs />
+          </Typography>
+        </Toolbar>
+      </StyledAppBar>
 
-          <div className={classes.search}>
-            <div className={classes.searchIcon}><SearchIcon /></div>
-            <InputBase placeholder="Search…"
-              onChange={({ target }) => {
-                actions.handleSearch(target.value);
-                components.search(target.value);
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }} />
-          </div>
-          <Badges>{components.badges}</Badges>
-        </MaterialToolbar>
-      </AppBar>
+      <StyledDrawer variant="permanent" open={drawerOpen} drawerWidth={drawerWidth}>
+        <Toolbar>
+          <Box sx={{ flexGrow: 1 }} />
+          <Box sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            padding: '0 8px'
+          }}>
+            <IconButton onClick={() => setDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
+          </Box>
+        </Toolbar>
 
-      <Drawer variant="permanent" open={drawerOpen}
-        classes={{
-          paper: clsx(classes.drawerPaper, !drawerOpen && classes.drawerPaperClose),
-        }}>
+        <Box sx={{ display: 'flex', flexGrow: 1 }} >
+          <Box sx={{
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.primary.contrastText,
+            width: `calc(${theme.spacing(7)} + 1px)`
+          }}>
+            {components.toolbar}
+          </Box>
+          
+          {!drawerOpen ? null :
+            <Box sx={contentStyle}>{components.secondary}</Box>
+          }
+        </Box>
+      </StyledDrawer>
 
-        <div>
-          <div>{components.header}</div>
-          <div className={classes.toolbarIconSpacer}></div>
-          <div className={classes.toolbarIcon}><IconButton onClick={handleDrawerClose}><ChevronLeftIcon /></IconButton></div>
-        </div>
-
-
-        <div className={classes.views}>
-          <Toolbar open={drawerOpen} setOpen={setDrawerOpen}>{components.toolbar}</Toolbar>
-        </div>
-      </Drawer>
-
-      <main className={classes.content} ref={ref}>
-        <div className={classes.appBarSpacer} />
-        {components.content}
+      <main>
+        <Toolbar />
+        <Box sx={contentStyle}>
+          {components.main}
+        </Box>
       </main>
-    </div>
+    </Box>
   );
 }
 

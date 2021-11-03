@@ -11,8 +11,10 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
-import { LocaleComposer, NewArticlePage, ArticleOptions } from '../composers';
-import { API, Ide } from '../deps';
+import { ArticleOptions } from '../article';
+import { LocaleComposer } from '../locale';
+import { NewArticlePage } from '../page';
+import { Composer, StencilClient } from '../context';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -113,42 +115,42 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ExplorerItemProps {
-  article: API.CMS.Article;
+  article: StencilClient.Article;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
 const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
-  const { handleInTab, findTab, handleDualView } = Ide.useNav();
-  const ide = Ide.useIde();
-  const site = ide.session.site;
-  const unsaved = Ide.useUnsaved(article);
+  const { handleInTab, findTab, handleDualView } = Composer.useNav();
+  const {service, actions, site, session, isArticleUnsaved} = Composer.useComposer();
+  const unsaved = isArticleUnsaved(article);
+  
   const [localeOpen, setLocaleOpen] = React.useState(false);
-  const [articlePageOpen, setArticlePageOpen] = React.useState<API.CMS.SiteLocale>();
+  const [articlePageOpen, setArticlePageOpen] = React.useState<StencilClient.SiteLocale>();
   const dualView = findTab(article)?.data?.dualView ? true : false;
 
 
 
   const handleSavePages = () => {
-    const unsaved: API.CMS.PageMutator[] = Object.values(ide.session.pages)
+    const unsaved: StencilClient.PageMutator[] = Object.values(session.pages)
       .filter(p => !p.saved)
       .filter(p => p.origin.body.article === article.id)
       .map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value }));
 
-    ide.service.update().pages(unsaved).then(success => {
-      ide.actions.handlePageUpdateRemove(success.map(p => p.id));
+    service.update().pages(unsaved).then(success => {
+      actions.handlePageUpdateRemove(success.map(p => p.id));
     }).then(() => {
-      ide.actions.handleLoadSite();
+      actions.handleLoadSite();
     });
   }
 
-  const pages: API.CMS.Page[] = Object.values(site.pages).filter(page => article.id === page.body.article);
-  const canCreate: API.CMS.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.body.locale === locale.id).length === 0);
-  const links: API.CMS.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
-  const workflows: API.CMS.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
+  const pages: StencilClient.Page[] = Object.values(site.pages).filter(page => article.id === page.body.article);
+  const canCreate: StencilClient.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.body.locale === locale.id).length === 0);
+  const links: StencilClient.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
+  const workflows: StencilClient.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
 
-  const getPageLocale = (page: API.CMS.Page) => {
+  const getPageLocale = (page: StencilClient.Page) => {
     try {
       return site.locales[page.body.locale].body.value;
     } catch (e) {

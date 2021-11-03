@@ -3,8 +3,8 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Theme, Button, alpha } from '@mui/material';
 
 import { FormattedMessage } from 'react-intl';
-import { Ide, API } from '../deps';
-import { ArticleComposer } from '../composers';
+import { Composer, StencilClient } from '../context';
+import { ArticleComposer } from '../article';
 import { ExplorerItem } from './ExplorerItem'
 
 
@@ -40,7 +40,8 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const Explorer: React.FC<{}> = () => {
   const classes = useStyles();
-  const site = Ide.useSite();
+  const {site} = Composer.useComposer();
+  
   const articles = Object.values(site.articles)
     .filter(a => !a.body.parentId)
     .sort((a1, a2) => a1.body.order - a2.body.order);
@@ -50,11 +51,11 @@ const Explorer: React.FC<{}> = () => {
     .sort((a1, a2) => a1.body.order - a2.body.order);
 
   const [openArticleComposer, setOpenArticleComposer] = React.useState(false);
-  const [activeArticleId, setActiveArticleId] = React.useState<API.CMS.ArticleId | undefined>(
+  const [activeArticleId, setActiveArticleId] = React.useState<StencilClient.ArticleId | undefined>(
     articles.length === 1 ? articles[0].id : undefined
   );
 
-  const setOpen = (value: boolean, article: API.CMS.Article) => {
+  const setOpen = (value: boolean, article: StencilClient.Article) => {
     if (value === true) {
       setActiveArticleId(article.id);
     } else {
@@ -62,7 +63,7 @@ const Explorer: React.FC<{}> = () => {
     }
   };
 
-  const getChildrenArticles = (article: API.CMS.Article): API.CMS.Article[] => {
+  const getChildrenArticles = (article: StencilClient.Article): StencilClient.Article[] => {
     return childArticles.filter(a => a.body.parentId === article.id);
   }
 
