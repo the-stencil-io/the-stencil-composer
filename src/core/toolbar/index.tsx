@@ -39,15 +39,10 @@ const ToolbarItem: React.FC<{
 }
 
 const Toolbar: React.FC<{}> = () => {
-  const theme = useTheme();
   const { actions } = Layout.useContext();
-
+  const theme = useTheme();
   return (
-    <List dense={true} disablePadding sx={{
-    width: theme.spacing(7),
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText
-  }}>
+    <List dense={true} disablePadding sx={{ width: `calc(${theme.spacing(7)} + 1px)` }}>
     <ToolbarItem id='toolbar.dashboard' icon={<HomeOutlinedIcon />} enabled={false}
       onClick={() => actions.handleTabAdd({ id: 'newItem', label: "Dashboard" })}
     />
