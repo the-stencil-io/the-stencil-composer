@@ -56,7 +56,11 @@ const Toolbar: React.FC<{}> = () => {
       onClick={() => actions.handleTabAdd({ id: 'links', label: "Links" })}
     />
     <ToolbarItem id='toolbar.workflows' icon={<WorkOutlineIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'workflows', label: "Workflows" })}
+      onClick={() => {
+        
+        actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
+        actions.handleSecondary('toolbar.workflows')
+      }}
     />
     <ToolbarItem id='toolbar.releases' icon={<NewReleasesOutlinedIcon />} enabled={false}
       onClick={() => actions.handleTabAdd({ id: 'releases', label: "Releases" })}

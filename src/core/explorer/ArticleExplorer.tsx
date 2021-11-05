@@ -5,7 +5,7 @@ import { Theme, Button, alpha } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
 import { ArticleComposer } from '../article';
-import { ExplorerItem } from './ExplorerItem'
+import { ArticleExplorerItem } from './ArticleExplorerItem'
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-const Explorer: React.FC<{}> = () => {
+const ArticleExplorer: React.FC<{}> = () => {
   const classes = useStyles();
   const {site} = Composer.useComposer();
   
@@ -80,7 +80,7 @@ const Explorer: React.FC<{}> = () => {
       }
       {articles.map((article, index) => [
         (<div key={index} className={index % 2 === 0 ? classes.article : ''}>
-          <ExplorerItem key={index}
+          <ArticleExplorerItem key={index}
             article={article}
             open={article.id === activeArticleId}
             setOpen={(value) => setOpen(value, article)}
@@ -88,7 +88,7 @@ const Explorer: React.FC<{}> = () => {
         </div>),
         ...getChildrenArticles(article).map((child, childIndex) => (
           (<div className={index % 2 === 0 ? classes.article : ''} key={childIndex + "-" + index + "-c"}>
-            <ExplorerItem key={childIndex + "-" + index + "-c"}
+            <ArticleExplorerItem key={childIndex + "-" + index + "-c"}
               article={child}
               open={child.id === activeArticleId}
               setOpen={(value) => setOpen(value, child)}
@@ -101,5 +101,5 @@ const Explorer: React.FC<{}> = () => {
   );
 }
 
-export { Explorer }
+export { ArticleExplorer }
 

@@ -114,13 +114,13 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface ExplorerItemProps {
+interface ArticleExplorerItemProps {
   article: StencilClient.Article;
   open: boolean;
   setOpen: (open: boolean) => void;
 }
 
-const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) => {
+const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
   const { handleInTab, findTab, handleDualView } = Composer.useNav();
   const {service, actions, site, session, isArticleUnsaved} = Composer.useComposer();
@@ -256,7 +256,7 @@ const ExplorerItem: React.FC<ExplorerItemProps> = ({ article, open, setOpen }) =
   );
 }
 
-export { ExplorerItem }
+export { ArticleExplorerItem }
 
 
 
