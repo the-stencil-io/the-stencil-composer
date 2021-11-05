@@ -23,13 +23,13 @@ const ToolbarItem: React.FC<{
   enabled: boolean,
   onClick: () => void,
   icon?: React.ReactElement
-}> = ({id, enabled, icon, onClick}) => {
-  
+}> = ({ id, enabled, icon, onClick }) => {
+
   const color = enabled ? "primary" : "inherit";
   return (
     <Tooltip title={<FormattedMessage id={id} />} key={id}>
       <ListItem disableGutters>
-        <Box display="flex" justifyContent="center" sx={{width: '100%'}}>
+        <Box display="flex" justifyContent="center" sx={{ width: '100%' }}>
           <IconButton color={color} onClick={onClick}>
             {icon}
           </IconButton>
@@ -39,42 +39,44 @@ const ToolbarItem: React.FC<{
 }
 
 const Toolbar: React.FC<{}> = () => {
-  const {actions} = Composer.useLayout();
+  const { actions } = Composer.useLayout();
   const theme = useTheme();
   return (
     <List dense={true} disablePadding sx={{ width: `calc(${theme.spacing(7)} + 1px)` }}>
-    <ToolbarItem id='toolbar.dashboard' icon={<HomeOutlinedIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'newItem', label: "Dashboard" })}
-    />
-    <ToolbarItem id='toolbar.explorer' enabled={true} 
-      onClick={() => actions.handleSecondary("toolbar.explorer")}
-    />
-    <ToolbarItem id='toolbar.articles' icon={<LibraryBooksOutlinedIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'articles', label: "Articles" })}
-    />
-    <ToolbarItem id='toolbar.links' icon={<LinkIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'links', label: "Links" })}
-    />
-    <ToolbarItem id='toolbar.workflows' icon={<WorkOutlineIcon />} enabled={false}
-      onClick={() => {
-        
-        actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
-        actions.handleSecondary('toolbar.workflows')
-      }}
-    />
-    <ToolbarItem id='toolbar.releases' icon={<NewReleasesOutlinedIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'releases', label: "Releases" })}
-    />
-    <ToolbarItem id='toolbar.locales' icon={<TranslateIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'locales', label: "Locales" })}
-    />
-    <ToolbarItem id='toolbar.import' icon={<ImportExportIcon />} enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'import', label: 'Import' })}
-    />
-    <ToolbarItem id='toolbar.help' icon={<HelpOutlineOutlinedIcon />}  enabled={false}
-      onClick={() => actions.handleTabAdd({ id: 'help', label: "Help" })}
-    />
-  </List>);
+      <ToolbarItem id='toolbar.dashboard' icon={<HomeOutlinedIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'newItem', label: "Dashboard" })}
+      />
+      <ToolbarItem id='toolbar.articles' icon={<LibraryBooksOutlinedIcon />} enabled={false}
+        onClick={() => {
+
+
+          actions.handleTabAdd({ id: 'articles', label: "Articles" })
+          actions.handleSecondary("toolbar.explorer")
+        }}
+      />
+      <ToolbarItem id='toolbar.links' icon={<LinkIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'links', label: "Links" })}
+      />
+      <ToolbarItem id='toolbar.workflows' icon={<WorkOutlineIcon />} enabled={false}
+        onClick={() => {
+
+          actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
+          actions.handleSecondary('toolbar.workflows')
+        }}
+      />
+      <ToolbarItem id='toolbar.releases' icon={<NewReleasesOutlinedIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'releases', label: "Releases" })}
+      />
+      <ToolbarItem id='toolbar.locales' icon={<TranslateIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'locales', label: "Locales" })}
+      />
+      <ToolbarItem id='toolbar.import' icon={<ImportExportIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'import', label: 'Import' })}
+      />
+      <ToolbarItem id='toolbar.help' icon={<HelpOutlineOutlinedIcon />} enabled={false}
+        onClick={() => actions.handleTabAdd({ id: 'help', label: "Help" })}
+      />
+    </List>);
 }
 
 export default Toolbar;
