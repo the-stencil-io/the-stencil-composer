@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
-  Theme, Typography, IconButton,
+  Theme, Typography, IconButton, ListItemButton, List, ListSubheader,
   Button, ListItem, ListItemText, Collapse
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
     nameStyle: {
       fontWeight: 500,
       color: theme.palette.text.primary,
-      maxWidth: '260px',
       "&:hover": {
         cursor: 'pointer',
         color: theme.palette.article.dark
@@ -48,8 +47,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     localeSummary: {
       color: theme.palette.page.dark,
-      paddingLeft: 3,
-      paddingRight: 3,
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {
         color: theme.palette.page.main,
@@ -67,9 +64,9 @@ const useStyles = makeStyles((theme: Theme) =>
     modified: {
       color: theme.palette.text.primary
     },
-    hoverRow: {
+    indentedRow: {
       fontWeight: 300,
-      textTransform: 'uppercase',
+      marginLeft: theme.spacing(3),
       "&:hover": {
         fontWeight: 'bold',
         cursor: 'pointer',
@@ -80,15 +77,6 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 'bold',
         cursor: 'pointer',
       }
-    },
-    table: {
-      borderBottom: 'none',
-      paddingTop: 0,
-      paddingBottom: 0,
-      fontVariant: 'all-small-caps',
-      fontWeight: 'bold',
-      lineHeight: 1,
-      overflow: 'hidden',
     },
     pageButtons: {
       '& > *': {
@@ -112,6 +100,31 @@ const useStyles = makeStyles((theme: Theme) =>
     }
   }),
 );
+
+const ArticlePages: React.FC<{ page: StencilClient.Page, article: StencilClient.Article }> = ({ page, article }) => {
+  const { handleInTab, handleDualView } = Composer.useNav();
+  const { site } = Composer.useComposer();
+
+  const getPageLocale = (page: StencilClient.Page) => {
+    try {
+      return site.locales[page.body.locale].body.value;
+    } catch (e) {
+      console.error(page);
+      return 'oops';
+    }
+  }
+
+  return (
+    <ListItem>
+      <ListItemText inset>
+        <Typography variant="body1"
+          onClick={() => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}>
+          {getPageLocale(page)}
+        </Typography>
+      </ListItemText>
+    </ListItem>)
+}
+
 
 interface ArticleExplorerItemProps {
   article: StencilClient.Article;
@@ -149,25 +162,28 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
   const links: StencilClient.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
 
-  const getPageLocale = (page: StencilClient.Page) => {
-    try {
-      return site.locales[page.body.locale].body.value;
-    } catch (e) {
-      console.error(page);
-      return 'oops';
-    }
-  }
+
 
 
   return (
-    <div className={classes.root}>
+    <List
+      className={classes.root}
+      sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+      component="nav"
+      aria-labelledby="nested-list-subheader"
+    >
+      <NewArticlePage article={article} open={articlePageOpen}
+        onClose={() => setArticlePageOpen(undefined)}
+        onCreate={(page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}
+      />
+
+
       <ListItem className={classes.itemHover}>
         <div className={classes.order}>{article.body.order}</div>
-
         {article.body.parentId ? <SubdirectoryArrowRightIcon /> : null}
         <ListItemText onClick={() => setOpen(!open)}
           primary={<Typography noWrap
-            variant="body1" className={classes.nameStyle}>{article.body.name}</Typography>}
+            className={classes.nameStyle}>{article.body.name}</Typography>}
         />
 
         {open ?
@@ -176,40 +192,26 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
       </ListItem>
 
       <Collapse in={open} timeout="auto" unmountOnExit>
-        <ArticleOptions article={article} />
-
-
-        {pages.length === 0 ? undefined : (
-          <ListItem>
-            <FormattedMessage id="pages" /> {pages.map((page, index) => (<span className={classes.hoverRow} key={index}
-              onClick={() => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}>
-              <span className={classes.localeSummary}>{getPageLocale(page)}&nbsp;</span></span>))}
-          </ListItem>
-        )}
-
-        {articlePageOpen ? (<NewArticlePage locale={articlePageOpen} article={article}
-          onClose={() => setArticlePageOpen(undefined)}
-          onCreate={(page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })}
-        />
-        ) : undefined}
+        {pages.map((page, index) => <ArticlePages key={index} page={page} article={article} />)}
 
         {canCreate.length === 0 ? undefined : (
           <ListItem>
-            <FormattedMessage id="explorer.pages.create" /> {canCreate.map((locale, index) => (<span className={classes.hoverRow} key={index}
-              onClick={() => setArticlePageOpen(locale)}>
-              <span className={classes.localeSummary}>{locale.body.value}&nbsp;</span></span>))}
+            <FormattedMessage id="explorer.pages.create" /> {canCreate.map((locale, index) => (
+              <ListItem className={classes.indentedRow} key={index}
+                onClick={() => setArticlePageOpen(locale)}>
+                {locale.body.value}
+              </ListItem>))}
           </ListItem>
-
         )}
 
         {links.length === 0 ? undefined : (
           <ListItem onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
-            <FormattedMessage id="links" /> <span className={classes.summary}>{links.length}</span>
+            <FormattedMessage id="links" /> <div className={classes.summary}>{links.length}</div>
           </ListItem>)}
 
         {workflows.length === 0 ? undefined : (
           <ListItem onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}>
-            <FormattedMessage id="workflows" /> <span className={classes.summary}>{workflows.length}</span>
+            <FormattedMessage id="workflows" /> <div className={classes.summary}>{workflows.length}</div>
           </ListItem>)}
 
         {unsaved ? (
@@ -228,7 +230,7 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
         }
 
       </Collapse>
-    </div>
+    </List>
   );
 }
 

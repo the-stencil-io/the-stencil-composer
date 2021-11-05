@@ -30,17 +30,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 interface NewArticlePageProps {
   article: StencilClient.Article,
-  locale: StencilClient.SiteLocale,
+  open?: StencilClient.SiteLocale,
+
   onClose: () => void,
   onCreate: (page: StencilClient.Page) => void
 }
 
-const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClose, onCreate }) => {
+const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose, onCreate }) => {
   const classes = useStyles();
   const {service, actions, session} = Composer.useComposer();
+  if(!open){
+    return null;
+  }
 
   const handleCreate = () => {
-    const entity: StencilClient.CreatePage = { articleId: article.id, locale: locale.id };
+    const entity: StencilClient.CreatePage = { articleId: article.id, locale: open.id };
     service.create().page(entity)
       .then(success => actions.handleLoadSite().then(() => success))
       .then(success => {
@@ -50,18 +54,18 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, locale, onClos
   }
 
   return (
-    <Dialog open={true} onClose={onClose} >
+    <Dialog open={open ? true : false} onClose={onClose} >
       <DialogTitle className={classes.title} ><FormattedMessage id='newpage.title' /></DialogTitle>
       <DialogContent>
         <Typography>
-          <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: locale.body.value }} />
+          <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: open.body.value }} />
         </Typography>
       </DialogContent>
 
       <DialogActions>
         <ButtonGroup variant="text">
           <Button className={classes.button} onClick={onClose}><FormattedMessage id='button.cancel' /></Button>
-          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!locale}><FormattedMessage id='button.create' /></Button>
+          <Button className={classes.button} onClick={handleCreate} autoFocus><FormattedMessage id='button.create' /></Button>
         </ButtonGroup>
       </DialogActions>
     </Dialog>
