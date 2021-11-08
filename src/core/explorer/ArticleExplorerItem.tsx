@@ -12,6 +12,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { LocaleComposer } from '../locale';
 import { NewArticlePage } from '../page';
+import { LinkLabels } from '../link/LinkLabels';
 import { Composer, StencilClient } from '../context';
 
 
@@ -105,6 +106,19 @@ const ArticlePages: React.FC<{ page: StencilClient.Page, article: StencilClient.
     </ListItem>)
 }
 
+const ArticleLinks: React.FC<{link: StencilClient.Link, article: StencilClient.Article}> = ({link, article}) => {
+    const { handleInTab } = Composer.useNav();
+
+  return (
+    <ListItem>
+      <ListItemText inset>
+        <Typography variant="body1">
+          <LinkLabels link={link}/>
+        </Typography>
+      </ListItemText>
+    </ListItem>
+  )
+}
 
 interface ArticleExplorerItemProps {
   article: StencilClient.Article;
@@ -186,7 +200,10 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
 
         {links.length === 0 ? undefined : (
           <ListItem onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
-            <FormattedMessage id="links" /> <div className={classes.summary}>{links.length}</div>
+            <FormattedMessage id="links" />
+            {links.map((link, index) => (
+              <ListItem key={index}><ArticleLinks article={article} link={link}/></ListItem>
+            ))}
           </ListItem>)}
 
         {workflows.length === 0 ? undefined : (

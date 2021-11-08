@@ -72,7 +72,6 @@ const ArticleExplorer: React.FC<{}> = () => {
 
   return (
     <div className={classes.drawerContainer}>
-      <AppBar className={classes.title} ><FormattedMessage id="articles"/> {": "}{articles.length}</AppBar>
       { articles.length !== 0 ? null : (
         <div>
           { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
