@@ -10,9 +10,6 @@ import { ArticleExplorerItem } from './ArticleExplorerItem'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: 'flex',
-    },
     title: {
       display: 'flex',
       fontSize: '15pt',
@@ -26,9 +23,6 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     article: {
       background: alpha(theme.palette.article.main, 0.05)
-    },
-    divider: {
-      marginTop: 4,
     },
     button: {
       margin: theme.spacing(1),

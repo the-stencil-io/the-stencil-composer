@@ -15,9 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
     select: {
       marginTop: theme.spacing(3),
     },
-    selectMain: {
-      
-    },
     selectSub: {
       marginLeft: theme.spacing(2),
       color: theme.palette.article.dark,
@@ -35,19 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     buttonGroup: {
       color: theme.palette.article.main
-    },
-    iconButton: {
-      padding: 2,
-      paddingLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.info.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
+    }
   }),
 );
 
@@ -97,7 +82,7 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
             label={<FormattedMessage id="article.edit.parent" />}
           >
             {articles.map((article, index) => (
-              <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : classes.selectMain}>
+              <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : ''}>
                 {article.body.order} - {article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : "" }{article.body.name}
               </MenuItem>
             ))}
