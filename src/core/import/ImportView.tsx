@@ -12,9 +12,6 @@ import { Composer } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    bold: {
-      fontWeight: 'bold'
-    },
     title: {
       margin: theme.spacing(1),
       color: theme.palette.text.primary
@@ -32,9 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
       fontWeight: 'bold',
       flexDirection: 'column',
-    },
-    cardHeader: {
-      padding: 0,
     },
     cardContent: {
       flexGrow: 1,
@@ -56,11 +50,7 @@ const useStyles = makeStyles((theme: Theme) =>
         backgroundColor: theme.palette.import.main,
         color: theme.palette.secondary.contrastText,
       }
-    },
-    buttonGroup: {
-      width: '100%',
     }
-
   }));
 
 
@@ -69,6 +59,7 @@ const ImportView: React.FC<{}> = () => {
   const classes = useStyles();
   const title = useIntl().formatMessage({ id: "imports" });
   const [file, setFile] = React.useState<string | undefined>();
+  const [loading, setLoading] = React.useState<boolean | undefined>();
   const {service, actions} = Composer.useComposer();
 
 
@@ -99,14 +90,18 @@ const ImportView: React.FC<{}> = () => {
 
         </div>
         <CardActions>
-          <Button className={classes.button} variant="contained" disabled={!file} 
+          <Button className={classes.button} variant="contained" disabled={!file || loading === true} 
             onClick={() => {
               if(!file) {
                 return;
               }
-              
+              setLoading(true);
               service.create().importData(file)
-                .then(() => actions.handleLoadSite());
+                .then(() => actions.handleLoadSite())
+                .then(() => {
+                  setLoading(false);
+                  setFile(undefined);
+                });
             }}>
             <FormattedMessage id={'imports.import.action'} />
           </Button>

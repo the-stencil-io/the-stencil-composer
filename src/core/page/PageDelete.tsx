@@ -28,9 +28,6 @@ const useStyles = makeStyles((theme: Theme) =>
         fontWeight: 'bold',
       }
     },
-    buttonGroup: {
-      color: theme.palette.page.main
-    },
     delete: {
       color: theme.palette.error.main,
       fontWeight: 'bold'

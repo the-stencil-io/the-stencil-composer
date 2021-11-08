@@ -32,9 +32,6 @@ const useStyles = makeStyles((theme: Theme) =>
     buttonGroup: {
       color: theme.palette.page.main
     },
-    selectMain: {
-
-    },
     selectSub: {
       marginLeft: theme.spacing(2),
       color: theme.palette.article.dark,
@@ -91,7 +88,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
                 label={<FormattedMessage id='article.name' />}
               >
                 {articles.map((article, index) => (
-                  <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : classes.selectMain}>
+                  <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : ''}>
                     {article.body.order} - {article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}{article.body.name}
                   </MenuItem>
                 ))}

@@ -10,17 +10,9 @@ import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
-    },
     title: {
       backgroundColor: theme.palette.link.main,
       color: theme.palette.secondary.contrastText,
-    },
-    select: {
-      margin: theme.spacing(1),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
     },
     button: {
       fontWeight: 'bold',
@@ -28,9 +20,6 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.link.main,
         fontWeight: 'bold',
       }
-    },
-    buttonGroup: {
-      color: theme.palette.link.main
     },
     delete: {
       color: theme.palette.error.main,

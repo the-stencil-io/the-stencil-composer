@@ -17,37 +17,20 @@ import { NewPage } from './page';
 import { Composer, StencilClient, Layout } from './context';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      margin: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    },
-  }),
-);
-
 const useItemStyles = makeStyles((theme: Theme) =>
   createStyles({
     card: {
       margin: theme.spacing(1),
-    //  border: '1px solid',
+      //  border: '1px solid',
       borderColor: (props: { color: string }) => props.color,
       width: '400px',
       display: 'flex',
       flexDirection: 'column',
     },
-    cardHeader: {
-      padding: 0,
-    },
     cardAvatar: {
       marginLeft: theme.spacing(1),
       backgroundColor: (props: { color: string }) => props.color,
       textTransform: 'uppercase'
-    },
-    cardContent: {
-      flexGrow: 1,
     },
     button: {
       fontWeight: 'bold',
@@ -61,11 +44,7 @@ const useItemStyles = makeStyles((theme: Theme) =>
     buttonGroup: {
       width: '100%',
     },
-    box: {
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      paddingRight: theme.spacing(2),
-    }
+
   }),
 );
 
@@ -156,17 +135,21 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
 
   return (
     <Card className={classes.card} raised>
-      <CardHeader className={classes.cardHeader}
+      <CardHeader sx={{padding: 0}}
         avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
         title={
-          <Box display="flex" className={classes.box}>
+          <Box display="flex" sx={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            paddingRight: 2,
+          }}>
             <Typography variant="h2">{title}</Typography>
             <Tooltip title={"Item help: Coming soon!"}><HelpOutlineIcon fontSize="small" /></Tooltip>
           </Box>
         }
       />
 
-      <CardContent className={classes.cardContent}>
+      <CardContent sx={{flexGrow: 1}}>
         <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
 
@@ -185,20 +168,24 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
 
 //card view for all CREATE views
 const Dashboard: React.FC<{}> = () => {
-  const classes = useStyles();
   const theme = useTheme();
   const layout = Composer.useLayout();
   const { site } = Composer.useComposer();
-  
+
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
   const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
 
   return (
-    <div className={classes.root}>
+    <Box sx={{
+      margin: 1,
+      display: 'flex',
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+    }}>
       {open === undefined ? null : (cards[open].composer(handleClose))}
       {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}
-    </div>
+    </Box>
   );
 }
 

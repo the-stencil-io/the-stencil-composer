@@ -14,13 +14,6 @@ import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.link.main,
-        fontWeight: 'bold',
-      }
-    },
     margin: {
       marginRight: theme.spacing(1)
     },
@@ -36,14 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
         }
       }
     },
-    title: {
-      backgroundColor: theme.palette.workflow.main,
-      color: theme.palette.secondary.contrastText,
-    },
-    buttonGroup: {
-      color: theme.palette.workflow.main
-    },
-
   }),
 );
 

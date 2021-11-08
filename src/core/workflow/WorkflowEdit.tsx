@@ -29,10 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.workflow.main,
         fontWeight: 'bold',
       }
-    },
-    buttonGroup: {
-      color: theme.palette.workflow.main
-    },
+    }
   }),
 );
 

@@ -113,7 +113,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
       </AppBar>
 
       <TableContainer component={Paper}>
-        <Table className={classes.table} size="small" aria-label="a dense table">
+        <Table className={classes.table} size="small">
           <TableHead>
             <TableRow>
               <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.composer.name" /></TableCell>
