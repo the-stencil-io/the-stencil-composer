@@ -7,9 +7,6 @@ import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
-    },
     title: {
       backgroundColor: theme.palette.article.main,
       color: theme.palette.secondary.contrastText,

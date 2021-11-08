@@ -1,7 +1,7 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
-  Theme, Typography, IconButton, ListItemButton, List, ListSubheader,
+  Theme, Typography, IconButton, List,
   Button, ListItem, ListItemText, Collapse
 } from '@mui/material';
 import ExpandLess from '@mui/icons-material/ExpandLess';
@@ -10,7 +10,6 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
-import { ArticleOptions } from '../article';
 import { LocaleComposer } from '../locale';
 import { NewArticlePage } from '../page';
 import { Composer, StencilClient } from '../context';
@@ -22,11 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
       paddingTop: theme.spacing(0.5),
       paddingBottom: theme.spacing(0.5),
     },
-
-    activeItem: {
-      paddingBottom: theme.spacing(1),
-    },
-
     nameStyle: {
       fontWeight: 500,
       color: theme.palette.text.primary,
@@ -45,24 +39,10 @@ const useStyles = makeStyles((theme: Theme) =>
         //color: theme.palette.background.paper,
       }
     },
-    localeSummary: {
-      color: theme.palette.page.dark,
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.page.main,
-      }
-    },
-    iconButton: {
-      marginTop: 1,
-      color: theme.palette.secondary.dark,
-    },
     iconButtonArrow: {
       marginTop: 1,
       padding: 0,
       color: theme.palette.secondary.dark,
-    },
-    modified: {
-      color: theme.palette.text.primary
     },
     indentedRow: {
       fontWeight: 300,

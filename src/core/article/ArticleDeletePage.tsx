@@ -12,17 +12,9 @@ import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      fontWeight: 'bold',
-    },
     title: {
       backgroundColor: theme.palette.article.main,
       color: theme.palette.secondary.contrastText,
-    },
-    select: {
-      margin: theme.spacing(1),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
     },
     button: {
       fontWeight: 'bold',

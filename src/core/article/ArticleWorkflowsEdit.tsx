@@ -37,17 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
       fontWeight: 'bold',
     }
   },
-  iconButton: {
-    padding: 1,
-    color: theme.palette.primary.dark,
-    "&:hover, &.Mui-focusVisible": {
-      backgroundColor: theme.palette.info.main,
-      color: theme.palette.background.paper,
-      "& .MuiSvgIcon-root": {
-        color: theme.palette.background.paper,
-      }
-    }
-  },
   bold: {
     fontWeight: 'bold',
   },
