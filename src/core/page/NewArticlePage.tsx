@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme: Theme) =>
       "&:hover, &.Mui-focusVisible": {
         color: theme.palette.page.main,
         fontWeight: 'bold',
-        }
+      }
     },
 
     title: {
@@ -38,8 +38,8 @@ interface NewArticlePageProps {
 
 const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose, onCreate }) => {
   const classes = useStyles();
-  const {service, actions, session} = Composer.useComposer();
-  if(!open){
+  const { service, actions } = Composer.useComposer();
+  if (!open) {
     return null;
   }
 

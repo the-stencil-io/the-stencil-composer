@@ -1,6 +1,5 @@
 import React from 'react';
-import { Theme } from '@mui/material';
-import { makeStyles } from '@mui/styles';
+import { Box } from '@mui/material';
 
 import {
   PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
@@ -11,34 +10,15 @@ import {
 import { Composer } from './context';
 
 
-const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    height: `100%`,
-    padding: theme.spacing(1)
-  },
-  left: {
-    display: 'flex',
-    padding: '1vw',
-    backgroundColor: theme.palette.background.paper,
-    height: '100%',
-  },
-  right: {
-    flexGrow: 1,
-    padding: '1vw',
-    backgroundColor: theme.palette.background.default,
-  },
-}),
-);
-
+const root = { height: `100%`, padding: 1 };
 
 const Main: React.FC<{}> = () => {
   const layout = Composer.useLayout();
   const site = Composer.useSite();
-  const classes = useStyles();
   const tabs = layout.session.tabs;
 
   if (site.contentType === "NO_CONNECTION") {
-    return (<div>{site.contentType}</div>);
+    return (<Box>{site.contentType}</Box>);
   }
 
   if (tabs.length === 0) {
@@ -48,22 +28,22 @@ const Main: React.FC<{}> = () => {
   //composers which are NOT linked directly with an article
   const active = tabs[layout.session.history.open];
   if (active.id === 'releases') {
-    return (<div className={classes.root}><ReleasesView /></div>);
+    return (<Box sx={root}><ReleasesView /></Box>);
   } else if (active.id === 'links') {
-    return (<div className={classes.root}><LinksView /></div>);
+    return (<Box sx={root}><LinksView /></Box>);
   } else if (active.id === 'newItem') {
-    return (<div className={classes.root}><Dashboard /></div>);
+    return (<Box sx={root}><Dashboard /></Box>);
   } else if (active.id === 'locales') {
-    return (<div className={classes.root}><LocalesView /></div>);
+    return (<Box sx={root}><LocalesView /></Box>);
   } else if (active.id === 'workflows') {
-    return (<div className={classes.root}><WorkflowsView /></div>);
+    return (<Box sx={root}><WorkflowsView /></Box>);
   } else if (active.id === 'articles') {
-    return (<div className={classes.root}><ArticlesView /></div>);
+    return (<Box sx={root}><ArticlesView /></Box>);
   } else if (active.id === 'import') {
-    return (<div className={classes.root}><ImportView /></div>);
+    return (<Box sx={root}><ImportView /></Box>);
 
   } else if (active.id === 'help') {
-    return (<div className={classes.root}><HelpView /></div>);
+    return (<Box sx={root}><HelpView /></Box>);
   }
 
   //article-based composers
@@ -87,7 +67,7 @@ const Main: React.FC<{}> = () => {
     composer = (<></>);
   }
 
-  return (<div className={classes.root} key={article.id}>{composer}</div>)
+  return (<Box sx={root} key={article.id}>{composer}</Box>)
 }
 export { Main }
 

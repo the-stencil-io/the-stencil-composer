@@ -25,22 +25,7 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.link.main,
         fontWeight: 'bold',
       }
-    },
-    buttonGroup: {
-      color: theme.palette.link.main
-    },
-    iconButton: {
-      padding: 2,
-      paddingLeft: theme.spacing(1),
-      color: theme.palette.primary.dark,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.link.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
+    }
   }),
 );
 

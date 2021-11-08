@@ -29,10 +29,7 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.page.main,
         fontWeight: 'bold',
       }
-    },
-    buttonGroup: {
-      color: theme.palette.page.main
-    },
+    }
   }),
 );
 
@@ -71,7 +68,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
             onChange={({ target }) => setPageId(target.value as any)}
             label={<FormattedMessage id='pages.edit.selectpage' />}
           >
-            {articlePages.map((articlePage, index) => (
+            {articlePages.map((articlePage) => (
               <MenuItem key={articlePage.id} value={articlePage.id}>{site.locales[articlePage.body.locale].body.value}</MenuItem>
             ))}
           </Select>
@@ -85,7 +82,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
             onChange={({ target }) => setNewLocale(target.value as any)}
             label={<FormattedMessage id='pages.edit.selectTargetLocale' />}
           >
-            {unusedLocales.map((unusedLocale, index) => (
+            {unusedLocales.map((unusedLocale) => (
               <MenuItem key={unusedLocale.id} value={unusedLocale.id}>{unusedLocale.body.value}</MenuItem>
             ))}
           </Select>

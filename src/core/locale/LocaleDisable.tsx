@@ -15,16 +15,6 @@ import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    button: {
-      backgroundColor: theme.palette.primary.main,
-      color: theme.palette.background.paper,
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.error.dark,
-        color: theme.palette.background.paper,
-        fontWeight: 'bold'
-      }
-    },
     margin: {
       marginRight: theme.spacing(1)
     },
@@ -37,7 +27,7 @@ interface LocaleDisableProps {
   locale: StencilClient.SiteLocale;
 }
 
-const LocaleDisable: React.FC<LocaleDisableProps> = ({ site, locale }) => {
+const LocaleDisable: React.FC<LocaleDisableProps> = ({ locale }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
 

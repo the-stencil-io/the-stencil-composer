@@ -16,12 +16,6 @@ const useStyles = makeStyles((theme: Theme) =>
       color: theme.palette.secondary.contrastText,
       marginBottom: theme.spacing(2)
     },
-    select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    },
     button: {
       fontWeight: 'bold',
       "&:hover, &.Mui-focusVisible": {

@@ -1,17 +1,8 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Box, useTheme } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 
 import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
 import { Composer, StencilClient } from '../context';
-
-const useStyles = () => makeStyles((theme: Theme) =>
-  createStyles({
-    left: {
-      paddingRight: theme.spacing(1),
-    }
-  }),
-)();
 
 
 const getMdCommands = (locale: StencilClient.SiteLocale, color: string) => {
@@ -39,7 +30,6 @@ type PageComposerProps = {
 }
 
 const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }) => {
-  const classes = useStyles();
   const theme = useTheme();
   const {actions, session} = Composer.useComposer();
   const page1 = Object.values(session.site.pages)
@@ -75,7 +65,7 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
 
   return (
     <Box display="flex" flexDirection="row" flexWrap="wrap">
-      <Box flex="1" className={classes.left}>
+      <Box flex="1" sx={{ paddingRight: 1 }}>
         <MDEditor key={2} value={value1} onChange={handleChange1}
           commands={getMdCommands(session.site.locales[page1.body.locale], theme.palette.page.main)}
           textareaProps={{ placeholder: '# Title' }}

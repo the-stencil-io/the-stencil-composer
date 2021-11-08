@@ -15,7 +15,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 
 import { FormattedMessage } from 'react-intl';
-import { Composer, StencilClient } from '../context';
+import { Composer } from '../context';
 
 
 const ToolbarItem: React.FC<{

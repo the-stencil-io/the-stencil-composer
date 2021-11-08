@@ -21,15 +21,6 @@ const useStyles = makeStyles((theme: Theme) =>
     container: {
       display: 'flex'
     },
-    cardContent: {
-      flexGrow: 1,
-    },
-    root: {
-      margin: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
-    },
     card: {
       margin: theme.spacing(1),
       width: '40vw',
@@ -38,10 +29,6 @@ const useStyles = makeStyles((theme: Theme) =>
         color: theme.palette.secondary.dark,
         fontWeight: 'bold',
       }
-    },
-
-    bold: {
-      fontWeight: 'bold'
     },
     title: {
       margin: theme.spacing(1),
@@ -54,39 +41,6 @@ const useStyles = makeStyles((theme: Theme) =>
       textTransform: 'uppercase'
     }
   }));
-
-const useRowStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    row: {
-      '& > *': {
-        // paddingLeft: 15
-      },
-    },
-    table: {
-      margin: theme.spacing(2)
-    },
-    bold: {
-      fontWeight: 'bold',
-      borderBottom: 'unset'
-    },
-    column: {
-      fontWeight: 'bold',
-      borderBottom: 'unset',
-      padding: 0
-    },
-    iconButton: {
-      padding: 2,
-      color: theme.palette.release.main,
-      "&:hover, &.Mui-focusVisible": {
-        backgroundColor: theme.palette.release.main,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
-  }));
-
 
 const LocalesView: React.FC<{}> = () => {
   const classes = useStyles();
@@ -108,8 +62,8 @@ const LocalesView: React.FC<{}> = () => {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <TableCell className={classes.bold} align="left"><FormattedMessage id="locale" /></TableCell>
-                  <TableCell className={classes.bold} align="left"><FormattedMessage id="status" /></TableCell>
+                  <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="locale" /></TableCell>
+                  <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="status" /></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody >
@@ -130,7 +84,6 @@ interface RowProps {
 }
 
 const Row: React.FC<RowProps> = ({ locale }) => {
-  const classes = useRowStyles();
   const {site} = Composer.useComposer();
 
   /*const handleUpdate = () => {
@@ -147,7 +100,7 @@ const Row: React.FC<RowProps> = ({ locale }) => {
 
 
   return (
-    <TableRow key={locale.id} hover className={classes.row}>
+    <TableRow key={locale.id} hover>
       <TableCell align="left">{locale.body.value}</TableCell>
       <TableCell>
         <LocaleDisable site={site} locale={locale} />

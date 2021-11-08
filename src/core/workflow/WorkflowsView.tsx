@@ -16,7 +16,6 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { WorkflowRemovePage } from './WorkflowRemovePage';
 import { WorkflowDelete } from './WorkflowDelete';
 import { WorkflowEdit } from './WorkflowEdit';
 

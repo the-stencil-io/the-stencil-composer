@@ -42,14 +42,6 @@ const useRowStyles = makeStyles((theme: Theme) =>
     expandRow: {
       width: "30px"
     },
-    bold: {
-      fontWeight: 'bold',
-    },
-    column: {
-      width: '25%',
-      fontWeight: 'bold',
-      padding: 0
-    },
     iconButton: {
       padding: 2,
       color: theme.palette.release.main,
