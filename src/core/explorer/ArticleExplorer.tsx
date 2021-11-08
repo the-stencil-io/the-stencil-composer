@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Button, alpha } from '@mui/material';
+import { Theme, Button, alpha, Box, AppBar } from '@mui/material';
 
 import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
@@ -12,6 +12,14 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       display: 'flex',
+    },
+    title: {
+      display: 'flex',
+      fontSize: '15pt',
+      fontWeight: 'bold',
+      justifyContent: 'center',
+      backgroundColor: theme.palette.article.main,
+      color: theme.palette.article.contrastText,
     },
     drawerContainer: {
       overflow: 'auto',
@@ -70,6 +78,7 @@ const ArticleExplorer: React.FC<{}> = () => {
 
   return (
     <div className={classes.drawerContainer}>
+      <AppBar className={classes.title} ><FormattedMessage id="articles"/> {": "}{articles.length}</AppBar>
       { articles.length !== 0 ? null : (
         <div>
           { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
