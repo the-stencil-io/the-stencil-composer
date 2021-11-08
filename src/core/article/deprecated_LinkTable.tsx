@@ -7,15 +7,14 @@ import {
   AppBar, Toolbar, Button
 } from '@mui/material';
 
-import AddIcon from '@mui/icons-material/AddOutlined';
 import EditOutlined from '@mui/icons-material/EditOutlined';
 import AddLinkIcon from '@mui/icons-material/AddLink';
 
 import { FormattedMessage } from 'react-intl';
 
-import { ArticleLinksEdit } from '../article/ArticleLinksEdit';
-import { LinkEdit } from './LinkEdit';
-import { LinkComposer } from './LinkComposer';
+
+import { LinkEdit } from '../link/LinkEdit';
+import { LinkComposer } from '../link/LinkComposer';
 
 import { Composer, StencilClient } from '../context';
 
@@ -82,10 +81,12 @@ interface LinkTableProps {
 
 }
 
+
+// deprecated
 const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
   const classes = useStyles();
   const {site} = Composer.useComposer();
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleLinksEdit' | 'LinkEdit' | 'LinkComposer'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkEdit' | 'LinkComposer'>(undefined);
   const [link, setLink] = React.useState<undefined | StencilClient.Link>()
 
   const handleDialogClose = () => {
@@ -98,7 +99,6 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
 
   return (
     <>
-      { dialogOpen === 'ArticleLinksEdit' ? <ArticleLinksEdit article={article} articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'LinkEdit' && link ? <LinkEdit link={link} open={true} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={handleDialogClose} /> : null}
 
@@ -106,8 +106,6 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
         <Toolbar className={classes.titleBox}>
           <Typography variant="h3" className={classes.title}>{article.body.name}{": "}<FormattedMessage id="links" /></Typography>
           <ButtonGroup>
-            <Button variant="text"className={classes.button} autoFocus onClick={() => setDialogOpen("ArticleLinksEdit")}><AddIcon className={classes.icon} />
-              <FormattedMessage id='article.links.addremove' /></Button>
             <Button variant="text" className={classes.button} autoFocus onClick={() => setDialogOpen("LinkComposer")}><AddLinkIcon className={classes.icon}/>
               <FormattedMessage id='link.create' /></Button>
           </ButtonGroup>

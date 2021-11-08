@@ -1,4 +1,6 @@
 import React from 'react';
+import { useIntl } from 'react-intl';
+
 
 import { StencilClient, Layout } from '../';
 import { ReducerDispatch, Reducer } from './Reducer';
@@ -10,14 +12,12 @@ declare namespace Composer {
 
   interface Nav {
     type: NavType;
-    value?: string;
-    value2?: string;
+    value?: string | null;
+    value2?: string | null;
   }
 
   interface TabData {
     nav?: Nav
-    dualView?: boolean;
-    withDualView(enabled: boolean): TabData;
     withNav(nav: Nav): TabData;
   }
 
@@ -35,6 +35,8 @@ declare namespace Composer {
   interface Session {
     site: StencilClient.Site,
     pages: Record<StencilClient.PageId, PageUpdate>;
+    
+    getArticleView(articleId: StencilClient.ArticleId): ArticleView;
     
     getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
     getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[];
@@ -58,10 +60,38 @@ declare namespace Composer {
     actions: Actions;
     service: StencilClient.Service;
   }
+  
+  interface ArticleView {
+    article: StencilClient.Article;
+    pages: PageView[];
+    canCreate: StencilClient.SiteLocale[];
+    links: LinkView[];
+    workflows: WorkflowView[];
+  }
+  
+  interface PageView {
+    page: StencilClient.Page;
+    locale: StencilClient.SiteLocale;
+  }
+  
+  interface LinkView {
+    link: StencilClient.Link;
+    labels: LabelView[];
+  }
+  
+  interface WorkflowView {
+    workflow: StencilClient.Workflow;
+    labels: LabelView[];
+  }
+  
+  interface LabelView {
+    label: StencilClient.LocaleLabel;
+    locale: StencilClient.SiteLocale;
+  }
 }
 
 namespace Composer {
-  const sessionData = new SessionData({});
+  const sessionData = new SessionData({ cache: {}});
 
   export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page  }) => new ImmutableTabData(props);
 
@@ -106,11 +136,23 @@ namespace Composer {
   export const useNav = () => {
     const layout = useLayout();
     
-    const handleInTab = (props: {article: StencilClient.Article, type: Composer.NavType, locale?: string}) => {
-      const nav = { type: props.type, value: props.locale };
+    
+    const handleInTab = (props: {article: StencilClient.Article, type: Composer.NavType, locale?: string | null, secondary?: boolean}) => {
+      const nav = { 
+        type: props.type, 
+        value: props.secondary ? undefined : props.locale,
+        value2: props.secondary ? props.locale : undefined};
+        
+      let label: string | React.ReactElement;
+      if(props.type === "ARTICLE_PAGES" || props.type === "ARTICLE_LINKS" || props.type === "ARTICLE_WORKFLOWS") {
+        label = <ArticleTab article={props.article} type={props.type}/>; 
+      } else {
+        label = props.article.body.name;
+      }
+      
       const tab: Composer.Tab = {
         id: props.article.id,
-        label: props.type === "ARTICLE_PAGES" ? <ArticlePagesTab article={props.article} /> : props.article.body.name, 
+        label,
         data: Composer.createTab({ nav })
       };
 
@@ -131,15 +173,9 @@ namespace Composer {
       }
       return undefined;
     }
-    
-    const handleDualView = (article: StencilClient.Article) => {
-      const oldTab = layout.session.findTab(article.id);
-      if (oldTab !== undefined) {
-        layout.actions.handleTabData(article.id, (oldData: Composer.TabData) => oldData.withDualView(!oldData.dualView));
-      }
-    }
+  
 
-    return { handleInTab, findTab, handleDualView };
+    return { handleInTab, findTab };
   }
   
   export const Provider: React.FC<{ children: React.ReactNode, service: StencilClient.Service }> = ({ children, service }) => {
@@ -158,9 +194,20 @@ namespace Composer {
   };
 }
 
-const ArticlePagesTab: React.FC<{article: StencilClient.Article}> = ({ article }) => {
+const ArticleTab: React.FC<{article: StencilClient.Article, type: Composer.NavType}> = ({ article, type }) => {
+  const intl = useIntl();
   const unsaved = Composer.useUnsaved(article);
-  return <span>{article.body.name}{unsaved ? " *": ""}</span>;
+  
+  /* TODO:::
+  if(type === "ARTICLE_PAGES") {
+    return <span>{`${intl.formatMessage({id: "pages"})}: ${article.body.name}`}{unsaved ? " * ": ""}</span>;
+  } else if(type === "ARTICLE_LINKS")  {
+    return <span>{`${intl.formatMessage({id: "links"})}: ${article.body.name}`}</span>;
+  } else if(type === "ARTICLE_WORKFLOWS") {
+    return <span>{`${intl.formatMessage({id: "workflows"})}: ${article.body.name}`}</span>;
+  }*/
+  
+  return <span>{`${article.body.name}`}{unsaved ? " * ": ""}</span>;  
 }
 
 

@@ -2,8 +2,8 @@ const en = {
 
   'select.multiple': 'Select one or many items',
   'resource.options': 'Resource options',
-  'resource.edit.links': 'Create, add, remove Article links',
-  'resource.edit.workflows': 'Create, add, remove Article workflows',
+  'resource.edit.links': 'Edit links',
+  'resource.edit.workflows': 'Edit workflows',
 
   'link.addremove': 'Add or remove links',
 

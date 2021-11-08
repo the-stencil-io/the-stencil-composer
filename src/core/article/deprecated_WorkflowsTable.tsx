@@ -11,9 +11,8 @@ import WorkOutlineOutlinedIcon from '@mui/icons-material/WorkOutlineOutlined';
 
 import { FormattedMessage } from 'react-intl';
 
-import { ArticleWorkflowsEdit } from '../article/ArticleWorkflowsEdit';
-import { WorkflowComposer } from './WorkflowComposer';
-import { WorkflowEdit } from './WorkflowEdit';
+import { WorkflowComposer } from '../workflow/WorkflowComposer';
+import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -96,7 +95,6 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
 
   return (
     <>
-      { dialogOpen === 'ArticleWorkflowsEdit' ? <ArticleWorkflowsEdit article={article} articleId={article.id} onClose={() => handleDialogClose()} /> : null}
       { dialogOpen === 'WorkflowEdit' && workflow ? <WorkflowEdit workflow={workflow} onClose={() => handleDialogClose()} /> : null}
       { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
 

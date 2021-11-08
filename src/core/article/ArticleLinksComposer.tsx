@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@mui/styles';
 
 import {
-  Typography, Table, Card, Button, ButtonGroup, Dialog, TableBody,
+  Typography, Table, Card, Button, ButtonGroup, TableBody,
   TableCell, Checkbox, TableHead, TableRow
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
@@ -64,24 +64,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const getArticleLinks: (site: StencilClient.Site, articleId: StencilClient.ArticleId) => StencilClient.LinkId[] = (site, articleId) => {
-  return Object.values(site.links).filter(link => link.body.articles.includes(articleId)).map(l => l.id);
-}
 
-
-interface ArticleLinksEditProps {
-  article: StencilClient.Article,
-  articleId: StencilClient.ArticleId,
-  onClose: () => void,
-}
-
-
-const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
+const ArticleLinksComposer: React.FC<{articleId: StencilClient.ArticleId}> = (props) => {
   const classes = useStyles();
-  const {service, actions, site} = Composer.useComposer();
+  const { service, actions, site, session } = Composer.useComposer();
 
-  const [selectedLinks, setSelectedLinks] = React.useState(getArticleLinks(site, props.articleId));
+  const view = session.getArticleView(props.articleId);
 
+  const [selectedLinks, setSelectedLinks] = React.useState(view.links.map(l => l.link.id));
   const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   const handleChange = (event: any, id: StencilClient.LinkId) => {
@@ -108,22 +98,19 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
       workflows: undefined
     };
     service.update().article(entity)
-      .then(_success => actions.handleLoadSite())
-      .then(() => props.onClose());
+      .then(_success => actions.handleLoadSite());
   }
-  
+
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkComposer'>(undefined);
 
   return (
-<>
-  { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={() => setDialogOpen(undefined)} /> : null}
-
-    <Dialog fullScreen open={true} onClose={props.onClose} >
+    <>
+      { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={() => setDialogOpen(undefined)} /> : null}
       <AppBar className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}<FormattedMessage id="resource.edit.links" /></Typography>
+          <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}<FormattedMessage id="resource.edit.links" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
-            <Button className={classes.button} onClick={props.onClose}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
+            <Button className={classes.button} onClick={() => setSelectedLinks(view.links.map(l => l.link.id))}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
             <Button className={classes.button} onClick={() => setDialogOpen('LinkComposer')} autoFocus ><AddIcon /><FormattedMessage id='link.composer.title' /></Button>
             <Button className={classes.button} onClick={handleSave} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
           </ButtonGroup>
@@ -156,9 +143,8 @@ const ArticleLinksEdit: React.FC<ArticleLinksEditProps> = (props) => {
           </Table>
         </Card>
       </div>
-    </Dialog>
     </>
   );
 }
 
-export { ArticleLinksEdit }
+export { ArticleLinksComposer }

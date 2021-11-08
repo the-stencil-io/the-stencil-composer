@@ -2,8 +2,8 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 import {
-  PageComposer, Dashboard, LinkTable, LinksView, WorkflowsView,
-  WorkflowsTable, ReleasesView, LocalesView, ArticlesView, ImportView,
+  Dashboard, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, LinksView, WorkflowsView,
+  ReleasesView, LocalesView, ArticlesView, ImportView,
   HelpView
 } from './';
 
@@ -58,11 +58,11 @@ const Main: React.FC<{}> = () => {
   if (tab.data.nav.type === "ARTICLE_PAGES") {
     const locale1 = tab.data.nav.value as string;
     const locale2 = tab.data.nav.value2 as string;
-    composer = (<PageComposer key={article.id + "-" + locale1 + "-" + locale2} article={article} locale1={locale1} locale2={locale2} />);
+    composer = (<ArticlePageComposer key={article.id + "-" + locale1 + "-" + locale2} articleId={article.id} locale1={locale1} locale2={locale2} />);
   } else if (tab.data.nav.type === "ARTICLE_LINKS") {
-    composer = (<LinkTable key={article.id + "-links"} article={article} />)
+    composer = (<ArticleLinksComposer key={article.id + "-links"} articleId={article.id} />)
   } else if (tab.data.nav.type === "ARTICLE_WORKFLOWS") {
-    composer = (<WorkflowsTable key={article.id + "-workflows"} article={article} />)
+    composer = (<ArticleWorkflowsComposer key={article.id + "-workflows"} articleId={article.id} />)
   } else {
     composer = (<></>);
   }

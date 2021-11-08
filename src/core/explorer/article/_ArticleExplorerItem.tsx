@@ -10,10 +10,10 @@ import ExpandMore from '@mui/icons-material/ExpandMore';
 import SubdirectoryArrowRightIcon from '@mui/icons-material/SubdirectoryArrowRight';
 import { FormattedMessage } from 'react-intl';
 
-import { LocaleComposer } from '../locale';
-import { NewArticlePage } from '../page';
-import { LinkLabels } from '../link/LinkLabels';
-import { Composer, StencilClient } from '../context';
+import { LocaleComposer } from '../../locale';
+import { NewArticlePage } from '../../page';
+import { LinkLabels } from '../../link/LinkLabels';
+import { Composer, StencilClient } from '../../context';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -83,7 +83,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ArticlePages: React.FC<{ page: StencilClient.Page, article: StencilClient.Article }> = ({ page, article }) => {
-  const { handleInTab, handleDualView } = Composer.useNav();
+  const { handleInTab } = Composer.useNav();
   const { site } = Composer.useComposer();
 
   const getPageLocale = (page: StencilClient.Page) => {
@@ -106,19 +106,24 @@ const ArticlePages: React.FC<{ page: StencilClient.Page, article: StencilClient.
     </ListItem>)
 }
 
-const ArticleLinks: React.FC<{link: StencilClient.Link, article: StencilClient.Article}> = ({link, article}) => {
-    const { handleInTab } = Composer.useNav();
+const ArticleLinks: React.FC<{ link: StencilClient.Link, article: StencilClient.Article }> = ({ link, article }) => {
+  const { handleInTab } = Composer.useNav();
 
+  const getLinkLabels = (link: StencilClient.Link) => {
+    return null;
+  }
+  
   return (
     <ListItem>
       <ListItemText inset>
         <Typography variant="body1">
-          <LinkLabels link={link}/>
+          link labels (value, locale)
         </Typography>
       </ListItemText>
     </ListItem>
   )
 }
+
 
 interface ArticleExplorerItemProps {
   article: StencilClient.Article;
@@ -128,13 +133,12 @@ interface ArticleExplorerItemProps {
 
 const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
-  const { handleInTab, findTab, handleDualView } = Composer.useNav();
+  const { handleInTab, findTab } = Composer.useNav();
   const { service, actions, site, session, isArticleUnsaved } = Composer.useComposer();
   const unsaved = isArticleUnsaved(article);
 
   const [localeOpen, setLocaleOpen] = React.useState(false);
   const [articlePageOpen, setArticlePageOpen] = React.useState<StencilClient.SiteLocale>();
-  const dualView = findTab(article)?.data?.dualView ? true : false;
 
 
 
@@ -155,8 +159,6 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
   const canCreate: StencilClient.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.body.locale === locale.id).length === 0);
   const links: StencilClient.Link[] = Object.values(site.links).filter(link => link.body.articles.includes(article.id));
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(article.id));
-
-
 
 
   return (
@@ -185,7 +187,7 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
           <IconButton className={classes.iconButtonArrow} onClick={() => setOpen(true)}><ExpandMore /></IconButton>}
       </ListItem>
 
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse in={open} timeout="auto" unmountOnExit >
         {pages.map((page, index) => <ArticlePages key={index} page={page} article={article} />)}
 
         {canCreate.length === 0 ? undefined : (
@@ -202,9 +204,12 @@ const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open
           <ListItem onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}>
             <FormattedMessage id="links" />
             {links.map((link, index) => (
-              <ListItem key={index}><ArticleLinks article={article} link={link}/></ListItem>
+              <ListItem key={index}><ArticleLinks article={article} link={link} />link</ListItem>
             ))}
           </ListItem>)}
+
+
+
 
         {workflows.length === 0 ? undefined : (
           <ListItem onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}>

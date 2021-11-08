@@ -5,7 +5,7 @@ import {
 } from '@mui/material';
 
 
-import LibraryBooksOutlinedIcon from '@mui/icons-material/LibraryBooksOutlined';
+import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
 import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
 import LinkIcon from '@mui/icons-material/Link';
 import TranslateIcon from '@mui/icons-material/Translate';
@@ -46,10 +46,8 @@ const Toolbar: React.FC<{}> = () => {
       <ToolbarItem id='toolbar.dashboard' icon={<HomeOutlinedIcon />} enabled={false}
         onClick={() => actions.handleTabAdd({ id: 'newItem', label: "Dashboard" })}
       />
-      <ToolbarItem id='toolbar.articles' icon={<LibraryBooksOutlinedIcon />} enabled={false}
+      <ToolbarItem id='toolbar.articles' icon={<ArticleRoundedIcon />} enabled={false}
         onClick={() => {
-
-
           actions.handleTabAdd({ id: 'articles', label: "Articles" })
           actions.handleSecondary("toolbar.explorer")
         }}

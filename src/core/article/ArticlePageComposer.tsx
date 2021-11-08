@@ -24,20 +24,20 @@ const getMdCommands = (locale: StencilClient.SiteLocale, color: string) => {
 }
 
 type PageComposerProps = {
-  article: StencilClient.Article,
+  articleId: StencilClient.ArticleId,
   locale1: StencilClient.LocaleId,
   locale2?: StencilClient.LocaleId,
 }
 
-const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }) => {
+const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, locale2 }) => {
   const theme = useTheme();
   const {actions, session} = Composer.useComposer();
-  const page1 = Object.values(session.site.pages)
-    .filter(p => p.body.article === article.id)
+  const view = session.getArticleView(articleId);
+  
+  const page1 = [...view.pages.map(p => p.page)]
     .filter(p => p.body.locale === locale1).pop() as StencilClient.Page;
 
-  const page2 = Object.values(session.site.pages)
-    .filter(p => p.body.article === article.id)
+  const page2 = [...view.pages.map(p => p.page)]
     .filter(p => p.body.locale === locale2).pop() as StencilClient.Page | undefined;
 
   const value1 = session.pages[page1.id] ? session.pages[page1.id].value : page1.body.content;
@@ -85,4 +85,5 @@ const PageComposer: React.FC<PageComposerProps> = ({ article, locale1, locale2 }
   );
 }
 
-export { PageComposer }
+export { ArticlePageComposer }
+

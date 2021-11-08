@@ -3,7 +3,7 @@ import { makeStyles } from '@mui/styles';
 import {
   Theme,
   Checkbox, AppBar, Toolbar,
-  Typography, Table, Card, Dialog, Button, ButtonGroup, TableBody, TableCell,
+  Typography, Table, Card, Button, ButtonGroup, TableBody, TableCell,
   TableRow, TableHead
 } from '@mui/material';
 
@@ -65,24 +65,13 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-const getArticleWorkflows: (site: StencilClient.Site, articleId: StencilClient.ArticleId) => StencilClient.WorkflowId[] = (site, articleId) => {
-  return Object.values(site.workflows).filter(workflow => workflow.body.articles.includes(articleId)).map(w => w.id);
-}
-
-
-
-interface ArticleWorkflowsEditProps {
-  article: StencilClient.Article,
-  articleId: StencilClient.ArticleId,
-  onClose: () => void,
-}
-
-const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
+const ArticleWorkflowsComposer: React.FC<{articleId: StencilClient.ArticleId}> = ({articleId}) => {
   const classes = useStyles();
-  const {service, actions, site} = Composer.useComposer();
+  const {service, actions, site, session} = Composer.useComposer();
+  const view = session.getArticleView(articleId);
   const [dialogOpen, setDialogOpen] = React.useState<undefined | "WorkflowComposer">(undefined);
 
-  const [selectedWorkflows, setSelectedWorkflows] = React.useState(getArticleWorkflows(site, props.articleId))
+  const [selectedWorkflows, setSelectedWorkflows] = React.useState(view.workflows.map(v => v.workflow.id))
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
   const handleChange = (event: any, id: StencilClient.WorkflowId) => {
@@ -100,7 +89,7 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
 
 
   const handleSave = () => {
-    const article = site.articles[props.articleId]
+    const article = site.articles[articleId]
     const entity: StencilClient.ArticleMutator = {
       articleId: article.id,
       name: article.body.name,
@@ -111,7 +100,6 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
     };
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
-      .then(() => props.onClose());
     console.log("saving selected workflows" + selectedWorkflows);
 
   }
@@ -120,13 +108,12 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
     <>
       {dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={() => setDialogOpen(undefined)} /> : null}
 
-      <Dialog fullScreen open={true} onClose={props.onClose} >
         <AppBar className={classes.appBar}>
           <Toolbar>
-            <Typography variant="h3" className={classes.title}>{props.article.body.name}{": "}
+            <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}
               <FormattedMessage id="article.workflows.addremove" /></Typography>
             <ButtonGroup variant="text" className={classes.buttonGroup}>
-              <Button onClick={props.onClose} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
+              <Button onClick={() => setSelectedWorkflows(view.workflows.map(v => v.workflow.id))} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
               <Button className={classes.button} onClick={() => setDialogOpen('WorkflowComposer')}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
               <Button onClick={handleSave} className={classes.button} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
             </ButtonGroup>
@@ -160,9 +147,9 @@ const ArticleWorkflowsEdit: React.FC<ArticleWorkflowsEditProps> = (props) => {
             </Table>
           </Card>
         </div>
-      </Dialog>
     </>
   );
 }
 
-export { ArticleWorkflowsEdit }
+export { ArticleWorkflowsComposer }
+

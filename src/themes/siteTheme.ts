@@ -1,5 +1,14 @@
 import { createTheme, PaletteOptions, Theme } from "@mui/material/styles";
 
+declare module 'react' {
+  interface CSSProperties {
+    '--tree-view-text-color'?: string;
+    '--tree-view-color'?: string;
+    '--tree-view-bg-color'?: string;
+    '--tree-view-hover-color'?: string;
+  }
+}
+
 declare module '@mui/styles/defaultTheme' {
   interface DefaultTheme extends Theme {}
 }
