@@ -2,6 +2,8 @@ import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelperText, ListItemText, Checkbox } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+
+
 import WorkflowDevMode from './WorkflowDevMode';
 import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
@@ -39,7 +41,9 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
   return (
-    <StyledDialog open={true} onClose={onClose} color="workflow.main" title="workflow.composer.title"
+    <StyledDialog open={true} onClose={onClose} 
+      color="workflow.main" 
+      title="workflow.composer.title"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !name || !technicalname }}>
       
       <>

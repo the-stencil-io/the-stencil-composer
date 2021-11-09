@@ -1,15 +1,11 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
+
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, IconButton } from '@mui/material';
+import { Theme, IconButton, DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
+import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,7 +38,7 @@ interface WorkflowRemovePageProps {
 const WorkflowRemovePage: React.FC<WorkflowRemovePageProps> = ({ workflow, article, locale }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const {service, actions} = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -66,25 +62,14 @@ const WorkflowRemovePage: React.FC<WorkflowRemovePageProps> = ({ workflow, artic
         <RemoveCircleOutlineIcon />
       </IconButton>
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle><FormattedMessage id="workflow.removepage.title" /></DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            <FormattedMessage id="workflow.removepage" />
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="text" onClick={handleClose} color="primary">
-            <FormattedMessage id="button.cancel" />
-          </Button>
-          <Button variant="contained" onClick={handleDelete} color="primary" autoFocus>
-            <FormattedMessage id="button.remove" />
-          </Button>
-        </DialogActions>
-      </Dialog>
+      <StyledDialog open={open} onClose={handleClose}
+        color="workflow.main"
+        title="workflow.removepage.title"
+        submit={{ title: "button.remove", onClick: handleDelete, disabled: false }}>
+        <DialogContentText>
+          <FormattedMessage id="workflow.removepage" />
+        </DialogContentText>
+      </StyledDialog>
     </div>
   );
 }
