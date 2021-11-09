@@ -157,7 +157,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
       </StyledTreeItem>
 
       <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label}>
-        {pages.map(pageView => (<PageItem article={view} page={pageView} />))}
+        {pages.map(pageView => (<PageItem key={pageView.page.id} article={view} page={pageView} />))}
 
         {/** Save button */ unsaved ? (
           <StyledTreeItemRoot
@@ -191,7 +191,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
           labelText={<FormattedMessage id="resource.edit.workflows" />}>
         </ArticleOptionItem>
 
-        {workflows.map(view => (<WorkflowItem labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
+        {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
       </StyledTreeItem>
 
       <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label}>
@@ -202,7 +202,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
           labelText={<FormattedMessage id="resource.edit.links" />}>
         </ArticleOptionItem>
 
-        {links.map(view => (<LinkItem labelText={view.link.body.value} nodeId={view.link.id} />))}
+        {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
       </StyledTreeItem>
 
     </StyledTreeItem>
