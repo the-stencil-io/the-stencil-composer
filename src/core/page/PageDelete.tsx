@@ -3,9 +3,8 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Theme, FormControl, MenuItem, Select } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
-
+import { StyledDialog } from '../styles/StyledDialog';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,7 +29,8 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: StencilClient.Artic
   }
   const articlePages: StencilClient.Page[] = Object.values(site.pages).filter(p => p.body.article === props.articleId);
   return (
-    <StyledDialog open={true} onClose={props.onClose} color="page.main"
+    <StyledDialog open={true} onClose={props.onClose} 
+      color="page.main"
       title="pages.delete"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: !pageId }}>
       <>

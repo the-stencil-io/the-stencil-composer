@@ -1,25 +1,11 @@
 import React from 'react';
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Switch } from '@mui/material';
+
+import { Box, Switch, DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    margin: {
-      marginRight: theme.spacing(1)
-    },
-  }),
-);
+import { StyledDialog } from '../styles/StyledDialog';
 
 
 interface LocaleDisableProps {
@@ -28,10 +14,10 @@ interface LocaleDisableProps {
 }
 
 const LocaleDisable: React.FC<LocaleDisableProps> = ({ locale }) => {
-  const classes = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
-  const {service, actions} = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -61,41 +47,32 @@ const LocaleDisable: React.FC<LocaleDisableProps> = ({ locale }) => {
   }
 
   return (
-    <div className={classes.margin}>
+    <Box sx={{ mr: 1 }}>
       {locale.body.enabled === true ?
         <Switch
           onClick={handleClickOpen}
           checked={state.checkedA}
-          onChange={handleChange} 
-          />
+          onChange={handleChange}
+        />
         : <Switch
           onClick={handleClickOpen}
           checked={state.checkedB}
           onChange={handleChange} />}
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-      >
-        <DialogTitle>{locale.body.enabled === true ? <FormattedMessage id="locale.disable.title" /> : <FormattedMessage id="locale.enable.title" />}</DialogTitle>
-        <DialogContent>
-          <DialogContentText >
-            {locale.body.enabled ? <FormattedMessage id="locale.disable" /> : <FormattedMessage id="locale.enable" />}
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button variant="text" onClick={handleClose} color="primary">
-            <FormattedMessage id="button.cancel" />
-          </Button>
-          {locale.body.enabled ?
-            (<Button variant="contained" onClick={() => handleEnable(false)} color="primary" autoFocus><FormattedMessage id="button.disable" /></Button>) :
-            (<Button variant="contained" onClick={() => handleEnable(true)} color="primary" autoFocus><FormattedMessage id="button.enable" /></Button>)
+      <StyledDialog open={open} onClose={handleClose}
+        color="locale.main" title={locale.body.enabled === true ? "locale.disable.title" : "locale.enable.title"}
+        submit={{
+          title: locale.body.enabled ? "button.disable" : "button.enable",
+          onClick: locale.body.enabled ? () => handleEnable(false) : () => handleEnable(true),
+          disabled: false
+        }}>
 
-          }
+        <DialogContentText>
+          {locale.body.enabled ? <FormattedMessage id="locale.disable" /> : <FormattedMessage id="locale.enable" />}
+        </DialogContentText>
 
-        </DialogActions>
-      </Dialog>
-    </div>
+      </StyledDialog>
+    </Box>
   );
 }
 export { LocaleDisable }
