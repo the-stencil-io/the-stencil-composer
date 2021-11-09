@@ -70,7 +70,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   const { service, actions, site, session } = Composer.useComposer();
 
   const view = session.getArticleView(props.articleId);
-
+  
   const [selectedLinks, setSelectedLinks] = React.useState(view.links.map(l => l.link.id));
   const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
@@ -125,7 +125,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
               <TableRow>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
-                                <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
               </TableRow>
             </TableHead>
@@ -135,9 +135,8 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={(event) => handleChange(event, link.id)} />
                   </TableCell>
-                                    <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-
                   <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
 
 
