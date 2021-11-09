@@ -41,10 +41,19 @@ const ToolbarItem: React.FC<{
 const Toolbar: React.FC<{}> = () => {
   const { actions } = Composer.useLayout();
   const theme = useTheme();
+  
+  // open dashboard
+  React.useLayoutEffect(() => {
+    console.log("init toolbar");
+    actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+  }, [actions]);
+  
   return (
     <List dense={true} disablePadding sx={{ width: `calc(${theme.spacing(7)} + 1px)` }}>
       <ToolbarItem id='toolbar.dashboard' icon={<HomeOutlinedIcon />} enabled={false}
-        onClick={() => actions.handleTabAdd({ id: 'newItem', label: "Dashboard" })}
+        onClick={() => {
+          actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+        }}
       />
       <ToolbarItem id='toolbar.articles' icon={<ArticleRoundedIcon />} enabled={false}
         onClick={() => {

@@ -98,7 +98,7 @@ const Reducer = (state: Session.Instance, action: Action): Session.Instance => {
       return result;
     }
     case ActionType.setDrawer: {
-      if (!action.setDrawer) {
+      if (action.setDrawer === undefined) {
         console.error("Action data error", action);
         return state;
       }

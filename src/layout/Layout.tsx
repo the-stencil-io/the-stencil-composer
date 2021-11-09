@@ -22,15 +22,21 @@ const contentStyle = { flexGrow: 1, overflow: "auto"};
 const Container: React.FC<ContainerProps> = (components) => {
   const layout = useLayout();
   const theme = useTheme();
-  
+  const actions = layout.actions;
   const drawerOpen = layout.session.drawer;
+  const {main, secondary, toolbar} = components;
+  const mainWindow = React.useMemo(() => main, [main]);
+  const secondaryWindow = React.useMemo(() => secondary, [secondary]);
+  const toolbarWindow = React.useMemo(() => toolbar, [toolbar]);
   
-  return (
-    <Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
+  return React.useMemo(() => {
+    console.log("init layout");
+    
+    return (<Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
       <CssBaseline />
       <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => layout.actions.handleDrawerOpen(true)}
+          <IconButton edge="start" color="inherit" onClick={() => actions.handleDrawerOpen(true)}
             sx={{ color: theme.palette.secondary.main, display: drawerOpen ? 'none' : undefined }}>
             <MenuIcon />
           </IconButton>
@@ -49,7 +55,7 @@ const Container: React.FC<ContainerProps> = (components) => {
             justifyContent: 'flex-end',
             padding: '0 8px'
           }}>
-            <IconButton onClick={() => layout.actions.handleDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
+            <IconButton onClick={() => actions.handleDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
           </Box>
         </Toolbar>
 
@@ -59,11 +65,11 @@ const Container: React.FC<ContainerProps> = (components) => {
             color: theme.palette.primary.contrastText,
             width: `calc(${theme.spacing(7)} + 1px)`
           }}>
-            {components.toolbar}
+            {toolbarWindow}
           </Box>
           
           {!drawerOpen ? null :
-            <Box sx={contentStyle}>{components.secondary}</Box>
+            <Box sx={contentStyle}>{secondaryWindow}</Box>
           }
         </Box>
       </StyledDrawer>
@@ -71,11 +77,11 @@ const Container: React.FC<ContainerProps> = (components) => {
       <main style={{width: "100%"}}>
         <Toolbar />
         <Box sx={contentStyle}>
-          {components.main}
+          {mainWindow}
         </Box>
       </main>
     </Box>
-  );
+  )}, [drawerOpen, actions, mainWindow, toolbarWindow, secondaryWindow, theme]);
 }
 
 export type { ContainerProps };

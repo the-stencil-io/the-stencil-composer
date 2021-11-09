@@ -91,7 +91,7 @@ declare namespace Composer {
 }
 
 namespace Composer {
-  const sessionData = new SessionData({ cache: {}});
+  const sessionData = new SessionData({});
 
   export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page  }) => new ImmutableTabData(props);
 
@@ -195,7 +195,7 @@ namespace Composer {
 }
 
 const ArticleTab: React.FC<{article: StencilClient.Article, type: Composer.NavType}> = ({ article, type }) => {
-  const intl = useIntl();
+ // const intl = useIntl();
   const unsaved = Composer.useUnsaved(article);
   
   /* TODO:::

@@ -8,7 +8,7 @@ interface StyledAppBarProps extends AppBarProps {
 }
 
 const StyledAppBar = styled(AppBar, {
-  shouldForwardProp: (prop) => prop !== 'open',
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
 })<StyledAppBarProps>(({ theme, open, drawerWidth }) => ({
   backgroundColor: theme.palette.background.default,
   zIndex: theme.zIndex.drawer + 1,
