@@ -1,31 +1,9 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Button, Dialog, Typography, DialogTitle, DialogContent, DialogActions, ButtonGroup, Theme,
-} from '@mui/material';
+import { Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.page.main,
-        fontWeight: 'bold',
-      }
-    },
-
-    title: {
-      backgroundColor: theme.palette.page.main,
-      color: theme.palette.page.contrastText,
-      fontWeight: 900,
-      marginBottom: theme.spacing(2)
-    },
-  }),
-);
+import { StyledDialog } from '../styles/StyledDialog';
 
 
 interface NewArticlePageProps {
@@ -37,7 +15,6 @@ interface NewArticlePageProps {
 }
 
 const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose, onCreate }) => {
-  const classes = useStyles();
   const { service, actions } = Composer.useComposer();
   if (!open) {
     return null;
@@ -54,21 +31,15 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
   }
 
   return (
-    <Dialog open={open ? true : false} onClose={onClose} >
-      <DialogTitle className={classes.title} ><FormattedMessage id='newpage.title' /></DialogTitle>
-      <DialogContent>
-        <Typography>
-          <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: open.body.value }} />
-        </Typography>
-      </DialogContent>
+    <StyledDialog open={open ? true : false} onClose={onClose}
+      color="page.main"
+      title="newpage.title"
+      submit={{ title: "button.create", onClick: handleCreate, disabled: false }}>
 
-      <DialogActions>
-        <ButtonGroup variant="text">
-          <Button className={classes.button} onClick={onClose}><FormattedMessage id='button.cancel' /></Button>
-          <Button className={classes.button} onClick={handleCreate} autoFocus><FormattedMessage id='button.create' /></Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+      <Typography>
+        <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: open.body.value }} />
+      </Typography>
+    </StyledDialog>
   );
 }
 

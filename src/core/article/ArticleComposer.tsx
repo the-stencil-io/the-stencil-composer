@@ -40,7 +40,8 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const articles: StencilClient.Article[] = Object.values(session.site.articles);
 
   return (
-    <StyledDialog open={true} onClose={onClose} color="article.main" title="article.composer.title"
+    <StyledDialog open={true} onClose={onClose} 
+      color="article.main" title="article.composer.title"
       submit={{ title: "article.create", onClick: handleCreate, disabled: !name }}>
       <>
         <FormControl variant="outlined" className={classes.select} fullWidth>

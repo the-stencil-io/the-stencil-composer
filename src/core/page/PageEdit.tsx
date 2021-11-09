@@ -1,44 +1,29 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Theme, FormControl, Button,
-  Dialog, DialogTitle, DialogContent, DialogActions, MenuItem, Select,
-  ButtonGroup
-} from '@mui/material';
+import { Theme, FormControl, MenuItem, Select } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
+import { StyledDialog } from '../styles/StyledDialog';
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    title: {
-      backgroundColor: theme.palette.page.main,
-      color: theme.palette.secondary.contrastText,
-      marginBottom: theme.spacing(2)
-    },
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
       //color: theme.palette.primary.contrastText,
       //backgroundColor: theme.palette.background.paper
     },
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.page.main,
-        fontWeight: 'bold',
-      }
-    }
   }),
 );
 
 
 const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.ArticleId }> = (props) => {
   const classes = useStyles();
-  const {service, actions, site} = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
   const articleId = props.articleId;
- // const [articleId, setArticleId] = React.useState('');
+  // const [articleId, setArticleId] = React.useState('');
   const [pageId, setPageId] = React.useState('');
   const [newLocale, setNewLocale] = React.useState('');
 
@@ -55,10 +40,13 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
   const unusedLocales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(siteLocale => !usedLocales.includes(siteLocale.id));
 
   const valid = pageId && articleId && newLocale;
-  return (<>
-    <Dialog open={true} onClose={props.onClose} >
-      <DialogTitle className={classes.title}><FormattedMessage id='pages.change' /></DialogTitle>
-      <DialogContent>
+  return (
+    <StyledDialog open={true} onClose={props.onClose}
+      color="page.main"
+      title="pages.change"
+      submit={{ title: "button.update", onClick: handleUpdate, disabled: !valid }}>
+
+      <>
         <FormattedMessage id='pages.change.info' />
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
@@ -73,7 +61,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
             ))}
           </Select>
         </FormControl>
-        
+
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <Select
             className={classes.select}
@@ -87,16 +75,9 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
             ))}
           </Select>
         </FormControl>
-      </DialogContent>
+      </>
 
-      <DialogActions>
-      <ButtonGroup variant="text">
-        <Button className={classes.button} onClick={props.onClose}><FormattedMessage id='button.cancel' /></Button>
-        <Button className={classes.button} onClick={handleUpdate} autoFocus disabled={!valid}><FormattedMessage id='button.update' /></Button>
-     </ButtonGroup>
-      </DialogActions>
-    </Dialog>
-  </>
+    </StyledDialog>
   );
 }
 

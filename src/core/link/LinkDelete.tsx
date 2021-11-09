@@ -1,32 +1,10 @@
 
 import React from 'react';
-import { Button, ButtonGroup, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Theme } from '@mui/material';
-import { makeStyles, createStyles } from '@mui/styles';
+import { DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-
 import { Composer, StencilClient } from '../context';
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      backgroundColor: theme.palette.link.main,
-      color: theme.palette.secondary.contrastText,
-    },
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.link.main,
-        fontWeight: 'bold',
-      }
-    },
-    delete: {
-      color: theme.palette.error.main,
-      fontWeight: 'bold'
-    }
-  }),
-);
+import { StyledDialog } from '../styles/StyledDialog';
 
 
 interface LinkDeleteProps {
@@ -36,8 +14,7 @@ interface LinkDeleteProps {
 }
 
 const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
-  const classes = useStyles();
-  const {service, actions} = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const handleDelete = () => {
     service.delete().link(linkId).then(success => {
@@ -48,24 +25,13 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   }
 
   return (
-    <Dialog open={true} onClose={onClose}>
-      <DialogTitle className={classes.title}><FormattedMessage id="link.delete.title" /></DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          <FormattedMessage id="link.delete" />
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <ButtonGroup variant="text">
-          <Button onClick={onClose} className={classes.button}>
-            <FormattedMessage id="button.cancel" />
-          </Button>
-          <Button onClick={handleDelete} autoFocus className={classes.delete}>
-            <FormattedMessage id="button.delete" />
-          </Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+    <StyledDialog open={true} onClose={onClose} 
+      color="article.main" title="article.composer.title"
+      submit={{ title: "article.create", onClick: handleDelete, disabled: false }}>
+      <DialogContentText>
+        <FormattedMessage id="link.delete" />
+      </DialogContentText>
+    </StyledDialog>
   );
 }
 export { LinkDelete }
