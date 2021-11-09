@@ -97,7 +97,6 @@ const ArticleExplorer: React.FC<{}> = () => {
         defaultCollapseIcon={<ArrowDropDownIcon />}
         defaultExpandIcon={<ArrowRightIcon />}
         defaultEndIcon={<div style={{ width: 24 }} />}
-        multiSelect={false}
       >
 
         {articles.map((article, index) => [

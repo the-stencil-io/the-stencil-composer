@@ -15,7 +15,7 @@ interface ContainerProps {
 };
 
 const drawerWidth = 400;
-const contentStyle = { flexGrow: 1, overflow: "auto", height: "85vh" };
+const contentStyle = { flexGrow: 1, overflow: "auto"};
 
 
 const Container: React.FC<ContainerProps> = (components) => {
@@ -64,7 +64,7 @@ const Container: React.FC<ContainerProps> = (components) => {
         </Box>
       </StyledDrawer>
 
-      <main>
+      <main style={{width: "100%"}}>
         <Toolbar />
         <Box sx={contentStyle}>
           {components.main}
