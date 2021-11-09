@@ -22,15 +22,17 @@ const contentStyle = { flexGrow: 1, overflow: "auto"};
 const Container: React.FC<ContainerProps> = (components) => {
   const layout = useLayout();
   const theme = useTheme();
-  
+  const actions = layout.actions;
   const drawerOpen = layout.session.drawer;
   
-  return (
-    <Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
+  return React.useMemo(() => {
+    console.log("init layout");
+    
+    return (<Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
       <CssBaseline />
       <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => layout.actions.handleDrawerOpen(true)}
+          <IconButton edge="start" color="inherit" onClick={() => actions.handleDrawerOpen(true)}
             sx={{ color: theme.palette.secondary.main, display: drawerOpen ? 'none' : undefined }}>
             <MenuIcon />
           </IconButton>
@@ -49,7 +51,7 @@ const Container: React.FC<ContainerProps> = (components) => {
             justifyContent: 'flex-end',
             padding: '0 8px'
           }}>
-            <IconButton onClick={() => layout.actions.handleDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
+            <IconButton onClick={() => actions.handleDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
           </Box>
         </Toolbar>
 
@@ -75,7 +77,7 @@ const Container: React.FC<ContainerProps> = (components) => {
         </Box>
       </main>
     </Box>
-  );
+  )}, [drawerOpen, actions]);
 }
 
 export type { ContainerProps };

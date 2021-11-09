@@ -1,54 +1,113 @@
 import Composer from './ide';
 import StencilClient from '../client';
 
+class SiteCache {
+  private _site: StencilClient.Site;
+  private _articles: Record<StencilClient.ArticleId, Composer.ArticleView> = {};
+  private _pagesByArticle: Record<StencilClient.ArticleId, Composer.PageView[]> = {};
+  private _linksByArticle: Record<StencilClient.ArticleId, Composer.LinkView[]> = {};
+  private _workflowsByArticle: Record<StencilClient.ArticleId, Composer.WorkflowView[]> = {};
+
+  constructor(site: StencilClient.Site) {
+    this._site = site;
+    Object.values(site.pages).sort((l0, l1) => l0.body.locale.localeCompare(l1.body.locale)).forEach(page => this.visitPage(page))
+    Object.values(site.links).sort((l0, l1) => l0.body.contentType.localeCompare(l1.body.contentType)).forEach(link => this.visitLink(link))
+    Object.values(site.workflows).sort((l0, l1) => l0.body.value.localeCompare(l1.body.value)).forEach(workflow => this.visitWorkflow(workflow))
+    Object.values(site.articles).sort((l0, l1) => l0.body.order - l1.body.order).forEach(article => this.visitArticle(article))
+  }
+  
+  getArticles() {
+    return this._articles;
+  }
+  
+  private visitPage(page: StencilClient.Page) {
+    const site = this._site;
+    const view = new ImmutablePageView({ page, locale: site.locales[page.body.locale] });
+    const articleId = page.body.article;  
+    let articlePages = this._pagesByArticle[articleId];
+    if (!articlePages) {
+      articlePages = [];
+      this._pagesByArticle[articleId] = articlePages;
+    }
+    articlePages.push(view);  
+  }
+
+  private visitLink(link: StencilClient.Link) {
+    const site = this._site;
+    const view = new ImmutableLinkView({
+      link,
+      labels: link.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
+    });
+
+    for (const articleId of link.body.articles) {
+      let articleLinks = this._linksByArticle[articleId];
+      if (!articleLinks) {
+        articleLinks = [];
+        this._linksByArticle[articleId] = articleLinks;
+      }
+      articleLinks.push(view);
+    }
+  }
+  private visitWorkflow(workflow: StencilClient.Workflow) {
+    const site = this._site;
+    const view = new ImmutableWorkflowView({
+      workflow,
+      labels: workflow.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
+    });
+
+    for (const articleId of workflow.body.articles) {
+      let articleWorkflows = this._workflowsByArticle[articleId];
+      if (!articleWorkflows) {
+        articleWorkflows = [];
+        this._workflowsByArticle[articleId] = articleWorkflows;
+      }
+      articleWorkflows.push(view);
+    }
+  }
+  private visitArticle(article: StencilClient.Article) {
+    const articleId = article.id;
+    const site = this._site;
+    const pages: Composer.PageView[] = Object.values(site.pages)
+      .filter(page => articleId === page.body.article)
+      .map(page => new ImmutablePageView({ page, locale: site.locales[page.body.locale] }));
+    
+    const links: Composer.LinkView[] = this.empty(this._linksByArticle[articleId]);
+    const workflows: Composer.WorkflowView[] = this.empty(this._workflowsByArticle[articleId]);
+
+    const canCreate: StencilClient.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.page.body.locale === locale.id).length === 0);
+    const view = new ImmutableArticleView({ 
+      article, pages, canCreate, 
+      links, 
+      workflows 
+    });
+    this._articles[articleId] = view;
+  }
+  
+  private empty<T>(arrayType:T) {
+    return arrayType ? arrayType : [];
+  }
+}
+
+
 class SessionData implements Composer.Session {
   private _site: StencilClient.Site;
   private _pages: Record<StencilClient.PageId, Composer.PageUpdate>;
-  private _cache: Record<StencilClient.ArticleId, Composer.ArticleView>;
+  private _cache: SiteCache;
 
   constructor(props: {
     site?: StencilClient.Site,
     pages?: Record<StencilClient.PageId, Composer.PageUpdate>,
-    cache: Record<StencilClient.ArticleId, Composer.ArticleView>
+    cache?: SiteCache;
   }) {
 
     this._site = props.site ? props.site : { name: "", contentType: "OK", releases: {}, articles: {}, links: {}, locales: {}, pages: {}, workflows: {} };
     this._pages = props.pages ? props.pages : {};
-    this._cache = props.cache;
+    this._cache = props.cache ? props.cache : new SiteCache(this._site);
   }
 
   getArticleView(articleId: StencilClient.ArticleId): Composer.ArticleView {
-    let view = this._cache[articleId];
-    if (view) {
-      return view;
-    }
-    const site = this._site;
-    const article = site.articles[articleId]
-    const pages: Composer.PageView[] = Object.values(site.pages)
-      .filter(page => articleId === page.body.article)
-      .map(page => new ImmutablePageView({ page, locale: site.locales[page.body.locale] }));
-    const links: Composer.LinkView[] = Object.values(site.links)
-      .filter(link => link.body.articles.includes(articleId))
-      .sort((l0, l1) => l0.body.contentType.localeCompare(l1.body.contentType))
-      .map(link => new ImmutableLinkView({
-        link,
-        labels: link.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
-      }));
-    const workflows: Composer.WorkflowView[] = Object.values(site.workflows)
-      .filter(workflow => workflow.body.articles.includes(articleId))
-      .map(workflow => new ImmutableWorkflowView({
-        workflow,
-        labels: workflow.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
-      }));
-
-    const canCreate: StencilClient.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.page.body.locale === locale.id).length === 0);
-
-    view = new ImmutableArticleView({ article, pages, canCreate, links, workflows });
-    this._cache[articleId] = view;
-
-    return view;
+    return this._cache.getArticles()[articleId];
   }
-
   get site() {
     return this._site;
   }
@@ -78,9 +137,8 @@ class SessionData implements Composer.Session {
     }) : []
   }
 
-
   withSite(site: StencilClient.Site) {
-    return new SessionData({ site: site, cache: {} });
+    return new SessionData({ site: site });
   }
   withoutPages(pageIds: StencilClient.PageId[]): Composer.Session {
     const pages = {};
@@ -151,11 +209,13 @@ class ImmutableTabData implements Composer.TabData {
     return this._nav;
   }
   withNav(nav: Composer.Nav) {
-    return new ImmutableTabData({nav: { 
-      type: nav.type,
-      value: nav.value === undefined ? this._nav.value : nav.value,
-      value2: nav.value2 === undefined ? this._nav.value2 : nav.value2 
-    }});
+    return new ImmutableTabData({
+      nav: {
+        type: nav.type,
+        value: nav.value === undefined ? this._nav.value : nav.value,
+        value2: nav.value2 === undefined ? this._nav.value2 : nav.value2
+      }
+    });
   }
 }
 

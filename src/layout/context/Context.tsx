@@ -18,7 +18,6 @@ const LayoutProvider: React.FC<{children: React.ReactNode}> = ({ children }) => 
     console.log("init layout dispatch");
     return new ReducerDispatch(dispatch)
   }, [dispatch]);
-
   return (
     <LayoutContext.Provider value={{ session, actions }}>
       {children}
@@ -33,4 +32,9 @@ const useLayout = () => {
   return result;
 }
 
-export { LayoutProvider, LayoutContext, useLayout };
+const useActions = () => {
+  const result: Session.ContextType = React.useContext(LayoutContext);
+  return result.actions;
+}
+
+export { LayoutProvider, LayoutContext, useLayout, useActions };

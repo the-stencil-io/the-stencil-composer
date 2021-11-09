@@ -91,7 +91,7 @@ declare namespace Composer {
 }
 
 namespace Composer {
-  const sessionData = new SessionData({ cache: {}});
+  const sessionData = new SessionData({});
 
   export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page  }) => new ImmutableTabData(props);
 

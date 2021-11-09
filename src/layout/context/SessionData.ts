@@ -51,14 +51,16 @@ class SessionData implements Session.Instance {
       const tabIndex = newTabOrTabIndex as number;
       return this.next({ previous: this.history, open: tabIndex });
     }
-    
     const newTab = newTabOrTabIndex as Session.Tab<any>;
     const alreadyOpen = this.findTab(newTab.id);
     if(alreadyOpen !== undefined) {      
       const editModeChange = this.tabs[alreadyOpen].edit !== newTab.edit;
       if(editModeChange && newTab.edit === true) {
         return this.deleteTab(newTab.id).withTab(newTab);
-      }      
+      }
+      if(alreadyOpen === this._history.open) {
+        return this;
+      }
       return this.next({ previous: this.history, open: alreadyOpen });
     }
 
