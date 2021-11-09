@@ -1,5 +1,10 @@
 const en = {
 
+
+  'workflow.technicalname.description': 'Flow name as defined in the Wrench',
+  'workflow.devmode.helper': 'If Development mode is active, this workflow will only appear in the development environment for testing. It will not be included in production releases.',
+  'workflow.devmode': 'Development mode',
+
   'select.multiple': 'Select one or many items',
   'resource.options': 'Resource options',
   'resource.edit.links': 'Edit links',

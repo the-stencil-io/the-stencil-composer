@@ -7,6 +7,7 @@ import {
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
+import WorkflowDevMode from './WorkflowDevMode';
 import { Composer, StencilClient } from '../context';
 
 
@@ -40,9 +41,9 @@ interface WorkflowEditProps {
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const classes = useStyles();
-  const {service, actions, session, site} = Composer.useComposer();
+  const { service, actions, session, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId]
-  
+
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
   const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
@@ -89,6 +90,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
             ))}
           </Select>
         </FormControl>
+        <WorkflowDevMode />
       </DialogContent>
 
       <DialogActions>

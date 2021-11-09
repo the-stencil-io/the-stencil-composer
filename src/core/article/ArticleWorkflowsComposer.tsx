@@ -14,7 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { FormattedMessage } from 'react-intl';
 
-import WorkflowDevMode from '../workflow/WorkflowDevMode';
+import WorkflowDevModeIcon from '../workflow/WorkflowDevModeIcon';
 import { WorkflowComposer } from '../workflow/WorkflowComposer';
 import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
@@ -152,7 +152,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
                       onChange={(event) => handleChange(event, workflow.id)} />
                   </TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
-                  <TableCell className={classes.tableCell} align="left"><WorkflowDevMode /></TableCell>
+                  <TableCell className={classes.tableCell} align="left"><WorkflowDevModeIcon /></TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton onClick={() => setWorkflowEditOpen(workflow.id)}>

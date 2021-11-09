@@ -1,10 +1,11 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
-  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, ListItemText, Checkbox
+  Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelperText, Switch, FormControlLabel,
+  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, ListItemText, Checkbox, Typography, Paper
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
+import WorkflowDevMode from './WorkflowDevMode';
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -83,16 +84,18 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             value={locales}
             label={<FormattedMessage id='locale' />}
           >
-            <MenuItem key={-1} value={''}><FormattedMessage id='locale' /></MenuItem>
             {siteLocales.map((locale, index) => (
               <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
+
             ))}
           </Select>
+          <FormHelperText><FormattedMessage id="select.multiple" /></FormHelperText>
+
         </FormControl>
 
         <TextField className={classes.select}
           label={<FormattedMessage id='workflow.technicalname' />}
-          helperText={<FormattedMessage id='workflow.technicalname' />}
+          helperText={<FormattedMessage id='workflow.technicalname.description' />}
           variant="outlined"
           fullWidth
           value={technicalname}
@@ -123,11 +126,12 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               <MenuItem key={index} value={article.id}>
                 <Checkbox checked={articleId.indexOf(article.id) > -1} />
                 <ListItemText primary={article.body.name} />
-
               </MenuItem>
             ))}
           </Select>
         </FormControl>
+
+        <WorkflowDevMode />
       </DialogContent>
 
       <DialogActions>
