@@ -135,10 +135,10 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="button.addremove" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="status" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
+                <TableCell className={classes.bold} align="left">  <FormattedMessage id="status" /></TableCell>
+                <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
+                <TableCell className={classes.bold} align="left">  <FormattedMessage id="locales" /></TableCell>
+                <TableCell className={classes.bold} align="left">  <FormattedMessage id="workflow.technicalname" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="workflow.edit.title" /></TableCell>
 
               </TableRow>
@@ -146,13 +146,13 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
             <TableBody>
               {workflows.map((workflow, index) => (
                 <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="left">
+                  <TableCell className={classes.tableCell} align="left"><WorkflowDevModeIcon /></TableCell>
+                  <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary"
                       checked={selectedWorkflows.includes(workflow.id) === true}
                       onChange={(event) => handleChange(event, workflow.id)} />
                   </TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
-                  <TableCell className={classes.tableCell} align="left"><WorkflowDevModeIcon /></TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton onClick={() => setWorkflowEditOpen(workflow.id)}>

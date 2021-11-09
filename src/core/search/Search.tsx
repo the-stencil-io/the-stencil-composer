@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import {
-  Theme, Tooltip, ClickAwayListener, Box,
+  Theme, Tooltip, Box,
   InputAdornment, OutlinedInput
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
