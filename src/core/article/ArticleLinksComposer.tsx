@@ -65,7 +65,7 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const ArticleLinksComposer: React.FC<{articleId: StencilClient.ArticleId}> = (props) => {
+const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
   const classes = useStyles();
   const { service, actions, site, session } = Composer.useComposer();
 
@@ -123,19 +123,23 @@ const ArticleLinksComposer: React.FC<{articleId: StencilClient.ArticleId}> = (pr
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
-                <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
+                                <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {links.map((link, index) => (
                 <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary" checked={selectedLinks.includes(link.id) === true} onChange={(event) => handleChange(event, link.id)} />
                   </TableCell>
+                                    <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
+
+                  <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
+
 
                 </TableRow>
               ))}
