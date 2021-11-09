@@ -1,35 +1,20 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions, Checkbox, ListItemText,
-  ButtonGroup
-} from '@mui/material';
+import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, Checkbox, ListItemText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import WorkflowDevMode from './WorkflowDevMode';
 import { Composer, StencilClient } from '../context';
-
+import { StyledDialog } from '../styles/StyledDialog';
 
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    title: {
-      backgroundColor: theme.palette.workflow.main,
-      color: theme.palette.secondary.contrastText,
-    },
     select: {
       padding: theme.spacing(1),
       marginTop: theme.spacing(3),
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
-    },
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.workflow.main,
-        fontWeight: 'bold',
-      }
     }
   }),
 );
@@ -58,10 +43,11 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   }
 
   return (
-    <Dialog open={true} onClose={onClose} >
-      <DialogTitle className={classes.title}><FormattedMessage id='workflow.edit.title' /></DialogTitle>
-      <DialogContent>
-
+    <StyledDialog open={true} onClose={onClose}
+      color="workflow.main"
+      title="workflow.edit.title"
+      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname }}>
+      <>
         <TextField className={classes.select}
           label={<FormattedMessage id='workflow.technicalname' />}
           helperText={<FormattedMessage id='workflow.technicalname' />}
@@ -91,15 +77,8 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           </Select>
         </FormControl>
         <WorkflowDevMode />
-      </DialogContent>
-
-      <DialogActions>
-        <ButtonGroup variant="text">
-          <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={handleCreate} autoFocus disabled={!technicalname} className={classes.button}><FormattedMessage id='button.add' /></Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+      </>
+    </StyledDialog>
   );
 
 }
