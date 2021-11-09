@@ -1,16 +1,19 @@
 import Session from './Session';
  
 
-class SessionData implements Session.InstanceMutator {  
+class SessionData implements Session.Instance {  
   private _tabs: Session.Tab<any>[];
   private _history: Session.History;
   private _secondary?: string;
+  private _drawer: boolean;
   
   constructor(props: {
       tabs?: Session.Tab<any>[], 
       history?: Session.History,
-      secondary?: string}) {
+      secondary?: string,
+      drawer?: boolean}) {
     
+    this._drawer = props.drawer ? true : false;
     this._secondary = props.secondary;
     this._tabs = props.tabs ? props.tabs : [];
     this._history = props.history ? props.history : { open: 0 };
@@ -24,11 +27,14 @@ class SessionData implements Session.InstanceMutator {
   get secondary() {
     return this._secondary;
   }
-  private next(history: Session.History, tabs?: Session.Tab<any>[]): Session.InstanceMutator {
-    const newTabs = tabs ? tabs : this.tabs;
-    return new SessionData({tabs: [...newTabs], history, secondary: this._secondary});
+  get drawer() {
+    return this._drawer;
   }
-  withTabData(tabId: string, updateCommand: (oldData: any) => any): Session.InstanceMutator {
+  private next(history: Session.History, tabs?: Session.Tab<any>[]): Session.Instance {
+    const newTabs = tabs ? tabs : this.tabs;
+    return new SessionData({tabs: [...newTabs], history, secondary: this._secondary, drawer: this._drawer});
+  }
+  withTabData(tabId: string, updateCommand: (oldData: any) => any): Session.Instance {
     const tabs: Session.Tab<any>[] = [];
     for(const tab of this.tabs) {
       if(tabId === tab.id) {
@@ -40,7 +46,7 @@ class SessionData implements Session.InstanceMutator {
     }
     return this.next(this.history, tabs);
   }
-  withTab(newTabOrTabIndex: Session.Tab<any> | number): Session.InstanceMutator {
+  withTab(newTabOrTabIndex: Session.Tab<any> | number): Session.Instance {
     if(typeof newTabOrTabIndex === 'number') {
       const tabIndex = newTabOrTabIndex as number;
       return this.next({ previous: this.history, open: tabIndex });
@@ -68,8 +74,11 @@ class SessionData implements Session.InstanceMutator {
     }
     return undefined;
   }
-  withSecondary(newItemId?: string): Session.InstanceMutator {
-    return new SessionData({ secondary: newItemId, tabs: this._tabs, history: this._history });
+  withSecondary(newItemId?: string): Session.Instance {
+    return new SessionData({ secondary: newItemId, tabs: this._tabs, history: this._history, drawer: this._drawer});
+  }
+  withDrawer(open: boolean): Session.Instance {
+    return new SessionData({ secondary: this._secondary, tabs: this._tabs, history: this._history, drawer: open});
   }
   getTabData<T>(tabId: string): T {
     const tabIndex = this.findTab(tabId);
@@ -79,7 +88,7 @@ class SessionData implements Session.InstanceMutator {
     console.error(this);
     throw new Error (`cant find tab: '${tabId}'`);
   }
-  deleteTab(tabId: string): Session.InstanceMutator {
+  deleteTab(tabId: string): Session.Instance {
     const tabs: Session.Tab<any>[] = [];
     for(const tab of this.tabs) {
       if(tabId !== tab.id) {
@@ -89,7 +98,7 @@ class SessionData implements Session.InstanceMutator {
     return this.next(this.history, tabs).withTab(tabs.length - 1);
   }
   
-  deleteTabs(): Session.InstanceMutator {
+  deleteTabs(): Session.Instance {
     const tabs: Session.Tab<any>[] = [];
     return this.next({ previous: this.history, open: 0}, tabs);
   }
