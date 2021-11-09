@@ -195,7 +195,7 @@ namespace Composer {
 }
 
 const ArticleTab: React.FC<{article: StencilClient.Article, type: Composer.NavType}> = ({ article, type }) => {
-  const intl = useIntl();
+ // const intl = useIntl();
   const unsaved = Composer.useUnsaved(article);
   
   /* TODO:::

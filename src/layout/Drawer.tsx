@@ -1,4 +1,4 @@
-import {CSSObject, styled, Drawer, Theme, DrawerProps} from '@mui/material';
+import { CSSObject, styled, Drawer, Theme, DrawerProps } from '@mui/material';
 
 interface StyledDrawerProps extends DrawerProps {
   drawerWidth: number;
@@ -23,7 +23,9 @@ const closedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
 });
 
 
-const StyledDrawer = styled(Drawer, { shouldForwardProp: (prop) => prop !== 'open' })<StyledDrawerProps>(
+const StyledDrawer = styled(Drawer, {
+  shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
+})<StyledDrawerProps>(
   ({ theme, open, drawerWidth }) => ({
     width: drawerWidth,
     flexShrink: 0,

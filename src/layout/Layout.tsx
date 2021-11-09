@@ -24,6 +24,10 @@ const Container: React.FC<ContainerProps> = (components) => {
   const theme = useTheme();
   const actions = layout.actions;
   const drawerOpen = layout.session.drawer;
+  const {main, secondary, toolbar} = components;
+  const mainWindow = React.useMemo(() => main, [main]);
+  const secondaryWindow = React.useMemo(() => secondary, [secondary]);
+  const toolbarWindow = React.useMemo(() => toolbar, [toolbar]);
   
   return React.useMemo(() => {
     console.log("init layout");
@@ -61,11 +65,11 @@ const Container: React.FC<ContainerProps> = (components) => {
             color: theme.palette.primary.contrastText,
             width: `calc(${theme.spacing(7)} + 1px)`
           }}>
-            {components.toolbar}
+            {toolbarWindow}
           </Box>
           
           {!drawerOpen ? null :
-            <Box sx={contentStyle}>{components.secondary}</Box>
+            <Box sx={contentStyle}>{secondaryWindow}</Box>
           }
         </Box>
       </StyledDrawer>
@@ -73,11 +77,11 @@ const Container: React.FC<ContainerProps> = (components) => {
       <main style={{width: "100%"}}>
         <Toolbar />
         <Box sx={contentStyle}>
-          {components.main}
+          {mainWindow}
         </Box>
       </main>
     </Box>
-  )}, [drawerOpen, actions]);
+  )}, [drawerOpen, actions, mainWindow, toolbarWindow, secondaryWindow, theme]);
 }
 
 export type { ContainerProps };
