@@ -95,7 +95,7 @@ const WorkflowsTable: React.FC<WorkflowsTableProps> = ({ article }) => {
 
   return (
     <>
-      { dialogOpen === 'WorkflowEdit' && workflow ? <WorkflowEdit workflow={workflow} onClose={() => handleDialogClose()} /> : null}
+      { dialogOpen === 'WorkflowEdit' && workflow ? <WorkflowEdit workflowId={workflow.id} onClose={() => handleDialogClose()} /> : null}
       { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
 
       <AppBar className={classes.appBar}>

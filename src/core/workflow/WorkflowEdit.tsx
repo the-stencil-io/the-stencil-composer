@@ -34,14 +34,15 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface WorkflowEditProps {
-  workflow: StencilClient.Workflow,
+  workflowId: StencilClient.WorkflowId,
   onClose: () => void,
 }
 
-const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflow }) => {
+const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const classes = useStyles();
   const {service, actions, session, site} = Composer.useComposer();
-
+  const workflow = site.workflows[workflowId]
+  
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
   const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));

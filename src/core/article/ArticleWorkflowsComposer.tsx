@@ -15,6 +15,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { FormattedMessage } from 'react-intl';
 
 import { WorkflowComposer } from '../workflow/WorkflowComposer';
+import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
 
 
@@ -73,7 +74,9 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
   const classes = useStyles();
   const { service, actions, site, session } = Composer.useComposer();
   const view = session.getArticleView(articleId);
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | "WorkflowComposer">(undefined);
+
+  const [workflowComposerOpen, setWorkflowComposerOpen] = React.useState<boolean>(false);
+  const [workflowEditOpen, setWorkflowEditOpen] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
 
   const [selectedWorkflows, setSelectedWorkflows] = React.useState(view.workflows.map(v => v.workflow.id))
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
@@ -110,7 +113,8 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
 
   return (
     <>
-      {dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={() => setDialogOpen(undefined)} /> : null}
+      {workflowComposerOpen ? <WorkflowComposer onClose={() => setWorkflowComposerOpen(false)} /> : null}
+      {workflowEditOpen ? <WorkflowEdit workflowId={workflowEditOpen} onClose={() => setWorkflowEditOpen(undefined)}/> : null}
 
       <AppBar className={classes.appBar}>
         <Toolbar>
@@ -118,7 +122,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
             <FormattedMessage id="resource.edit.workflows" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
             <Button onClick={() => setSelectedWorkflows(view.workflows.map(v => v.workflow.id))} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
-            <Button className={classes.button} onClick={() => setDialogOpen('WorkflowComposer')}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
+            <Button className={classes.button} onClick={() => setWorkflowComposerOpen(true)}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
             <Button onClick={handleSave} className={classes.button} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
           </ButtonGroup>
         </Toolbar>
@@ -133,7 +137,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="button.addremove" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
-                <TableCell className={classes.bold} align="center"><FormattedMessage id="resource.edit.workflows" /></TableCell>
+                <TableCell className={classes.bold} align="center"><FormattedMessage id="workflow.edit.title" /></TableCell>
 
               </TableRow>
             </TableHead>
@@ -148,7 +152,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
-                    <IconButton>
+                    <IconButton onClick={() => setWorkflowEditOpen(workflow.id)}>
                       <EditIcon className={classes.icon} />
                     </IconButton>
                   </TableCell>

@@ -126,7 +126,7 @@ const Row: React.FC<RowProps> = ({ site, workflow }) => {
 
   return (
     <>
-      {openDialog === 'WorkflowEdit' ? <WorkflowEdit workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'WorkflowEdit' ? <WorkflowEdit workflowId={workflow.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'WorkflowDelete' ? <WorkflowDelete workflow={workflow} onClose={() => setOpenDialog(undefined)} /> : null}
 
       <TableRow key={workflow.id} hover className={classes.row}>
