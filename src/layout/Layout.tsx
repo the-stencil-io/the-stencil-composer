@@ -7,6 +7,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import StyledAppBar from './Appbar';
 import StyledDrawer from './Drawer';
 import Tabs from './Tabs';
+import {useLayout} from './context';
 
 interface ContainerProps {
   main: React.ReactElement;
@@ -19,14 +20,17 @@ const contentStyle = { flexGrow: 1, overflow: "auto"};
 
 
 const Container: React.FC<ContainerProps> = (components) => {
-  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const layout = useLayout();
   const theme = useTheme();
+  
+  const drawerOpen = layout.session.drawer;
+  
   return (
     <Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
       <CssBaseline />
       <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
         <Toolbar>
-          <IconButton edge="start" color="inherit" onClick={() => setDrawerOpen(true)}
+          <IconButton edge="start" color="inherit" onClick={() => layout.actions.handleDrawerOpen(true)}
             sx={{ color: theme.palette.secondary.main, display: drawerOpen ? 'none' : undefined }}>
             <MenuIcon />
           </IconButton>
@@ -45,7 +49,7 @@ const Container: React.FC<ContainerProps> = (components) => {
             justifyContent: 'flex-end',
             padding: '0 8px'
           }}>
-            <IconButton onClick={() => setDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
+            <IconButton onClick={() => layout.actions.handleDrawerOpen(false)}><ChevronLeftIcon /></IconButton>
           </Box>
         </Toolbar>
 

@@ -48,7 +48,6 @@ const Toolbar: React.FC<{}> = () => {
       />
       <ToolbarItem id='toolbar.articles' icon={<ArticleRoundedIcon />} enabled={false}
         onClick={() => {
-          actions.handleTabAdd({ id: 'articles', label: "Articles" })
           actions.handleSecondary("toolbar.explorer")
         }}
       />
