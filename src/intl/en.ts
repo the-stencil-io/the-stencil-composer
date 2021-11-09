@@ -1,6 +1,7 @@
 const en = {
 
   'search': 'Search',
+  'search.tooltip': 'I want to find...',
   'workflow.technicalname.description': 'Flow name as defined in the Wrench',
   'workflow.devmode.helper': 'If Development mode is active, this workflow will only appear in the development environment for testing. It will not be included in production releases.',
   'workflow.devmode': 'Development mode',

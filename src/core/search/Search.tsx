@@ -1,49 +1,94 @@
-import * as React from 'react';
-import { Box, Theme, Input, InputLabel, FormControl } from '@mui/material';
-import { createStyles, makeStyles } from '@mui/styles';
+import React from 'react';
+import { makeStyles } from '@mui/styles';
+import {
+  Theme, Tooltip, ClickAwayListener, Box,
+  InputAdornment, OutlinedInput
+} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import TextField from '@mui/material/TextField';
-import InputAdornment from '@mui/material/InputAdornment';
+import { FormattedMessage, useIntl } from 'react-intl';
+import { SearchResult } from './SearchResult';
 
-import { FormattedMessage } from 'react-intl';
+const useStyles = makeStyles((theme: Theme) => ({
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      marginTop: theme.spacing(3),
+  search: {
+    marginRight: theme.spacing(1),
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    [theme.breakpoints.up('sm')]: {
+      marginLeft: theme.spacing(1),
+      width: 'auto',
     },
-    selectSub: {
-      marginLeft: theme.spacing(2),
-      color: theme.palette.article.dark,
+  },
+  searchIcon: {
+    color: theme.palette.article.main,
+  },
+  inputRoot: {
+    color: 'inherit',
+    width: '100%'
+  },
+  inputInput: {
+    padding: theme.spacing(1, 1, 1, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    color: theme.palette.text.primary,
+    '&:focus': {
+      borderColor: theme.palette.info.main
     },
-    title: {
-      backgroundColor: theme.palette.article.main,
-      color: theme.palette.secondary.contrastText,
-    },
-  }),
-);
+  },
+}));
 
 
-const Search: React.FC<{}> = () => {
-  return (
-    <Box
-      component="form"
-      noValidate
-      autoComplete="off"
-      sx={{ m: 1 }}
-    >     
-    
-        <TextField
-          sx={{ width: '100%' }}
-          label={<FormattedMessage id="search" />}
-          placeholder="something here"
-          color="info"
-          focused
-          type="search"
-          variant="outlined"
-        />
-    </Box>
-  );
+interface SearchProps {
 }
 
-export default Search;
+const Search: React.FC<SearchProps> = () => {
+  const classes = useStyles();
+  const intl = useIntl();
+  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement>();
+  const [value, setValue] = React.useState("");
+
+  const handleAnchor = (event: React.MouseEvent<HTMLDivElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  return (
+    <>
+      <div className={classes.search}>
+        <Tooltip title={<FormattedMessage id={"search"} />} aria-label={intl.formatMessage({ id: "search" })}>
+          <>
+            <Box sx={{ m: 1 }} >
+              <OutlinedInput
+                type="search"
+                role="search"
+                onClick={handleAnchor}
+                classes={{
+                  root: classes.inputRoot,
+                  input: classes.inputInput,
+                }}
+                onChange={({ currentTarget }) => setValue(currentTarget.value)}
+                placeholder={intl.formatMessage({ id: "search.tooltip" })}
+                id="input-with-icon-adornment"
+                inputProps={{ 'aria-label': intl.formatMessage({ id: "app.search" }) }}
+                startAdornment={
+                  <InputAdornment position="start">
+                    <SearchIcon className={classes.searchIcon}/>
+                  </InputAdornment>
+                }
+              />
+            </Box>
+          </>
+        </Tooltip>
+      </div>
+      {anchorEl ? (
+        <ClickAwayListener onClickAway={() => setAnchorEl(undefined)}>
+          <div>
+            <SearchResult anchorEl={anchorEl} />
+          </div>
+        </ClickAwayListener>
+      ) : null}
+    </>);
+}
+
+
+export { Search }
+
+

@@ -9,7 +9,7 @@ import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../../context';
 import { ArticleComposer } from '../../article';
 import ArticleItem from './ArticleItem';
-import Search from '../../search/Search';
+import { Search } from '../../search/Search';
 
 
 const useStyles = makeStyles((theme: Theme) =>
