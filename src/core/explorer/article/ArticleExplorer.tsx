@@ -8,7 +8,8 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../../context';
 import { ArticleComposer } from '../../article';
-import ArticleItem from './ArticleItem'
+import ArticleItem from './ArticleItem';
+import Search from '../../search/Search';
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -45,7 +46,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const findMainId = (values: string[]) => {
   const result = values.filter(id => !id.endsWith("-nested"));
-  if(result.length) {
+  if (result.length) {
     return result[0];
   }
   return undefined;
@@ -83,14 +84,14 @@ const ArticleExplorer: React.FC<{}> = () => {
         </div>)
       }
 
-
+      <Search />
       <TreeView
         onNodeToggle={(_event: React.SyntheticEvent, nodeIds: string[]) => {
           const active = findMainId(expanded);
           const newId = findMainId(nodeIds.filter(n => n !== active));
-          if(active !== newId && active && newId) {
-            nodeIds.splice(nodeIds.indexOf(active), 1);  
-          } 
+          if (active !== newId && active && newId) {
+            nodeIds.splice(nodeIds.indexOf(active), 1);
+          }
           setExpanded(nodeIds);
         }}
         expanded={expanded}
