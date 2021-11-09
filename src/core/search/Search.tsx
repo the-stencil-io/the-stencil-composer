@@ -6,7 +6,6 @@ import {
 } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { SearchResult } from './SearchResult';
 
 const useStyles = makeStyles((theme: Theme) => ({
 
@@ -43,12 +42,8 @@ interface SearchProps {
 const Search: React.FC<SearchProps> = () => {
   const classes = useStyles();
   const intl = useIntl();
-  const [anchorEl, setAnchorEl] = React.useState<HTMLDivElement>();
   const [value, setValue] = React.useState("");
 
-  const handleAnchor = (event: React.MouseEvent<HTMLDivElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   return (
     <>
@@ -59,7 +54,6 @@ const Search: React.FC<SearchProps> = () => {
               <OutlinedInput
                 type="search"
                 role="search"
-                onClick={handleAnchor}
                 classes={{
                   root: classes.inputRoot,
                   input: classes.inputInput,
@@ -78,13 +72,6 @@ const Search: React.FC<SearchProps> = () => {
           </>
         </Tooltip>
       </div>
-      {anchorEl ? (
-        <ClickAwayListener onClickAway={() => setAnchorEl(undefined)}>
-          <div>
-            <SearchResult anchorEl={anchorEl} />
-          </div>
-        </ClickAwayListener>
-      ) : null}
     </>);
 }
 

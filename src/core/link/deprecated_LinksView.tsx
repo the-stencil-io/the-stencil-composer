@@ -13,7 +13,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { LinkRemovePage, LinkDelete, NewLinkArticle, LinkEdit } from './';
+import { LinkDelete, LinkEdit } from './';
 import { Composer, StencilClient } from '../context';
 
 
@@ -128,7 +128,6 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
  */
   return (
     <>
-      {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkEdit' ? <LinkEdit linkId={link.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
 
