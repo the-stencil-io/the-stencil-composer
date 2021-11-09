@@ -120,12 +120,11 @@ function LinkItem(props: {
   );
 }
 
-interface ArticleItemProps {
+
+const ArticleItem: React.FC<{
   articleId: StencilClient.ArticleId;
   open: boolean;
-}
-
-const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
+}> = ({ articleId }) => {
 
   const { session, isArticleUnsaved, service, actions } = Composer.useComposer();
   const { handleInTab } = Composer.useNav();
@@ -155,8 +154,8 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
       <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
         <ArticleOptions article={article} />
       </StyledTreeItem>
-
-      <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label}>
+        {/** Pages */}
+      <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
         {pages.map(pageView => (<PageItem key={pageView.page.id} article={view} page={pageView} />))}
 
         {/** Save button */ unsaved ? (
@@ -183,7 +182,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
         }
       </StyledTreeItem>
 
-      <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label}>
+      <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`}>
         {/** Workflows options */}
         <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
           color='workflow'
@@ -194,7 +193,7 @@ const ArticleItem: React.FC<ArticleItemProps> = ({ articleId }) => {
         {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
       </StyledTreeItem>
 
-      <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label}>
+      <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`}>
         {/** Links options */}
         <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
           color='link'

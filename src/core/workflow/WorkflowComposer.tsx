@@ -5,7 +5,6 @@ import {
   Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, ListItemText, Checkbox
 } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
-
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>

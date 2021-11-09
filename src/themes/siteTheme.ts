@@ -23,6 +23,7 @@ declare module '@mui/material/styles' {
     locale: Palette['primary'];
     import: Palette['primary'];
     activeItem: Palette['primary'];
+    save: Palette['primary'];
   }
   interface PaletteOptions {
     article: Palette['primary'];
@@ -33,6 +34,7 @@ declare module '@mui/material/styles' {
     locale: Palette['primary'];
     import: Palette['primary'];
     activeItem: Palette['primary'];
+    save: Palette['primary'];
   }
 }
 
@@ -122,8 +124,13 @@ const palette = {
     dark: '#edf6f9',
     light: '#edf6f9',
     contrastText: '#000'
-  }
-
+  },
+  save: {
+    main: 'rgba(255, 183, 3)',
+    dark: 'rgba(255, 183, 3)',
+    light: 'rgba(255, 183, 3)',
+    contrastText: '#000'
+  },
 
 }
 

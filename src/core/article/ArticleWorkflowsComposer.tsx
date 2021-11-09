@@ -14,6 +14,7 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { FormattedMessage } from 'react-intl';
 
+import WorkflowDevMode from '../workflow/WorkflowDevMode';
 import { WorkflowComposer } from '../workflow/WorkflowComposer';
 import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
@@ -114,7 +115,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
   return (
     <>
       {workflowComposerOpen ? <WorkflowComposer onClose={() => setWorkflowComposerOpen(false)} /> : null}
-      {workflowEditOpen ? <WorkflowEdit workflowId={workflowEditOpen} onClose={() => setWorkflowEditOpen(undefined)}/> : null}
+      {workflowEditOpen ? <WorkflowEdit workflowId={workflowEditOpen} onClose={() => setWorkflowEditOpen(undefined)} /> : null}
 
       <AppBar className={classes.appBar}>
         <Toolbar>
@@ -136,6 +137,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
               <TableRow>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="button.addremove" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="status" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="workflow.edit.title" /></TableCell>
 
@@ -150,6 +152,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
                       onChange={(event) => handleChange(event, workflow.id)} />
                   </TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
+                  <TableCell className={classes.tableCell} align="left"><WorkflowDevMode /></TableCell>
                   <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <IconButton onClick={() => setWorkflowEditOpen(workflow.id)}>
