@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 import {
-  Dashboard, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, LinksView, WorkflowsView,
+  Dashboard, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
   ReleasesView, LocalesView, ImportView,
   HelpView
 } from './';
@@ -29,8 +29,6 @@ const Main: React.FC<{}> = () => {
   const active = tabs[layout.session.history.open];
   if (active.id === 'releases') {
     return (<Box sx={root}><ReleasesView /></Box>);
-  } else if (active.id === 'links') {
-    return (<Box sx={root}><LinksView /></Box>);
   } else if (active.id === 'newItem') {
     return (<Box sx={root}><Dashboard /></Box>);
   } else if (active.id === 'locales') {

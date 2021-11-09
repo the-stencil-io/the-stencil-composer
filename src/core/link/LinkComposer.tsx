@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const classes = useStyles();
-  const {service, actions, session, site} = Composer.useComposer();
+  const { service, actions, session, site } = Composer.useComposer();
   const siteLocales: StencilClient.SiteLocale[] = Object.values(site.locales);
 
   const [type, setType] = React.useState<'internal' | 'external'>('internal');

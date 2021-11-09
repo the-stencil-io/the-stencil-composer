@@ -129,7 +129,7 @@ const Row: React.FC<RowProps> = ({ site, link }) => {
   return (
     <>
       {openDialog === 'NewLinkArticle' ? <NewLinkArticle link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
-      {openDialog === 'LinkEdit' ? <LinkEdit link={link} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
+      {openDialog === 'LinkEdit' ? <LinkEdit linkId={link.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === 'LinkDelete' ? <LinkDelete linkId={link.id} open={open} onClose={() => setOpenDialog(undefined)} /> : null}
 
         <TableRow key={link.id} hover className={classes.row}>

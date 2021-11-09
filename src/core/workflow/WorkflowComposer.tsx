@@ -35,11 +35,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const classes = useStyles();
-  const {service, actions, site, session} = Composer.useComposer();
+  const { service, actions, site, session } = Composer.useComposer();
   const siteLocales: StencilClient.SiteLocale[] = Object.values(site.locales);
 
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
-  
+
   const [locales, setLocales] = React.useState<StencilClient.LocaleId[]>([]);
   const [technicalname, setTechnicalname] = React.useState('');
   const [name, setName] = React.useState('');

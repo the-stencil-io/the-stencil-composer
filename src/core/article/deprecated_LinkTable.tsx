@@ -99,7 +99,7 @@ const LinkTable: React.FC<LinkTableProps> = ({ article }) => {
 
   return (
     <>
-      { dialogOpen === 'LinkEdit' && link ? <LinkEdit link={link} open={true} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'LinkEdit' && link ? <LinkEdit linkId={link.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={handleDialogClose} /> : null}
 
       <AppBar className={classes.appBar}>

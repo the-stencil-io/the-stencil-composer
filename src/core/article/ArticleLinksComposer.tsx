@@ -68,14 +68,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId, link: StencilClient.Link }> = (props) => {
+const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
   const classes = useStyles();
   const { service, actions, site, session } = Composer.useComposer();
   const view = session.getArticleView(props.articleId);
 
   const [selectedLinks, setSelectedLinks] = React.useState(view.links.map(l => l.link.id));
   const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
-  
+
   const handleChange = (event: any, id: StencilClient.LinkId) => {
     const selected: boolean = event.target.checked;
     const newLinks: StencilClient.LinkId[] = [...selectedLinks];
@@ -103,19 +103,20 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId, link:
       .then(_success => actions.handleLoadSite());
   }
 
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkComposer' | 'LinkEdit'>(undefined);
+  const [linkComposerOpen, setLinkComposerOpen] = React.useState<boolean>(false);
+  const [linkEditOpen, setLinkEditOpen] = React.useState<undefined | StencilClient.LinkId>(undefined);
 
   return (
     <>
-      { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={() => setDialogOpen(undefined)} /> : null}
-      { dialogOpen === 'LinkEdit' ?     <LinkEdit link={props.link} onClose={() => setDialogOpen(undefined)} /> : null }
-      
+      { linkComposerOpen ? <LinkComposer onClose={() => setLinkComposerOpen(false)} /> : null}
+      { linkEditOpen ? <LinkEdit linkId={linkEditOpen} onClose={() => setLinkEditOpen(undefined)} /> : null}
+
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}<FormattedMessage id="resource.edit.links" /></Typography>
           <ButtonGroup variant="text" className={classes.buttonGroup}>
             <Button className={classes.button} onClick={() => setSelectedLinks(view.links.map(l => l.link.id))}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
-            <Button className={classes.button} onClick={() => setDialogOpen('LinkComposer')} autoFocus ><AddIcon /><FormattedMessage id='link.composer.title' /></Button>
+            <Button className={classes.button} onClick={() => setLinkComposerOpen(true)} autoFocus ><AddIcon /><FormattedMessage id='link.composer.title' /></Button>
             <Button className={classes.button} onClick={handleSave} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
           </ButtonGroup>
         </Toolbar>
@@ -132,7 +133,6 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId, link:
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="link.edit.title" /></TableCell>
-
               </TableRow>
             </TableHead>
             <TableBody>
@@ -144,7 +144,11 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId, link:
                   <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
-                  <TableCell className={classes.tableCell} align="center"><IconButton onClick={() => setDialogOpen('LinkEdit')} autoFocus><EditIcon className={classes.icon}/></IconButton></TableCell>
+                  <TableCell className={classes.tableCell} align="center">
+                    <IconButton onClick={() => setLinkEditOpen(link.id)} autoFocus>
+                      <EditIcon className={classes.icon} />
+                    </IconButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

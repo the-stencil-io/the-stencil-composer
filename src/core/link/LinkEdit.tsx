@@ -32,14 +32,14 @@ const useStyles = makeStyles((theme: Theme) =>
 const linkTypes: StencilClient.LinkType[] = ["internal", "external", "phone"];
 
 interface LinkEditProps {
-  link: StencilClient.Link,
+  linkId: StencilClient.LinkId,
   onClose: () => void,
 }
 
-const LinkEdit: React.FC<LinkEditProps> = ({ link, onClose }) => {
+const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   const classes = useStyles();
-  const {service, actions, session, site} = Composer.useComposer();
-
+  const { service, actions, session, site } = Composer.useComposer();
+  const link = site.links[linkId];
   const [locale, setLocale] = React.useState(link.body.labels[0].locale);
   const [value, setValue] = React.useState(link.body.value);
   const [contentType, setContentType] = React.useState(link.body.contentType);
