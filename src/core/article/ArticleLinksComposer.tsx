@@ -124,7 +124,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
 
       <div className={classes.root}>
         <Card className={classes.card}>
-          <Typography variant="h3" className={classes.title}><FormattedMessage id="article.links.sitelinks" /></Typography>
+          <Typography variant="h3" className={classes.title}><FormattedMessage id="article.links.sitelinks" />: {links.length}</Typography>
           <Table size="small">
             <TableHead>
               <TableRow>

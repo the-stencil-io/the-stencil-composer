@@ -92,6 +92,8 @@ const en = {
   'article.links.addremove': 'Add or remove Article links',
   'article.links': 'Article links', //not in use
   'article.links.sitelinks': 'Site links',
+  'article.workflows.siteworkflows': 'Site workflows',
+
   'article.links.remove': 'Remove this link association with this Article', //not in use
 
   'article.workflows.addremove': 'Add or remove Article Workflows',

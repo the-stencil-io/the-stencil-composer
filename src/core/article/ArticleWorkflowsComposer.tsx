@@ -4,12 +4,13 @@ import {
   Theme,
   Checkbox, AppBar, Toolbar,
   Typography, Table, Card, Button, ButtonGroup, TableBody, TableCell,
-  TableRow, TableHead
+  TableRow, TableHead, IconButton
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import EditIcon from '@mui/icons-material/Edit';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -40,6 +41,9 @@ const useStyles = makeStyles((theme: Theme) => ({
   bold: {
     fontWeight: 'bold',
   },
+  icon: {
+    color: theme.palette.workflow.main
+  },
   title: {
     marginLeft: theme.spacing(2),
     flex: 1,
@@ -65,9 +69,9 @@ const useStyles = makeStyles((theme: Theme) => ({
 }));
 
 
-const ArticleWorkflowsComposer: React.FC<{articleId: StencilClient.ArticleId}> = ({articleId}) => {
+const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
   const classes = useStyles();
-  const {service, actions, site, session} = Composer.useComposer();
+  const { service, actions, site, session } = Composer.useComposer();
   const view = session.getArticleView(articleId);
   const [dialogOpen, setDialogOpen] = React.useState<undefined | "WorkflowComposer">(undefined);
 
@@ -108,45 +112,53 @@ const ArticleWorkflowsComposer: React.FC<{articleId: StencilClient.ArticleId}> =
     <>
       {dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={() => setDialogOpen(undefined)} /> : null}
 
-        <AppBar className={classes.appBar}>
-          <Toolbar>
-            <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}
-              <FormattedMessage id="article.workflows.addremove" /></Typography>
-            <ButtonGroup variant="text" className={classes.buttonGroup}>
-              <Button onClick={() => setSelectedWorkflows(view.workflows.map(v => v.workflow.id))} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
-              <Button className={classes.button} onClick={() => setDialogOpen('WorkflowComposer')}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
-              <Button onClick={handleSave} className={classes.button} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
-            </ButtonGroup>
-          </Toolbar>
-        </AppBar>
+      <AppBar className={classes.appBar}>
+        <Toolbar>
+          <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}
+            <FormattedMessage id="resource.edit.workflows" /></Typography>
+          <ButtonGroup variant="text" className={classes.buttonGroup}>
+            <Button onClick={() => setSelectedWorkflows(view.workflows.map(v => v.workflow.id))} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
+            <Button className={classes.button} onClick={() => setDialogOpen('WorkflowComposer')}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
+            <Button onClick={handleSave} className={classes.button} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
+          </ButtonGroup>
+        </Toolbar>
+      </AppBar>
 
-        <div className={classes.root}>
-          <Card className={classes.card}>
-            <Typography variant="h3" className={classes.title}><FormattedMessage id="article.workflows" /></Typography>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
-                  <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
+      <div className={classes.root}>
+        <Card className={classes.card}>
+          <Typography variant="h3" className={classes.title}><FormattedMessage id="article.workflows.siteworkflows" />: {workflows.length}</Typography>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="button.addremove" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
+                <TableCell className={classes.bold} align="left"><FormattedMessage id="workflow.technicalname" /></TableCell>
+                <TableCell className={classes.bold} align="center"><FormattedMessage id="resource.edit.workflows" /></TableCell>
+
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {workflows.map((workflow, index) => (
+                <TableRow hover key={index}>
+                  <TableCell className={classes.tableCell} align="left">
+                    <Checkbox size="small" color="secondary"
+                      checked={selectedWorkflows.includes(workflow.id) === true}
+                      onChange={(event) => handleChange(event, workflow.id)} />
+                  </TableCell>
+                  <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
+                  <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
+                  <TableCell className={classes.tableCell} align="center">
+                    <IconButton>
+                      <EditIcon className={classes.icon} />
+                    </IconButton>
+                  </TableCell>
+
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {workflows.map((workflow, index) => (
-                  <TableRow hover key={index}>
-                    <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
-                    <TableCell className={classes.tableCell} align="center">
-
-                      <Checkbox size="small" color="secondary"
-                        checked={selectedWorkflows.includes(workflow.id) === true}
-                        onChange={(event) => handleChange(event, workflow.id)} />
-                    </TableCell>
-
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </Card>
-        </div>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+      </div>
     </>
   );
 }

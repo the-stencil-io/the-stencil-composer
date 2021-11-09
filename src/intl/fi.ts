@@ -92,6 +92,7 @@ const fi = {
   'article.workflows': 'Artikkelien työnkulut',
   'article.workflows.add': 'Yhdistä tämä työnkulku tähän artikkeliin', //not in use
   'article.workflows.remove': 'Poista tämän työnkulun yhteys tähän artikkeliin', //not in use
+  'article.workflows.siteworkflows': 'Site workflows',
 
   'button.cancel': 'Peruuta',
   'button.create': 'Luo',
