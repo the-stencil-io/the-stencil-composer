@@ -1,34 +1,18 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelperText, Switch, FormControlLabel,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, ListItemText, Checkbox, Typography, Paper
-} from '@mui/material';
+import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelperText, ListItemText, Checkbox } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import WorkflowDevMode from './WorkflowDevMode';
+import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    title: {
-      backgroundColor: theme.palette.workflow.main,
-      color: theme.palette.secondary.contrastText,
-    },
     select: {
       marginTop: theme.spacing(2),
       color: theme.palette.primary.contrastText,
       backgroundColor: theme.palette.background.paper
-    },
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.workflow.main,
-        fontWeight: 'bold',
-      }
-    },
-    buttonGroup: {
-      color: theme.palette.workflow.main
-    },
+    }
   }),
 );
 
@@ -53,14 +37,12 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     })
   }
 
-
   const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
-
   return (
-    <Dialog open={true} onClose={onClose} >
-      <DialogTitle className={classes.title}><FormattedMessage id='workflow.composer.title' /></DialogTitle>
-      <DialogContent>
-
+    <StyledDialog open={true} onClose={onClose} color="workflow.main" title="workflow.composer.title"
+      submit={{ title: "button.add", onClick: handleCreate, disabled: !name || !technicalname }}>
+      
+      <>
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel><FormattedMessage id='locale' /></InputLabel>
           <Select
@@ -101,7 +83,6 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           value={technicalname}
           onChange={({ target }) => setTechnicalname(target.value)} />
 
-
         <TextField className={classes.select}
           label={<FormattedMessage id='workflow.composer.name' />}
           helperText={<FormattedMessage id='workflow.composer.helper' />}
@@ -122,7 +103,6 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           >
             {articles.map((article, index) => (
-
               <MenuItem key={index} value={article.id}>
                 <Checkbox checked={articleId.indexOf(article.id) > -1} />
                 <ListItemText primary={article.body.name} />
@@ -130,17 +110,9 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             ))}
           </Select>
         </FormControl>
-
         <WorkflowDevMode />
-      </DialogContent>
-
-      <DialogActions>
-        <ButtonGroup className={classes.buttonGroup} variant="text" >
-          <Button onClick={onClose} className={classes.button}><FormattedMessage id='button.cancel' /></Button>
-          <Button onClick={handleCreate} autoFocus disabled={!name || !technicalname} className={classes.button}><FormattedMessage id='button.add' /></Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+      </>
+    </StyledDialog>
   );
 
 }

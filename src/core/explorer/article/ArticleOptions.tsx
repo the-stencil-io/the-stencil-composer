@@ -1,8 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { StencilClient, Composer } from '../../context';
-import { ArticleEdit } from '../../article';
+import { StencilClient } from '../../context';
+import { ArticleEdit, ArticleDelete } from '../../article';
 import { NewPage, PageEdit, PageDelete } from '../../page';
 import ArticleOptionItem from './ArticleOptionItem';
 
@@ -10,7 +10,7 @@ interface ArticleOptionsProps {
   article: StencilClient.Article,
 }
 const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageDelete'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageDelete' | 'ArticleDelete'>(undefined);
 
   const handleDialogClose = () => setDialogOpen(undefined);
 
@@ -20,6 +20,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'NewPage' ? <NewPage articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'ArticleDelete' ? <ArticleDelete articleId={article.id} onClose={handleDialogClose} /> : null}
 
       {/** Page options */}
       <ArticleOptionItem nodeId={article.id + 'pages.add'}
@@ -43,6 +44,11 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
         color='article'
         onClick={() => setDialogOpen('ArticleEdit')}
         labelText={<FormattedMessage id="article.edit.title" />}>
+      </ArticleOptionItem>
+      <ArticleOptionItem nodeId={article.id + 'delete-nested'}
+        color='article'
+        onClick={() => setDialogOpen('ArticleDelete')}
+        labelText={<FormattedMessage id="article.delete.title" />}>
       </ArticleOptionItem>
     </>
   );
