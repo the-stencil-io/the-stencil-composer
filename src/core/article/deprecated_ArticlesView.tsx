@@ -17,7 +17,7 @@ import DeleteOutlinedIcon from '@mui/icons-material/DeleteOutlined';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ArticleDeletePage, ArticleDelete, ArticleEdit } from '../article';
+import { ArticleDelete, ArticleEdit } from '../article';
 
 import { Composer, StencilClient } from '../context';
 import { NewPage } from '../page';
@@ -131,7 +131,7 @@ const ArticleAndPages: React.FC<{ article: StencilClient.Article, site: StencilC
     <>
       {openDialog === "EditArticle" ? <ArticleEdit articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
       {openDialog === "DeleteArticle" ? <ArticleDelete articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
-      {openDialog === "ArticleDeletePage" && pageId ? <ArticleDeletePage pageId={pageId} onClose={() => setOpenDialog(undefined)} /> : null}
+      
       {openDialog === "NewPage" ? <NewPage articleId={article.id} onClose={() => setOpenDialog(undefined)} /> : null}
 
 

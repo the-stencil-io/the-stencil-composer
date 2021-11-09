@@ -1,12 +1,9 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Theme, TextField, InputLabel, FormControl, MenuItem, Select,
-  Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup
-} from '@mui/material';
-
+import { Theme, TextField, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
+import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
 
 
@@ -18,20 +15,6 @@ const useStyles = makeStyles((theme: Theme) =>
     selectSub: {
       marginLeft: theme.spacing(2),
       color: theme.palette.article.dark,
-    },
-    title: {
-      backgroundColor: theme.palette.article.main,
-      color: theme.palette.secondary.contrastText,
-    },
-    button: {
-      fontWeight: 'bold',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.article.main,
-        fontWeight: 'bold',
-      }
-    },
-    buttonGroup: {
-      color: theme.palette.article.main
     }
   }),
 );
@@ -47,7 +30,7 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
   const [parentId, setParentId] = React.useState(article.body.parentId);
 
 
-  const handleCreate = () => {
+  const handleUpdate = () => {
     const entity: StencilClient.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined, workflows: undefined };
     service.update().article(entity).then(_success => {
       onClose();
@@ -70,10 +53,11 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
     });
 
   return (<>
-    <Dialog open={true} onClose={onClose} maxWidth="md" fullWidth={true}>
-      <DialogTitle className={classes.title}><FormattedMessage id="article.edit.title" /></DialogTitle>
-      <DialogContent >
+    <StyledDialog open={true} onClose={onClose}
+      color="article.main" title="article.edit.title"
+      submit={{ title: "button.update", onClick: handleUpdate, disabled: !name }}>
 
+      <>
         <FormControl variant="outlined" className={classes.select} fullWidth>
           <InputLabel ><FormattedMessage id="article.edit.parent" /></InputLabel>
           <Select
@@ -109,15 +93,8 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
           required
           value={name}
           onChange={({ target }) => setName(target.value)} />
-
-      </DialogContent>
-      <DialogActions>
-        <ButtonGroup variant="text">
-          <Button className={classes.button} onClick={onClose}><FormattedMessage id="button.cancel" /></Button>
-          <Button className={classes.button} onClick={handleCreate} autoFocus disabled={!name}><FormattedMessage id="button.update" /></Button>
-        </ButtonGroup>
-      </DialogActions>
-    </Dialog>
+      </>
+    </StyledDialog>
   </>
   );
 }
