@@ -3,16 +3,17 @@ import { makeStyles } from '@mui/styles';
 
 import {
   Typography, Table, Card, Button, ButtonGroup, TableBody,
-  TableCell, Checkbox, TableHead, TableRow
+  TableCell, Checkbox, TableHead, TableRow, IconButton
 } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
-
+import EditIcon from '@mui/icons-material/Edit';
 import { FormattedMessage } from 'react-intl';
 import { LinkComposer } from '../link/LinkComposer';
+import { LinkEdit } from '../link/LinkEdit';
 import { Composer, StencilClient } from '../context';
 
 
@@ -36,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
       fontWeight: 'bold',
     }
   },
+  icon: {
+    color: theme.palette.link.main
+  },
   bold: {
     fontWeight: 'bold',
   },
@@ -43,7 +47,6 @@ const useStyles = makeStyles((theme) => ({
     marginLeft: theme.spacing(2),
     flex: 1,
     fontWeight: 'bold'
-
   },
   tableCell: {
     paddingTop: 0,
@@ -65,15 +68,14 @@ const useStyles = makeStyles((theme) => ({
 
 
 
-const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
+const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId, link: StencilClient.Link }> = (props) => {
   const classes = useStyles();
   const { service, actions, site, session } = Composer.useComposer();
-
   const view = session.getArticleView(props.articleId);
-  
+
   const [selectedLinks, setSelectedLinks] = React.useState(view.links.map(l => l.link.id));
   const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
-
+  
   const handleChange = (event: any, id: StencilClient.LinkId) => {
     const selected: boolean = event.target.checked;
     const newLinks: StencilClient.LinkId[] = [...selectedLinks];
@@ -101,11 +103,13 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
       .then(_success => actions.handleLoadSite());
   }
 
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkComposer'>(undefined);
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'LinkComposer' | 'LinkEdit'>(undefined);
 
   return (
     <>
       { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={() => setDialogOpen(undefined)} /> : null}
+      { dialogOpen === 'LinkEdit' ?     <LinkEdit link={props.link} onClose={() => setDialogOpen(undefined)} /> : null }
+      
       <AppBar className={classes.appBar}>
         <Toolbar>
           <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}<FormattedMessage id="resource.edit.links" /></Typography>
@@ -127,6 +131,8 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="link.type" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="locales" /></TableCell>
                 <TableCell className={classes.bold} align="left"><FormattedMessage id="value" /></TableCell>
+                <TableCell className={classes.bold} align="center"><FormattedMessage id="link.edit.title" /></TableCell>
+
               </TableRow>
             </TableHead>
             <TableBody>
@@ -138,8 +144,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
                   <TableCell className={classes.tableCell} align="left">{link.body.contentType}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
                   <TableCell className={classes.tableCell} align="left">{link.body.value}</TableCell>
-
-
+                  <TableCell className={classes.tableCell} align="center"><IconButton onClick={() => setDialogOpen('LinkEdit')} autoFocus><EditIcon className={classes.icon}/></IconButton></TableCell>
                 </TableRow>
               ))}
             </TableBody>

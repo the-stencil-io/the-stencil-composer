@@ -33,7 +33,6 @@ const linkTypes: StencilClient.LinkType[] = ["internal", "external", "phone"];
 
 interface LinkEditProps {
   link: StencilClient.Link,
-  open: boolean,
   onClose: () => void,
 }
 
