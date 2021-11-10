@@ -1,4 +1,5 @@
-import * as React from "react";
+import React from "react";
+import { SxProps } from '@mui/system';
 import { Box, Typography, Theme, useTheme } from "@mui/material";
 
 import TranslateIcon from "@mui/icons-material/Translate";
@@ -40,6 +41,10 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale, secondary })
     }
   }
+  
+  const sx: SxProps<Theme> = {
+    mr: 3, p: .5, border: '1px solid', borderRadius: 3, boxShadow: 2,    
+  };
 
   return (
     <StyledTreeItemRoot
@@ -49,7 +54,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
 
-          <Box component={TranslateIcon} sx={{mr: 3, p: .5, border: '1px solid', borderRadius: 3, boxShadow: 3}}
+          <Box component={TranslateIcon} sx={sx}
             color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />
 
           <Typography
@@ -59,7 +64,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
             {props.page.locale.body.value}
           </Typography>
 
-          <Box component={SwitchLeftRoundedIcon} sx={{ mr: 3, border: '1px solid', borderRadius: 3, boxShadow: 3 }}
+          <Box component={SwitchLeftRoundedIcon} sx={sx}
             color={nav?.value2 === page.body.locale ? localeIconColor : "inherit"}
             onClick={(event) => {
               event.stopPropagation()

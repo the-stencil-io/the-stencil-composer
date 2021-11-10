@@ -91,64 +91,56 @@ const ArticleItem: React.FC<{
     });
   }
 
-  const saveButton = saved ? <></> : (
-    <Box sx={{display: "flex", alignItems: "center", p: 0.8, pr: 0 }} onClick={(e) => {
+  const saveButton = saved ? undefined : (
+
+    <Box component={SaveIcon} onClick={(e) => {
       e.stopPropagation();
       handleSavePages();
-    }}>
-
-      <Box color="inherit" sx={{ pl: 1, mr: 1, flexWrap: 'wrap'  }} />
-      <Button startIcon={<SaveIcon /> } 
-          sx={{ 
-            borderRadius: 3, 
-            boxShadow: 3,
-            backgroundColor: theme.palette.save.main, 
-            color: theme.palette.text.primary }} >
-        <Typography
-          variant="body2"
-          sx={{ fontWeight: "inherit", flexGrow: 1 }}
-        >
-          <FormattedMessage id="pages.save" />
-        </Typography>
-      </Button>
-    </Box>
-
+    }}
+      sx={{
+        mr: 1, p: .3, border: '1px solid', borderRadius: 3, boxShadow: 2,
+        backgroundColor: "save.main",
+        color: "text.primary"
+      }} />
   )
 
 
   return (
-    <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelInfo={saveButton}>
-      <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
-        <ArticleOptions article={article} />
+    <>
+
+      <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton}>
+        <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+          <ArticleOptions article={article} />
+        </StyledTreeItem>
+
+        {/** Pages */}
+        <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
+          {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
+        </StyledTreeItem>
+
+        {/** Workflows options */}
+        <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`}>
+          <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
+            color='workflow'
+            onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
+            labelText={<FormattedMessage id="resource.edit.workflows" />}>
+          </ArticleOptionItem>
+
+          {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
+        </StyledTreeItem>
+
+        {/** Links options */}
+        <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`}>
+          <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
+            color='link'
+            onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
+            labelText={<FormattedMessage id="resource.edit.links" />}>
+          </ArticleOptionItem>
+          {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
+        </StyledTreeItem>
+
       </StyledTreeItem>
-
-      {/** Pages */}
-      <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
-        {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
-      </StyledTreeItem>
-
-      {/** Workflows options */}
-      <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`}>
-        <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
-          color='workflow'
-          onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
-          labelText={<FormattedMessage id="resource.edit.workflows" />}>
-        </ArticleOptionItem>
-
-        {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
-      </StyledTreeItem>
-
-      {/** Links options */}
-      <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`}>
-        <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
-          color='link'
-          onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
-          labelText={<FormattedMessage id="resource.edit.links" />}>
-        </ArticleOptionItem>
-        {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
-      </StyledTreeItem>
-
-    </StyledTreeItem>);
+    </>)
 }
 
 export default ArticleItem;

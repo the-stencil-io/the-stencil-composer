@@ -1,6 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import {Typography, Box, useTheme} from "@mui/material";
+import { Typography, Box, useTheme } from "@mui/material";
 import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
 import { SvgIconProps } from "@mui/material/SvgIcon";
 
@@ -41,7 +41,8 @@ type StyledTreeItemProps = TreeItemProps & {
   bgcolor?: string;
   hovercolor?: string;
   textcolor?: string;
-  labelIcon?: React.ElementType<SvgIconProps>;
+  labelIcon: React.ElementType<SvgIconProps>;
+  labelButton?: React.ReactChild;
   labelInfo?: string | React.ReactChild;
   labelText: string | React.ReactChild;
 };
@@ -49,6 +50,7 @@ type StyledTreeItemProps = TreeItemProps & {
 const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
   const theme = useTheme();
   const {
+    labelButton,
     color,
     bgcolor,
     hovercolor,
@@ -58,12 +60,12 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
     labelText,
     ...other
   } = props;
-  
+
   return (
     <StyledTreeItemRoot
       label={
-        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0}}>
-          <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />
+        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
+          {labelButton ?  labelButton : <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />}
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -75,7 +77,7 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
           </Typography>
         </Box>
       }
-      
+
       {...other}
       style={{
         '--tree-view-text-color': textcolor ? theme.palette[textcolor].main : textcolor,
@@ -88,4 +90,4 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
 }
 
 export type { StyledTreeItemProps };
-export { StyledTreeItem, StyledTreeItemRoot};
+export { StyledTreeItem, StyledTreeItemRoot };
