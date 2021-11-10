@@ -1,9 +1,7 @@
 import React from 'react';
-import { TextField } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
 
 const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -21,21 +19,16 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   }
   const locales: StencilClient.Locale[] = Object.values(site.locales).map(l => l.body.value);
   return (
-    <StyledDialog open={true} onClose={onClose}
+    <StencilStyles.Dialog open={true} onClose={onClose}
       color="locale.main" title="locale.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !locale || locales.includes(locale) || locale.length !== 2 }}>
-      <>
-        <TextField
-          value={locale}
-          onChange={({ target }) => setLocale(target.value as any)}
-          helperText={<FormattedMessage id='locale.composer.helper' />}
-          placeholder="en"
-          variant="outlined"
-          fullWidth
-          required
-        />
-      </>
-    </StyledDialog>
+
+      <StencilStyles.TextField label='locale.composer.helper' helperText='locale.composer.helper' placeholder="en"
+        required
+        value={locale}
+        onChange={setLocale}
+      />
+    </StencilStyles.Dialog>
   );
 }
 

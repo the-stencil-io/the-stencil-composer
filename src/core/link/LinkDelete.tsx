@@ -4,7 +4,7 @@ import { DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
 
 interface LinkDeleteProps {
@@ -25,13 +25,13 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   }
 
   return (
-    <StyledDialog open={true} onClose={onClose} 
+    <StencilStyles.Dialog open={true} onClose={onClose} 
       color="article.main" title="article.composer.title"
       submit={{ title: "article.create", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="link.delete" />
       </DialogContentText>
-    </StyledDialog>
+    </StencilStyles.Dialog>
   );
 }
 export { LinkDelete }

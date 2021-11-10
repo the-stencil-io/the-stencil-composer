@@ -3,7 +3,7 @@ import { DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
 
 interface ArticleDeleteProps {
@@ -22,12 +22,12 @@ const ArticleDelete: React.FC<ArticleDeleteProps> = ({ articleId, onClose }) => 
   }
 
   return (
-    <StyledDialog open={true} onClose={onClose} 
+    <StencilStyles.Dialog open={true} onClose={onClose} 
       color="article.main" title="article.delete.title"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="article.delete" />
       </DialogContentText>
-    </StyledDialog>);
+    </StencilStyles.Dialog>);
 };
 export { ArticleDelete };

@@ -1,28 +1,13 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, InputLabel, FormControl, MenuItem, Select } from '@mui/material';
+
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      marginTop: theme.spacing(2),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    },
-    selectSub: {
-      marginLeft: theme.spacing(2),
-      color: theme.palette.article.dark,
-    },
-  }),
-);
 
 const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.ArticleId }> = (props) => {
-  const classes = useStyles();
   const { service, actions, site } = Composer.useComposer();
   const [locale, setLocale] = React.useState('');
   const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
@@ -54,44 +39,31 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
     });
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
 
-  return (<StyledDialog open={true} onClose={props.onClose}
+  return (<StencilStyles.Dialog open={true} onClose={props.onClose}
     color="page.main"
     title="newpage.title"
     submit={{ title: "button.create", onClick: handleCreate, disabled: !locale }}>
     <>
       <FormattedMessage id='newpage.info' />
-      <FormControl variant="outlined" className={classes.select} fullWidth>
-        <InputLabel><FormattedMessage id='article.name' /></InputLabel>
-        <Select
-          value={articleId}
-          onChange={({ target }) => setArticleId(target.value as any)}
-          label={<FormattedMessage id='article.name' />}
-        >
-          {articles.map((article, index) => (
-            <MenuItem key={index} value={article.id} className={article.body.parentId ? classes.selectSub : ''}>
-              {article.body.order} - {article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}{article.body.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl >
-      <FormControl variant="outlined" className={classes.select} fullWidth>
-        <InputLabel><FormattedMessage id='locale' /></InputLabel>
 
-
-        <Select
-          value={locale}
-          onChange={({ target }) => setLocale(target.value as any)}
-          label={<FormattedMessage id='locale' />}
-        >
-
-          {locales.map((locale) =>
-            <MenuItem value={locale.id}>{locale.body.value}</MenuItem>
-          )}
-
-        </Select>
-      </FormControl >
+      <StencilStyles.Select
+        selected={articleId}
+        onChange={setArticleId}
+        label='article.name'
+        items={articles.map((article) => ({
+          id: article.id,
+          sx: article.body.parentId ? { ml: 2, color: "article.dark" } : undefined,
+          value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`
+        }))}
+      />
+      <StencilStyles.Select
+        selected={locale}
+        onChange={setLocale}
+        label='locale'
+        items={locales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
+      />
     </>
-  </StyledDialog>
+  </StencilStyles.Dialog>
   );
 }
 
