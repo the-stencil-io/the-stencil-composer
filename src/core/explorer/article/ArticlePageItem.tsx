@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Theme, useTheme } from "@mui/material";
 
 import TranslateIcon from "@mui/icons-material/Translate";
 import SwitchLeftRoundedIcon from "@mui/icons-material/SwitchLeftRounded";
@@ -9,8 +9,12 @@ import { StyledTreeItemRoot } from './StyledTreeItem';
 import { Composer } from '../../context';
 
 
+
+
 const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView }> = (props) => {
 
+  const theme = useTheme<Theme>();
+  const localeIconColor = theme.palette.locale.main;
 
   const { handleInTab, findTab } = Composer.useNav();
   const page = props.page.page;
@@ -42,12 +46,12 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       nodeId={nodeId}
       onClick={onLeftEdit}
       label={
-        
+
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-        
-          <Box component={TranslateIcon} sx={{ pl: 1, mr: 1 }}
-            color={nav?.value === page.body.locale ? "red" : "inherit"} />
-            
+
+          <Box component={TranslateIcon} sx={{mr: 3, p: .5, border: '1px solid', borderRadius: 3}}
+            color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />
+
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -55,8 +59,8 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
             {props.page.locale.body.value}
           </Typography>
 
-          <Box component={SwitchLeftRoundedIcon} sx={{ mr: 3 }}
-            color={nav?.value2 === page.body.locale ? "red" : "inherit"}
+          <Box component={SwitchLeftRoundedIcon} sx={{ mr: 3, border: '1px solid', borderRadius: 3 }}
+            color={nav?.value2 === page.body.locale ? localeIconColor : "inherit"}
             onClick={(event) => {
               event.stopPropagation()
               onRightEdit();

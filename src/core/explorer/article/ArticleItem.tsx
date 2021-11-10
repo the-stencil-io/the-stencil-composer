@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography, useTheme, Button } from "@mui/material";
 
 import Label from "@mui/icons-material/Label";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
@@ -15,6 +15,7 @@ import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticleOptionItem from './ArticleOptionItem';
 import ArticlePageItem from './ArticlePageItem';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function WorkflowItem(props: {
@@ -91,18 +92,26 @@ const ArticleItem: React.FC<{
   }
 
   const saveButton = saved ? <></> : (
-    <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }} onClick={(e) => {
+    <Box sx={{display: "flex", alignItems: "center", p: 0.8, pr: 0 }} onClick={(e) => {
       e.stopPropagation();
       handleSavePages();
     }}>
-      <Box component={SaveIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
-      <Typography
-        variant="body2"
-        sx={{ fontWeight: "inherit", flexGrow: 1 }}
-      >
-        <FormattedMessage id="pages.save" />
-      </Typography>
+
+      <Box color="inherit" sx={{ pl: 1, mr: 1, flexWrap: 'wrap' }} />
+      <Button startIcon={<SaveIcon />} 
+          sx={{ 
+            borderRadius: 3, 
+            backgroundColor: theme.palette.save.main, 
+            color: theme.palette.text.primary }} >
+        <Typography
+          variant="body2"
+          sx={{ fontWeight: "inherit", flexGrow: 1 }}
+        >
+          <FormattedMessage id="pages.save" />
+        </Typography>
+      </Button>
     </Box>
+
   )
 
 
