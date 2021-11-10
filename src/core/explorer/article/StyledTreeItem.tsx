@@ -73,7 +73,7 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
            }} />}
           <Typography
             variant="body2"
-            sx={{ fontWeight: "bold", flexGrow: 1 }}
+            sx={{ fontWeight: "bold", flexGrow: 1}}
           >
             {labelText}
           </Typography>
