@@ -49,7 +49,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
 
-          <Box component={TranslateIcon} sx={{mr: 3, p: .5, border: '1px solid', borderRadius: 3}}
+          <Box component={TranslateIcon} sx={{mr: 3, p: .5, border: '1px solid', borderRadius: 3, boxShadow: 3}}
             color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />
 
           <Typography
@@ -59,7 +59,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
             {props.page.locale.body.value}
           </Typography>
 
-          <Box component={SwitchLeftRoundedIcon} sx={{ mr: 3, border: '1px solid', borderRadius: 3 }}
+          <Box component={SwitchLeftRoundedIcon} sx={{ mr: 3, border: '1px solid', borderRadius: 3, boxShadow: 3 }}
             color={nav?.value2 === page.body.locale ? localeIconColor : "inherit"}
             onClick={(event) => {
               event.stopPropagation()

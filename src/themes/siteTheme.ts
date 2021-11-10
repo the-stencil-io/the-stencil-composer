@@ -126,7 +126,7 @@ const palette = {
     contrastText: '#000'
   },
   save: {
-    main: 'rgba(255, 99, 71, 0.6)',
+    main: 'rgba(255, 99, 71, 0.8)',
     dark: 'rgba(255, 183, 3)',
     light: 'rgba(255, 183, 3)',
     contrastText: '#000'

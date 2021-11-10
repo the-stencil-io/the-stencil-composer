@@ -97,10 +97,11 @@ const ArticleItem: React.FC<{
       handleSavePages();
     }}>
 
-      <Box color="inherit" sx={{ pl: 1, mr: 1, flexWrap: 'wrap' }} />
-      <Button startIcon={<SaveIcon />} 
+      <Box color="inherit" sx={{ pl: 1, mr: 1, flexWrap: 'wrap'  }} />
+      <Button startIcon={<SaveIcon /> } 
           sx={{ 
             borderRadius: 3, 
+            boxShadow: 3,
             backgroundColor: theme.palette.save.main, 
             color: theme.palette.text.primary }} >
         <Typography
