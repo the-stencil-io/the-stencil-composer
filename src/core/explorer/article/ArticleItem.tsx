@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, useTheme, Button } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 import Label from "@mui/icons-material/Label";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
@@ -15,7 +15,6 @@ import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticleOptionItem from './ArticleOptionItem';
 import ArticlePageItem from './ArticlePageItem';
-import DeleteIcon from '@mui/icons-material/Delete';
 
 
 function WorkflowItem(props: {
@@ -92,7 +91,6 @@ const ArticleItem: React.FC<{
   }
 
   const saveButton = saved ? undefined : (
-
     <Box component={SaveIcon} onClick={(e) => {
       e.stopPropagation();
       handleSavePages();
@@ -105,9 +103,9 @@ const ArticleItem: React.FC<{
   )
 
 
+
   return (
     <>
-
       <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton}>
         <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />

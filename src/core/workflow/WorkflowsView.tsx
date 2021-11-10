@@ -90,6 +90,7 @@ const WorkflowsView: React.FC<{}> = () => {
       <Box display="flex">
         <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
         <Typography variant="h3" className={classes.title}><FormattedMessage id="workflows" />: {workflows.length}</Typography>
+               <Typography variant="h3" className={classes.title}><FormattedMessage id="DEV mode" />: 10</Typography>
       </Box>
 
       <TableContainer component={Paper}>

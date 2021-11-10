@@ -1,2 +1,2 @@
 export * from './article/ArticleExplorer';
-export * from './WorkflowExplorer';
+export * from './workflow/WorkflowExplorer';
