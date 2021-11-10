@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Button, alpha, Box, AppBar } from '@mui/material';
+import { Theme, Button, alpha } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
