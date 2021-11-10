@@ -1,19 +1,9 @@
 import React from 'react';
-import { makeStyles, createStyles } from '@mui/styles';
-import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, ListItemText, Checkbox } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { ListItemText, Checkbox } from '@mui/material';
 
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
-    }
-  }),
-);
 
 const linkTypes: StencilClient.LinkType[] = ["internal", "external", "phone"];
 
@@ -23,7 +13,6 @@ interface LinkEditProps {
 }
 
 const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
-  const classes = useStyles();
   const { service, actions, session, site } = Composer.useComposer();
   const link = site.links[linkId];
   const [locale, setLocale] = React.useState(link.body.labels[0].locale);
@@ -44,88 +33,54 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
     });
   }
 
-  return (<StyledDialog open={true} onClose={onClose}
+  return (<StencilStyles.Dialog open={true} onClose={onClose}
     color="link.main" title="link.edit.title"
     submit={{ title: "button.update", onClick: handleUpdate, disabled: !value }}>
-
     <>
-      <FormControl variant="outlined" className={classes.select} fullWidth>
-        <InputLabel ><FormattedMessage id="link.type" /></InputLabel>
-        <Select
-          value={contentType}
-          onChange={({ target }) => setContentType(target.value as any)}
-          label={<FormattedMessage id="link.type" />}
-        >
-          {linkTypes.map((link, index) => (
-            <MenuItem key={index} value={link}>{link}</MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <StencilStyles.Select label="link.type"
+        selected={contentType}
+        onChange={setContentType as any}
+        items={linkTypes.map(link => ({ id: link, value: link }))}
+      />
 
-      <FormControl variant="outlined" className={classes.select} fullWidth>
-        <InputLabel ><FormattedMessage id="locale" /></InputLabel>
-        <Select
-          value={locale}
-          label={<FormattedMessage id="locale" />}
-          onChange={({ target }) => {
-            const locale: StencilClient.LocaleId = target.value as any;
-            if (articleId) {
-              const newArticleId = [...articleId]
-              const articlesForNewLocale = session.getArticlesForLocale(locale).map(article => article.id);
-              for (const nextId of articleId) {
-                if (!articlesForNewLocale.includes(nextId)) {
-                  const index = newArticleId.indexOf(nextId);
-                  newArticleId.splice(index, 1);
-                }
+      <StencilStyles.Select label='locale'
+        selected={locale}
+        items={locales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
+        onChange={(locale: StencilClient.LocaleId) => {
+          if (articleId) {
+            const newArticleId = [...articleId]
+            const articlesForNewLocale = session.getArticlesForLocale(locale).map(article => article.id);
+            for (const nextId of articleId) {
+              if (!articlesForNewLocale.includes(nextId)) {
+                const index = newArticleId.indexOf(nextId);
+                newArticleId.splice(index, 1);
               }
-              setArticleId(newArticleId);
             }
-            setLocale(locale);
-          }}>
+            setArticleId(newArticleId);
+          }
+          setLocale(locale);
+        }} />
 
-          <MenuItem value={""}><FormattedMessage id='link.locale.all' /></MenuItem>
-          {locales.map((locale, index) => (
-            <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
-          ))}
+      <StencilStyles.TextField label="link.content" helperText="link.composer.valuehelper" placeholder={link.body.value}
+        required
+        value={value}
+        onChange={setValue} />
 
-        </Select>
-      </FormControl>
-
-      <FormControl variant="outlined" fullWidth>
-        <TextField
-          label={<FormattedMessage id="link.content" />}
-          variant="outlined"
-          required
-          placeholder={link.body.value}
-          helperText={<FormattedMessage id="link.composer.valuehelper" />}
-          fullWidth
-          className={classes.select}
-          value={value}
-          onChange={({ target }) => setValue(target.value as any)} />
-      </FormControl>
-      <FormControl variant="outlined" className={classes.select} fullWidth>
-        <InputLabel><FormattedMessage id='link.article.select' /></InputLabel>
-        <Select
-          multiline
-          multiple
-          value={articleId}
-          label={<FormattedMessage id='link.article.select' />}
-          onChange={({ target }) => setArticleId(target.value as StencilClient.ArticleId[])}
-          renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
-        >
-          {articles.map((article, index) => (
-
-
-            <MenuItem key={index} value={article.id}>
-              <Checkbox checked={articleId.indexOf(article.id) > -1} />
-              <ListItemText primary={article.body.name} />
-
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+      <StencilStyles.SelectMultiple label='link.article.select' multiline
+        selected={articleId}
+        onChange={setArticleId}
+        renderValue={(selected: StencilClient.ArticleId[]) => selected.map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
+        items={articles.map((article) => ({
+          id: article.id,
+          value: (<>
+            <Checkbox checked={articleId.indexOf(article.id) > -1} />
+            <ListItemText primary={article.body.name} />
+          </>)
+        }
+        ))}
+      />
     </>
-  </StyledDialog>
+  </StencilStyles.Dialog>
   );
 }
 export { LinkEdit }

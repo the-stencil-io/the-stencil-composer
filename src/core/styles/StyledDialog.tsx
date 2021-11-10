@@ -1,26 +1,8 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
 import { styled } from "@mui/material/styles";
-import { Theme, useTheme, Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup } from '@mui/material';
-import { Palette } from '@mui/material/styles';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-
-import { Composer, StencilClient } from '../context';
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      backgroundColor: theme.palette.workflow.main,
-      color: theme.palette.secondary.contrastText,
-    },
-    select: {
-      marginTop: theme.spacing(2),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    },
-  }),
-);
 
 const StyledDialogButton = styled(Button)(() => ({
   fontWeight: 'bold',
@@ -33,7 +15,8 @@ const StyledDialogTitle = styled(DialogTitle)(({theme}) => ({
   color: theme.palette.secondary.contrastText,
 }));
 
-const StyledDialog: React.FC<{
+
+interface StyledDialogProps {
   title: string;
   onClose: () => void;
   submit: {
@@ -43,9 +26,10 @@ const StyledDialog: React.FC<{
   };
   open: boolean;
   color: string;
-  children: React.ReactElement;
+  children: React.ReactElement;  
+}
 
-}> = (props) => {
+const StyledDialog: React.FC<StyledDialogProps> = (props) => {
   
   return (
     <Dialog open={props.open} onClose={props.onClose}>
@@ -63,4 +47,5 @@ const StyledDialog: React.FC<{
   );
 }
 
+export type {StyledDialogProps}
 export { StyledDialog }

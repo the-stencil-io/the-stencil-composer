@@ -5,7 +5,7 @@ import { createStyles, makeStyles } from '@mui/styles';
 import { Theme, IconButton, DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -62,14 +62,14 @@ const WorkflowRemovePage: React.FC<WorkflowRemovePageProps> = ({ workflow, artic
         <RemoveCircleOutlineIcon />
       </IconButton>
 
-      <StyledDialog open={open} onClose={handleClose}
+      <StencilStyles.Dialog open={open} onClose={handleClose}
         color="workflow.main"
         title="workflow.removepage.title"
         submit={{ title: "button.remove", onClick: handleDelete, disabled: false }}>
         <DialogContentText>
           <FormattedMessage id="workflow.removepage" />
         </DialogContentText>
-      </StyledDialog>
+      </StencilStyles.Dialog>
     </div>
   );
 }

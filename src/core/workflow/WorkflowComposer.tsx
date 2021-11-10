@@ -1,25 +1,13 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelperText, ListItemText, Checkbox } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
 
+import { ListItemText, Checkbox } from '@mui/material';
 
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      marginTop: theme.spacing(2),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    }
-  }),
-);
 
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const classes = useStyles();
   const { service, actions, site, session } = Composer.useComposer();
   const siteLocales: StencilClient.SiteLocale[] = Object.values(site.locales);
 
@@ -40,85 +28,56 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
   return (
-    <StyledDialog open={true} onClose={onClose} 
-      color="workflow.main" 
+    <StencilStyles.Dialog open={true} onClose={onClose}
+      color="workflow.main"
       title="workflow.composer.title"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !name || !technicalname }}>
-      
       <>
-        <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='locale' /></InputLabel>
-          <Select
-            multiple
-            onChange={({ target }) => {
-              const locale: StencilClient.LocaleId[] = target.value as any;
-              if (articleId) {
-                const newArticleId = [...articleId]
-                const articlesForNewLocale = session.getArticlesForLocales(locale).map(article => article.id);
-                for (const nextId of articleId) {
-                  if (!articlesForNewLocale.includes(nextId)) {
-                    const index = newArticleId.indexOf(nextId);
-                    newArticleId.splice(index, 1);
-                  }
+        <StencilStyles.SelectMultiple label='locale'
+          selected={locales}
+          items={siteLocales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
+          helperText="select.multiple"
+          onChange={(locale: StencilClient.LocaleId[]) => {
+            if (articleId) {
+              const newArticleId = [...articleId]
+              const articlesForNewLocale = session.getArticlesForLocales(locale).map(article => article.id);
+              for (const nextId of articleId) {
+                if (!articlesForNewLocale.includes(nextId)) {
+                  const index = newArticleId.indexOf(nextId);
+                  newArticleId.splice(index, 1);
                 }
-                setArticleId(newArticleId);
               }
+              setArticleId(newArticleId);
+            }
+            setLocales(locale);
+          }}
+        />
 
-              setLocales(locale);
-            }}
-            value={locales}
-            label={<FormattedMessage id='locale' />}
-          >
-            {siteLocales.map((locale, index) => (
-              <MenuItem key={index} value={locale.id}>{locale.body.value}</MenuItem>
-
-            ))}
-          </Select>
-          <FormHelperText><FormattedMessage id="select.multiple" /></FormHelperText>
-
-        </FormControl>
-
-        <TextField className={classes.select}
-          label={<FormattedMessage id='workflow.technicalname' />}
-          helperText={<FormattedMessage id='workflow.technicalname.description' />}
-          variant="outlined"
-          fullWidth
+        <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname.description'
           value={technicalname}
-          onChange={({ target }) => setTechnicalname(target.value)} />
+          onChange={setTechnicalname} />
 
-        <TextField className={classes.select}
-          label={<FormattedMessage id='workflow.composer.name' />}
-          helperText={<FormattedMessage id='workflow.composer.helper' />}
-          variant="outlined"
-          fullWidth
+        <StencilStyles.TextField label='workflow.composer.name' helperText='workflow.composer.helper'
           value={name}
-          onChange={({ target }) => setName(target.value)} />
+          onChange={setName} />
 
-        <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='composer.select.article' /></InputLabel>
-          <Select
-            multiline
-            multiple
-            disabled={!locales.length}
-            onChange={({ target }) => setArticleId(target.value as StencilClient.ArticleId[])}
-            value={articleId}
-            label={<FormattedMessage id='composer.select.article' />}
-            renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
-          >
-            {articles.map((article, index) => (
-              <MenuItem key={index} value={article.id}>
-                <Checkbox checked={articleId.indexOf(article.id) > -1} />
-                <ListItemText primary={article.body.name} />
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        
-        
-        
+        <StencilStyles.SelectMultiple label='composer.select.article'
+          multiline
+          selected={articleId}
+          disabled={!locales.length}
+          onChange={setArticleId}
+          renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
+          items={articles.map((article) => ({
+            id: article.id,
+            value: (<>
+              <Checkbox checked={articleId.indexOf(article.id) > -1} />
+              <ListItemText primary={article.body.name} />
+              </>)
+          }))}
+        />
         dsfjkghskdhgkdhgldfhsgldfsglhlh
       </>
-    </StyledDialog>
+    </StencilStyles.Dialog>
   );
 
 }

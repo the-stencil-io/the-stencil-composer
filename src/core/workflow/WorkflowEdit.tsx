@@ -1,23 +1,11 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
+import { Theme, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    }
-  }),
-);
 
 interface WorkflowEditProps {
   workflowId: StencilClient.WorkflowId,
@@ -25,7 +13,6 @@ interface WorkflowEditProps {
 }
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
-  const classes = useStyles();
   const { service, actions, session, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId]
 
@@ -44,39 +31,29 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   }
 
   return (
-    <StyledDialog open={true} onClose={onClose}
+    <StencilStyles.Dialog open={true} onClose={onClose}
       color="workflow.main"
       title="workflow.edit.title"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname }}>
       <>
-        <TextField className={classes.select}
-          label={<FormattedMessage id='workflow.technicalname' />}
-          helperText={<FormattedMessage id='workflow.technicalname' />}
-          variant="outlined"
-          fullWidth
+        <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname'
           value={technicalname}
-          onChange={({ target }) => setTechnicalname(target.value)} />
+          onChange={setTechnicalname} />
 
-        <FormControl variant="outlined" className={classes.select} fullWidth>
-          <InputLabel><FormattedMessage id='composer.select.article' /></InputLabel>
-          <Select
-            multiline
-            multiple
-            onChange={({ target }) => setArticleId(target.value as StencilClient.ArticleId[])}
-            value={articleId}
-            label={<FormattedMessage id='composer.select.article' />}
-            renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
-          >
-            {articles.map((article, index) => (
-
-              <MenuItem key={index} value={article.id}>
-                <Checkbox checked={articleId.indexOf(article.id) > -1} />
-                <ListItemText primary={article.body.name} />
-
-              </MenuItem>
-            ))}
-          </Select>
-        </FormControl>
+        <StencilStyles.SelectMultiple label='composer.select.article'
+          multiline
+          onChange={setArticleId}
+          selected={articleId}
+          renderValue={(selected) => (selected as StencilClient.ArticleId[]).map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
+          items={articles.map((article) => ({
+            id: article.id,
+            value: (<>
+              <Checkbox checked={articleId.indexOf(article.id) > -1} />
+              <ListItemText primary={article.body.name} />
+            </>
+            )
+          }))}
+        />
 
         <Paper variant="elevation" elevation={5} sx={{ mt: 1, p: 1, borderRadius: 3 }}>
           <FormControlLabel
@@ -90,7 +67,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
 
 
       </>
-    </StyledDialog>
+    </StencilStyles.Dialog>
   );
 
 }

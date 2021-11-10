@@ -14,7 +14,7 @@ interface StencilComposerProps {
 
 const StencilComposer: React.FC<StencilComposerProps> = ({ service }) => {
   return (
-    <Layout.Provider>
+    <Layout.Provider drawerOpen={true}>
       <Composer.Provider service={service} >
         <Layout.Container
           main={<Main />}
