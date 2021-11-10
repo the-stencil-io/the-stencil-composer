@@ -75,7 +75,6 @@ const ArticleItem: React.FC<{
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
   const saved = isArticleSaved(article);
-  const theme = useTheme();
 
   const handleSavePages = () => {
     const unsaved: StencilClient.PageMutator[] = Object.values(session.pages)
