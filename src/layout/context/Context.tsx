@@ -12,8 +12,8 @@ const LayoutContext = React.createContext<Session.ContextType>({
 
 const sessionData = new SessionData({});
 
-const LayoutProvider: React.FC<{children: React.ReactNode}> = ({ children }) => {
-  const [session, dispatch] = React.useReducer(Reducer, sessionData);
+const LayoutProvider: React.FC<{children: React.ReactNode, drawerOpen?: boolean }> = ({ children, drawerOpen }) => {
+  const [session, dispatch] = React.useReducer(Reducer, sessionData.withDrawer(drawerOpen ? true : false));
   const actions = React.useMemo(() => {
     console.log("init layout dispatch");
     return new ReducerDispatch(dispatch)
