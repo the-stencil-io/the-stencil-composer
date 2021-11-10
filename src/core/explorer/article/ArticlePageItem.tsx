@@ -15,7 +15,7 @@ import { Composer } from '../../context';
 const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView }> = (props) => {
 
   const theme = useTheme<Theme>();
-  const localeIconColor = theme.palette.locale.main;
+  const localeIconColor = theme.palette.page.main;
 
   const { handleInTab, findTab } = Composer.useNav();
   const page = props.page.page;

@@ -27,7 +27,7 @@ function WorkflowItem(props: {
       nodeId={props.nodeId}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={WorkOutlineIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
+          <Box component={WorkOutlineIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -50,7 +50,7 @@ function LinkItem(props: {
       nodeId={props.nodeId}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={LinkIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
+          <Box component={LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -106,18 +106,18 @@ const ArticleItem: React.FC<{
 
   return (
     <>
-      <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton}>
+      <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton} labelcolor="article">
         <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
         </StyledTreeItem>
 
         {/** Pages */}
-        <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
+        <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`} labelcolor="page">
           {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
         </StyledTreeItem>
 
         {/** Workflows options */}
-        <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`}>
+        <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`} labelcolor="workflow">
           <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
             color='workflow'
             onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
@@ -128,7 +128,7 @@ const ArticleItem: React.FC<{
         </StyledTreeItem>
 
         {/** Links options */}
-        <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`}>
+        <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
           <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
             color='link'
             onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}

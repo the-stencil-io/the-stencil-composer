@@ -39,6 +39,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
 type StyledTreeItemProps = TreeItemProps & {
   color?: string;
   bgcolor?: string;
+  labelcolor?: string;
   hovercolor?: string;
   textcolor?: string;
   labelIcon: React.ElementType<SvgIconProps>;
@@ -51,6 +52,7 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
   const theme = useTheme();
   const {
     labelButton,
+    labelcolor,
     color,
     bgcolor,
     hovercolor,
@@ -65,10 +67,13 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
     <StyledTreeItemRoot
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          {labelButton ?  labelButton : <Box component={LabelIcon} color="inherit" sx={{ mr: 1 }} />}
+          {labelButton ?  labelButton : <Box component={LabelIcon}  sx={{ 
+            mr: 1,
+            color: labelcolor ? theme.palette[labelcolor].main : "inherit",
+           }} />}
           <Typography
             variant="body2"
-            sx={{ fontWeight: "inherit", flexGrow: 1 }}
+            sx={{ fontWeight: "bold", flexGrow: 1 }}
           >
             {labelText}
           </Typography>
