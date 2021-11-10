@@ -10,7 +10,8 @@ import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/ModeEdit';
 
 import { FormattedMessage } from 'react-intl';
-import { StyledTreeItem, StyledTreeItemRoot } from './StyledTreeItem';
+
+import StencilStyles from '../../styles';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticleOptionItem from './ArticleOptionItem';
@@ -23,7 +24,7 @@ function WorkflowItem(props: {
   children?: React.ReactChild;
 }) {
   return (
-    <StyledTreeItemRoot
+    <StencilStyles.TreeItemRoot
       nodeId={props.nodeId}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
@@ -46,7 +47,7 @@ function LinkItem(props: {
   children?: React.ReactChild;
 }) {
   return (
-    <StyledTreeItemRoot
+    <StencilStyles.TreeItemRoot
       nodeId={props.nodeId}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
@@ -75,7 +76,6 @@ const ArticleItem: React.FC<{
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
   const saved = isArticleSaved(article);
-  const theme = useTheme();
 
   const handleSavePages = () => {
     const unsaved: StencilClient.PageMutator[] = Object.values(session.pages)
@@ -106,18 +106,18 @@ const ArticleItem: React.FC<{
 
   return (
     <>
-      <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton} labelcolor="article">
-        <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton} labelcolor="article">
+        <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
-        </StyledTreeItem>
+        </StencilStyles.TreeItem>
 
         {/** Pages */}
-        <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`} labelcolor="page">
+        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`} labelcolor="page">
           {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
-        </StyledTreeItem>
+        </StencilStyles.TreeItem>
 
         {/** Workflows options */}
-        <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`} labelcolor="workflow">
+        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`} labelcolor="workflow">
           <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
             color='workflow'
             onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
@@ -125,19 +125,19 @@ const ArticleItem: React.FC<{
           </ArticleOptionItem>
 
           {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
-        </StyledTreeItem>
+        </StencilStyles.TreeItem>
 
         {/** Links options */}
-        <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
+        <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
           <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
             color='link'
             onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
             labelText={<FormattedMessage id="resource.edit.links" />}>
           </ArticleOptionItem>
           {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
-        </StyledTreeItem>
+        </StencilStyles.TreeItem>
 
-      </StyledTreeItem>
+      </StencilStyles.TreeItem>
     </>)
 }
 

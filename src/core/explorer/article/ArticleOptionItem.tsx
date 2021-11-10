@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, useTheme } from "@mui/material";
 import EditIcon from '@mui/icons-material/ModeEdit';
-import { StyledTreeItemRoot } from './StyledTreeItem';
+import StencilStyles from '../../styles';
 
 
 const ArticleOptionItem: React.FC<{
@@ -13,7 +13,7 @@ const ArticleOptionItem: React.FC<{
   const theme = useTheme();
 
   return (
-    <StyledTreeItemRoot
+    <StencilStyles.TreeItemRoot
       onClick={props.onClick}
       nodeId={props.nodeId}
 

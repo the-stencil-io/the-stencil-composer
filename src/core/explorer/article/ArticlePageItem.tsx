@@ -6,7 +6,7 @@ import TranslateIcon from "@mui/icons-material/Translate";
 import SwitchLeftRoundedIcon from "@mui/icons-material/SwitchLeftRounded";
 
 
-import { StyledTreeItemRoot } from './StyledTreeItem';
+import StencilStyles from '../../styles';
 import { Composer } from '../../context';
 
 
@@ -47,7 +47,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
   };
 
   return (
-    <StyledTreeItemRoot
+    <StencilStyles.TreeItemRoot
       nodeId={nodeId}
       onClick={onLeftEdit}
       label={
