@@ -4,7 +4,6 @@ import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, FormHelper
 import { FormattedMessage } from 'react-intl';
 
 
-import WorkflowDevMode from './WorkflowDevMode';
 import { StyledDialog } from '../styles/StyledDialog';
 import { Composer, StencilClient } from '../context';
 
@@ -114,7 +113,10 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             ))}
           </Select>
         </FormControl>
-        <WorkflowDevMode />
+        
+        
+        
+        dsfjkghskdhgkdhgldfhsgldfsglhlh
       </>
     </StyledDialog>
   );

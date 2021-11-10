@@ -115,6 +115,7 @@ declare namespace StencilClient {
       articles: ArticleId[],
       value: string,
       labels: LocaleLabel[],
+      devMode?: boolean
     }
   }
   

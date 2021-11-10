@@ -14,7 +14,6 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import { FormattedMessage } from 'react-intl';
 
-import WorkflowDevModeIcon from '../workflow/WorkflowDevModeIcon';
 import { WorkflowComposer } from '../workflow/WorkflowComposer';
 import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
@@ -135,18 +134,15 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
           <Table size="small">
             <TableHead>
               <TableRow>
-                <TableCell className={classes.bold} align="left">  <FormattedMessage id="status" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
                 <TableCell className={classes.bold} align="left">  <FormattedMessage id="locales" /></TableCell>
                 <TableCell className={classes.bold} align="left">  <FormattedMessage id="workflow.technicalname" /></TableCell>
                 <TableCell className={classes.bold} align="center"><FormattedMessage id="workflow.edit.title" /></TableCell>
-
               </TableRow>
             </TableHead>
             <TableBody>
               {workflows.map((workflow, index) => (
                 <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="left"><WorkflowDevModeIcon /></TableCell>
                   <TableCell className={classes.tableCell} align="center">
                     <Checkbox size="small" color="secondary"
                       checked={selectedWorkflows.includes(workflow.id) === true}

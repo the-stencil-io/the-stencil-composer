@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, Checkbox, ListItemText } from '@mui/material';
+import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
-import WorkflowDevMode from './WorkflowDevMode';
+
 import { Composer, StencilClient } from '../context';
 import { StyledDialog } from '../styles/StyledDialog';
 
@@ -29,12 +29,13 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const { service, actions, session, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId]
 
+  const [devMode, setDevMode] = React.useState(workflow.body.devMode);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
   const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
 
   const handleCreate = () => {
-    const entity: StencilClient.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels: undefined, devMode: undefined };
+    const entity: StencilClient.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels: undefined, devMode };
     service.update().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -76,7 +77,18 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
             ))}
           </Select>
         </FormControl>
-        <WorkflowDevMode />
+
+        <Paper variant="elevation" elevation={5} sx={{ mt: 1, p: 1, borderRadius: 3 }}>
+          <FormControlLabel
+            sx={{ mt: 3 }}
+            control={<Switch checked={devMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDevMode(event.target.checked)} />}
+            label={<FormattedMessage id="workflow.devmode" />} />
+          <FormHelperText>
+            <FormattedMessage id="workflow.devmode.helper" />
+          </FormHelperText>
+        </Paper>
+
+
       </>
     </StyledDialog>
   );
