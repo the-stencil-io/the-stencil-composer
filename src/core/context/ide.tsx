@@ -1,5 +1,4 @@
 import React from 'react';
-import { useIntl } from 'react-intl';
 
 
 import { StencilClient, Layout } from '../';
@@ -103,19 +102,22 @@ namespace Composer {
   
   export const useUnsaved = (article: StencilClient.Article) => {
     const ide: ContextType = React.useContext(ComposerContext);
-    return isInsaved(article, ide);
+    return !isSaved(article, ide);
   }
   
-  const isInsaved = (article: StencilClient.Article, ide: ContextType): boolean => {
+  const isSaved = (article: StencilClient.Article, ide: ContextType): boolean => {
     const unsaved = Object.values(ide.session.pages).filter(p => !p.saved).filter(p => p.origin.body.article === article.id);
-    return unsaved.length > 0
+    return unsaved.length === 0
   }
 
   export const useComposer = () => {
     const result: ContextType = React.useContext(ComposerContext);
-    const isArticleUnsaved = (article: StencilClient.Article): boolean => isInsaved(article, result);
+    const isArticleSaved = (article: StencilClient.Article): boolean => isSaved(article, result);
     
-    return {session: result.session, service: result.service, actions: result.actions, site: result.session.site, isArticleUnsaved};
+    return {
+      session: result.session, service: result.service, actions: result.actions, site: result.session.site, 
+      isArticleSaved 
+      };
   }
 
   export const useSite = () => {

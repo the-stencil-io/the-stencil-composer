@@ -42,7 +42,7 @@ type StyledTreeItemProps = TreeItemProps & {
   hovercolor?: string;
   textcolor?: string;
   labelIcon?: React.ElementType<SvgIconProps>;
-  labelInfo?: string;
+  labelInfo?: string | React.ReactChild;
   labelText: string | React.ReactChild;
 };
 

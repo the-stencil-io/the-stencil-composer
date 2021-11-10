@@ -134,8 +134,8 @@ interface ArticleExplorerItemProps {
 const ArticleExplorerItem: React.FC<ArticleExplorerItemProps> = ({ article, open, setOpen }) => {
   const classes = useStyles();
   const { handleInTab, findTab } = Composer.useNav();
-  const { service, actions, site, session, isArticleUnsaved } = Composer.useComposer();
-  const unsaved = isArticleUnsaved(article);
+  const { service, actions, site, session, isArticleSaved } = Composer.useComposer();
+  const unsaved = !isArticleSaved(article);
 
   const [localeOpen, setLocaleOpen] = React.useState(false);
   const [articlePageOpen, setArticlePageOpen] = React.useState<StencilClient.SiteLocale>();

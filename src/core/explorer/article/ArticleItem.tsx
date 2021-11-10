@@ -4,9 +4,7 @@ import { Box, Typography, useTheme } from "@mui/material";
 import Label from "@mui/icons-material/Label";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
 
-import TranslateIcon from "@mui/icons-material/Translate";
 import LinkIcon from '@mui/icons-material/Link';
-import SwitchLeftRoundedIcon from "@mui/icons-material/SwitchLeftRounded";
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/ModeEdit';
@@ -16,63 +14,8 @@ import { StyledTreeItem, StyledTreeItemRoot } from './StyledTreeItem';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticleOptionItem from './ArticleOptionItem';
+import ArticlePageItem from './ArticlePageItem';
 
-
-function PageItem(props: { article: Composer.ArticleView, page: Composer.PageView }) {
-
-
-  const { handleInTab, findTab } = Composer.useNav();
-  const page = props.page.page;
-  const article = props.article.article;
-  const nodeId = props.page.page.id
-
-  const onLeftEdit = () => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })
-  const onRightEdit = () => {
-    const oldTab = findTab(article);
-    const nav = oldTab?.data?.nav;
-    const secondary = nav?.value ? true : false
-
-    // Same locale on the right side
-    if (nav?.value && nav?.value === page.body.locale) {
-      return;
-    }
-
-    // Close the locale     
-    if (nav?.value2 === page.body.locale) {
-      handleInTab({ article, type: "ARTICLE_PAGES", locale: null, secondary })
-    } else {
-      handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale, secondary })
-    }
-  }
-
-  return (
-    <StyledTreeItemRoot
-      nodeId={nodeId}
-      onClick={onLeftEdit}
-      label={
-        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={TranslateIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
-          <Typography
-            variant="body2"
-            sx={{ fontWeight: "inherit", flexGrow: 1 }}
-          >
-            {props.page.locale.body.value}
-          </Typography>
-
-          <Box
-            component={SwitchLeftRoundedIcon}
-            color="inherit"
-            sx={{ mr: 3 }}
-            onClick={(event) => {
-              event.stopPropagation()
-              onRightEdit();
-            }}
-          />
-        </Box>
-      }
-    />
-  );
-}
 
 function WorkflowItem(props: {
   labelText: string;
@@ -126,12 +69,12 @@ const ArticleItem: React.FC<{
   open: boolean;
 }> = ({ articleId }) => {
 
-  const { session, isArticleUnsaved, service, actions } = Composer.useComposer();
+  const { session, isArticleSaved, service, actions } = Composer.useComposer();
   const { handleInTab } = Composer.useNav();
   const view = session.getArticleView(articleId);
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
-  const unsaved = isArticleUnsaved(article);
+  const saved = isArticleSaved(article);
   const theme = useTheme();
 
   const handleSavePages = () => {
@@ -147,43 +90,35 @@ const ArticleItem: React.FC<{
     });
   }
 
+  const saveButton = saved ? <></> : (
+    <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }} onClick={(e) => {
+      e.stopPropagation();
+      handleSavePages();
+    }}>
+      <Box component={SaveIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
+      <Typography
+        variant="body2"
+        sx={{ fontWeight: "inherit", flexGrow: 1 }}
+      >
+        <FormattedMessage id="pages.save" />
+      </Typography>
+    </Box>
+  )
 
-  return (<>
-    <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon}>
 
+  return (
+    <StyledTreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelInfo={saveButton}>
       <StyledTreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
         <ArticleOptions article={article} />
       </StyledTreeItem>
-        {/** Pages */}
-      <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
-        {pages.map(pageView => (<PageItem key={pageView.page.id} article={view} page={pageView} />))}
 
-        {/** Save button */ unsaved ? (
-          <StyledTreeItemRoot
-            onClick={handleSavePages}
-            nodeId={article.id + 'pages-save-nested'}
-            label={
-              <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-                <Box component={SaveIcon} color="inherit" sx={{ pl: 1, mr: 1 }} />
-                <Typography
-                  variant="body2"
-                  sx={{ fontWeight: "inherit", flexGrow: 1 }}
-                >
-                  <FormattedMessage id="pages.save" />
-                </Typography>
-              </Box>
-            }
-            style={{
-              "--tree-view-text-color": theme.palette.release.main
-            }}
-          />
-        ) :
-          null
-        }
+      {/** Pages */}
+      <StyledTreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`}>
+        {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
       </StyledTreeItem>
 
+      {/** Workflows options */}
       <StyledTreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`}>
-        {/** Workflows options */}
         <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
           color='workflow'
           onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
@@ -193,20 +128,17 @@ const ArticleItem: React.FC<{
         {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
       </StyledTreeItem>
 
+      {/** Links options */}
       <StyledTreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`}>
-        {/** Links options */}
         <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
           color='link'
           onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
           labelText={<FormattedMessage id="resource.edit.links" />}>
         </ArticleOptionItem>
-
         {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
       </StyledTreeItem>
 
-    </StyledTreeItem>
-
-  </>);
+    </StyledTreeItem>);
 }
 
 export default ArticleItem;
