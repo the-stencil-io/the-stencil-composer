@@ -3,7 +3,7 @@ import { DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import { StyledDialog } from '../styles/StyledDialog';
+import StencilStyles from '../styles';
 
 interface WorkflowDeleteProps {
   workflow: StencilClient.Workflow,
@@ -22,7 +22,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
   }
 
   return (
-    <StyledDialog open={true} onClose={onClose}
+    <StencilStyles.Dialog open={true} onClose={onClose}
       color="workflow.main"
       title="workflow.delete.title"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
@@ -30,7 +30,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
       <DialogContentText>
         <FormattedMessage id="workflow.delete" />
       </DialogContentText>
-    </StyledDialog>
+    </StencilStyles.Dialog>
   );
 }
 export { WorkflowDelete }

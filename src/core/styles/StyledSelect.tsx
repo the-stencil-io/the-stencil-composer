@@ -17,6 +17,7 @@ interface StyledSelectProps<T> {
   label: string;
   items: {id: string, value: string | React.ReactChild, sx?: SxProps<Theme>}[]; 
   selected: T; 
+  disabled?: boolean; 
   helperText?: string;
   empty?: {id: string, label: string}
   onChange: (values: T) => void;
@@ -30,6 +31,7 @@ const StyledSelect: React.FC<StyledSelectProps<string>> = (props) => {
       <InputLabel>{title}</InputLabel>
       <Select
         value={props.selected}
+        disabled={props.disabled}
         onChange={({ target }) => props.onChange(target.value as any)}
         label={title}>
         
@@ -52,6 +54,7 @@ const StyledSelectMultiple: React.FC<{
       <Select
         multiple={true}
         multiline={props.multiline}
+        disabled={props.disabled}
         value={props.selected}
         onChange={({ target }) => props.onChange(target.value as any)}
         renderValue={props.renderValue}

@@ -27,6 +27,7 @@ const StyleInputProps = styled(Input)<InputProps>(({ theme }) => ({
 
 interface StyledTextFieldProps<T> {
   label: string;
+  disabled?: boolean;
   helperText?: string;
   value: T;
   placeholder?: T;
@@ -34,7 +35,7 @@ interface StyledTextFieldProps<T> {
   onChange: (newValue: T) => void;
 }
 
-const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText }) => {
+const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
   const title = <FormattedMessage id={label} />;
   return (
     <Box sx={{ mt: 2 }}>
@@ -44,6 +45,7 @@ const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
           fullWidth
           disableUnderline
           type="file"
+          disabled={disabled}
           onChange={(e) => {
             const file: File = (e.target as any).files[0];
             const enc = new TextDecoder("utf-8");
@@ -56,10 +58,11 @@ const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
   );
 }
 
-const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText }) => {
+const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
   const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
   return (
     <TextFieldRoot fullWidth
+    disabled={disabled}
       variant="outlined"
       label={<FormattedMessage id={label} />}
       required={required}
@@ -70,10 +73,11 @@ const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
   );
 }
 
-const StyledNumberField: React.FC<StyledTextFieldProps<number>> = ({ onChange, label, value, required, placeholder, helperText }) => {
+const StyledNumberField: React.FC<StyledTextFieldProps<number>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
   const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
   return (
     <TextFieldRoot fullWidth
+      disabled={disabled}
       variant="outlined"
       label={<FormattedMessage id={label} />}
       required={required}
