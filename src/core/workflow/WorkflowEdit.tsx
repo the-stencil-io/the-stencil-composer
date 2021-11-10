@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, TextField, InputLabel, FormControl, MenuItem, Select, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
+import { Theme, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 
@@ -8,24 +7,12 @@ import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    select: {
-      padding: theme.spacing(1),
-      marginTop: theme.spacing(3),
-      color: theme.palette.primary.contrastText,
-      backgroundColor: theme.palette.background.paper
-    }
-  }),
-);
-
 interface WorkflowEditProps {
   workflowId: StencilClient.WorkflowId,
   onClose: () => void,
 }
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
-  const classes = useStyles();
   const { service, actions, session, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId]
 
