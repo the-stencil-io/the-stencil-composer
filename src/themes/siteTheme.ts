@@ -10,7 +10,7 @@ declare module 'react' {
 }
 
 declare module '@mui/styles/defaultTheme' {
-  interface DefaultTheme extends Theme {}
+  interface DefaultTheme extends Theme { }
 }
 
 declare module '@mui/material/styles' {
@@ -24,6 +24,8 @@ declare module '@mui/material/styles' {
     import: Palette['primary'];
     activeItem: Palette['primary'];
     save: Palette['primary'];
+    explorer: Palette['primary'];
+    explorerItem: Palette['primary'];
   }
   interface PaletteOptions {
     article: Palette['primary'];
@@ -35,6 +37,8 @@ declare module '@mui/material/styles' {
     import: Palette['primary'];
     activeItem: Palette['primary'];
     save: Palette['primary'];
+    explorer: Palette['primary'];
+    explorerItem: Palette['primary'];
   }
 }
 
@@ -76,6 +80,18 @@ const palette = {
     disabled: 'rgba(0,0,0,0.36)',
     hint: 'rgba(0,0,0,0.37)',
   },
+  explorer: {
+    main: 'rgb(17, 24, 39)', // background colour, dark grey-black
+    dark: '',
+    light: '',
+    contrastText: '' // inactive item
+  },
+  explorerItem: {
+    main: 'rgb(209, 213, 219)', // inactive item 
+    dark: 'rgb(16, 185, 129)', // active item
+    light: 'rgba(255, 255, 255, 0.08)', // active item hover
+    contrastText: 'rgb(16, 185, 129)' // active item
+  },
   article: {
     main: '#5048E5', // blue
     dark: '#3229e0',
@@ -86,8 +102,7 @@ const palette = {
     main: '#14B8A6', // turquoise
     dark: '#109384',
     light: '#18dcc5',
-    contrastText: '#fff'
-
+    contrastText: '#fff',
   },
   link: {
     main: '#a0548b', // purple
@@ -114,23 +129,23 @@ const palette = {
     contrastText: '#fff'
   },
   import: {
-    main: 'rgba(77, 144, 142)',
+  main: 'rgba(77, 144, 142)',
     dark: 'rgba(64, 119, 118)',
-    light: 'rgba(86, 159, 158)',
-    contrastText: '#fff'
-  },
-  activeItem: {
-    main: '#edf6f9',
+      light: 'rgba(86, 159, 158)',
+        contrastText: '#fff'
+},
+activeItem: {
+  main: '#edf6f9',
     dark: '#edf6f9',
-    light: '#edf6f9',
-    contrastText: '#000'
-  },
-  save: {
-    main: 'rgba(255, 99, 71, 0.8)',
+      light: '#edf6f9',
+        contrastText: '#000'
+},
+save: {
+  main: 'rgba(255, 99, 71, 0.8)',
     dark: 'rgba(255, 183, 3)',
-    light: 'rgba(255, 183, 3)',
-    contrastText: '#000'
-  },
+      light: 'rgba(255, 183, 3)',
+        contrastText: '#000'
+},
 
 }
 

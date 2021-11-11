@@ -84,7 +84,7 @@ const en = {
   'article.name': 'Article name',
   'articles.message': 'Expand rows to view Pages associated with Articles and modify these associations',
 
-  'article.delete.title': 'Permanently delete this Article?',
+  'article.delete.title': 'Delete article',
   'article.delete': 'Deleting this article will remove it and its associated pages globally from the application.',
   'article.deletepage.title': 'Delete this page?',
   'article.deletepage': 'Deleting this page will permanently remove it from the application.',
