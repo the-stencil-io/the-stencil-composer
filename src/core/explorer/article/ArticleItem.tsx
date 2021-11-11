@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Typography, useTheme } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 import Label from "@mui/icons-material/Label";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
@@ -14,7 +14,6 @@ import { FormattedMessage } from 'react-intl';
 import StencilStyles from '../../styles';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
-import ArticleOptionItem from './ArticleOptionItem';
 import ArticlePageItem from './ArticlePageItem';
 
 
@@ -71,7 +70,6 @@ const ArticleItem: React.FC<{
 }> = ({ articleId }) => {
 
   const { session, isArticleSaved, service, actions } = Composer.useComposer();
-  const { handleInTab } = Composer.useNav();
   const view = session.getArticleView(articleId);
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
@@ -102,8 +100,6 @@ const ArticleItem: React.FC<{
       }} />
   )
 
-
-
   return (
     <>
       <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton} labelcolor="article">
@@ -118,22 +114,11 @@ const ArticleItem: React.FC<{
 
         {/** Workflows options */}
         <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`} labelcolor="workflow">
-          <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
-            color='workflow'
-            onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
-            labelText={<FormattedMessage id="resource.edit.workflows" />}>
-          </ArticleOptionItem>
-
           {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
         </StencilStyles.TreeItem>
 
         {/** Links options */}
         <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
-          <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
-            color='link'
-            onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
-            labelText={<FormattedMessage id="resource.edit.links" />}>
-          </ArticleOptionItem>
           {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
         </StencilStyles.TreeItem>
 

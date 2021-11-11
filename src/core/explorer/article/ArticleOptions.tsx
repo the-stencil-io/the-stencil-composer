@@ -1,11 +1,10 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { StencilClient } from '../../context';
 import { ArticleEdit, ArticleDelete } from '../../article';
 import { NewPage, PageEdit, PageDelete } from '../../page';
 import ArticleOptionItem from './ArticleOptionItem';
-
+import { Composer, StencilClient } from '../../context';
 
 interface ArticleOptionsProps {
   article: StencilClient.Article,
@@ -14,7 +13,8 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageDelete' | 'ArticleDelete'>(undefined);
 
   const handleDialogClose = () => setDialogOpen(undefined);
-
+  const { handleInTab } = Composer.useNav();
+  
   return (
     <>
       { dialogOpen === 'ArticleEdit' ? <ArticleEdit articleId={article.id} onClose={handleDialogClose} /> : null}
@@ -50,6 +50,20 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
         color='article'
         onClick={() => setDialogOpen('ArticleDelete')}
         labelText={<FormattedMessage id="article.delete.title" />}>
+      </ArticleOptionItem>
+
+
+
+      <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
+        color='link'
+        onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
+        labelText={<FormattedMessage id="resource.edit.links" />}>
+      </ArticleOptionItem>
+
+      <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
+        color='workflow'
+        onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
+        labelText={<FormattedMessage id="resource.edit.workflows" />}>
       </ArticleOptionItem>
     </>
   );
