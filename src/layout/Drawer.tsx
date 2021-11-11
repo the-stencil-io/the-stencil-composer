@@ -1,11 +1,12 @@
 import { CSSObject, styled, Drawer, Theme, DrawerProps } from '@mui/material';
 
 interface StyledDrawerProps extends DrawerProps {
-  drawerWidth: number;
+  drawerWidth: { collapsed: number, expanded: number};
 }
 
-const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
-  width: drawerWidth,
+
+const openedMixin = (theme: Theme, drawerWidth: { collapsed: number, expanded: number}): CSSObject => ({
+  width: drawerWidth.expanded -1,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.enteringScreen,
@@ -13,13 +14,13 @@ const openedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
   overflowX: 'hidden',
 });
 
-const closedMixin = (theme: Theme, drawerWidth: number): CSSObject => ({
+const closedMixin = (theme: Theme, drawerWidth: { collapsed: number, expanded: number}): CSSObject => ({
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: `calc(${theme.spacing(7)} + 1px)`
+  width: `calc(${drawerWidth.collapsed} + 1px)`
 });
 
 
@@ -27,7 +28,7 @@ const StyledDrawer = styled(Drawer, {
   shouldForwardProp: (prop) => prop !== 'open' && prop !== 'drawerWidth',
 })<StyledDrawerProps>(
   ({ theme, open, drawerWidth }) => ({
-    width: drawerWidth,
+    width: drawerWidth.expanded - 1,
     flexShrink: 0,
     whiteSpace: 'nowrap',
     boxSizing: 'border-box',
