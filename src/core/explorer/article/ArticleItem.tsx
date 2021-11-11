@@ -3,7 +3,7 @@ import { Box, Typography } from "@mui/material";
 
 import Label from "@mui/icons-material/Label";
 import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
-
+import BuildIcon from '@mui/icons-material/Build';
 import LinkIcon from '@mui/icons-material/Link';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import SaveIcon from '@mui/icons-material/Save';
@@ -99,6 +99,17 @@ const ArticleItem: React.FC<{
         color: "text.primary"
       }} />
   )
+  
+    const devButton = saved ? undefined : (
+    <Box component={BuildIcon} onClick={(e) => {
+      e.stopPropagation();
+    }}
+      sx={{
+        mr: 1, p: .3, border: '1px solid', borderRadius: 3, boxShadow: 2,
+        backgroundColor: "save.main",
+        color: "text.primary"
+      }} />
+  )
 
   return (
     <>
@@ -113,7 +124,13 @@ const ArticleItem: React.FC<{
         </StencilStyles.TreeItem>
 
         {/** Workflows options */}
-        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'} labelText={<FormattedMessage id="workflows" />} labelIcon={Label} labelInfo={`${workflows.length}`} labelcolor="workflow">
+        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'} 
+            labelText={<FormattedMessage id="workflows" />} 
+            labelIcon={Label} 
+            labelButton={devButton}
+            labelInfo={`${workflows.length}`} 
+            labelcolor="workflow">
+            
           {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
         </StencilStyles.TreeItem>
 
