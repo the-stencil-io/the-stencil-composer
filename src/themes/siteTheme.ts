@@ -28,6 +28,7 @@ declare module '@mui/material/styles' {
     explorerItem: Palette['primary'];
     mainContent: Palette['primary'];
     uiElements: Palette['primary'];
+    table: Palette['primary'];
   }
   interface PaletteOptions {
     article: Palette['primary'];
@@ -43,6 +44,8 @@ declare module '@mui/material/styles' {
     explorerItem: Palette['primary'];
     mainContent: Palette['primary'];
     uiElements: Palette['primary'];
+    table: Palette['primary'];
+
   }
 }
 
@@ -94,7 +97,7 @@ const palette = {
     main: 'rgb(209, 213, 219)', // inactive item 
     dark: 'rgb(16, 185, 129)', // active item
     light: 'rgba(255, 255, 255, 0.08)', // active item hover
-    contrastText: '' 
+    contrastText: ''
   },
   mainContent: {
     main: 'rgb(249, 250, 252)', // primary bg colour for behind content boxes, light gray
@@ -104,8 +107,14 @@ const palette = {
   },
   uiElements: {
     main: 'rgb(80, 72, 229)', // primary ui element, blue-purple (button fill, button text, text, checkboxes, etc.)
-    dark: '',
+    dark: '#F3F4F6', // table header gray
     light: 'rgba(80, 72, 229, 0.04)', // transparent purple for hover backgrounds, secondary button fill on hover
+    contrastText: ''
+  },
+  table: {
+    main: '',
+    dark: '#F3F4F6', // table header gray
+    light: '',
     contrastText: ''
   },
   article: {
