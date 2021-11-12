@@ -15,16 +15,21 @@ import StencilStyles from '../../styles';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticlePageItem from './ArticlePageItem';
+import { LinkEdit } from '../../link/LinkEdit';
+import { WorkflowEdit } from '../../workflow/WorkflowEdit';
+
 
 
 function WorkflowItem(props: {
   labelText: string;
   nodeId: string;
   children?: React.ReactChild;
+  onClick: () => void;
 }) {
   return (
     <StencilStyles.TreeItemRoot
       nodeId={props.nodeId}
+      onClick={props.onClick}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={WorkOutlineIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
@@ -40,14 +45,18 @@ function WorkflowItem(props: {
   );
 }
 
-function LinkItem(props: {
+interface LinkItemProps {
   labelText: string;
   nodeId: string;
   children?: React.ReactChild;
-}) {
+  onClick: () => void;
+}
+
+const LinkItem: React.FC<LinkItemProps> = (props) => {
   return (
     <StencilStyles.TreeItemRoot
       nodeId={props.nodeId}
+      onClick={props.onClick}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
@@ -64,6 +73,8 @@ function LinkItem(props: {
 }
 
 
+
+
 const ArticleItem: React.FC<{
   articleId: StencilClient.ArticleId;
   open: boolean;
@@ -74,6 +85,9 @@ const ArticleItem: React.FC<{
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
   const saved = isArticleSaved(article);
+
+  const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
+  const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
 
   const handleSavePages = () => {
     const unsaved: StencilClient.PageMutator[] = Object.values(session.pages)
@@ -99,8 +113,8 @@ const ArticleItem: React.FC<{
         color: "text.primary"
       }} />
   )
-  
-    const devButton = saved ? undefined : (
+
+  const devButton = saved ? undefined : (
     <Box component={BuildIcon} onClick={(e) => {
       e.stopPropagation();
     }}
@@ -113,6 +127,9 @@ const ArticleItem: React.FC<{
 
   return (
     <>
+      { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
+      { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
+      
       <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleOutlinedIcon} labelButton={saveButton} labelcolor="explorerItem">
         <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
@@ -124,19 +141,24 @@ const ArticleItem: React.FC<{
         </StencilStyles.TreeItem>
 
         {/** Workflows options */}
-        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'} 
-            labelText={<FormattedMessage id="workflows" />} 
-            labelIcon={Label} 
-            labelButton={devButton}
-            labelInfo={`${workflows.length}`} 
-            labelcolor="workflow">
-            
-          {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} />))}
+        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
+          labelText={<FormattedMessage id="workflows" />}
+          labelIcon={Label}
+          labelButton={devButton}
+          labelInfo={`${workflows.length}`}
+          labelcolor="workflow">
+
+          {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} onClick={() => setEditWorkflow(view.workflow.id)} />))}
         </StencilStyles.TreeItem>
 
         {/** Links options */}
+
         <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
-          {links.map(view => (<LinkItem key={view.link.id} labelText={view.link.body.value} nodeId={view.link.id} />))}
+          {links.map(view => (<LinkItem key={view.link.id}
+            labelText={view.link.body.value}
+            nodeId={view.link.id}
+            onClick={() => setEditLink(view.link.id)} />)
+          )}
         </StencilStyles.TreeItem>
 
       </StencilStyles.TreeItem>
