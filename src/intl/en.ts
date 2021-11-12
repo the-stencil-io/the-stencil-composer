@@ -1,5 +1,7 @@
 const en = {
 
+  'links.addremove': 'Add / remove links',
+  'workflows.addremove': 'Add / remove workflows',
   'search': 'Search',
   'search.tooltip': 'I want to find...',
   'workflow.technicalname.description': 'Flow name as defined in the Wrench',

@@ -54,13 +54,13 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
 
 
-      <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
+      <ArticleOptionItem nodeId={article.id + 'links.addremove'}
         color='link'
         onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
         labelText={<FormattedMessage id="resource.edit.links" />}>
       </ArticleOptionItem>
 
-      <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
+      <ArticleOptionItem nodeId={article.id + 'workflows.addremove'}
         color='workflow'
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
         labelText={<FormattedMessage id="resource.edit.workflows" />}>

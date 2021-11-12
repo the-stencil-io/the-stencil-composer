@@ -90,7 +90,7 @@ const palette = {
     main: 'rgb(209, 213, 219)', // inactive item 
     dark: 'rgb(16, 185, 129)', // active item
     light: 'rgba(255, 255, 255, 0.08)', // active item hover
-    contrastText: 'rgb(16, 185, 129)' // active item
+    contrastText: '' 
   },
   article: {
     main: '#5048E5', // blue
