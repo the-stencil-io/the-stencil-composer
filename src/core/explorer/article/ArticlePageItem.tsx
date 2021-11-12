@@ -2,9 +2,10 @@ import React from "react";
 import { SxProps } from '@mui/system';
 import { Box, Typography, Theme, useTheme } from "@mui/material";
 
-import TranslateIcon from "@mui/icons-material/Translate";
-import SwitchLeftRoundedIcon from "@mui/icons-material/SwitchLeftRounded";
+import LeftEditIcon from "@mui/icons-material/BorderLeft";
+import RightEditIcon from "@mui/icons-material/BorderRight";
 
+//import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
 
 import StencilStyles from '../../styles';
 import { Composer } from '../../context';
@@ -42,10 +43,6 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
     }
   }
   
-  const sx: SxProps<Theme> = {
-    mr: 3, p: .5, border: '1px solid', borderRadius: 3, boxShadow: 2,    
-  };
-
   return (
     <StencilStyles.TreeItemRoot
       nodeId={nodeId}
@@ -57,17 +54,17 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
 
-          <Box component={TranslateIcon} sx={sx}
+          <Box component={LeftEditIcon}
             color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />
 
           <Typography
             variant="body2"
-            sx={{ fontWeight: "inherit", flexGrow: 1 }}
+            sx={{ fontWeight: "inherit", flexGrow: 1, pl: 1 }}
           >
             {props.page.locale.body.value}
           </Typography>
 
-          <Box component={SwitchLeftRoundedIcon} sx={sx}
+          <Box component={RightEditIcon} 
             color={nav?.value2 === page.body.locale ? localeIconColor : "inherit"}
             onClick={(event) => {
               event.stopPropagation()

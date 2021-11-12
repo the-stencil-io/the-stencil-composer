@@ -1,7 +1,9 @@
 import * as React from "react";
 import { Box, Typography } from "@mui/material";
 
-import Label from "@mui/icons-material/Label";
+import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
+
+
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import BuildIcon from '@mui/icons-material/Build';
 import LinkIcon from '@mui/icons-material/Link';
@@ -136,14 +138,14 @@ const ArticleItem: React.FC<{
         </StencilStyles.TreeItem>
 
         {/** Pages */}
-        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={Label} labelInfo={`${pages.length}`} labelcolor="page">
+        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={FolderOutlinedIcon} labelInfo={`${pages.length}`} labelcolor="page">
           {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
         </StencilStyles.TreeItem>
 
         {/** Workflows options */}
         <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
           labelText={<FormattedMessage id="workflows" />}
-          labelIcon={Label}
+          labelIcon={FolderOutlinedIcon}
           labelButton={devButton}
           labelInfo={`${workflows.length}`}
           labelcolor="workflow">
@@ -153,7 +155,7 @@ const ArticleItem: React.FC<{
 
         {/** Links options */}
 
-        <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={Label} labelInfo={`${links.length}`} labelcolor="link">
+        <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={FolderOutlinedIcon} labelInfo={`${links.length}`} labelcolor="link">
           {links.map(view => (<LinkItem key={view.link.id}
             labelText={view.link.body.value}
             nodeId={view.link.id}
