@@ -97,7 +97,7 @@ const palette = {
     contrastText: ''
   },
   mainContent: {
-    main: 'rgb(249, 250, 252)', // primary bg colour, light gray
+    main: 'rgb(249, 250, 252)', // primary bg colour for behind content boxes, light gray
     dark: 'rgb(18, 24, 40)', // primary content text, dark gray/black
     light: 'rgb(255, 255, 255) ', // primary content bg colour, white
     contrastText: 'rgb(101, 116, 139)' // secondary content text, medium gray
