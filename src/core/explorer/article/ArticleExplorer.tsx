@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Button, alpha } from '@mui/material';
+import { Theme, Button, alpha, Box } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -10,38 +10,6 @@ import { Composer, StencilClient } from '../../context';
 import { ArticleComposer } from '../../article';
 import ArticleItem from './ArticleItem';
 import { Search } from '../../search/Search';
-
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    title: {
-      display: 'flex',
-      fontSize: '15pt',
-      fontWeight: 'bold',
-      justifyContent: 'center',
-      backgroundColor: theme.palette.article.main,
-      color: theme.palette.article.contrastText,
-    },
-    drawerContainer: {
-      overflow: 'auto',
-    },
-    article: {
-      background: alpha(theme.palette.article.main, 0.05)
-    },
-    button: {
-      margin: theme.spacing(1),
-      flexGrow: 1,
-      color: theme.palette.background.paper,
-      "&:hover, & .Mui-focusVisible": {
-        backgroundColor: theme.palette.primary.dark,
-        color: theme.palette.background.paper,
-        "& .MuiSvgIcon-root": {
-          color: theme.palette.background.paper,
-        }
-      }
-    },
-  }),
-);
 
 
 const findMainId = (values: string[]) => {
@@ -54,7 +22,7 @@ const findMainId = (values: string[]) => {
 
 
 const ArticleExplorer: React.FC<{}> = () => {
-  const classes = useStyles();
+  //const classes = useStyles();
   const { site } = Composer.useComposer();
 
   const articles = Object.values(site.articles)
@@ -74,17 +42,15 @@ const ArticleExplorer: React.FC<{}> = () => {
 
 
   return (
-    <div className={classes.drawerContainer}>
+    <Box>
       { articles.length !== 0 ? null : (
         <div>
           { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
-          <Button className={classes.button} variant="contained" color="primary" onClick={() => setOpenArticleComposer(true)} >
+          <Button variant="contained" color="primary" onClick={() => setOpenArticleComposer(true)} >
             <FormattedMessage id='article.composer.title' />
           </Button>
         </div>)
       }
-
-      <Search />
       <TreeView
         onNodeToggle={(_event: React.SyntheticEvent, nodeIds: string[]) => {
           const active = findMainId(expanded);
@@ -101,18 +67,18 @@ const ArticleExplorer: React.FC<{}> = () => {
       >
 
         {articles.map((article, index) => [
-          (<div key={index} className={index % 2 === 0 ? classes.article : ''}>
+          (<div key={index}>
             <ArticleItem key={index} articleId={article.id} open={expanded.includes(article.id)} />
           </div>),
           ...getChildrenArticles(article).map((child, childIndex) => (
-            (<div className={index % 2 === 0 ? classes.article : ''} key={childIndex + "-" + index + "-c"}>
+            (<div key={childIndex + "-" + index + "-c"}>
               <ArticleItem key={childIndex + "-" + index + "-c"} articleId={child.id} open={expanded.includes(child.id)} />
             </div>)
           ))
         ]
         )}
       </TreeView>
-    </div>
+    </Box>
   );
 }
 

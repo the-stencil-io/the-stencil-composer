@@ -2,7 +2,7 @@ import * as React from "react";
 import { Box, Typography } from "@mui/material";
 
 import Label from "@mui/icons-material/Label";
-import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import BuildIcon from '@mui/icons-material/Build';
 import LinkIcon from '@mui/icons-material/Link';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
@@ -113,7 +113,7 @@ const ArticleItem: React.FC<{
 
   return (
     <>
-      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleRoundedIcon} labelButton={saveButton} labelcolor="article">
+      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleOutlinedIcon} labelButton={saveButton} labelcolor="explorerItem">
         <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
         </StencilStyles.TreeItem>

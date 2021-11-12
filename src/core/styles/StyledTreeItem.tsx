@@ -8,7 +8,7 @@ import { SvgIconProps } from "@mui/material/SvgIcon";
 const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
   color: `var(--tree-view-text-color, ${theme.palette.text.secondary})`,
   [`& .${treeItemClasses.content}`]: {
-    color: `var(--tree-view-text-color, ${theme.palette.text.secondary})`,
+    color: `var(--tree-view-text-color, ${theme.palette.explorerItem.main})`,
     borderTopRightRadius: theme.spacing(2),
     borderBottomRightRadius: theme.spacing(2),
     paddingRight: theme.spacing(1),
@@ -21,7 +21,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
     },
     "&.Mui-focused, &.Mui-selected, &.Mui-selected.Mui-focused": {
       backgroundColor: `var(--tree-view-bg-color, ${theme.palette.action.selected})`,
-      color: "var(--tree-view-color)"
+      color: `var(--tree-view-color, ${theme.palette.explorerItem.dark})` //"var(--tree-view-color)"
     },
     [`& .${treeItemClasses.label}`]: {
       fontWeight: "inherit",

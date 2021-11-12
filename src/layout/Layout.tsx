@@ -51,7 +51,7 @@ const Container: React.FC<ContainerProps> = (components) => {
             {toolbarWindow}
           </Box>
           {!drawerOpen ? null :
-            (<Box sx={{width: drawerWidth.expanded, marginLeft: `${drawerWidth.collapsed + 1}px` }}>
+            (<Box sx={{width: drawerWidth.expanded, marginLeft: `${drawerWidth.collapsed + 1}px`, height: "100%"}}>
               {secondaryWindow}
             </Box>)
           }
