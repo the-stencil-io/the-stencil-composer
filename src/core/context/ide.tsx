@@ -34,6 +34,7 @@ declare namespace Composer {
   interface Session {
     site: StencilClient.Site,
     pages: Record<StencilClient.PageId, PageUpdate>;
+    articles: ArticleView[];
     
     getArticleView(articleId: StencilClient.ArticleId): ArticleView;
     
@@ -66,6 +67,7 @@ declare namespace Composer {
     canCreate: StencilClient.SiteLocale[];
     links: LinkView[];
     workflows: WorkflowView[];
+    children: Composer.ArticleView[];
   }
   
   interface PageView {

@@ -13,23 +13,26 @@ class SiteCache {
     Object.values(site.pages).sort((l0, l1) => l0.body.locale.localeCompare(l1.body.locale)).forEach(page => this.visitPage(page))
     Object.values(site.links).sort((l0, l1) => l0.body.contentType.localeCompare(l1.body.contentType)).forEach(link => this.visitLink(link))
     Object.values(site.workflows).sort((l0, l1) => l0.body.value.localeCompare(l1.body.value)).forEach(workflow => this.visitWorkflow(workflow))
-    Object.values(site.articles).sort((l0, l1) => l0.body.order - l1.body.order).forEach(article => this.visitArticle(article))
+    Object.values(site.articles).sort((l0, l1) => (
+      (l0.body.order + (l0.body.parentId !== undefined ? 10000 : 0)) -
+      (l1.body.order + (l1.body.parentId !== undefined ? 10000 : 0))
+    )).forEach(article => this.visitArticle(article))
   }
-  
+
   getArticles() {
     return this._articles;
   }
-  
+
   private visitPage(page: StencilClient.Page) {
     const site = this._site;
     const view = new ImmutablePageView({ page, locale: site.locales[page.body.locale] });
-    const articleId = page.body.article;  
+    const articleId = page.body.article;
     let articlePages = this._pagesByArticle[articleId];
     if (!articlePages) {
       articlePages = [];
       this._pagesByArticle[articleId] = articlePages;
     }
-    articlePages.push(view);  
+    articlePages.push(view);
   }
 
   private visitLink(link: StencilClient.Link) {
@@ -70,20 +73,36 @@ class SiteCache {
     const pages: Composer.PageView[] = Object.values(site.pages)
       .filter(page => articleId === page.body.article)
       .map(page => new ImmutablePageView({ page, locale: site.locales[page.body.locale] }));
-    
+
     const links: Composer.LinkView[] = this.empty(this._linksByArticle[articleId]);
     const workflows: Composer.WorkflowView[] = this.empty(this._workflowsByArticle[articleId]);
 
     const canCreate: StencilClient.SiteLocale[] = Object.values(site.locales).filter(locale => pages.filter(p => p.page.body.locale === locale.id).length === 0);
-    const view = new ImmutableArticleView({ 
-      article, pages, canCreate, 
-      links, 
-      workflows 
+    const view = new ImmutableArticleView({
+      article, pages, canCreate,
+      links,
+      workflows,
+      children: []
     });
+
+    if (article.body.parentId) {
+      const parent = this._articles[article.body.parentId];
+      if (parent) {
+        this._articles[parent.article.id] = new ImmutableArticleView({
+          article : parent.article, 
+          pages: parent.pages, 
+          canCreate: parent.canCreate,
+          links: parent.links,
+          workflows: parent.workflows,
+          children: [...parent.children, view]
+        });
+      }
+    }
+
     this._articles[articleId] = view;
   }
-  
-  private empty<T>(arrayType:T) {
+
+  private empty<T>(arrayType: T) {
     return arrayType ? arrayType : [];
   }
 }
@@ -104,15 +123,17 @@ class SessionData implements Composer.Session {
     this._pages = props.pages ? props.pages : {};
     this._cache = props.cache ? props.cache : new SiteCache(this._site);
   }
-
-  getArticleView(articleId: StencilClient.ArticleId): Composer.ArticleView {
-    return this._cache.getArticles()[articleId];
+  get articles() {
+    return Object.values(this._cache.getArticles());
   }
   get site() {
     return this._site;
   }
   get pages() {
     return this._pages;
+  }
+  getArticleView(articleId: StencilClient.ArticleId): Composer.ArticleView {
+    return this._cache.getArticles()[articleId];
   }
   getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[] {
     const pages = Object.values(this._site.pages)
@@ -225,6 +246,7 @@ class ImmutableArticleView implements Composer.ArticleView {
   private _canCreate: StencilClient.SiteLocale[];
   private _links: Composer.LinkView[];
   private _workflows: Composer.WorkflowView[];
+  private _children: Composer.ArticleView[];
 
   constructor(props: {
     article: StencilClient.Article;
@@ -232,14 +254,16 @@ class ImmutableArticleView implements Composer.ArticleView {
     canCreate: StencilClient.SiteLocale[];
     links: Composer.LinkView[];
     workflows: Composer.WorkflowView[];
+    children: Composer.ArticleView[];
   }) {
     this._article = props.article;
     this._pages = props.pages;
     this._canCreate = props.canCreate;
     this._links = props.links;
     this._workflows = props.workflows;
+    this._children = props.children;
   }
-
+  get children(): Composer.ArticleView[] { return this._children };
   get article(): StencilClient.Article { return this._article };
   get pages(): Composer.PageView[] { return this._pages };
   get canCreate(): StencilClient.SiteLocale[] { return this._canCreate };

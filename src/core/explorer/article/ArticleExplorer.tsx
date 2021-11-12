@@ -1,15 +1,13 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Button, alpha, Box } from '@mui/material';
+import { Button, Box } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 import { FormattedMessage } from 'react-intl';
-import { Composer, StencilClient } from '../../context';
+import { Composer } from '../../context';
 import { ArticleComposer } from '../../article';
 import ArticleItem from './ArticleItem';
-import { Search } from '../../search/Search';
 
 
 const findMainId = (values: string[]) => {
@@ -22,36 +20,26 @@ const findMainId = (values: string[]) => {
 
 
 const ArticleExplorer: React.FC<{}> = () => {
-  //const classes = useStyles();
-  const { site } = Composer.useComposer();
-
-  const articles = Object.values(site.articles)
-    .filter(a => !a.body.parentId)
-    .sort((a1, a2) => a1.body.order - a2.body.order);
-
-  const childArticles = Object.values(site.articles)
-    .filter(a => a.body.parentId)
-    .sort((a1, a2) => a1.body.order - a2.body.order);
+  const { session } = Composer.useComposer();
+  const articles = session.articles;
 
   const [openArticleComposer, setOpenArticleComposer] = React.useState(false);
   const [expanded, setExpanded] = React.useState<string[]>([]);
 
-  const getChildrenArticles = (article: StencilClient.Article): StencilClient.Article[] => {
-    return childArticles.filter(a => a.body.parentId === article.id);
-  }
-
-
   return (
     <Box>
-      { articles.length !== 0 ? null : (
+      {articles.length !== 0 ? null : (
         <div>
-          { openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
+          {openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
           <Button variant="contained" color="primary" onClick={() => setOpenArticleComposer(true)} >
             <FormattedMessage id='article.composer.title' />
           </Button>
         </div>)
       }
-      <TreeView
+      <TreeView expanded={expanded}
+        defaultCollapseIcon={<ArrowDropDownIcon />}
+        defaultExpandIcon={<ArrowRightIcon />}
+        defaultEndIcon={<div style={{ width: 24 }} />}
         onNodeToggle={(_event: React.SyntheticEvent, nodeIds: string[]) => {
           const active = findMainId(expanded);
           const newId = findMainId(nodeIds.filter(n => n !== active));
@@ -59,20 +47,15 @@ const ArticleExplorer: React.FC<{}> = () => {
             nodeIds.splice(nodeIds.indexOf(active), 1);
           }
           setExpanded(nodeIds);
-        }}
-        expanded={expanded}
-        defaultCollapseIcon={<ArrowDropDownIcon />}
-        defaultExpandIcon={<ArrowRightIcon />}
-        defaultEndIcon={<div style={{ width: 24 }} />}
-      >
+        }}>
 
-        {articles.map((article, index) => [
-          (<div key={index}>
-            <ArticleItem key={index} articleId={article.id} open={expanded.includes(article.id)} />
+        {articles.filter(view => view.article.body.parentId === undefined).map((view) => [
+          (<div key={view.article.id}>
+            <ArticleItem articleId={view.article.id} open={expanded.includes(view.article.id)} />
           </div>),
-          ...getChildrenArticles(article).map((child, childIndex) => (
-            (<div key={childIndex + "-" + index + "-c"}>
-              <ArticleItem key={childIndex + "-" + index + "-c"} articleId={child.id} open={expanded.includes(child.id)} />
+          ...view.children.map((child) => (
+            (<div key={child.article.id}>
+              <ArticleItem articleId={child.article.id} open={expanded.includes(child.article.id)} />
             </div>)
           ))
         ]
