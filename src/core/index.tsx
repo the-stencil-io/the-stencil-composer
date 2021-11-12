@@ -2,7 +2,7 @@ import React from 'react';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
 import StencilClient from './client';
-import Toolbar from './toolbar';
+import Toolbar from './Toolbar';
 import {Composer} from './context';
 import messages from '../intl';
 import Layout from '../layout';

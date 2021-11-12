@@ -13,22 +13,22 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 
-import { Composer } from '../context';
+import { Composer } from './context';
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
-  //color: theme.palette.secondary.contrastText,
   "&.MuiButtonBase-root": {
     minWidth: "unset",
-    color: "cyan",
+    color: theme.palette.explorerItem.main,
   },
   "&.Mui-selected": {
-    color: "white",
+    color: theme.palette.explorerItem.dark,
   }
 }));
 
 const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
   "& .MuiTabs-indicator": {
-    backgroundColor: "white",
+    backgroundColor: theme.palette.explorerItem.dark,
+    marginRight: "49px"
   }
 }));
 
@@ -74,10 +74,10 @@ const Toolbar: React.FC<{}> = () => {
   }, [actions]);
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', width: "100%" }}>
+    <Box sx={{ flexGrow: 1, display: 'flex', width: "100%", height: "100%", backgroundColor: "explorer.main" }}>
       <StyledTabs orientation="vertical" 
         onChange={handleChange}
-        sx={{ borderRight: 1, borderColor: 'divider' }}
+        sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
         value={session.secondary}>
 
         <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />

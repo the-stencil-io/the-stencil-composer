@@ -50,6 +50,9 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
     <StencilStyles.TreeItemRoot
       nodeId={nodeId}
       onClick={onLeftEdit}
+      style={{
+        "--tree-view-color": theme.palette.explorerItem.main
+      }}
       label={
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
