@@ -1,5 +1,7 @@
 const en = {
 
+  'article.explorer.title': 'Article Explorer',
+  
   'links.addremove': 'Add / remove links',
   'workflows.addremove': 'Add / remove workflows',
   'search': 'Search',

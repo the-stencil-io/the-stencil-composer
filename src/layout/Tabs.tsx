@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Tabs as MuiTabs, Tab as MuiTab, useTheme, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-
+import SaveIcon from '@mui/icons-material/Save';
 import { useLayout, Session } from './context';
 
 
@@ -31,13 +31,23 @@ const Tabs: React.FC<{}> = () => {
           iconPosition="end"
           sx={{ minHeight: 'unset' }}
           icon={(<>
+            <SaveIcon 
+              sx={{
+                ml: 1,
+                p: .3,
+                backgroundColor: "explorerItem.contrastText",
+                color: "text.primary",
+                border: '1px solid',
+                borderRadius: 3
+              }}/>
+
             <CloseIcon color="disabled"
               onClick={(e) => handleTabClose(e, tab)}
               sx={{
-                marginLeft: 5,
-                color: theme.palette.primary.main,
+                ml: 1,
+                color: "uiElements.main",
                 "&:hover": {
-                  color: theme.palette.secondary.light
+                  color: "uiElements.main"
                 }
               }}
             />

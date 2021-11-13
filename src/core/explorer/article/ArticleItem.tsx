@@ -107,9 +107,9 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
       handleSavePages();
     }}
       sx={{
-        mr: 1, p: .3, border: '1px solid', borderRadius: 3, boxShadow: 2,
-        backgroundColor: "save.main",
-        color: "text.primary"
+        mr: 1, p: .3, borderRadius: 3,
+        backgroundColor: "explorerItem.contrastText",
+        color: "text.primary",
       }} />
   )
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Box } from '@mui/material';
+import { Button, Box, Typography } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
@@ -39,6 +39,20 @@ const ArticleExplorer: React.FC<{}> = () => {
 
   return (
     <Box>
+      <Typography align="left"
+        sx={{
+          fontVariant: 'all-petite-caps',
+          fontWeight: 'bold',
+          color: 'explorerItem.main',
+          ml: 1,
+          mr: 1,
+          mb: 1,
+          borderBottom: '1px solid'
+        
+        }}>
+        <FormattedMessage id='article.explorer.title' />
+
+      </Typography>
       {articles.length !== 0 ? null : (
         <div>
           {openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
