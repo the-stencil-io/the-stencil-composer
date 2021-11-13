@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tabs, Tab, Box, useTheme, TabProps, TabsProps } from '@mui/material';
+import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
@@ -43,29 +43,29 @@ const Toolbar: React.FC<{}> = () => {
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     if (newValue === 'toolbar.dashboard') {
-      actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+      actions.handleTabAdd({ id: 'newItem', label: () => "Dashboard" });
 
     } else if (newValue === 'toolbar.articles') {
       actions.handleSecondary("toolbar.articles")
 
     } else if (newValue === 'toolbar.links') {
-      actions.handleTabAdd({ id: 'links', label: "Links" })
+      actions.handleTabAdd({ id: 'links', label: () => "Links" })
 
     } else if (newValue === 'toolbar.workflows') {
-      actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
+      actions.handleTabAdd({ id: 'workflows', label: () => "Workflows" });
       actions.handleSecondary('toolbar.workflows')
 
     } else if (newValue === 'toolbar.releases') {
-      actions.handleTabAdd({ id: 'releases', label: "Releases" })
+      actions.handleTabAdd({ id: 'releases', label: () => "Releases" })
 
     } else if (newValue === 'toolbar.locales') {
-      actions.handleTabAdd({ id: 'locales', label: "Locales" })
+      actions.handleTabAdd({ id: 'locales', label: () => "Locales" })
 
     } else if (newValue === 'toolbar.import') {
-      actions.handleTabAdd({ id: 'import', label: 'Import' })
+      actions.handleTabAdd({ id: 'import', label: () => 'Import' })
 
     } else if (newValue === 'toolbar.help') {
-      actions.handleTabAdd({ id: 'help', label: "Help" })
+      actions.handleTabAdd({ id: 'help', label: () => "Help" })
 
     } else if (newValue === 'toolbar.expand') {
       actions.handleDrawerOpen(!drawerOpen)
@@ -76,7 +76,7 @@ const Toolbar: React.FC<{}> = () => {
   React.useLayoutEffect(() => {
     console.log("init toolbar");
     actions.handleSecondary("toolbar.articles")
-    actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+    actions.handleTabAdd({ id: 'newItem', label: () => "Dashboard" });
   }, [actions]);
 
   return (

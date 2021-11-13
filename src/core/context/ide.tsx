@@ -1,6 +1,6 @@
 import React from 'react';
 
-
+import { useTheme } from '@mui/material';
 import { StencilClient, Layout } from '../';
 import { ReducerDispatch, Reducer } from './Reducer';
 import { SessionData, ImmutableTabData } from './SessionData';
@@ -35,16 +35,16 @@ declare namespace Composer {
     site: StencilClient.Site,
     pages: Record<StencilClient.PageId, PageUpdate>;
     articles: ArticleView[];
-    
+
     getArticleView(articleId: StencilClient.ArticleId): ArticleView;
-    
+
     getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
     getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[];
-    
+
     withPage(page: StencilClient.PageId): Session;
     withPageValue(page: StencilClient.PageId, value: StencilClient.LocalisedContent): Session;
     withoutPages(pages: StencilClient.PageId[]): Session;
-    
+
     withSite(site: StencilClient.Site): Session;
   }
 
@@ -60,7 +60,7 @@ declare namespace Composer {
     actions: Actions;
     service: StencilClient.Service;
   }
-  
+
   interface ArticleView {
     article: StencilClient.Article;
     pages: PageView[];
@@ -69,22 +69,22 @@ declare namespace Composer {
     workflows: WorkflowView[];
     children: Composer.ArticleView[];
   }
-  
+
   interface PageView {
     page: StencilClient.Page;
     locale: StencilClient.SiteLocale;
   }
-  
+
   interface LinkView {
     link: StencilClient.Link;
     labels: LabelView[];
   }
-  
+
   interface WorkflowView {
     workflow: StencilClient.Workflow;
     labels: LabelView[];
   }
-  
+
   interface LabelView {
     label: StencilClient.LocaleLabel;
     locale: StencilClient.SiteLocale;
@@ -94,19 +94,19 @@ declare namespace Composer {
 namespace Composer {
   const sessionData = new SessionData({});
 
-  export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page  }) => new ImmutableTabData(props);
+  export const createTab = (props: { nav: Composer.Nav, page?: StencilClient.Page }) => new ImmutableTabData(props);
 
   export const ComposerContext = React.createContext<ContextType>({
     session: sessionData,
     actions: {} as Actions,
     service: {} as StencilClient.Service
   });
-  
+
   export const useUnsaved = (article: StencilClient.Article) => {
     const ide: ContextType = React.useContext(ComposerContext);
     return !isSaved(article, ide);
   }
-  
+
   const isSaved = (article: StencilClient.Article, ide: ContextType): boolean => {
     const unsaved = Object.values(ide.session.pages).filter(p => !p.saved).filter(p => p.origin.body.article === article.id);
     return unsaved.length === 0
@@ -115,11 +115,11 @@ namespace Composer {
   export const useComposer = () => {
     const result: ContextType = React.useContext(ComposerContext);
     const isArticleSaved = (article: StencilClient.Article): boolean => isSaved(article, result);
-    
+
     return {
-      session: result.session, service: result.service, actions: result.actions, site: result.session.site, 
-      isArticleSaved 
-      };
+      session: result.session, service: result.service, actions: result.actions, site: result.session.site,
+      isArticleSaved
+    };
   }
 
   export const useSite = () => {
@@ -135,28 +135,36 @@ namespace Composer {
   export const useLayout = () => {
     const layout = Layout.useContext();
     return layout;
-  } 
+  }
 
   export const useNav = () => {
     const layout = useLayout();
-    
-    
-    const handleInTab = (props: {article: StencilClient.Article, type: Composer.NavType, locale?: string | null, secondary?: boolean}) => {
-      const nav = { 
-        type: props.type, 
+
+
+    const handleInTab = (props: { article: StencilClient.Article, type: Composer.NavType, locale?: string | null, secondary?: boolean }) => {
+      const nav = {
+        type: props.type,
         value: props.secondary ? undefined : props.locale,
-        value2: props.secondary ? props.locale : undefined};
-        
+        value2: props.secondary ? props.locale : undefined
+      };
+
       let label: string | React.ReactElement;
-      if(props.type === "ARTICLE_PAGES" || props.type === "ARTICLE_LINKS" || props.type === "ARTICLE_WORKFLOWS") {
-        label = <ArticleTab article={props.article} type={props.type}/>; 
+      let icon: (() => React.ReactElement) | undefined = undefined;
+
+      if (props.type === "ARTICLE_PAGES") {
+        icon = () => <ArticleTabIndicator article={props.article} type={props.type} />;
+      }
+
+      if (props.type === "ARTICLE_PAGES" || props.type === "ARTICLE_LINKS" || props.type === "ARTICLE_WORKFLOWS") {
+        label = <ArticleTab article={props.article} type={props.type} />;
       } else {
         label = props.article.body.name;
       }
-      
+
       const tab: Composer.Tab = {
         id: props.article.id,
-        label,
+        label: () => label,
+        icon,
         data: Composer.createTab({ nav })
       };
 
@@ -177,11 +185,11 @@ namespace Composer {
       }
       return undefined;
     }
-  
+
 
     return { handleInTab, findTab };
   }
-  
+
   export const Provider: React.FC<{ children: React.ReactNode, service: StencilClient.Service }> = ({ children, service }) => {
     const [session, dispatch] = React.useReducer(Reducer, sessionData);
     const actions = React.useMemo(() => {
@@ -198,10 +206,9 @@ namespace Composer {
   };
 }
 
-const ArticleTab: React.FC<{article: StencilClient.Article, type: Composer.NavType}> = ({ article, type }) => {
- // const intl = useIntl();
-  const unsaved = Composer.useUnsaved(article);
-  
+const ArticleTab: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article, type }) => {
+  // const intl = useIntl();
+
   /* TODO:::
   if(type === "ARTICLE_PAGES") {
     return <span>{`${intl.formatMessage({id: "pages"})}: ${article.body.name}`}{unsaved ? " * ": ""}</span>;
@@ -210,8 +217,19 @@ const ArticleTab: React.FC<{article: StencilClient.Article, type: Composer.NavTy
   } else if(type === "ARTICLE_WORKFLOWS") {
     return <span>{`${intl.formatMessage({id: "workflows"})}: ${article.body.name}`}</span>;
   }*/
-  
-  return <span>{`${article.body.name}`}{unsaved ? " * ": ""}</span>;  
+
+  return <span>{`${article.body.name}`}</span>;
+}
+
+const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article, type }) => {
+  const theme = useTheme();
+  const unsaved = Composer.useUnsaved(article);
+  return <span style={{ 
+    paddingLeft: "5px", 
+    fontSize: '30px',
+    color: theme.palette.explorerItem.contrastText, 
+    display: unsaved ? undefined : "none" 
+    }}>*</span>
 }
 
 

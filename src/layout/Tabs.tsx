@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Tabs as MuiTabs, Tab as MuiTab, useTheme, Box } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import SaveIcon from '@mui/icons-material/Save';
 import { useLayout, Session } from './context';
 
 
@@ -27,20 +26,11 @@ const Tabs: React.FC<{}> = () => {
     return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
       {tabs.map((tab, index) => (
         <MuiTab key={index} value={index} wrapped={true}
-          label={tab.label}
+          label={tab.label()}
           iconPosition="end"
           sx={{ minHeight: 'unset' }}
           icon={(<>
-            <SaveIcon 
-              sx={{
-                ml: 1,
-                p: .3,
-                backgroundColor: "explorerItem.contrastText",
-                color: "text.primary",
-                border: '1px solid',
-                borderRadius: 3
-              }}/>
-
+            {tab.icon ? tab.icon() : null}
             <CloseIcon color="disabled"
               onClick={(e) => handleTabClose(e, tab)}
               sx={{

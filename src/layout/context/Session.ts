@@ -7,7 +7,8 @@ declare namespace Session {
   
   interface Tab<T> {
     id: string;
-    label: string | React.ReactElement;
+    label: () => (string | React.ReactElement);
+    icon?: () => (string | React.ReactElement);
     data?: T;
     edit?: boolean;
   }
