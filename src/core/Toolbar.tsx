@@ -103,8 +103,8 @@ const Toolbar: React.FC<{}> = () => {
           <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
         </StyledTabs>
-        <Box flexGrow={1} />
-        
+        <Box flexGrow={1} sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} />
+
         <StyledTabs orientation="vertical"
           onChange={handleChange}
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
