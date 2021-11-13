@@ -77,10 +77,7 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
 
 
 
-const ArticleItem: React.FC<{
-  articleId: StencilClient.ArticleId;
-  open: boolean;
-}> = ({ articleId }) => {
+const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
 
   const { session, isArticleSaved, service, actions } = Composer.useComposer();
   const view = session.getArticleView(articleId);

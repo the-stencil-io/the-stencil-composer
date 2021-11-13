@@ -21,10 +21,21 @@ const findMainId = (values: string[]) => {
 
 const ArticleExplorer: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
-  const articles = session.articles;
+
 
   const [openArticleComposer, setOpenArticleComposer] = React.useState(false);
   const [expanded, setExpanded] = React.useState<string[]>([]);
+
+  const articles = session.articles.filter(view => !view.article.body.parentId).map((view) => [
+    (<div key={view.article.id}>
+      <ArticleItem articleId={view.article.id} />
+    </div>),
+    ...view.children.map((child) => (
+      (<div key={child.article.id}>
+        <ArticleItem articleId={child.article.id} />
+      </div>)
+    ))
+  ]);
 
   return (
     <Box>
@@ -36,6 +47,7 @@ const ArticleExplorer: React.FC<{}> = () => {
           </Button>
         </div>)
       }
+
       <TreeView expanded={expanded}
         defaultCollapseIcon={<ArrowDropDownIcon />}
         defaultExpandIcon={<ArrowRightIcon />}
@@ -48,18 +60,7 @@ const ArticleExplorer: React.FC<{}> = () => {
           }
           setExpanded(nodeIds);
         }}>
-
-        {articles.filter(view => view.article.body.parentId === undefined).map((view) => [
-          (<div key={view.article.id}>
-            <ArticleItem articleId={view.article.id} open={expanded.includes(view.article.id)} />
-          </div>),
-          ...view.children.map((child) => (
-            (<div key={child.article.id}>
-              <ArticleItem articleId={child.article.id} open={expanded.includes(child.article.id)} />
-            </div>)
-          ))
-        ]
-        )}
+        {articles}
       </TreeView>
     </Box>
   );
