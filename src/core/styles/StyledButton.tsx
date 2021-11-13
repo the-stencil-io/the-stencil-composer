@@ -1,5 +1,5 @@
 import React from 'react';
-import { styled } from "@mui/material/styles";
+import { styled, darken, alpha } from "@mui/material/styles";
 import { SxProps } from '@mui/system';
 import { Button, ButtonProps, Theme } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
@@ -7,14 +7,45 @@ import { FormattedMessage } from 'react-intl';
 
 
 const StyledButtonRoot = styled(Button)<ButtonProps>(({ theme }) => ({
-  borderRadius: theme.spacing(1)
+  borderRadius: theme.spacing(1),
+  fontWeight: 'bold',
+  color: theme.palette.uiElements.main,
+  '&:hover': {
+    backgroundColor: alpha(theme.palette.uiElements.main, 0.1),
+  },
 }));
 
-const StyledPrimaryButton: React.FC<{label: string, onClick: () => void, sx?: SxProps<Theme>} > = (props) => {
+
+const StyledButtonPrimaryRoot = styled(Button)<ButtonProps>(({ theme }) => ({
+  borderRadius: theme.spacing(1),
+  fontWeight: 'bold',
+  backgroundColor: theme.palette.uiElements.main,
+
+  '&:hover': {
+    backgroundColor: darken(theme.palette.uiElements.main, 0.2),
+  },
+}));
+
+
+
+const StyledPrimaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme>  }> = (props) => {
   const title = <FormattedMessage id={props.label} />;
   return (
-    <StyledButtonRoot variant='contained' onClick={props.onClick} sx={props.sx}>{title}</StyledButtonRoot>
+    <StyledButtonPrimaryRoot
+      variant='contained'
+      onClick={props.onClick}
+      sx={props.sx}>{title}</StyledButtonPrimaryRoot>
   );
 }
 
-export { StyledPrimaryButton, StyledButtonRoot }
+const StyledSecondaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme> }> = (props) => {
+  const title = <FormattedMessage id={props.label} />;
+  return (
+    <StyledButtonRoot
+      variant='text'
+      onClick={props.onClick}
+      sx={props.sx}>{title}</StyledButtonRoot>
+  );
+}
+
+export { StyledPrimaryButton, StyledSecondaryButton, StyledButtonRoot }

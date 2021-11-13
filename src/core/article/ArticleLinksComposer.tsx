@@ -29,9 +29,9 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   return (
     <>      
       <StencilStyles.TransferList
-        title="link.composer.title"
+        title="article.links.sitelinks"
         searchTitle="link.search.title"
-        selectedTitle="article.links.selectedworkflows"
+        selectedTitle="article.links.selectedlinks"
         headers={["link.value", "link.type"]}
         rows={links.map(row => row.id)}
         filterRow={(row, search) => {

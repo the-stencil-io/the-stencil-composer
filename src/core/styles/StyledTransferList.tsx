@@ -64,23 +64,23 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
 
   return (
     <>
-      <Box sx={{ paddingBottom: 1 }}>
+      <Box sx={{ paddingBottom: 1, m: 2}}>
         <Box display="flex">
           <Box alignSelf="center">
-            <Typography variant="h4"><FormattedMessage id={title} /></Typography>
+            <Typography variant="h3" fontWeight="bold"><FormattedMessage id={title} /></Typography>
           </Box>
           <Box flexGrow={1} />
           <Box>
-            <StencilStyles.PrimaryButton label={props.cancel.label} onClick={cancel.onClick} sx={{ marginRight: 1 }} />
+            <StencilStyles.SecondaryButton label={props.cancel.label} onClick={cancel.onClick} sx={{ marginRight: 1 }} />
             <StencilStyles.PrimaryButton label={props.submit.label} onClick={() => submit.onClick(selected)} />
           </Box>
         </Box>
       </Box>
 
-      <Box component={Paper} sx={{ marginTop: 1, marginBottom: 1 }}>
+      <Box component={Paper} sx={{ mt: 1, mb: 1, mr: 3, ml: 3 }}>
         <TableContainer component={Paper}>
           <Table size="small">
-            <TableHead sx={{ background: "grey" }}>
+            <TableHead sx={{ backgroundColor: "table.main" }}>
               <TableRow sx={{ borderBottom: 0 }}>
                 <TableCell colSpan={headers.length + 1} sx={{ borderBottom: 0 }}>
                   <Typography variant="h4" sx={{ marginBottom: 1 }}><FormattedMessage id={selectedTitle} /></Typography>
@@ -101,7 +101,7 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
               {selected.map((row, index) => (
                 <TableRow hover key={index}>
                   <TableCell>
-                    <IconButton onClick={() => handleChange(row, "remove")}>
+                    <IconButton sx={{color: 'uiElements.main'}} onClick={() => handleChange(row, "remove")}>
                       <DeleteOutlineIcon />
                     </IconButton>
                   </TableCell>
@@ -113,15 +113,15 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
         </TableContainer>
       </Box>
 
-      <Box component={Paper} sx={{ padding: 2, paddingBottom: 4 }}>
+      <Box component={Paper} sx={{ p: 2, pb: 4, mt: 2, mb: 2, mr: 3, ml: 3 }}>
         <StencilStyles.SearchField label={searchTitle} value={search} onChange={setSearch} 
           placeholder={intl.formatMessage({id: searchPlaceholder ? searchPlaceholder : "transferlist.search"})}/>
       </Box>
 
-      <Box sx={{ marginTop: 1 }}>
+      <Box sx={{ mt: 1, mb: 1, mr: 3, ml: 3}}>
         <TableContainer component={Paper}>
           <Table size="small">
-            <TableHead sx={{ background: "grey" }}>
+            <TableHead sx={{ backgroundColor: "table.main"  }}>
               <TableRow>
                 <TableCell sx={{ width: "80px" }} />
                 {headers.map((header, index) => (<TableCell key={index} align="left" sx={{ fontWeight: "bold" }}><FormattedMessage id={header} /></TableCell>))}
@@ -138,7 +138,7 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
               {searchItems.map((row, index) => (
                 <TableRow hover key={index}>
                   <TableCell>
-                    <IconButton onClick={() => handleChange(row, "add")} disabled={selected.includes(row)}>
+                    <IconButton sx={{color: 'uiElements.main'}} onClick={() => handleChange(row, "add")} disabled={selected.includes(row)}>
                       <AddCircleOutlineIcon />
                     </IconButton>
                   </TableCell>

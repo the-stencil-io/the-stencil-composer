@@ -1,5 +1,12 @@
 const en = {
-
+  
+  'link.value': 'Link value',
+  'link.search.title': 'Search links by value',
+  'article.links.selectedlinks': 'Selected links',
+  'article.workflows.selectedworkflows': 'Selected workflows',
+  'transferlist.noItemsSelected': 'No items selected',
+  'transferlist.search': 'Search',
+  'transferlist.noSearchResults': 'No search results found',
   'article.explorer.title': 'Article Explorer',
   
   'links.addremove': 'Add / remove links',

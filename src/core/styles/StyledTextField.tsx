@@ -1,28 +1,66 @@
 import React from 'react';
-import { TextField, TextFieldProps, FormControl, FormControlProps, InputLabel, Input, InputProps, Box, FormHelperText, InputAdornment } from '@mui/material';
+import { alpha, TextField, TextFieldProps, FormControl, FormControlProps, InputLabel, Input, InputProps, Box, FormHelperText, InputAdornment } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 import { styled } from "@mui/material/styles";
 import { FormattedMessage } from 'react-intl';
+
+/**
+const CssTextField = styled(TextField)({
+  '& label.Mui-focused': {
+    color: 'green',
+  },
+  '& .MuiInput-underline:after': {
+    borderBottomColor: 'green',
+  },
+  '& .MuiOutlinedInput-root': {
+    '& fieldset': {
+      borderColor: 'red',
+    },
+    '&:hover fieldset': {
+      borderColor: 'yellow',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: 'green',
+    },
+  },
+});
+
+
+ */
 
 
 const TextFieldRoot = styled(TextField)<TextFieldProps>(({ theme }) => ({
   marginTop: theme.spacing(2),
   color: theme.palette.primary.contrastText,
   backgroundColor: theme.palette.background.paper,
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.uiElements.main,
+    },
+  },
 }));
 
 const StyledFormControl = styled(FormControl)<FormControlProps>(({ theme }) => ({
   marginTop: theme.spacing(2),
   color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.background.paper
+  backgroundColor: theme.palette.background.paper,
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.uiElements.main,
+    },
+  },
 }));
 
-
-const StyleInputProps = styled(Input)<InputProps>(({ theme }) => ({
-  //marginTop: theme.spacing(2),
-  //color: theme.palette.primary.contrastText.,
-  backgroundColor: theme.palette.background.paper
+const StyledInputProps = styled(Input)<InputProps>(({ theme }) => ({
+  marginTop: theme.spacing(2),
+  color: theme.palette.primary.contrastText,
+  backgroundColor: theme.palette.background.paper,
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.uiElements.main,
+    },
+  },
 }));
 
 
@@ -43,7 +81,7 @@ const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
     <Box sx={{ mt: 2 }}>
       <InputLabel sx={{ fontWeight: "bold" }}>{title}</InputLabel>
       <StyledFormControl variant="outlined" fullWidth>
-        <StyleInputProps
+        <StyledInputProps
           fullWidth
           disableUnderline
           type="file"
@@ -105,11 +143,11 @@ const StyledSearchField: React.FC<StyledTextFieldProps<string>> = ({ onChange, l
       placeholder={placeholder !== undefined && placeholder !== null ? placeholder + '' : ''}
       value={value}
       onChange={({ target }) => onChange(target.value as any)}
-      sx={{maxWidth: "400px"}}
+      sx={{ maxWidth: "400px" }}
       InputProps={{
         startAdornment: (
           <InputAdornment position="start">
-            <SearchIcon />
+            <SearchIcon sx={{ color: 'uiElements.main' }} />
           </InputAdornment>
         ),
       }} />

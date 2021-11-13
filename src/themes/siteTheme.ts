@@ -97,7 +97,7 @@ const palette = {
     main: 'rgb(209, 213, 219)', // inactive item 
     dark: 'rgb(16, 185, 129)', // active item
     light: 'rgba(255, 255, 255, 0.08)', // active item hover
-    contrastText: 'rgba(252, 186, 4)' // indicative item
+    contrastText: 'rgba(253, 205, 73)' // indicative item
   },
   mainContent: {
     main: 'rgb(249, 250, 252)', // primary bg colour for behind content boxes, light gray
@@ -112,8 +112,8 @@ const palette = {
     contrastText: ''
   },
   table: {
-    main: '',
-    dark: '#F3F4F6', // table header gray
+    main: '#F3F4F6', // table header gray
+    dark: '#e8eaed', // table header darker gray
     light: '',
     contrastText: ''
   },
