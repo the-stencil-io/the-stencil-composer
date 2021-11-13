@@ -297,9 +297,6 @@ const siteTheme = createTheme({
           transition: 'unset'
         }
       },
-      defaultProps: {
-        square: true,
-      }
     },
 
 

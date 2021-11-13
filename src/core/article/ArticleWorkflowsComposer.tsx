@@ -1,10 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@mui/styles';
 import {
-  Theme,
-  Checkbox, AppBar, Toolbar,
-  Typography, Table, Card, Button, ButtonGroup, TableBody, TableCell,
-  TableRow, TableHead, IconButton
+  Theme, Box,
+  Checkbox, AppBar, Toolbar, OutlinedInput,
+  Typography, Table, Card, Button, ButtonGroup,
+
+  TableContainer,
+  TableBody, TableCell,
+  TableRow, TableHead, IconButton, Paper
 } from '@mui/material';
 
 import AddIcon from '@mui/icons-material/Add';
@@ -17,6 +20,7 @@ import { FormattedMessage } from 'react-intl';
 import { WorkflowComposer } from '../workflow/WorkflowComposer';
 import { WorkflowEdit } from '../workflow/WorkflowEdit';
 import { Composer, StencilClient } from '../context';
+import StencilStyles from '../styles';
 
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -71,7 +75,7 @@ const useStyles = makeStyles((theme: Theme) => ({
 
 
 const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
-  const classes = useStyles();
+
   const { service, actions, site, session } = Composer.useComposer();
   const view = session.getArticleView(articleId);
 
@@ -113,55 +117,24 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
 
   return (
     <>
-      {workflowComposerOpen ? <WorkflowComposer onClose={() => setWorkflowComposerOpen(false)} /> : null}
-      {workflowEditOpen ? <WorkflowEdit workflowId={workflowEditOpen} onClose={() => setWorkflowEditOpen(undefined)} /> : null}
-
-      <AppBar className={classes.appBar}>
-        <Toolbar>
-          <Typography variant="h3" className={classes.title}>{view.article.body.name}{": "}
-            <FormattedMessage id="resource.edit.workflows" /></Typography>
-          <ButtonGroup variant="text" className={classes.buttonGroup}>
-            <Button onClick={() => setSelectedWorkflows(view.workflows.map(v => v.workflow.id))} className={classes.button}><CloseIcon /><FormattedMessage id='button.cancel' /></Button>
-            <Button className={classes.button} onClick={() => setWorkflowComposerOpen(true)}><AddIcon /><FormattedMessage id='workflow.create' /></Button>
-            <Button onClick={handleSave} className={classes.button} autoFocus ><CheckIcon /><FormattedMessage id='button.apply' /></Button>
-          </ButtonGroup>
-        </Toolbar>
-      </AppBar>
-
-      <div className={classes.root}>
-        <Card className={classes.card}>
-          <Typography variant="h3" className={classes.title}><FormattedMessage id="article.workflows.siteworkflows" />: {workflows.length}</Typography>
-          <Table size="small">
-            <TableHead>
-              <TableRow>
-                <TableCell className={classes.bold} align="center"><FormattedMessage id="button.addremove" /></TableCell>
-                <TableCell className={classes.bold} align="left">  <FormattedMessage id="locales" /></TableCell>
-                <TableCell className={classes.bold} align="left">  <FormattedMessage id="workflow.technicalname" /></TableCell>
-                <TableCell className={classes.bold} align="center"><FormattedMessage id="workflow.edit.title" /></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {workflows.map((workflow, index) => (
-                <TableRow hover key={index}>
-                  <TableCell className={classes.tableCell} align="center">
-                    <Checkbox size="small" color="secondary"
-                      checked={selectedWorkflows.includes(workflow.id) === true}
-                      onChange={(event) => handleChange(event, workflow.id)} />
-                  </TableCell>
-                  <TableCell className={classes.tableCell} align="left">{workflow.body.labels.map((label) => site.locales[label.locale].body.value).join(", ")}</TableCell>
-                  <TableCell className={classes.tableCell} align="left">{workflow.body.value}</TableCell>
-                  <TableCell className={classes.tableCell} align="center">
-                    <IconButton onClick={() => setWorkflowEditOpen(workflow.id)}>
-                      <EditIcon className={classes.icon} />
-                    </IconButton>
-                  </TableCell>
-
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </Card>
-      </div>
+      <StencilStyles.TransferList
+        title="article.workflows.siteworkflows"
+        searchTitle="workflow.technicalname"
+        selectedTitle="article.workflows.selectedworkflows"
+        headers={["workflow.technicalname"]}
+        rows={workflows.map(row => row.id)}
+        filterRow={(row, search) => {
+          const workflow = site.workflows[row];
+          return workflow.body.value.toLowerCase().indexOf(search) > -1;
+        }}
+        renderCells={(row) => [site.workflows[row].body.value]}
+        selected={selectedWorkflows}
+        submit={{
+          title: "button.apply",
+          disabled: false,
+          onClick: () => {}
+        }}
+      />
     </>
   );
 }

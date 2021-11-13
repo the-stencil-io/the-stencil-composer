@@ -1,5 +1,7 @@
 import React from 'react';
-import { TextField, TextFieldProps, FormControl, FormControlProps, InputLabel, Input, InputProps, Box, FormHelperText } from '@mui/material';
+import { TextField, TextFieldProps, FormControl, FormControlProps, InputLabel, Input, InputProps, Box, FormHelperText, InputAdornment } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
+
 import { styled } from "@mui/material/styles";
 import { FormattedMessage } from 'react-intl';
 
@@ -39,7 +41,7 @@ const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
   const title = <FormattedMessage id={label} />;
   return (
     <Box sx={{ mt: 2 }}>
-      <InputLabel sx={{fontWeight: "bold" }}>{title}</InputLabel>
+      <InputLabel sx={{ fontWeight: "bold" }}>{title}</InputLabel>
       <StyledFormControl variant="outlined" fullWidth>
         <StyleInputProps
           fullWidth
@@ -62,7 +64,7 @@ const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
   const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
   return (
     <TextFieldRoot fullWidth
-    disabled={disabled}
+      disabled={disabled}
       variant="outlined"
       label={<FormattedMessage id={label} />}
       required={required}
@@ -89,5 +91,29 @@ const StyledNumberField: React.FC<StyledTextFieldProps<number>> = ({ onChange, l
   );
 }
 
+const StyledSearchField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
+  const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
+  return (
+    <TextFieldRoot fullWidth
+      disabled={disabled}
+      variant="outlined"
+      label={<FormattedMessage id={label} />}
+      required={required}
+      type={"string"}
+      helperText={helperTextLocalized}
+      placeholder={placeholder + ""}
+      value={value}
+      onChange={({ target }) => onChange(target.value as any)}
+      sx={{maxWidth: "400px"}}
+      InputProps={{
+        startAdornment: (
+          <InputAdornment position="start">
+            <SearchIcon />
+          </InputAdornment>
+        ),
+      }} />
+  );
+}
+
 export type { StyledTextFieldProps }
-export { StyledTextField, StyledNumberField, StyledFileField }
+export { StyledTextField, StyledNumberField, StyledFileField, StyledSearchField }
