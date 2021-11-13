@@ -55,6 +55,10 @@ const Toolbar: React.FC<{}> = () => {
       actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
       actions.handleSecondary('toolbar.workflows')
 
+    } else if (newValue === 'toolbar.filters') {
+      actions.handleTabAdd({ id: 'filters', label: "Filters" });
+      actions.handleSecondary('toolbar.filters')
+
     } else if (newValue === 'toolbar.releases') {
       actions.handleTabAdd({ id: 'releases', label: "Releases" })
 
@@ -100,7 +104,12 @@ const Toolbar: React.FC<{}> = () => {
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
         </StyledTabs>
         <Box flexGrow={1} />
-        <StyledTabs >
+        
+        <StyledTabs orientation="vertical"
+          onChange={handleChange}
+          sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
+          value={session.secondary}>
+
           <StyledTab value='toolbar.filters' icon={<SettingsOutlinedIcon />} />
         </StyledTabs>
       </Box>
