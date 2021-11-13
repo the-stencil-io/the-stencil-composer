@@ -18,16 +18,11 @@ const contentStyle = { flexGrow: 1, overflow: "auto" };
 
 const Container: React.FC<ContainerProps> = (components) => {
   const layout = useLayout();
-  const theme = useTheme();
-  const actions = layout.actions;
   const drawerOpen = layout.session.drawer;
   const { main, secondary, toolbar } = components;
   const mainWindow = React.useMemo(() => main, [main]);
   const secondaryWindow = React.useMemo(() => secondary, [secondary]);
   const toolbarWindow = React.useMemo(() => toolbar, [toolbar]);
-
-  return React.useMemo(() => {
-    console.log("init layout");
 
     return (<Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
       <CssBaseline />
@@ -65,8 +60,7 @@ const Container: React.FC<ContainerProps> = (components) => {
         </Box>
       </main>
     </Box>
-    )
-  }, [drawerOpen, actions, mainWindow, toolbarWindow, secondaryWindow, theme]);
+    );
 }
 
 export type { ContainerProps };

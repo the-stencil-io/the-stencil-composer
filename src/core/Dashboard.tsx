@@ -65,7 +65,7 @@ type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
 const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'articles', label: () => "Articles" }),
+    onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
     title: "composer.article.title",
     desc: "composer.article.desc",
     color: theme.palette.article?.main,
@@ -85,7 +85,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   },
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'links', label: () =>"Links" }),
+    onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
     title: "composer.link.title",
     desc: "composer.link.desc",
     color: theme.palette.link?.main,
@@ -96,7 +96,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'workflows', label: () =>"Workflows" }),
+    onView: () => layout.actions.handleTabAdd({ id: 'workflows', label: "Workflows" }),
     title: "composer.workflow.title",
     desc: "composer.workflow.desc",
     color: theme.palette.workflow?.main,
@@ -107,7 +107,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'locales', label: () =>"Locales" }),
+    onView: () => layout.actions.handleTabAdd({ id: 'locales', label: "Locales" }),
     title: "composer.locale.title",
     desc: "composer.locale.desc",
     color: theme.palette.locale?.main,
@@ -118,7 +118,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'releases', label: () => "Releases" }),
+    onView: () => layout.actions.handleTabAdd({ id: 'releases', label: "Releases" }),
     title: "composer.release.title",
     desc: "composer.release.desc",
     color: theme.palette.release?.main,

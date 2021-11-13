@@ -148,22 +148,13 @@ namespace Composer {
         value2: props.secondary ? props.locale : undefined
       };
 
-      let label: string | React.ReactElement;
-      let icon: (() => React.ReactElement) | undefined = undefined;
-
+      let icon: React.ReactElement | undefined = undefined;
       if (props.type === "ARTICLE_PAGES") {
-        icon = () => <ArticleTabIndicator article={props.article} type={props.type} />;
+        icon = <ArticleTabIndicator article={props.article} type={props.type} />;
       }
-
-      if (props.type === "ARTICLE_PAGES" || props.type === "ARTICLE_LINKS" || props.type === "ARTICLE_WORKFLOWS") {
-        label = <ArticleTab article={props.article} type={props.type} />;
-      } else {
-        label = props.article.body.name;
-      }
-
       const tab: Composer.Tab = {
         id: props.article.id,
-        label: () => label,
+        label: props.article.body.name,
         icon,
         data: Composer.createTab({ nav })
       };
@@ -171,8 +162,11 @@ namespace Composer {
       const oldTab = layout.session.findTab(props.article.id);
       if (oldTab !== undefined) {
         layout.actions.handleTabData(props.article.id, (oldData: Composer.TabData) => oldData.withNav(nav));
+      } else {
+        // open or add the tab
+        layout.actions.handleTabAdd(tab);  
       }
-      layout.actions.handleTabAdd(tab);
+      
     }
 
     const findTab = (article: StencilClient.Article): Composer.Tab | undefined => {
@@ -206,29 +200,16 @@ namespace Composer {
   };
 }
 
-const ArticleTab: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article, type }) => {
-  // const intl = useIntl();
-
-  /* TODO:::
-  if(type === "ARTICLE_PAGES") {
-    return <span>{`${intl.formatMessage({id: "pages"})}: ${article.body.name}`}{unsaved ? " * ": ""}</span>;
-  } else if(type === "ARTICLE_LINKS")  {
-    return <span>{`${intl.formatMessage({id: "links"})}: ${article.body.name}`}</span>;
-  } else if(type === "ARTICLE_WORKFLOWS") {
-    return <span>{`${intl.formatMessage({id: "workflows"})}: ${article.body.name}`}</span>;
-  }*/
-
-  return <span>{`${article.body.name}`}</span>;
-}
-
 const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article, type }) => {
   const theme = useTheme();
-  const unsaved = Composer.useUnsaved(article);
+  const { isArticleSaved } = Composer.useComposer();
+  const saved = isArticleSaved(article);
+  console.log("INDICATOR", saved);
   return <span style={{ 
     paddingLeft: "5px", 
     fontSize: '30px',
     color: theme.palette.explorerItem.contrastText, 
-    display: unsaved ? undefined : "none" 
+    display: saved ? "none" : undefined 
     }}>*</span>
 }
 
