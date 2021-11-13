@@ -6,6 +6,7 @@ enum ActionType {
   removeTab = "removeTab",
   changeTab = "changeTab",
   closeTabs = "closeTabs",
+  closeTabCurrent = "closeTabCurrent",
   setTabData = "setTabData",
   setSecondary = "setSecondary"
 }
@@ -26,6 +27,7 @@ const ActionBuilder = {
   removeTab: (removeTab: string): Action => ({ type: ActionType.removeTab, removeTab }),
   changeTab: (changeTab: number): Action => ({ type: ActionType.changeTab, changeTab }),
   closeTabs: (): Action => ({ type: ActionType.closeTabs }),
+  closeTabCurrent: (): Action => ({ type: ActionType.closeTabCurrent }),
   setSecondary: (newItemId?: string): Action => ({ type: ActionType.setSecondary, setSecondary: newItemId }),
   setTabData: (id: string, updateCommand: (oldData: any) => any): Action => ({
     type: ActionType.setTabData,
@@ -61,6 +63,10 @@ class ReducerDispatch implements Session.Actions {
   handleTabData(tabId: string, updateCommand: (oldData: any) => any) {
     this._sessionDispatch(ActionBuilder.setTabData(tabId, updateCommand));
   }
+  handleTabCloseCurrent() {
+    this._sessionDispatch(ActionBuilder.closeTabCurrent());   
+  }
+
 }
 
 const Reducer = (state: Session.Instance, action: Action): Session.Instance => {
@@ -113,6 +119,11 @@ const Reducer = (state: Session.Instance, action: Action): Session.Instance => {
     }
     case ActionType.closeTabs: {
       return state.deleteTabs();
+    }
+    case ActionType.closeTabCurrent: {
+      const active = state.history.open;
+      const tab = state.tabs[active];
+      return state.deleteTab(tab.id);
     }
   }
 }

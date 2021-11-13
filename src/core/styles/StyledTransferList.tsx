@@ -1,8 +1,9 @@
 import React from 'react';
-import { Box, Typography, Table, TableContainer, TableBody, TableCell, TableRow, TableHead, Paper } from '@mui/material';
+import { Box, Typography, Table, TableContainer, TableBody, TableCell, TableRow, TableHead, Paper, IconButton } from '@mui/material';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
-
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 import StencilStyles from '../styles';
 
@@ -11,6 +12,7 @@ interface StyledTransferListProps {
   title: string;
   selectedTitle: string;
   searchTitle: string;
+  searchPlaceholder?: string;
   selected: string[];
   headers: string[];
 
@@ -18,8 +20,13 @@ interface StyledTransferListProps {
   filterRow: (id: string, search: string) => boolean;
   renderCells: (id: string) => (string | React.ReactElement)[];
 
+  cancel: {
+    label: string;
+    onClick: () => void;
+  };
+
   submit: {
-    title: string;
+    label: string;
     disabled: boolean;
     onClick: (selected: string[]) => void;
   };
@@ -27,12 +34,28 @@ interface StyledTransferListProps {
 
 
 const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
-  const { title, headers, selected, searchTitle, selectedTitle, rows, renderCells, filterRow } = props;
+  const { title, headers, selected: initSelected, searchTitle, selectedTitle, searchPlaceholder, rows, renderCells, filterRow, cancel, submit } = props;
   const [search, setSearch] = React.useState("");
   const [searchResult, setSearchResult] = React.useState(rows);
+  const [selected, setSelected] = React.useState(initSelected);
+  const searchItems = search ? searchResult : rows;
+  const intl = useIntl(); 
+
+  const handleChange = (id: string, command: "add" | "remove") => {
+    const currentIndex = selected.indexOf(id);
+    const newSelection = [...selected];
+
+    if (selected && currentIndex < 0 && command === "add") {
+      newSelection.push(id);
+    } else if (currentIndex > -1 && command === "remove") {
+      newSelection.splice(currentIndex, 1);
+    }
+    setSelected(newSelection);
+  };
+
 
   React.useEffect(() => {
-    if (!search) {
+    if (!search) {  
       return;
     }
     setSearchResult(rows.filter(row => filterRow(row, search.toLowerCase())));
@@ -42,26 +65,46 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
   return (
     <>
       <Box sx={{ paddingBottom: 1 }}>
-        <Typography variant="h4"><FormattedMessage id={title} /></Typography>
+        <Box display="flex">
+          <Box alignSelf="center">
+            <Typography variant="h4"><FormattedMessage id={title} /></Typography>
+          </Box>
+          <Box flexGrow={1} />
+          <Box>
+            <StencilStyles.PrimaryButton label={props.cancel.label} onClick={cancel.onClick} sx={{ marginRight: 1 }} />
+            <StencilStyles.PrimaryButton label={props.submit.label} onClick={() => submit.onClick(selected)} />
+          </Box>
+        </Box>
       </Box>
-
 
       <Box component={Paper} sx={{ marginTop: 1, marginBottom: 1 }}>
         <TableContainer component={Paper}>
           <Table size="small">
-            <TableHead sx={{ background: "grey"}}>
-              <TableRow sx={{borderBottom: 0}}>
-                <TableCell colSpan={headers.length} sx={{borderBottom: 0}}>
-                  <Typography variant="h4" sx={{marginBottom: 1}}><FormattedMessage id={selectedTitle} /></Typography>
+            <TableHead sx={{ background: "grey" }}>
+              <TableRow sx={{ borderBottom: 0 }}>
+                <TableCell colSpan={headers.length + 1} sx={{ borderBottom: 0 }}>
+                  <Typography variant="h4" sx={{ marginBottom: 1 }}><FormattedMessage id={selectedTitle} /></Typography>
                 </TableCell>
               </TableRow>
               <TableRow>
+                <TableCell sx={{ width: "80px" }} />
                 {headers.map((header, index) => (<TableCell key={index} align="left" sx={{ fontWeight: "bold" }}><FormattedMessage id={header} /></TableCell>))}
               </TableRow>
             </TableHead>
             <TableBody>
+              {selected.length === 0 ? <TableRow>
+                <TableCell colSpan={headers.length + 1}>
+                  <Typography variant="h5" sx={{ marginBottom: 1, marginTop: 1 }}><FormattedMessage id="transferlist.noItemsSelected" /></Typography>
+                </TableCell>
+              </TableRow> : null}
+
               {selected.map((row, index) => (
                 <TableRow hover key={index}>
+                  <TableCell>
+                    <IconButton onClick={() => handleChange(row, "remove")}>
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </TableCell>
                   {renderCells(row).map((cell, cellIndex) => (<TableCell align="left" key={cellIndex}>{cell}</TableCell>))}
                 </TableRow>
               ))}
@@ -71,7 +114,8 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
       </Box>
 
       <Box component={Paper} sx={{ padding: 2, paddingBottom: 4 }}>
-        <StencilStyles.SearchField label={searchTitle} value={search} onChange={setSearch} />
+        <StencilStyles.SearchField label={searchTitle} value={search} onChange={setSearch} 
+          placeholder={intl.formatMessage({id: searchPlaceholder ? searchPlaceholder : "transferlist.search"})}/>
       </Box>
 
       <Box sx={{ marginTop: 1 }}>
@@ -79,12 +123,25 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
           <Table size="small">
             <TableHead sx={{ background: "grey" }}>
               <TableRow>
+                <TableCell sx={{ width: "80px" }} />
                 {headers.map((header, index) => (<TableCell key={index} align="left" sx={{ fontWeight: "bold" }}><FormattedMessage id={header} /></TableCell>))}
               </TableRow>
             </TableHead>
             <TableBody>
-              {searchResult.map((row, index) => (
+
+              {searchItems.length === 0 ? <TableRow>
+                <TableCell colSpan={headers.length + 1}>
+                  <Typography variant="h5" sx={{ marginBottom: 1, marginTop: 1 }}><FormattedMessage id="transferlist.noSearchResults" /></Typography>
+                </TableCell>
+              </TableRow> : null}
+
+              {searchItems.map((row, index) => (
                 <TableRow hover key={index}>
+                  <TableCell>
+                    <IconButton onClick={() => handleChange(row, "add")} disabled={selected.includes(row)}>
+                      <AddCircleOutlineIcon />
+                    </IconButton>
+                  </TableCell>
                   {renderCells(row).map((cell, cellIndex) => (<TableCell align="left" key={cellIndex}>{cell}</TableCell>))}
                 </TableRow>
               ))}

@@ -40,6 +40,7 @@ declare namespace Session {
     handleTabData(tabId: string, updateCommand: (oldData: any) => any): void;
     handleTabChange(tabIndex: number): void;
     handleTabClose(tab: Session.Tab<any>): void;
+    handleTabCloseCurrent(): void;
     handleTabCloseAll(): void;
   }
 }

@@ -69,7 +69,7 @@ const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
       label={<FormattedMessage id={label} />}
       required={required}
       helperText={helperTextLocalized}
-      placeholder={placeholder}
+      placeholder={placeholder !== null && placeholder !== undefined ? placeholder : ''}
       value={value}
       onChange={({ target }) => onChange(target.value)} />
   );
@@ -92,7 +92,8 @@ const StyledNumberField: React.FC<StyledTextFieldProps<number>> = ({ onChange, l
 }
 
 const StyledSearchField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
-  const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
+  const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : '';
+
   return (
     <TextFieldRoot fullWidth
       disabled={disabled}
@@ -101,7 +102,7 @@ const StyledSearchField: React.FC<StyledTextFieldProps<string>> = ({ onChange, l
       required={required}
       type={"string"}
       helperText={helperTextLocalized}
-      placeholder={placeholder + ""}
+      placeholder={placeholder !== undefined && placeholder !== null ? placeholder + '' : ''}
       value={value}
       onChange={({ target }) => onChange(target.value as any)}
       sx={{maxWidth: "400px"}}
