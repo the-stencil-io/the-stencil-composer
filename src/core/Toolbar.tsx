@@ -37,35 +37,35 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 
 
 
+
 const Toolbar: React.FC<{}> = () => {
   const { actions, session } = Composer.useLayout();
   const drawerOpen = session.drawer;
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     if (newValue === 'toolbar.dashboard') {
-      actions.handleTabAdd({ id: 'newItem', label: () => "Dashboard" });
+      actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
 
     } else if (newValue === 'toolbar.articles') {
       actions.handleSecondary("toolbar.articles")
 
     } else if (newValue === 'toolbar.links') {
-      actions.handleTabAdd({ id: 'links', label: () => "Links" })
+      actions.handleTabAdd({ id: 'links', label: "Links" })
 
     } else if (newValue === 'toolbar.workflows') {
-      actions.handleTabAdd({ id: 'workflows', label: () => "Workflows" });
-      actions.handleSecondary('toolbar.workflows')
+      actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
 
     } else if (newValue === 'toolbar.releases') {
-      actions.handleTabAdd({ id: 'releases', label: () => "Releases" })
+      actions.handleTabAdd({ id: 'releases', label: "Releases" })
 
     } else if (newValue === 'toolbar.locales') {
-      actions.handleTabAdd({ id: 'locales', label: () => "Locales" })
+      actions.handleTabAdd({ id: 'locales', label: "Locales" })
 
     } else if (newValue === 'toolbar.import') {
-      actions.handleTabAdd({ id: 'import', label: () => 'Import' })
+      actions.handleTabAdd({ id: 'import', label: 'Import' })
 
     } else if (newValue === 'toolbar.help') {
-      actions.handleTabAdd({ id: 'help', label: () => "Help" })
+      actions.handleTabAdd({ id: 'help', label: "Help" })
 
     } else if (newValue === 'toolbar.expand') {
       actions.handleDrawerOpen(!drawerOpen)
@@ -76,7 +76,7 @@ const Toolbar: React.FC<{}> = () => {
   React.useLayoutEffect(() => {
     console.log("init toolbar");
     actions.handleSecondary("toolbar.articles")
-    actions.handleTabAdd({ id: 'newItem', label: () => "Dashboard" });
+    actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
   }, [actions]);
 
   return (
@@ -101,12 +101,8 @@ const Toolbar: React.FC<{}> = () => {
         </StyledTabs>
         <Box flexGrow={1} sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} />
 
-        <StyledTabs orientation="vertical"
-          onChange={handleChange}
-          sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
-          value={session.secondary}>
-
-          <StyledTab value='toolbar.filters' icon={<SettingsOutlinedIcon />} />
+        <StyledTabs orientation="vertical" sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} value="default-is-unselected-material-issue">
+          <StyledTab icon={<SettingsOutlinedIcon />} />
         </StyledTabs>
       </Box>
     </>

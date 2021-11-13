@@ -12,8 +12,12 @@ const Tabs: React.FC<{}> = () => {
   const active = session.history.open;
   const tabs = session.tabs;
 
+  console.log("tabbbbbb");
 
   return React.useMemo(() => {
+    
+    console.log("RENDERING TABS", tabs);
+    
     const handleTabChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
       actions.handleTabChange(newValue);
     };
@@ -26,11 +30,11 @@ const Tabs: React.FC<{}> = () => {
     return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
       {tabs.map((tab, index) => (
         <MuiTab key={index} value={index} wrapped={true}
-          label={tab.label()}
+          label={tab.label}
           iconPosition="end"
           sx={{ minHeight: 'unset' }}
           icon={(<>
-            {tab.icon ? tab.icon() : null}
+            {tab.icon ? tab.icon : null}
             <CloseIcon color="disabled"
               onClick={(e) => handleTabClose(e, tab)}
               sx={{
