@@ -91,13 +91,13 @@ const palette = {
     main: 'rgb(17, 24, 39)', // background colour, dark grey-black
     dark: '',
     light: '',
-    contrastText: '' // inactive item
+    contrastText: '' 
   },
   explorerItem: {
     main: 'rgb(209, 213, 219)', // inactive item 
     dark: 'rgb(16, 185, 129)', // active item
     light: 'rgba(255, 255, 255, 0.08)', // active item hover
-    contrastText: ''
+    contrastText: 'rgba(252, 186, 4)' // indicative item
   },
   mainContent: {
     main: 'rgb(249, 250, 252)', // primary bg colour for behind content boxes, light gray

@@ -55,10 +55,6 @@ const Toolbar: React.FC<{}> = () => {
       actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
       actions.handleSecondary('toolbar.workflows')
 
-    } else if (newValue === 'toolbar.filters') {
-      actions.handleTabAdd({ id: 'filters', label: "Filters" });
-      actions.handleSecondary('toolbar.filters')
-
     } else if (newValue === 'toolbar.releases') {
       actions.handleTabAdd({ id: 'releases', label: "Releases" })
 
