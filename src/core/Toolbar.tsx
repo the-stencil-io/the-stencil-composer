@@ -4,7 +4,7 @@ import { Tabs, Tab, Box, useTheme, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
-import ArticleRoundedIcon from "@mui/icons-material/ArticleRounded";
+import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
 import LinkIcon from '@mui/icons-material/Link';
 import TranslateIcon from '@mui/icons-material/Translate';
@@ -12,6 +12,9 @@ import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
+import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
+import SaveIcon from '@mui/icons-material/Save';
+import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { Composer } from './context';
 
@@ -41,10 +44,13 @@ const Toolbar: React.FC<{}> = () => {
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
     if (newValue === 'toolbar.dashboard') {
       actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+
     } else if (newValue === 'toolbar.articles') {
       actions.handleSecondary("toolbar.articles")
+
     } else if (newValue === 'toolbar.links') {
       actions.handleTabAdd({ id: 'links', label: "Links" })
+
     } else if (newValue === 'toolbar.workflows') {
       actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
       actions.handleSecondary('toolbar.workflows')
@@ -74,23 +80,32 @@ const Toolbar: React.FC<{}> = () => {
   }, [actions]);
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', width: "100%", height: "100%", backgroundColor: "explorer.main" }}>
-      <StyledTabs orientation="vertical" 
-        onChange={handleChange}
-        sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
-        value={session.secondary}>
+    <>
+      <Box sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column', width: "100%", height: "100%", backgroundColor: "explorer.main" }}>
+        <StyledTabs orientation="vertical"
+          onChange={handleChange}
+          sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
+          value={session.secondary}>
 
-        <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />
-        <StyledTab value='toolbar.articles' icon={<ArticleRoundedIcon />} />
-        <StyledTab value='toolbar.links' icon={<LinkIcon />} />
-        <StyledTab value='toolbar.workflows' icon={<WorkOutlineIcon />} />
-        <StyledTab value='toolbar.releases' icon={<NewReleasesOutlinedIcon />} />
-        <StyledTab value='toolbar.locales' icon={<TranslateIcon />} />
-        <StyledTab value='toolbar.import' icon={<ImportExportIcon />} />
-        <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
-        <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
-      </StyledTabs>
-    </Box>);
+          <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />
+          <StyledTab value='toolbar.save' icon={<SaveIcon />} />
+          <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
+          <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
+          <StyledTab value='toolbar.links' icon={<LinkIcon />} />
+          <StyledTab value='toolbar.workflows' icon={<WorkOutlineIcon />} />
+          <StyledTab value='toolbar.releases' icon={<NewReleasesOutlinedIcon />} />
+          <StyledTab value='toolbar.locales' icon={<TranslateIcon />} />
+          <StyledTab value='toolbar.import' icon={<ImportExportIcon />} />
+          <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
+          <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
+        </StyledTabs>
+        <Box flexGrow={1} />
+        <StyledTabs >
+          <StyledTab value='toolbar.filters' icon={<SettingsOutlinedIcon />} />
+        </StyledTabs>
+      </Box>
+    </>
+  );
 }
 
 
