@@ -36,21 +36,19 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 }));
 
 
-
-
-
 const LocaleFilter: React.FC<{}> = () => {
-  const site = Composer.useSite();
+  const {site, session, actions} = Composer.useComposer();
   const locales = Object.values(site.locales);
-  const [selected, setSelected] = React.useState();
+  const selected = session.filter.locale ? session.filter.locale : '';
+console.log(session.filter);
 
   return (<StyledTabs orientation="vertical" sx={{ borderRight: 1, borderColor: 'explorerItem.dark', maxHeight: '200px' }} value={selected}
-    onChange={(_event, newValue) => setSelected(newValue)}
+    onChange={(_event, newValue) => actions.handleLocaleFilter(newValue)}
     variant="scrollable"
     scrollButtons="auto">{
       locales.map((locale) => <StyledTab key={locale.id} value={locale.id} label={locale.body.value} />)
     }
-    <StyledTab icon={<SettingsOutlinedIcon />} />
+    <StyledTab icon={<SettingsOutlinedIcon />} value=''/>
   </StyledTabs>);
 }
 

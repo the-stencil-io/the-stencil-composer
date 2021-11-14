@@ -88,7 +88,6 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
   const { session, isArticleSaved } = Composer.useComposer();
   const view = session.getArticleView(articleId);
   const { article, pages, workflows, links } = view;
-  const label = article.body.name;
   const saved = isArticleSaved(article);
 
   const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
@@ -104,13 +103,14 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
     }
     return update.saved;
   }
-
+  
+  const articleName = session.getArticleName(view.article.id);
   return (
     <>
       { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
       { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
 
-      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
+      <StencilStyles.TreeItem nodeId={article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
         <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
         </StencilStyles.TreeItem>

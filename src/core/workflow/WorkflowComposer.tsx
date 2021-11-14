@@ -15,8 +15,6 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [changeInProgress, setChangeInProgress] = React.useState(false);
   const locales = labels.map(l => l.locale);
 
-  console.log(labels);
-
   const handleCreate = () => {
     const entity: StencilClient.CreateWorkflow = { value: technicalname, articles: articleId, devMode: undefined, labels };
     service.create().workflow(entity).then(success => {
