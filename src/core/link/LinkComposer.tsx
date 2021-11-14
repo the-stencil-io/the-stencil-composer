@@ -3,22 +3,22 @@ import { Checkbox, ListItemText } from '@mui/material';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
-
+import { LocaleLabels } from '../locale';
 
 
 const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { service, actions, session, site } = Composer.useComposer();
-  const siteLocales: StencilClient.SiteLocale[] = Object.values(site.locales);
 
   const [type, setType] = React.useState<'internal' | 'external' | 'phone' | string>('internal');
   const [value, setValue] = React.useState('');
-  const [labelValue, setLabelValue] = React.useState('');
-  const [locales, setLocales] = React.useState<StencilClient.LocaleId[]>([]);
-  const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
+  const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
+  const [changeInProgress, setChangeInProgress] = React.useState(false);
+  const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([])
+  const locales = labels.map(l => l.locale);
   const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateLink = { type, value, labelValue, locales, articles: articleId };
+    const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels };
     service.create().link(entity).then(success => {
       console.log(success)
       onClose();
@@ -30,39 +30,20 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       color="link.main" title="link.composer.title"
-      submit={{ title: "button.create", onClick: handleCreate, disabled: !value || !locales.length || !labelValue }}>
+      submit={{ title: "button.create", onClick: handleCreate, disabled: !value || changeInProgress }}>
 
       <>
+        <LocaleLabels
+          onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
+          onChangeStart={() => setChangeInProgress(true)}
+          selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
+
         <StencilStyles.Select label='link.type' selected={type} onChange={setType}
           items={[
             { id: 'internal', value: 'link.type.internal' },
             { id: 'external', value: 'link.type.external' },
             { id: 'phone', value: 'link.type.phone' }
           ]} />
-
-        <StencilStyles.SelectMultiple label='locale' helperText='select.multiple'
-          selected={locales}
-          items={siteLocales.map(locale => ({ id: locale.id, value: locale.body.value }))}
-          onChange={(locale: StencilClient.LocaleId[]) => {
-            if (articleId) {
-              const newArticleId = [...articleId]
-              const articlesForNewLocale = session.getArticlesForLocales(locale).map(article => article.id);
-              for (const nextId of articleId) {
-                if (!articlesForNewLocale.includes(nextId)) {
-                  const index = newArticleId.indexOf(nextId);
-                  newArticleId.splice(index, 1);
-                }
-              }
-              setArticleId(newArticleId);
-            }
-            setLocales(locale);
-          }}
-        />
-
-        <StencilStyles.TextField label='link.composer.descriptionlabel' helperText='link.composer.descriptionhelper'
-          required
-          value={labelValue}
-          onChange={setLabelValue} />
 
         <StencilStyles.TextField label='value' helperText='link.composer.valuehelper'
           required

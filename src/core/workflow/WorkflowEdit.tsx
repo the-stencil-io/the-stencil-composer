@@ -1,10 +1,12 @@
 import React from 'react';
-import { Theme, Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
+import { Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
+import { LocaleLabels } from '../locale';
+
 
 
 interface WorkflowEditProps {
@@ -20,9 +22,11 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
   const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
+  const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
+  const [changeInProgress, setChangeInProgress] = React.useState(false);
 
   const handleCreate = () => {
-    const entity: StencilClient.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels: undefined, devMode };
+    const entity: StencilClient.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels, devMode };
     service.update().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -34,8 +38,14 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       color="workflow.main"
       title="workflow.edit.title"
-      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname }}>
+      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       <>
+        <LocaleLabels
+          onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
+          onChangeStart={() => setChangeInProgress(true)}
+          selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
+
+
         <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname'
           value={technicalname}
           onChange={setTechnicalname} />

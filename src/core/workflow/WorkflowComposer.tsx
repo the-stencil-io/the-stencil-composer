@@ -4,21 +4,21 @@ import { ListItemText, Checkbox } from '@mui/material';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
-
+import { LocaleLabels } from '../locale';
 
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { service, actions, site, session } = Composer.useComposer();
-  const siteLocales: StencilClient.SiteLocale[] = Object.values(site.locales);
-
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
-
-  const [locales, setLocales] = React.useState<StencilClient.LocaleId[]>([]);
   const [technicalname, setTechnicalname] = React.useState('');
-  const [name, setName] = React.useState('');
+  const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
+  const [changeInProgress, setChangeInProgress] = React.useState(false);
+  const locales = labels.map(l => l.locale);
+
+  console.log(labels);
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateWorkflow = { value: technicalname, locales, labelValue: name, articles: articleId, devMode: undefined };
+    const entity: StencilClient.CreateWorkflow = { value: technicalname, articles: articleId, devMode: undefined, labels };
     service.create().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -31,35 +31,16 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       color="workflow.main"
       title="workflow.composer.title"
-      submit={{ title: "button.add", onClick: handleCreate, disabled: !name || !technicalname }}>
+      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       <>
-        <StencilStyles.SelectMultiple label='locale'
-          selected={locales}
-          items={siteLocales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
-          helperText="select.multiple"
-          onChange={(locale: StencilClient.LocaleId[]) => {
-            if (articleId) {
-              const newArticleId = [...articleId]
-              const articlesForNewLocale = session.getArticlesForLocales(locale).map(article => article.id);
-              for (const nextId of articleId) {
-                if (!articlesForNewLocale.includes(nextId)) {
-                  const index = newArticleId.indexOf(nextId);
-                  newArticleId.splice(index, 1);
-                }
-              }
-              setArticleId(newArticleId);
-            }
-            setLocales(locale);
-          }}
-        />
+        <LocaleLabels
+          onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
+          onChangeStart={() => setChangeInProgress(true)}
+          selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
         <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname.description'
           value={technicalname}
           onChange={setTechnicalname} />
-
-        <StencilStyles.TextField label='workflow.composer.name' helperText='workflow.composer.helper'
-          value={name}
-          onChange={setName} />
 
         <StencilStyles.SelectMultiple label='composer.select.article'
           multiline
@@ -72,10 +53,9 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             value: (<>
               <Checkbox checked={articleId.indexOf(article.id) > -1} />
               <ListItemText primary={article.body.name} />
-              </>)
+            </>)
           }))}
         />
-        dsfjkghskdhgkdhgldfhsgldfsglhlh
       </>
     </StencilStyles.Dialog>
   );

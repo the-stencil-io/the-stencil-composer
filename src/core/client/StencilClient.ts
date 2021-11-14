@@ -154,16 +154,14 @@ declare namespace StencilClient {
   }
   interface CreateLink { 
     type: "internal" | "external" | string;
-    value: string;
-    locales: LocaleId[];
-    labelValue: LocalisedContent; 
-    articles: ArticleId[]
+    value: string; 
+    labels: LocaleLabel[];
+    articles: ArticleId[];
   }
   
   interface CreateWorkflow { 
     value: string;
-    locales: LocaleId[]; 
-    labelValue: LocalisedContent;
+    labels: LocaleLabel[];
     articles: ArticleId[];
     devMode: boolean | undefined 
   }

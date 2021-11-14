@@ -189,6 +189,9 @@ const en = {
   'locales.content': 'Page in this locale has content',
   'locales.nocontent': 'Page in this locale has no content',
   'locales.nopage': 'There is no page for this locale in this Article',
+  
+  'locales.label.table.locale': 'Language code',
+
 
   'newpage.title': 'Create a new page',
   'newpage.info': 'A page consists of localised content and must be associated with an Article.',

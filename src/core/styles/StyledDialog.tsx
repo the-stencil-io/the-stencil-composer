@@ -32,7 +32,7 @@ interface StyledDialogProps {
 const StyledDialog: React.FC<StyledDialogProps> = (props) => {
   
   return (
-    <Dialog open={props.open} onClose={props.onClose}>
+    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md">
       <StyledDialogTitle sx={{backgroundColor: props.color}}><FormattedMessage id={props.title} /></StyledDialogTitle>
       <DialogContent>{props.children}</DialogContent>
       <DialogActions>

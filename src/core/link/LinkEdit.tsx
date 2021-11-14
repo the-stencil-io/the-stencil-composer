@@ -3,7 +3,7 @@ import { ListItemText, Checkbox } from '@mui/material';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
-
+import { LocaleLabels } from '../locale';
 
 const linkTypes: StencilClient.LinkType[] = ["internal", "external", "phone"];
 
@@ -15,16 +15,19 @@ interface LinkEditProps {
 const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   const { service, actions, session, site } = Composer.useComposer();
   const link = site.links[linkId];
-  const [locale, setLocale] = React.useState(link.body.labels[0].locale);
+
   const [value, setValue] = React.useState(link.body.value);
+  const [labels, setLabels] = React.useState(link.body.labels);
+  const [changeInProgress, setChangeInProgress] = React.useState(false);
   const [contentType, setContentType] = React.useState(link.body.contentType);
-  const locales: StencilClient.SiteLocale[] = Object.values(site.locales);
+  
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(link.body.articles);
-  const articles: StencilClient.Article[] = locale ? session.getArticlesForLocale(locale) : Object.values(site.articles);
+  const locales = labels.map(l => l.locale);
+  const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
 
 
   const handleUpdate = () => {
-    const entity: StencilClient.LinkMutator = { linkId: link.id, value, type: contentType, articles: articleId, labels: undefined };
+    const entity: StencilClient.LinkMutator = { linkId: link.id, type: contentType, articles: articleId, labels, value };
     console.log("entity", entity)
     service.update().link(entity).then(success => {
       console.log(success)
@@ -35,31 +38,18 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
 
   return (<StencilStyles.Dialog open={true} onClose={onClose}
     color="link.main" title="link.edit.title"
-    submit={{ title: "button.update", onClick: handleUpdate, disabled: !value }}>
+    submit={{ title: "button.update", onClick: handleUpdate, disabled: !value || changeInProgress }}>
     <>
+      <LocaleLabels
+        onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
+        onChangeStart={() => setChangeInProgress(true)}
+        selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
+
       <StencilStyles.Select label="link.type"
         selected={contentType}
         onChange={setContentType as any}
         items={linkTypes.map(link => ({ id: link, value: link }))}
       />
-
-      <StencilStyles.Select label='locale'
-        selected={locale}
-        items={locales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
-        onChange={(locale: StencilClient.LocaleId) => {
-          if (articleId) {
-            const newArticleId = [...articleId]
-            const articlesForNewLocale = session.getArticlesForLocale(locale).map(article => article.id);
-            for (const nextId of articleId) {
-              if (!articlesForNewLocale.includes(nextId)) {
-                const index = newArticleId.indexOf(nextId);
-                newArticleId.splice(index, 1);
-              }
-            }
-            setArticleId(newArticleId);
-          }
-          setLocale(locale);
-        }} />
 
       <StencilStyles.TextField label="link.content" helperText="link.composer.valuehelper" placeholder={link.body.value}
         required
