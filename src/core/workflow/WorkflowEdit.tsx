@@ -58,7 +58,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           items={articles.map((article) => ({
             id: article.id,
             value: (<>
-              <Checkbox checked={articleId.indexOf(article.id) > -1} />
+              <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
               <ListItemText primary={article.body.name} />
             </>
             )
