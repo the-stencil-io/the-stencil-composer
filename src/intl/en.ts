@@ -1,5 +1,5 @@
 const en = {
-  
+
   'link.value': 'Link value',
   'link.search.title': 'Search links by value',
   'article.links.selectedlinks': 'Selected links',
@@ -8,9 +8,12 @@ const en = {
   'transferlist.search': 'Search',
   'transferlist.noSearchResults': 'No search results found',
   'article.explorer.title': 'Article Explorer',
-  
-  'links.addremove': 'Add / remove links',
-  'workflows.addremove': 'Add / remove workflows',
+
+  'links.change': 'Change existing links',
+  'workflows.change': 'Change existing workflows',
+  'link.create': 'Create new link',
+  'workflow.create': 'Create new Workflow',
+
   'search': 'Search',
   'search.tooltip': 'I want to find...',
   'workflow.technicalname.description': 'Flow name as defined in the Wrench',
@@ -37,8 +40,6 @@ const en = {
 
   'article.create': 'Create Article',
   'page.create': 'Create Page',
-  'link.create': 'Create link',
-  'workflow.create': 'Create a new Workflow',
   'locale.create': 'Create locale',
   'release.create': 'Create release',
   'button.view.all.articles': 'View all Articles',

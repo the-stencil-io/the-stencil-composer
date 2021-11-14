@@ -1,6 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
+import { LinkComposer } from '../../link';
+import { WorkflowComposer } from '../../workflow';
 import { ArticleEdit, ArticleDelete } from '../../article';
 import { NewPage, PageEdit, PageDelete } from '../../page';
 import ArticleOptionItem from './ArticleOptionItem';
@@ -8,13 +10,16 @@ import { Composer, StencilClient } from '../../context';
 
 interface ArticleOptionsProps {
   article: StencilClient.Article,
+
 }
 const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
-  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageDelete' | 'ArticleDelete'>(undefined);
+
+  const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageDelete' | 'ArticleDelete' | 'LinkComposer' | 'WorkflowComposer'>(undefined);
+
 
   const handleDialogClose = () => setDialogOpen(undefined);
   const { handleInTab } = Composer.useNav();
-  
+
   return (
     <>
       { dialogOpen === 'ArticleEdit' ? <ArticleEdit articleId={article.id} onClose={handleDialogClose} /> : null}
@@ -22,6 +27,10 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'ArticleDelete' ? <ArticleDelete articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
+
+
 
       {/** Page options */}
       <ArticleOptionItem nodeId={article.id + 'pages.add'}
@@ -53,17 +62,28 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       </ArticleOptionItem>
 
 
+      <ArticleOptionItem nodeId={article.id + 'resource.create.links'}
+        color='link'
+        onClick={() => setDialogOpen('LinkComposer')}
+        labelText={<FormattedMessage id="link.create" />}>
+      </ArticleOptionItem>
 
       <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
         color='link'
         onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
-        labelText={<FormattedMessage id="links.addremove" />}>
+        labelText={<FormattedMessage id="links.change" />}>
+      </ArticleOptionItem>
+
+      <ArticleOptionItem nodeId={article.id + 'resource.create.workflows'}
+        color='workflow'
+        onClick={() => setDialogOpen('WorkflowComposer')}
+        labelText={<FormattedMessage id="workflow.create" />}>
       </ArticleOptionItem>
 
       <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
         color='workflow'
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
-        labelText={<FormattedMessage id="workflows.addremove" />}>
+        labelText={<FormattedMessage id="workflows.change" />}>
       </ArticleOptionItem>
     </>
   );

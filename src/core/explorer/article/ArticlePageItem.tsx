@@ -13,7 +13,7 @@ import { Composer } from '../../context';
 
 
 
-const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saveIcon?: React.ReactChild }> = (props) => {
+const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saveIcon?: React.ReactChild}> = (props) => {
 
   const theme = useTheme<Theme>();
   const localeIconColor = theme.palette.page.main;

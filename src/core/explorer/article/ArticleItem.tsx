@@ -7,10 +7,10 @@ import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import LinkIcon from '@mui/icons-material/Link';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
+import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/ModeEdit';
-
+import ConstructionIcon from '@mui/icons-material/Construction';
 import { FormattedMessage } from 'react-intl';
 
 import StencilStyles from '../../styles';
@@ -26,15 +26,17 @@ function WorkflowItem(props: {
   labelText: string;
   nodeId: string;
   children?: React.ReactChild;
+  devMode?: boolean,
   onClick: () => void;
 }) {
+
   return (
     <StencilStyles.TreeItemRoot
       nodeId={props.nodeId}
       onClick={props.onClick}
       label={
-        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={WorkOutlineIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
+        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}> 
+          <Box component={props.devMode ? ConstructionIcon : AccountTreeOutlinedIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
@@ -92,14 +94,14 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
   const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
   const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
 
+
   const saveIcon = saved ? undefined : (<Box component={SaveIcon} sx={saveIconColorSx} />)
 
   const isPageSaved = (pageView: Composer.PageView) => {
     const update = session.pages[pageView.page.id];
-    if(!update) {
+    if (!update) {
       return true;
     }
-    
     return update.saved;
   }
 
@@ -120,7 +122,10 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${pages.length}`}
           labelcolor="page">
-          {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} saveIcon={isPageSaved(pageView) ? undefined : saveIcon} />))}
+          {pages.map(pageView => (<ArticlePageItem key={pageView.page.id}
+            article={view}
+            page={pageView}
+            saveIcon={isPageSaved(pageView) ? undefined : saveIcon} />))}
         </StencilStyles.TreeItem>
 
         {/** Workflows options */}
@@ -130,11 +135,16 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
           labelInfo={`${workflows.length}`}
           labelcolor="workflow">
 
-          {workflows.map(view => (<WorkflowItem key={view.workflow.id} labelText={view.workflow.body.value} nodeId={view.workflow.id} onClick={() => setEditWorkflow(view.workflow.id)} />))}
+          {workflows.map(view => (<WorkflowItem
+            key={view.workflow.id}
+            labelText={view.workflow.body.value}
+            devMode={view.workflow.body.devMode}
+            nodeId={view.workflow.id}
+
+            onClick={() => setEditWorkflow(view.workflow.id)} />))}
         </StencilStyles.TreeItem>
 
         {/** Links options */}
-
         <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={FolderOutlinedIcon} labelInfo={`${links.length}`} labelcolor="link">
           {links.map(view => (<LinkItem key={view.link.id}
             labelText={view.link.body.value}
