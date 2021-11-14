@@ -48,7 +48,7 @@ const LocaleFilter: React.FC<{}> = () => {
     onChange={(_event, newValue) => setSelected(newValue)}
     variant="scrollable"
     scrollButtons="auto">{
-      locales.map((locale) => <StyledTab key={locale.id} value={locale.id} icon={<SettingsOutlinedIcon />} />)
+      locales.map((locale) => <StyledTab key={locale.id} value={locale.id} label={locale.body.value} />)
     }
     <StyledTab icon={<SettingsOutlinedIcon />} />
   </StyledTabs>);
