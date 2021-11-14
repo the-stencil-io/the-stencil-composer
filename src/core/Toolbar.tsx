@@ -16,7 +16,7 @@ import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
-import { Composer } from './context';
+import { Composer, StencilClient } from './context';
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   "&.MuiButtonBase-root": {
@@ -39,45 +39,69 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 
 
 const Toolbar: React.FC<{}> = () => {
-  const { actions, session } = Composer.useLayout();
-  const drawerOpen = session.drawer;
+  const composer = Composer.useComposer();
+  const layout = Composer.useLayout();
+  const drawerOpen = layout.session.drawer;
+  const layoutActions = layout.actions;
+  const tabs = layout.session.tabs;
+  const active = tabs.length ? tabs[layout.session.history.open] : undefined;
+  const article = active ? composer.site.articles[active.id] : undefined;
+  const articlePagesView = active?.data?.nav?.type === "ARTICLE_PAGES";
+  const unsavedPages = Object.values(composer.session.pages).filter(p => !p.saved);
+  const unsavedArticlePages: Composer.PageUpdate[] = (article ? unsavedPages.filter(p => !p.saved).filter(p => p.origin.body.article === article.id) : []);
+
 
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
-    if (newValue === 'toolbar.dashboard') {
-      actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+
+    if (newValue === 'toolbar.save' && articlePagesView && article) {
+      if (unsavedArticlePages.length === 0) {
+        return;
+      }
+      const update: StencilClient.PageMutator[] = unsavedArticlePages.map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value }));
+      composer.service.update().pages(update).then(success => {
+        composer.actions.handlePageUpdateRemove(success.map(p => p.id));
+      }).then(() => {
+        composer.actions.handleLoadSite();
+      });
+
+
+    } else if (newValue === 'toolbar.dashboard') {
+      layoutActions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
 
     } else if (newValue === 'toolbar.articles') {
-      actions.handleSecondary("toolbar.articles")
+      layoutActions.handleSecondary("toolbar.articles")
 
     } else if (newValue === 'toolbar.links') {
-      actions.handleTabAdd({ id: 'links', label: "Links" })
+      layoutActions.handleTabAdd({ id: 'links', label: "Links" })
 
     } else if (newValue === 'toolbar.workflows') {
-      actions.handleTabAdd({ id: 'workflows', label: "Workflows" });
+      layoutActions.handleTabAdd({ id: 'workflows', label: "Workflows" });
 
     } else if (newValue === 'toolbar.releases') {
-      actions.handleTabAdd({ id: 'releases', label: "Releases" })
+      layoutActions.handleTabAdd({ id: 'releases', label: "Releases" })
 
     } else if (newValue === 'toolbar.locales') {
-      actions.handleTabAdd({ id: 'locales', label: "Locales" })
+      layoutActions.handleTabAdd({ id: 'locales', label: "Locales" })
 
     } else if (newValue === 'toolbar.import') {
-      actions.handleTabAdd({ id: 'import', label: 'Import' })
+      layoutActions.handleTabAdd({ id: 'import', label: 'Import' })
 
     } else if (newValue === 'toolbar.help') {
-      actions.handleTabAdd({ id: 'help', label: "Help" })
+      layoutActions.handleTabAdd({ id: 'help', label: "Help" })
 
     } else if (newValue === 'toolbar.expand') {
-      actions.handleDrawerOpen(!drawerOpen)
+      layoutActions.handleDrawerOpen(!drawerOpen)
     }
   };
 
   // open dashboard
   React.useLayoutEffect(() => {
     console.log("init toolbar");
-    actions.handleSecondary("toolbar.articles")
-    actions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
-  }, [actions]);
+    layoutActions.handleSecondary("toolbar.articles")
+    layoutActions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+  }, [layoutActions]);
+
+  const saveSx = unsavedPages.length ? {color: "explorerItem.contrastText"} : undefined;
 
   return (
     <>
@@ -85,10 +109,13 @@ const Toolbar: React.FC<{}> = () => {
         <StyledTabs orientation="vertical"
           onChange={handleChange}
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
-          value={session.secondary}>
+          value={layout.session.secondary}>
 
           <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />
-          <StyledTab value='toolbar.save' icon={<SaveIcon />} />
+          <StyledTab value='toolbar.save'
+            icon={<SaveIcon sx={saveSx}/>} 
+            disabled={unsavedArticlePages.length === 0}
+            label={unsavedPages.length ? (<Box sx={saveSx}>{unsavedPages.length}</Box>) : undefined} />
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
           <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
           <StyledTab value='toolbar.links' icon={<LinkIcon />} />

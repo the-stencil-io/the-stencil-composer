@@ -10,7 +10,7 @@ import {
 import { Composer } from './context';
 
 
-const root = { height: `100%`, padding: 1 };
+const root = { height: `100%`, padding: 1, backgroundColor: "mainContent.main" };
 
 const Main: React.FC<{}> = () => {
   const layout = Composer.useLayout();

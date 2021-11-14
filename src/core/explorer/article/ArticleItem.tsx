@@ -1,11 +1,11 @@
 import * as React from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Theme } from "@mui/material";
+import { SxProps } from '@mui/system';
 
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
 
 
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import BuildIcon from '@mui/icons-material/Build';
 import LinkIcon from '@mui/icons-material/Link';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import SaveIcon from '@mui/icons-material/Save';
@@ -74,12 +74,16 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
   );
 }
 
-
+const saveIconColorSx: SxProps<Theme> = {
+  mr: 1, p: .3, borderRadius: 3,
+  backgroundColor: "explorerItem.contrastText",
+  color: "text.primary",
+}
 
 
 const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
 
-  const { session, isArticleSaved, service, actions } = Composer.useComposer();
+  const { session, isArticleSaved } = Composer.useComposer();
   const view = session.getArticleView(articleId);
   const { article, pages, workflows, links } = view;
   const label = article.body.name;
@@ -88,62 +92,41 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
   const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
   const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
 
-  const handleSavePages = () => {
-    const unsaved: StencilClient.PageMutator[] = Object.values(session.pages)
-      .filter(p => !p.saved)
-      .filter(p => p.origin.body.article === article.id)
-      .map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value }));
+  const saveIcon = saved ? undefined : (<Box component={SaveIcon} sx={saveIconColorSx} />)
 
-    service.update().pages(unsaved).then(success => {
-      actions.handlePageUpdateRemove(success.map(p => p.id));
-    }).then(() => {
-      actions.handleLoadSite();
-    });
+  const isPageSaved = (pageView: Composer.PageView) => {
+    const update = session.pages[pageView.page.id];
+    if(!update) {
+      return true;
+    }
+    
+    return update.saved;
   }
-
-  const saveButton = saved ? undefined : (
-    <Box component={SaveIcon} onClick={(e) => {
-      e.stopPropagation();
-      handleSavePages();
-    }}
-      sx={{
-        mr: 1, p: .3, borderRadius: 3,
-        backgroundColor: "explorerItem.contrastText",
-        color: "text.primary",
-      }} />
-  )
-
-  const devButton = saved ? undefined : (
-    <Box component={BuildIcon} onClick={(e) => {
-      e.stopPropagation();
-    }}
-      sx={{
-        mr: 1, p: .3, border: '1px solid', borderRadius: 3, boxShadow: 2,
-        backgroundColor: "save.main",
-        color: "text.primary"
-      }} />
-  )
 
   return (
     <>
       { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
       { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
-      
-      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleOutlinedIcon} labelButton={saveButton} labelcolor="explorerItem">
+
+      <StencilStyles.TreeItem nodeId={article.id} labelText={label} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
         <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <ArticleOptions article={article} />
         </StencilStyles.TreeItem>
 
         {/** Pages */}
-        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'} labelText={<FormattedMessage id="pages" />} labelIcon={FolderOutlinedIcon} labelInfo={`${pages.length}`} labelcolor="page">
-          {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} />))}
+        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'}
+          labelText={<FormattedMessage id="pages" />}
+          labelButton={saveIcon}
+          labelIcon={FolderOutlinedIcon}
+          labelInfo={`${pages.length}`}
+          labelcolor="page">
+          {pages.map(pageView => (<ArticlePageItem key={pageView.page.id} article={view} page={pageView} saveIcon={isPageSaved(pageView) ? undefined : saveIcon} />))}
         </StencilStyles.TreeItem>
 
         {/** Workflows options */}
         <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
           labelText={<FormattedMessage id="workflows" />}
           labelIcon={FolderOutlinedIcon}
-          labelButton={devButton}
           labelInfo={`${workflows.length}`}
           labelcolor="workflow">
 

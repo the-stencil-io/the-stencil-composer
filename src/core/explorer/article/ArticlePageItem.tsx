@@ -13,7 +13,7 @@ import { Composer } from '../../context';
 
 
 
-const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView }> = (props) => {
+const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saveIcon?: React.ReactChild }> = (props) => {
 
   const theme = useTheme<Theme>();
   const localeIconColor = theme.palette.page.main;
@@ -42,7 +42,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale, secondary })
     }
   }
-  
+
   return (
     <StencilStyles.TreeItemRoot
       nodeId={nodeId}
@@ -53,10 +53,10 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       label={
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-
-          <Box component={LeftEditIcon}
-            color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />
-
+          {
+            props.saveIcon ? props.saveIcon : (<Box component={LeftEditIcon} color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />) 
+          }
+          
           <Typography
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1, pl: 1 }}
@@ -64,7 +64,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
             {props.page.locale.body.value}
           </Typography>
 
-          <Box component={RightEditIcon} 
+          <Box component={RightEditIcon}
             color={nav?.value2 === page.body.locale ? localeIconColor : "inherit"}
             onClick={(event) => {
               event.stopPropagation()
