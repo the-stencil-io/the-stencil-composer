@@ -14,9 +14,10 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
 import { Composer, StencilClient } from './context';
+import { LocaleFilter } from './explorer/filter';
+
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   "&.MuiButtonBase-root": {
@@ -101,7 +102,7 @@ const Toolbar: React.FC<{}> = () => {
     layoutActions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
   }, [layoutActions]);
 
-  const saveSx = unsavedPages.length ? {color: "explorerItem.contrastText"} : undefined;
+  const saveSx = unsavedPages.length ? { color: "explorerItem.contrastText" } : undefined;
 
   return (
     <>
@@ -113,7 +114,7 @@ const Toolbar: React.FC<{}> = () => {
 
           <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />
           <StyledTab value='toolbar.save'
-            icon={<SaveIcon sx={saveSx}/>} 
+            icon={<SaveIcon sx={saveSx} />}
             disabled={unsavedArticlePages.length === 0}
             label={unsavedPages.length ? (<Box sx={saveSx}>{unsavedPages.length}</Box>) : undefined} />
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
@@ -127,10 +128,8 @@ const Toolbar: React.FC<{}> = () => {
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
         </StyledTabs>
         <Box flexGrow={1} sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} />
+        <LocaleFilter />
 
-        <StyledTabs orientation="vertical" sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} value="default-is-unselected-material-issue">
-          <StyledTab icon={<SettingsOutlinedIcon />} />
-        </StyledTabs>
       </Box>
     </>
   );

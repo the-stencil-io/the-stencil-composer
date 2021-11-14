@@ -12,8 +12,6 @@ const Tabs: React.FC<{}> = () => {
   const active = session.history.open;
   const tabs = session.tabs;
 
-  console.log("tabbbbbb");
-
   return React.useMemo(() => {
     
     console.log("RENDERING TABS", tabs);

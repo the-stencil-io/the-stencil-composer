@@ -5,7 +5,8 @@ import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl'
 import { siteTheme } from './themes/siteTheme'
 
-const locale = "en";
+var locale = (navigator.languages && navigator.languages[0]) || navigator.language || (navigator as any).userLanguage || 'en-US';
+
 const service = StencilClient.mock();
 //const service = StencilClient.service({url: "http://localhost:8080/q/ide-services"});
 
