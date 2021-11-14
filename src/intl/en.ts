@@ -1,7 +1,11 @@
 const en = {
 
+  'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
+  'locales.label.table.title': 'Locale labels',
+  'locales.label.table.value': 'Locale label values',
   'link.value': 'Link value',
   'link.search.title': 'Search links by value',
+  'article.order': 'Article order number',
   'article.links.selectedlinks': 'Selected links',
   'article.workflows.selectedworkflows': 'Selected workflows',
   'transferlist.noItemsSelected': 'No items selected',
