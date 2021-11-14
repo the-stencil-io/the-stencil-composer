@@ -89,8 +89,8 @@ class SiteCache {
       const parent = this._articles[article.body.parentId];
       if (parent) {
         this._articles[parent.article.id] = new ImmutableArticleView({
-          article : parent.article, 
-          pages: parent.pages, 
+          article: parent.article,
+          pages: parent.pages,
           canCreate: parent.canCreate,
           links: parent.links,
           workflows: parent.workflows,
@@ -108,20 +108,42 @@ class SiteCache {
 }
 
 
+class ImmutableSessionFilter implements Composer.SessionFilter {
+  private _locale?: string;
+   
+  constructor(props: {
+    locale?: string
+  }) {
+    this._locale = props.locale;
+  }
+  
+  get locale() {
+    return this._locale;
+  }
+  withLocale(locale?: StencilClient.LocaleId) {
+    return new ImmutableSessionFilter({locale});
+  }
+}
+
 class SessionData implements Composer.Session {
   private _site: StencilClient.Site;
   private _pages: Record<StencilClient.PageId, Composer.PageUpdate>;
   private _cache: SiteCache;
+  private _filter: Composer.SessionFilter;
 
   constructor(props: {
     site?: StencilClient.Site,
     pages?: Record<StencilClient.PageId, Composer.PageUpdate>,
     cache?: SiteCache;
+    filter?: Composer.SessionFilter;
   }) {
-
+    this._filter = props.filter ? props.filter : new ImmutableSessionFilter({});
     this._site = props.site ? props.site : { name: "", contentType: "OK", releases: {}, articles: {}, links: {}, locales: {}, pages: {}, workflows: {} };
     this._pages = props.pages ? props.pages : {};
     this._cache = props.cache ? props.cache : new SiteCache(this._site);
+  }
+  get filter() {
+    return this._filter;
   }
   get articles() {
     return Object.values(this._cache.getArticles());
@@ -131,6 +153,21 @@ class SessionData implements Composer.Session {
   }
   get pages() {
     return this._pages;
+  }
+  getArticleName(articleId : StencilClient.ArticleId) {
+    const article = this.getArticleView(articleId);
+    const articleName = article.article.body.name;
+    const locale = this._filter.locale;
+    
+    if(locale) {
+      const pages = article.pages.filter(p => p.locale.id === locale);
+      if(pages.length === 0) {
+        return {missing: true, name: "_not_translated_" + articleName};    
+      }
+      const name = pages.length ? pages[0].title : '';
+      return {missing: false, name: name ? name : 'no-h1'};
+    }
+    return {missing: false, name: articleName};
   }
   getArticleView(articleId: StencilClient.ArticleId): Composer.ArticleView {
     return this._cache.getArticles()[articleId];
@@ -159,7 +196,7 @@ class SessionData implements Composer.Session {
   }
 
   withSite(site: StencilClient.Site) {
-    return new SessionData({ site: site });
+    return new SessionData({ site: site, pages: this._pages, filter: this._filter });
   }
   withoutPages(pageIds: StencilClient.PageId[]): Composer.Session {
     const pages = {};
@@ -169,7 +206,7 @@ class SessionData implements Composer.Session {
       }
       pages[page.origin.id] = page;
     }
-    return new SessionData({ site: this._site, pages, cache: this._cache });
+    return new SessionData({ site: this._site, pages, cache: this._cache, filter: this._filter });
   }
   withPage(page: StencilClient.PageId): Composer.Session {
     if (this._pages[page]) {
@@ -178,7 +215,7 @@ class SessionData implements Composer.Session {
     const pages = Object.assign({}, this._pages);
     const origin = this._site.pages[page];
     pages[page] = new ImmutablePageUpdate({ origin, saved: true, value: origin.body.content });
-    return new SessionData({ site: this._site, pages, cache: this._cache });
+    return new SessionData({ site: this._site, pages, cache: this._cache, filter: this._filter });
   }
   withPageValue(page: StencilClient.PageId, value: StencilClient.LocalisedContent): Composer.Session {
     const session = this.withPage(page);
@@ -187,7 +224,11 @@ class SessionData implements Composer.Session {
     const pages = Object.assign({}, session.pages);
     pages[page] = pageUpdate.withValue(value);
 
-    return new SessionData({ site: session.site, pages, cache: this._cache });
+    return new SessionData({ site: session.site, pages, cache: this._cache, filter: this._filter });
+  }
+  
+  withLocaleFilter(locale?: StencilClient.LocaleId) {
+    return new SessionData({ site: this._site, pages: this._pages, cache: this._cache, filter: this._filter.withLocale(locale) });
   }
 }
 
@@ -274,6 +315,7 @@ class ImmutableArticleView implements Composer.ArticleView {
 class ImmutablePageView implements Composer.PageView {
   private _page: StencilClient.Page;
   private _locale: StencilClient.SiteLocale;
+  private _title: string;
 
   constructor(props: {
     page: StencilClient.Page;
@@ -281,8 +323,29 @@ class ImmutablePageView implements Composer.PageView {
   }) {
     this._page = props.page;
     this._locale = props.locale;
+    this._title = this.getTitle(props.page);
   }
 
+  private getTitle(page: StencilClient.Page) {
+    const heading1 = page.body.content.indexOf("# ");
+
+    if (heading1 === -1) {
+      return page.body.content.substring(0, Math.min(page.body.content.length, 30));
+    }
+    const lineBreak1 = page.body.content.indexOf("\n", heading1)
+    if (lineBreak1 > 0) {
+      return page.body.content.substring(0, Math.min(lineBreak1, 30)).substring(2);
+    }
+
+    const lineBreak2 = page.body.content.indexOf("\r\n", heading1)
+    if (lineBreak2 > 0) {
+      return page.body.content.substring(0, Math.min(lineBreak2, 30)).substring(2);
+    }
+    return "";
+
+  }
+
+  get title(): string { return this._title };
   get page(): StencilClient.Page { return this._page };
   get locale(): StencilClient.SiteLocale { return this._locale };
 }

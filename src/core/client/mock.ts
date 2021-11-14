@@ -18,7 +18,7 @@ const articles: StencilClient.Article[] = [
 ];
 
 const pages: StencilClient.Page[] = [
-  { id: "p1", body: { article: "a1", content: "# Residence topic", locale: "l3"}, created: "04-11-2020", modified: "05-11-2020" },
+  { id: "p1", body: { article: "a1", content: "# Residence topic\n\n", locale: "l3"}, created: "04-11-2020", modified: "05-11-2020" },
   { id: "p2", body: { article: "a1", content: "# Asuinpaikka", locale: "l1"}, created: "04-11-2020", modified: "06-11-2020" },
   { id: "p3", body: { article: "a1.1", content: "# Utilities", locale: "l3"}, created: "09-10-2020", modified: "09-11-2020" },
   { id: "p4", body: { article: "a1.1", content: "# apuohjelmat", locale: "l1"}, created: "10-12-2020", modified: "12-12-2020" },

@@ -30,12 +30,19 @@ declare namespace Composer {
     value: StencilClient.LocalisedContent;
     withValue(value: StencilClient.LocalisedContent): PageUpdate;
   }
+  
+  interface SessionFilter {
+    locale?: StencilClient.LocaleId;
+    withLocale(locale?: StencilClient.LocaleId): SessionFilter;
+  }
 
   interface Session {
     site: StencilClient.Site,
     pages: Record<StencilClient.PageId, PageUpdate>;
     articles: ArticleView[];
-
+    filter: SessionFilter;
+    
+    getArticleName(articleId: StencilClient.ArticleId): {missing: boolean, name: string};
     getArticleView(articleId: StencilClient.ArticleId): ArticleView;
 
     getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
@@ -45,6 +52,7 @@ declare namespace Composer {
     withPageValue(page: StencilClient.PageId, value: StencilClient.LocalisedContent): Session;
     withoutPages(pages: StencilClient.PageId[]): Session;
 
+    withLocaleFilter(locale?: StencilClient.LocaleId): Session;
     withSite(site: StencilClient.Site): Session;
   }
 
@@ -53,6 +61,7 @@ declare namespace Composer {
     handleLoadSite(): Promise<void>;
     handlePageUpdate(page: StencilClient.PageId, value: StencilClient.LocalisedContent): void;
     handlePageUpdateRemove(pages: StencilClient.PageId[]): void;
+    handleLocaleFilter(locale?: StencilClient.LocaleId): void;
   }
 
   interface ContextType {
@@ -71,6 +80,7 @@ declare namespace Composer {
   }
 
   interface PageView {
+    title: string;
     page: StencilClient.Page;
     locale: StencilClient.SiteLocale;
   }
