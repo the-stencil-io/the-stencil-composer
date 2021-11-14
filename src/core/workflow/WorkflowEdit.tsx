@@ -16,13 +16,13 @@ interface WorkflowEditProps {
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const { service, actions, session, site } = Composer.useComposer();
-  const workflow = site.workflows[workflowId]
+  const workflow = site.workflows[workflowId];
 
   const [devMode, setDevMode] = React.useState(workflow.body.devMode);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
   const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
-  const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
+  const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>(workflow.body.labels);
   const [changeInProgress, setChangeInProgress] = React.useState(false);
 
   const handleCreate = () => {

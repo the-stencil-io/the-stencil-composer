@@ -4,15 +4,16 @@ import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
+const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => ((o1.body.devMode ? "a-" : "b-") +o1.body.value)
+      .localeCompare(((o2.body.devMode ? "a-" : "b-") +o2.body.value));
 
 const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
 
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Composer.useLayout();
-  
-  const view = session.getArticleView(articleId);
-  const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
+  const view = session.getArticleView(articleId);
+  const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort(comparator);
 
   const handleSave = (selectedWorkflows: string[]) => {
     const article = site.articles[articleId]
@@ -26,8 +27,8 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
     };
     console.log("saving selected workflows" + selectedWorkflows);
     service.update().article(entity)
-    .then(_success => actions.handleLoadSite())
-    .then(() => layout.actions.handleTabCloseCurrent()) 
+      .then(_success => actions.handleLoadSite())
+      .then(() => layout.actions.handleTabCloseCurrent())
   }
 
   return (
@@ -36,17 +37,17 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
         title="article.workflows.siteworkflows"
         searchTitle="workflow.technicalname"
         selectedTitle="article.workflows.selectedworkflows"
-        headers={["workflow.technicalname"]}
+        headers={["workflow.technicalname", "workflow.devmode"]}
         rows={workflows.map(row => row.id)}
         filterRow={(row, search) => {
           const workflow = site.workflows[row];
           return workflow.body.value.toLowerCase().indexOf(search) > -1;
         }}
-        renderCells={(row) => [site.workflows[row].body.value]}
-        selected={view.workflows.map(v => v.workflow.id)}
+        renderCells={(row) => [site.workflows[row].body.value, site.workflows[row].body.devMode ? "DEV" : ""]}
+        selected={view.workflows.map(view => view.workflow).sort(comparator).map(v => v.id)}
         cancel={{
           label: 'button.cancel',
-          onClick: () => layout.actions.handleTabCloseCurrent() 
+          onClick: () => layout.actions.handleTabCloseCurrent()
         }}
         submit={{
           label: "button.apply",
