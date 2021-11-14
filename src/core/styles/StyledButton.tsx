@@ -28,12 +28,13 @@ const StyledButtonPrimaryRoot = styled(Button)<ButtonProps>(({ theme }) => ({
 
 
 
-const StyledPrimaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme>  }> = (props) => {
+const StyledPrimaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme>, disabled?: boolean  }> = (props) => {
   const title = <FormattedMessage id={props.label} />;
   return (
     <StyledButtonPrimaryRoot
       variant='contained'
       onClick={props.onClick}
+      disabled={props.disabled}
       sx={props.sx}>{title}</StyledButtonPrimaryRoot>
   );
 }
