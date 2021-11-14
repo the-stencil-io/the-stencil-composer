@@ -4,6 +4,8 @@ import { StyledSelect, StyledSelectMultiple, StyledSelectProps } from './StyledS
 import { StyledTextField, StyledNumberField, StyledFileField, StyledSearchField, StyledTextFieldProps } from './StyledTextField';
 import { StyledTransferList, StyledTransferListProps } from './StyledTransferList';
 import { StyledPrimaryButton, StyledSecondaryButton} from './StyledButton';
+import { StyledCheckbox } from './StyledCheckbox';
+
 
 
 declare namespace StencilStyles {
@@ -23,6 +25,7 @@ namespace StencilStyles {
   export const TransferList = StyledTransferList;
   export const PrimaryButton = StyledPrimaryButton;
   export const SecondaryButton = StyledSecondaryButton;
+  export const Checkbox = StyledCheckbox;
 }
 
 export default StencilStyles;

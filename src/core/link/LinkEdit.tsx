@@ -20,7 +20,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   const [labels, setLabels] = React.useState(link.body.labels);
   const [changeInProgress, setChangeInProgress] = React.useState(false);
   const [contentType, setContentType] = React.useState(link.body.contentType);
-  
+
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(link.body.articles);
   const locales = labels.map(l => l.locale);
   const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
@@ -63,7 +63,9 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
         items={articles.map((article) => ({
           id: article.id,
           value: (<>
-            <Checkbox checked={articleId.indexOf(article.id) > -1} />
+            <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1}
+            
+            />
             <ListItemText primary={article.body.name} />
           </>)
         }

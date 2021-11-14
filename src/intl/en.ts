@@ -1,6 +1,7 @@
 const en = {
 
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
+  'sitelocale.label.table.editLocaleValue': 'Edit locale value',
   'locales.label.table.title': 'Locale labels',
   'locales.label.table.value': 'Locale label values',
   'link.value': 'Link value',

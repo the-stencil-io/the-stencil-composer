@@ -8,18 +8,23 @@ import { FormattedMessage } from 'react-intl';
 
 const StyledFormControl = styled(FormControl)<FormControlProps>(({ theme }) => ({
   marginTop: theme.spacing(2),
-  color: theme.palette.primary.contrastText,
-  backgroundColor: theme.palette.background.paper
+  color: theme.palette.uiElements.main,
+  backgroundColor: theme.palette.background.paper,
+  '& .MuiOutlinedInput-root': {
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.uiElements.main,
+    },
+  }
 }));
 
 
 interface StyledSelectProps<T> {
   label: string;
-  items: {id: string, value: string | React.ReactChild, sx?: SxProps<Theme>}[]; 
-  selected: T; 
-  disabled?: boolean; 
+  items: { id: string, value: string | React.ReactChild, sx?: SxProps<Theme> }[];
+  selected: T;
+  disabled?: boolean;
   helperText?: string;
-  empty?: {id: string, label: string}
+  empty?: { id: string, label: string }
   onChange: (values: T) => void;
 }
 
@@ -34,7 +39,7 @@ const StyledSelect: React.FC<StyledSelectProps<string>> = (props) => {
         disabled={props.disabled}
         onChange={({ target }) => props.onChange(target.value as any)}
         label={title}>
-        
+
         {props.empty ? <MenuItem value={props.empty.id}><FormattedMessage id={props.empty.label} /></MenuItem> : null}
         {props.items.map(item => (<MenuItem key={item.id} value={item.id} sx={item.sx}>{item.value}</MenuItem>))}
       </Select>
@@ -59,7 +64,7 @@ const StyledSelectMultiple: React.FC<{
         onChange={({ target }) => props.onChange(target.value as any)}
         renderValue={props.renderValue}
         label={title}>
-        
+
         {props.empty ? <MenuItem value={props.empty.id}><FormattedMessage id={props.empty.label} /></MenuItem> : null}
         {props.items.map(item => (<MenuItem key={item.id} value={item.id} sx={item.sx}>{item.value}</MenuItem>))}
       </Select>
