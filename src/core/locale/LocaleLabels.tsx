@@ -1,5 +1,8 @@
 import React from 'react';
-import { Box, Typography, Table, TableContainer, TableBody, TableCell, TableRow, TableHead, Paper, IconButton, Popover, List, ListItem, ListItemText, ListItemButton, ListItemIcon } from '@mui/material';
+import {
+  Box, Typography, Table, TableContainer, TableBody, TableCell, TableRow, TableHead, Paper,
+  IconButton, Popover, List, ListItem, ListItemText, ListItemButton, ListItemIcon
+} from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Create';
@@ -115,7 +118,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
             <TableHead sx={{ backgroundColor: "table.main" }}>
               <TableRow sx={{ borderBottom: 0 }}>
                 <TableCell colSpan={3} sx={{ borderBottom: 0 }}>
-                  <Typography variant="h4" sx={{ marginBottom: 1 }}><FormattedMessage id={"locales.label.table.title"} /></Typography>
+                  <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: "mainContent.dark" }}><FormattedMessage id={"locales.label.table.title"} /></Typography>
                 </TableCell>
 
                 <TableCell sx={{ borderBottom: 0 }} align="right">
@@ -128,8 +131,8 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
               </TableRow>
 
               <TableRow>
-                <TableCell sx={{ fontWeight: "bold", width: "100px" }} colSpan={2} align="left"><FormattedMessage id="locales.label.table.locale" /></TableCell>
-                <TableCell sx={{ fontWeight: "bold" }} colSpan={2} align="left"><FormattedMessage id="locales.label.table.value" /></TableCell>
+                <TableCell sx={{ width: "100px" }} colSpan={2} align="left" color="mainContent.contrastText"><FormattedMessage id="locales.label.table.locale" /></TableCell>
+                <TableCell sx={{  }} colSpan={2} align="left"><FormattedMessage id="locales.label.table.value" /></TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

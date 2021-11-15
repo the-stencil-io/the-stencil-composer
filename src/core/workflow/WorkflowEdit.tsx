@@ -1,5 +1,7 @@
 import React from 'react';
-import { Checkbox, ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
+import { alpha, styled } from '@mui/material/styles';
+
+import { ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 
@@ -7,7 +9,17 @@ import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 import { LocaleLabels } from '../locale';
 
-
+const StyledSwitch = styled(Switch)(({ theme }) => ({
+  '& .MuiSwitch-switchBase.Mui-checked': {
+    color: theme.palette.uiElements.main,
+    '&:hover': {
+      backgroundColor: alpha(theme.palette.uiElements.main, 0.1),
+    },
+  },
+  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
+    backgroundColor: alpha(theme.palette.uiElements.main, 0.5),
+  },
+}));
 
 interface WorkflowEditProps {
   workflowId: StencilClient.WorkflowId,
@@ -65,10 +77,10 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           }))}
         />
 
-        <Paper variant="elevation" elevation={5} sx={{ mt: 1, p: 1, borderRadius: 3 }}>
+        <Paper variant="elevation" sx={{ mt: 1, pl: 1, pr: 1, pb: 1, borderRadius: 2 }}>
           <FormControlLabel
-            sx={{ mt: 3 }}
-            control={<Switch checked={devMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDevMode(event.target.checked)} />}
+            sx={{ mt: 2}}
+            control={<StyledSwitch size="medium" checked={devMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDevMode(event.target.checked)} />}
             label={<FormattedMessage id="workflow.devmode" />} />
           <FormHelperText>
             <FormattedMessage id="workflow.devmode.helper" />
