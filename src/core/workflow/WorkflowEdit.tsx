@@ -47,16 +47,16 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   }
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <StencilStyles.Dialog open={true} onClose={onClose} 
       backgroundColor="uiElements.main"
-      title="workflow.edit.title"
+      title="workflow.edit.title" 
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
+      
       <>
         <LocaleLabels
           onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
-
 
         <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname'
           value={technicalname}
@@ -78,16 +78,13 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
         />
 
         <Paper variant="elevation" sx={{ mt: 1, pl: 1, pr: 1, pb: 1, borderRadius: 2 }}>
-          <FormControlLabel
-            sx={{ mt: 2}}
-            control={<StyledSwitch size="medium" checked={devMode} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setDevMode(event.target.checked)} />}
-            label={<FormattedMessage id="workflow.devmode" />} />
-          <FormHelperText>
-            <FormattedMessage id="workflow.devmode.helper" />
-          </FormHelperText>
+          <StencilStyles.Switch
+            checked={devMode ? devMode : false}
+            onChange={setDevMode}
+            helperText={"workflow.devmode.helper"}
+            label={"workflow.devmode"}
+          />
         </Paper>
-
-
       </>
     </StencilStyles.Dialog>
   );

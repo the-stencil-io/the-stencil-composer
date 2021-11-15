@@ -5,11 +5,12 @@ import { StyledTextField, StyledNumberField, StyledFileField, StyledSearchField,
 import { StyledTransferList, StyledTransferListProps } from './StyledTransferList';
 import { StyledPrimaryButton, StyledSecondaryButton} from './StyledButton';
 import { StyledCheckbox } from './StyledCheckbox';
+import { StyledSwitch, StyledSwitchProps } from './StyledSwitch';
 
 
 
 declare namespace StencilStyles {
-  export type { StyledDialogProps, StyledSelectProps, StyledTextFieldProps, StyledTreeItemProps, StyledTransferListProps }
+  export type { StyledDialogProps, StyledSelectProps, StyledTextFieldProps, StyledTreeItemProps, StyledTransferListProps, StyledSwitchProps }
 }
 
 namespace StencilStyles {
@@ -26,6 +27,7 @@ namespace StencilStyles {
   export const PrimaryButton = StyledPrimaryButton;
   export const SecondaryButton = StyledSecondaryButton;
   export const Checkbox = StyledCheckbox;
+  export const Switch = StyledSwitch;
 }
 
 export default StencilStyles;

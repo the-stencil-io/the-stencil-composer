@@ -1,11 +1,11 @@
 import React from 'react';
-import { makeStyles, createStyles, useTheme } from '@mui/styles';
+import { useTheme } from '@mui/styles';
 import {
-  Button, ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
-  Typography, Tooltip, Avatar, Box
+  ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
+  Typography, Box, Divider
 } from '@mui/material';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import { FormattedMessage, useIntl } from 'react-intl';
+import StencilStyles from './styles';
 
 import { ArticleComposer } from './article';
 import { LinkComposer } from './link';
@@ -15,38 +15,6 @@ import { ReleaseComposer } from './release';
 import { NewPage } from './page';
 
 import { Composer, StencilClient, Layout } from './context';
-
-
-const useItemStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      margin: theme.spacing(1),
-      //  border: '1px solid',
-      borderColor: (props: { color: string }) => props.color,
-      width: '400px',
-      display: 'flex',
-      flexDirection: 'column',
-    },
-    cardAvatar: {
-      marginLeft: theme.spacing(1),
-      backgroundColor: (props: { color: string }) => props.color,
-      textTransform: 'uppercase'
-    },
-    button: {
-      fontWeight: 'bold',
-      color: theme.palette.text.primary,
-      //color: (props: { color: string }) => props.color,
-      "&:hover, &.Mui-focusVisible": {
-        color: (props: { color: string }) => props.color,
-        fontWeight: 'bold',
-      }
-    },
-    buttonGroup: {
-      width: '100%',
-    },
-
-  }),
-);
 
 interface CardData {
   type: CardType;
@@ -129,36 +97,37 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 ]);
 
 const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
-  const classes = useItemStyles({ color: props.data.color });
 
   const title = useIntl().formatMessage({ id: props.data.title })
 
   return (
-    <Card className={classes.card} raised>
-      <CardHeader sx={{padding: 0}}
-        avatar={<Avatar className={classes.cardAvatar}>{title.substring(0, 2)}</Avatar>}
+    <Card sx={{
+      margin: 3,
+      width: '20vw',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <CardHeader sx={{ p: 1, backgroundColor: "table.main" }}
         title={
-          <Box display="flex" sx={{
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            paddingRight: 2,
-          }}>
-            <Typography variant="h2">{title}</Typography>
-            <Tooltip title={"Item help: Coming soon!"}><HelpOutlineIcon fontSize="small" /></Tooltip>
+          <Box display="flex"
+            sx={{
+              justifyContent: 'center',
+              pr: 2,
+            }}>
+            <Typography variant="h2" sx={{fontWeight: 'bold'}}>{title}</Typography>
           </Box>
         }
       />
 
-      <CardContent sx={{flexGrow: 1}}>
-        <Typography color="textSecondary" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
+      <CardContent sx={{ flexGrow: 1, p: 2 }}>
+        <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
-
+      <Divider />
       <CardActions>
-        <ButtonGroup variant="text" fullWidth>
-          <Button className={classes.button} onClick={props.onCreate}><FormattedMessage id={props.data.buttonCreate} /></Button>
-          <Tooltip title={<FormattedMessage id="dashboard.view.helper" />}>
-            <Button className={classes.button} onClick={props.data.onView}><FormattedMessage id={props.data.buttonViewAll} /></Button>
-          </Tooltip>
+        <ButtonGroup variant="text" fullWidth sx={{justifyContent: 'space-between'}}>
+          <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} />
+          <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
+
         </ButtonGroup>
       </CardActions>
     </Card>
@@ -182,6 +151,7 @@ const Dashboard: React.FC<{}> = () => {
       display: 'flex',
       flexWrap: 'wrap',
       justifyContent: 'center',
+
     }}>
       {open === undefined ? null : (cards[open].composer(handleClose))}
       {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}

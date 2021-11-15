@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ListItemText, Checkbox } from '@mui/material';
+import { Checkbox, ListItemText, Paper } from '@mui/material';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -9,6 +9,8 @@ import { LocaleLabels } from '../locale';
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { service, actions, site, session } = Composer.useComposer();
+
+  const [devMode, setDevMode] = React.useState<boolean>(true);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
   const [technicalname, setTechnicalname] = React.useState('');
   const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
@@ -16,7 +18,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const locales = labels.map(l => l.locale);
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateWorkflow = { value: technicalname, articles: articleId, devMode: undefined, labels };
+    const entity: StencilClient.CreateWorkflow = { value: technicalname, articles: articleId, devMode, labels };
     service.create().workflow(entity).then(success => {
       console.log(success)
       onClose();
@@ -54,6 +56,15 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             </>)
           }))}
         />
+        <Paper variant="elevation" sx={{ mt: 1, pl: 1, pr: 1, pb: 1, borderRadius: 2 }}>
+          <StencilStyles.Switch
+            checked={devMode}
+            helperText="workflow.devmode.helper"
+            label="workflow.devmode"
+            onChange={setDevMode}
+          />
+        </Paper>
+
       </>
     </StencilStyles.Dialog>
   );
