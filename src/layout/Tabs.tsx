@@ -13,9 +13,9 @@ const Tabs: React.FC<{}> = () => {
   const tabs = session.tabs;
 
   return React.useMemo(() => {
-    
+
     console.log("RENDERING TABS", tabs);
-    
+
     const handleTabChange = (_event: React.ChangeEvent<{}>, newValue: number) => {
       actions.handleTabChange(newValue);
     };
@@ -25,28 +25,39 @@ const Tabs: React.FC<{}> = () => {
     };
 
     console.log("init tabs");
-    return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto">
-      {tabs.map((tab, index) => (
-        <MuiTab key={index} value={index} wrapped={true}
-          label={tab.label}
-          iconPosition="end"
-          sx={{ minHeight: 'unset' }}
-          icon={(<>
-            {tab.icon ? tab.icon : null}
-            <CloseIcon color="disabled"
-              onClick={(e) => handleTabClose(e, tab)}
-              sx={{
-                ml: 1,
-                color: "uiElements.main",
-                "&:hover": {
-                  color: "uiElements.main"
-                }
-              }}
-            />
-            <Box component="span" sx={{ flexGrow: 1 }}></Box>
-          </>)}
-        />))}
-    </MuiTabs>
+    return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"
+      sx={{
+          "& .MuiTabs-indicator": {
+            backgroundColor: theme.palette.uiElements.main,
+            marginRight: "49px"
+          }
+        }
+      }
+
+        >
+      {
+        tabs.map((tab, index) => (
+          <MuiTab key={index} value={index} wrapped={true}
+            label={tab.label}
+            iconPosition="end"
+            sx={{ minHeight: 'unset', color: "mainContent.dark", "&:focus":{color: "uiElements.main"} }}
+            icon={(<>
+              {tab.icon ? tab.icon : null}
+              <CloseIcon color="disabled"
+                onClick={(e) => handleTabClose(e, tab)}
+                sx={{
+                  m: 0,
+                  color: "uiElements.main",
+                  "&:hover": {
+                    color: "mainContent.dark"
+                  }
+                }}
+              />
+              <Box component="span" sx={{ flexGrow: 1 }}></Box>
+            </>)}
+          />))
+      }
+    </MuiTabs >
     )
   }, [tabs, active, theme, actions]);
 }

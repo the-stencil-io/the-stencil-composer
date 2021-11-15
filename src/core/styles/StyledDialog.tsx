@@ -39,7 +39,7 @@ const StyledDialog: React.FC<StyledDialogProps> = (props) => {
   
   
   return (
-    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md">
+    <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md" >
       <StyledDialogTitle sx={{ mb: 2, backgroundColor: alpha(color, 0.9) }}><FormattedMessage id={props.title} /></StyledDialogTitle>
       <DialogContent>{props.children}</DialogContent>
       <DialogActions>
