@@ -40,7 +40,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
 
   return (<StencilStyles.Dialog open={true} onClose={props.onClose}
-    color="page.main"
+    backgroundColor="uiElements.main"
     title="newpage.title"
     submit={{ title: "button.create", onClick: handleCreate, disabled: !locale }}>
     <>

@@ -29,7 +29,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="link.main" title="link.composer.title"
+      backgroundColor="uiElements.main"
+      title="link.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !value || changeInProgress }}>
 
       <>

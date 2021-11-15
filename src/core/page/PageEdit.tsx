@@ -28,7 +28,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
   const valid = pageId && articleId && newLocale;
   return (
     <StencilStyles.Dialog open={true} onClose={props.onClose}
-      color="page.main"
+      backgroundColor="uiElements.main" 
       title="pages.change"
       submit={{ title: "button.update", onClick: handleUpdate, disabled: !valid }}>
 
@@ -39,9 +39,9 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
           onChange={setPageId}
           label='pages.edit.selectpage'
           items={articlePages.map((articlePage) => ({
-              id: articlePage.id,
-              value: site.locales[articlePage.body.locale].body.value
-            }))}
+            id: articlePage.id,
+            value: site.locales[articlePage.body.locale].body.value
+          }))}
         />
         <StencilStyles.Select
           selected={newLocale}

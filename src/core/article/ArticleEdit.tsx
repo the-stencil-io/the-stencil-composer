@@ -23,7 +23,7 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
     });
   }
 
-  const articles: {id: string, value: string}[] = Object.values(site.articles)
+  const articles: { id: string, value: string }[] = Object.values(site.articles)
     .sort((a1, a2) => {
       if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
         const children = a1.body.order - a2.body.order;
@@ -43,13 +43,14 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
     }));
 
   return (<StencilStyles.Dialog open={true} onClose={onClose}
-    color="article.main" title="article.edit.title"
+    backgroundColor="uiElements.main"
+    title="article.edit.title"
     submit={{ title: "button.update", onClick: handleUpdate, disabled: !name }}>
     <>
-      <StencilStyles.Select label="article.edit.parent" onChange={setParentId} 
+      <StencilStyles.Select label="article.edit.parent" onChange={setParentId}
         selected={parentId ? parentId : ''}
         items={articles}
-        empty={{id: "", label: "article.composer.parent.unselected"}}   
+        empty={{ id: "", label: "article.composer.parent.unselected" }}
       />
       <StencilStyles.NumberField label="order" helperText="article.edit.orderhelper" placeholder={100} value={order} onChange={setOrder} />
       <StencilStyles.TextField label="article.name" required value={name} onChange={setName} />

@@ -20,7 +20,8 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const locales: StencilClient.Locale[] = Object.values(site.locales).map(l => l.body.value);
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="locale.main" title="locale.composer.title"
+      backgroundColor="uiElements.main"
+      title="locale.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !locale || locales.includes(locale) || locale.length !== 2 }}>
 
       <StencilStyles.TextField label='locale.composer.helper' helperText='locale.composer.helper' placeholder="en"

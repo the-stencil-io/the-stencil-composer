@@ -29,7 +29,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="article.main" title="article.composer.title"
+      backgroundColor="uiElements.main" title="article.composer.title"
       submit={{ title: "article.create", onClick: handleCreate, disabled: !name }}>
       <>
         <StencilStyles.Select label="article.composer.parent"

@@ -63,7 +63,7 @@ const WorkflowRemovePage: React.FC<WorkflowRemovePageProps> = ({ workflow, artic
       </IconButton>
 
       <StencilStyles.Dialog open={open} onClose={handleClose}
-        color="workflow.main"
+        backgroundColor="workflow.main"
         title="workflow.removepage.title"
         submit={{ title: "button.remove", onClick: handleDelete, disabled: false }}>
         <DialogContentText>

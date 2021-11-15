@@ -11,7 +11,7 @@ interface WorkflowDeleteProps {
 }
 
 const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) => {
-  const { service, actions  } = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const handleDelete = () => {
     service.delete().workflow(workflow.id).then(success => {
@@ -23,7 +23,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="workflow.main"
+      backgroundColor="uiElements.main"
       title="workflow.delete.title"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
 

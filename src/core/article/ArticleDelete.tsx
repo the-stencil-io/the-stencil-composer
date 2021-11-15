@@ -22,8 +22,9 @@ const ArticleDelete: React.FC<ArticleDeleteProps> = ({ articleId, onClose }) => 
   }
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose} 
-      color="article.main" title="article.delete.title"
+    <StencilStyles.Dialog open={true} onClose={onClose}
+      backgroundColor="uiElements.main"
+      title="article.delete.title"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="article.delete" />

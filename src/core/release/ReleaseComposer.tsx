@@ -21,12 +21,13 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   }
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="release.main" title="release.composer.title"
+      backgroundColor="uiElements.main"
+      title="release.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !name }}>
       <>
-        <StencilStyles.TextField label='release.composer.label' onChange={setName} value={name}/>
-        <StencilStyles.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note}/>
-        <StencilStyles.TextField disabled label='date' value={new Date().toISOString()} onChange={() => {}}/>
+        <StencilStyles.TextField label='release.composer.label' onChange={setName} value={name} />
+        <StencilStyles.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note} />
+        <StencilStyles.TextField disabled label='date' value={new Date().toISOString()} onChange={() => { }} />
       </>
     </StencilStyles.Dialog>
   );

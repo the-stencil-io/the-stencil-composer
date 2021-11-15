@@ -60,7 +60,7 @@ const LocaleDisable: React.FC<LocaleDisableProps> = ({ locale }) => {
           onChange={handleChange} />}
 
       <StyledDialog open={open} onClose={handleClose}
-        color="locale.main" title={locale.body.enabled === true ? "locale.disable.title" : "locale.enable.title"}
+        backgroundColor="locale.main" title={locale.body.enabled === true ? "locale.disable.title" : "locale.enable.title"}
         submit={{
           title: locale.body.enabled ? "button.disable" : "button.enable",
           onClick: locale.body.enabled ? () => handleEnable(false) : () => handleEnable(true),

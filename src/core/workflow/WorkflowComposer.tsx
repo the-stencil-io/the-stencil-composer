@@ -27,7 +27,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="workflow.main"
+      backgroundColor="uiElements.main"
       title="workflow.composer.title"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       <>

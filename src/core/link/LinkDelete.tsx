@@ -25,8 +25,9 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   }
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose} 
-      color="article.main" title="article.composer.title"
+    <StencilStyles.Dialog open={true} onClose={onClose}
+      backgroundColor="uiElements.main"
+      title="article.composer.title"
       submit={{ title: "article.create", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="link.delete" />

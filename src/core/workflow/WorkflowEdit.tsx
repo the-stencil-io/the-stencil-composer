@@ -36,7 +36,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      color="workflow.main"
+      backgroundColor="uiElements.main"
       title="workflow.edit.title"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       <>
