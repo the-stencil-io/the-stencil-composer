@@ -118,7 +118,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
         }
       />
 
-      <CardContent sx={{ flexGrow: 1, p: 2, height: '15vh' }}>
+      <CardContent sx={{ flexGrow: 1, p: 2, height: 'fit-content',}}>
         <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
       <Divider />
