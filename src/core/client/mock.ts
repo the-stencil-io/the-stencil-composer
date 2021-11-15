@@ -76,9 +76,9 @@ const locales: StencilClient.SiteLocale[] = [
   { id: "l3", body: { enabled: false, value: "en" }}
 ]
 const releases: StencilClient.Release[] = [
-  { id: "r3", body: {name: "LATEST", note: "" }, created: "03/10/2021"},
-  { id: "r1", body: {name: "v1.5", note: "super note here" }, created: "04/02/2021"},
-  { id: "r2", body: {name: "v1.6", note: "Even better note here" }, created: "12/02/2021"},
+  { id: "r3", body: {name: "LATEST", note: "", articles: [], links: [], workflows: [], locales: [], pages: [] }, created: "03/10/2021"},
+  { id: "r1", body: {name: "v1.5", note: "super note here", articles: [], links: [], workflows: [], locales: [], pages: [] }, created: "04/02/2021"},
+  { id: "r2", body: {name: "v1.6", note: "Even better note here", articles: [], links: [], workflows: [], locales: [], pages: [] }, created: "12/02/2021"},
 
 ];
 const getSite = async (): Promise<StencilClient.Site> => {
@@ -96,6 +96,9 @@ const createMock = (): StencilClient.Service => {
 
   return {
     getSite,
+    async getReleaseContent(_release: StencilClient.Release): Promise<{}> {
+      return {};
+    },
     create: () => new MockCreateBuilder(),
     update: () => new MockUpdateBuilder(),
     delete: () => new MockDeleteBuilder()

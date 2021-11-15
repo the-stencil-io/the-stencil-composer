@@ -14,6 +14,7 @@ import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
+import PieChartIcon from '@mui/icons-material/PieChart';
 
 import { Composer, StencilClient } from './context';
 import { LocaleFilter } from './explorer/filter';
@@ -72,6 +73,9 @@ const Toolbar: React.FC<{}> = () => {
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
 
+    } else if (newValue === 'toolbar.graph') {
+      layoutActions.handleTabAdd({id: "graph", label: "Release Graph"})
+
     } else if (newValue === 'toolbar.links') {
       layoutActions.handleTabAdd({ id: 'links', label: "Links" })
 
@@ -123,6 +127,7 @@ const Toolbar: React.FC<{}> = () => {
           <StyledTab value='toolbar.workflows' icon={<WorkOutlineIcon />} />
           <StyledTab value='toolbar.releases' icon={<NewReleasesOutlinedIcon />} />
           <StyledTab value='toolbar.locales' icon={<TranslateIcon />} />
+          <StyledTab value='toolbar.graph' icon={<PieChartIcon />} />
           <StyledTab value='toolbar.import' icon={<ImportExportIcon />} />
           <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />

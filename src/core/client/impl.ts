@@ -25,10 +25,13 @@ const createService = (init: { store?: StencilClient.Store, url?: string }): Ste
 
   return {
     getSite,
+    async getReleaseContent(release: StencilClient.Release): Promise<{}> {
+      return backend.fetch(`/releases/${release.id}`, { method: "GET" }).then((data) => data as any);
+    },
     create: () => new CreateBuilderImpl(backend),
     update: () => new UpdateBuilderImpl(backend),
     delete: () => new DeleteBuilderImpl(backend)
-  } as any;
+  };
 }
 
 class CreateBuilderImpl implements StencilClient.CreateBuilder {

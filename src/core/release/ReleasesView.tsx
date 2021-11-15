@@ -2,12 +2,15 @@ import React from 'react';
 import { createStyles, makeStyles } from '@mui/styles';
 import {
   Avatar, Theme, Box, Typography, IconButton, Table, TableBody, 
-  TableCell, TableContainer, TableRow, TableHead
+  TableCell, TableContainer, TableRow, TableHead, Paper
 } from '@mui/material';
 
-import Paper from '@mui/material/Paper';
+
 import GetAppIcon from '@mui/icons-material/GetApp';
 import { FormattedMessage, useIntl } from 'react-intl';
+
+import fileDownload from 'js-file-download'
+
 
 import { Composer, StencilClient } from '../context';
 
@@ -58,9 +61,17 @@ const useRowStyles = makeStyles((theme: Theme) =>
 
 const ReleasesView: React.FC<{}> = () => {
   const classes = useStyles();
-  const {site} = Composer.useComposer();
+  const {site, service} = Composer.useComposer();
   const releases = Object.values(site.releases);
   const title = useIntl().formatMessage({ id: "releases" });
+
+  const onDownload = (release: StencilClient.Release) => {
+    service.getReleaseContent(release).then(content => {
+      const data = JSON.stringify(content, null, 2);
+      console.log(data);
+      fileDownload(data, release.body.name + '.json');      
+    })
+  }
 
   return (
     <>
@@ -81,7 +92,10 @@ const ReleasesView: React.FC<{}> = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {releases.map((release, index) => (<Row key={index} release={release} />))}
+            {releases.map((release, index) => (<Row key={index} 
+              release={release}
+              onDownload={() => onDownload(release)} 
+            />))}
           </TableBody>
         </Table>
       </TableContainer>
@@ -90,7 +104,7 @@ const ReleasesView: React.FC<{}> = () => {
 }
 
 
-const Row: React.FC<{ release: StencilClient.Release }> = ({ release }) => {
+const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> = ({ release, onDownload }) => {
   const classes = useRowStyles();
 
   return (
@@ -101,7 +115,7 @@ const Row: React.FC<{ release: StencilClient.Release }> = ({ release }) => {
         <TableCell align="left">{release.created}</TableCell>
         <TableCell align="left">{release.body.note}</TableCell>
         <TableCell align="center">
-          <IconButton className={classes.iconButton}><GetAppIcon /> </IconButton>
+          <IconButton className={classes.iconButton} onClick={onDownload}><GetAppIcon /> </IconButton>
         </TableCell>
       </TableRow>
     </>

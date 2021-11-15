@@ -82,8 +82,41 @@ declare namespace StencilClient {
     body: {
       note?: string,
       name: string,
+      locales: LocaleReleaseItem[];
+      articles: ArticleReleaseItem[];
+      links: LinkReleaseItem[];
+      workflows: WorkflowReleaseItem[];
+      pages: PageReleaseItem[];
     }
   }
+  
+  interface LinkReleaseItem extends ReleaseItem {
+    value: string;
+    contentType: string;
+    articles: string;
+    labels: LocaleLabel[];    
+  }
+  interface WorkflowReleaseItem extends ReleaseItem {
+    value: string; // pointer to actual workflow
+    articles: string[];
+    labels: LocaleLabel[];
+  }
+  interface LocaleReleaseItem extends ReleaseItem {
+    value: string; // language code
+  }
+  interface ArticleReleaseItem extends ReleaseItem {
+    name: string;
+    parentId?: string;
+  }
+  interface PageReleaseItem extends ReleaseItem {
+    locale: string;
+    h1: string;
+  }
+  interface ReleaseItem {
+    id: string;
+    hash: string;
+  }
+
 
   interface Link {
     id: LinkId,
@@ -133,6 +166,8 @@ declare namespace StencilClient {
 
   interface Service {
     getSite(): Promise<Site>,
+    getReleaseContent(release: Release): Promise<{}>, 
+    
     create(): CreateBuilder;
     delete(): DeleteBuilder;
     update(): UpdateBuilder;

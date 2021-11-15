@@ -63,6 +63,9 @@
     ]
   },
   "dependencies": {
-    "@mui/lab": "^5.0.0-alpha.53"
+    "@mui/lab": "^5.0.0-alpha.53",
+    "@types/d3": "^7.1.0",
+    "d3": "^7.1.1",
+    "js-file-download": "^0.4.12"
   }
 }
