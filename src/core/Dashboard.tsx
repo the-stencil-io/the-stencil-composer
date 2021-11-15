@@ -112,14 +112,13 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
           <Box display="flex"
             sx={{
               justifyContent: 'center',
-              pr: 2,
             }}>
-            <Typography variant="h2" sx={{fontWeight: 'bold'}}>{title}</Typography>
+            <Typography variant="h2" sx={{fontWeight: 'bold', p: 1}}>{title}</Typography>
           </Box>
         }
       />
 
-      <CardContent sx={{ flexGrow: 1, p: 2 }}>
+      <CardContent sx={{ flexGrow: 1, p: 2, height: '15vh' }}>
         <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
       <Divider />
@@ -127,7 +126,6 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
         <ButtonGroup variant="text" fullWidth sx={{justifyContent: 'space-between'}}>
           <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} />
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
-
         </ButtonGroup>
       </CardActions>
     </Card>
