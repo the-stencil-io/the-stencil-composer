@@ -24,7 +24,7 @@ const StyledTreeItemRoot = styled(TreeItem)(({ theme }) => ({
       color: `var(--tree-view-color, ${theme.palette.explorerItem.dark})` //"var(--tree-view-color)"
     },
     [`& .${treeItemClasses.label}`]: {
-      fontWeight: "inherit",
+      //fontWeight: "inherit",
       color: "inherit"
     }
   },

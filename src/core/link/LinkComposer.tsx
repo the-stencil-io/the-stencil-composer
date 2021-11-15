@@ -43,7 +43,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           items={[
             { id: 'internal', value: 'link.type.internal' },
             { id: 'external', value: 'link.type.external' },
-            { id: 'phone', value: 'link.type.phone' }
+            { id: 'phone',    value: 'link.type.phone' }
           ]} />
 
         <StencilStyles.TextField label='value' helperText='link.composer.valuehelper'

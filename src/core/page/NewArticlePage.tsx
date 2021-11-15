@@ -32,7 +32,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
 
   return (
     <StyledDialog open={open ? true : false} onClose={onClose}
-  backgroundColor="uiElements.main"
+      backgroundColor="uiElements.main"
       title="newpage.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: false }}>
 

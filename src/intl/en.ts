@@ -1,5 +1,9 @@
 const en = {
 
+  'link.type.internal': 'Internal link: My pages within my domain',
+  'link.type.external': 'External link: Other websites',
+  'link.type.phone': 'Phone number',
+
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
   'sitelocale.label.table.editLocaleValue': 'Edit locale value',
   'locales.label.table.title': 'Locale labels',
@@ -162,9 +166,6 @@ const en = {
   'link.type': 'Type',
   'link.url': 'URL / value',
   'link.locale.all': 'All locales',
-  'link.type.internal': 'Internal (within my domain)',
-  'link.type.external': 'External (outside of my domain)',
-  'link.type.phone': 'Phone number',
   'link.content': 'Link URL / path',
   'link.composer.descriptionlabel': 'Description',
   'link.composer.descriptionhelper': 'Text that the user will see',
@@ -194,7 +195,7 @@ const en = {
   'locales.content': 'Page in this locale has content',
   'locales.nocontent': 'Page in this locale has no content',
   'locales.nopage': 'There is no page for this locale in this Article',
-  
+
   'locales.label.table.locale': 'Language code',
 
 
