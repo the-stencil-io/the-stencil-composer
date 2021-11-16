@@ -1,7 +1,12 @@
 const en = {
 
+  'services.title': 'Services',
+  'services.desc': 'Connect your forms and other integrations to your content with the Wrench and Dialob workflows',
+  
+  
+  
   'toolbar.createitems': 'Create',
-  'createitems.title': 'Create resources',
+  'createitems.title': 'Create and view site-wide resources',
   'link.type.internal': 'Internal link: My pages within my domain',
   'link.type.external': 'External link: Other websites',
   'link.type.phone': 'Phone number',
