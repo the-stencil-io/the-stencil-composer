@@ -101,6 +101,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
   const title = useIntl().formatMessage({ id: props.data.title })
 
   return (
+
     <Card sx={{
       margin: 3,
       width: '20vw',
@@ -113,17 +114,17 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
             sx={{
               justifyContent: 'center',
             }}>
-            <Typography variant="h2" sx={{fontWeight: 'bold', p: 1}}>{title}</Typography>
+            <Typography variant="h2" sx={{ fontWeight: 'bold', p: 1 }}>{title}</Typography>
           </Box>
         }
       />
 
-      <CardContent sx={{ flexGrow: 1, p: 2, height: 'fit-content'}}>
+      <CardContent sx={{ flexGrow: 1, p: 2, height: 'fit-content' }}>
         <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
       <Divider />
       <CardActions>
-        <ButtonGroup variant="text" fullWidth sx={{justifyContent: 'space-between'}}>
+        <ButtonGroup variant="text" fullWidth sx={{ justifyContent: 'space-between' }}>
           <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} />
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
         </ButtonGroup>
@@ -144,16 +145,20 @@ const Dashboard: React.FC<{}> = () => {
   const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
 
   return (
-    <Box sx={{
-      margin: 1,
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'center',
+    <>
+      <Typography variant="h3" fontWeight="bold" sx={{p:1, m:2}}><FormattedMessage id={"createitems.title"} /></Typography>
+      <Box sx={{
+        margin: 1,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
 
-    }}>
-      {open === undefined ? null : (cards[open].composer(handleClose))}
-      {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}
-    </Box>
+      }}>
+        {open === undefined ? null : (cards[open].composer(handleClose))}
+        {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}
+      </Box>
+
+    </>
   );
 }
 

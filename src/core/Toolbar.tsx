@@ -9,7 +9,7 @@ import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
 import LinkIcon from '@mui/icons-material/Link';
 import TranslateIcon from '@mui/icons-material/Translate';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import ImportExportIcon from '@mui/icons-material/ImportExport';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -67,8 +67,8 @@ const Toolbar: React.FC<{}> = () => {
       });
 
 
-    } else if (newValue === 'toolbar.dashboard') {
-      layoutActions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+    } else if (newValue === 'toolbar.createitems') {
+      layoutActions.handleTabAdd({ id: 'newItem', label: "Create" });
 
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
@@ -103,7 +103,7 @@ const Toolbar: React.FC<{}> = () => {
   React.useLayoutEffect(() => {
     console.log("init toolbar");
     layoutActions.handleSecondary("toolbar.articles")
-    layoutActions.handleTabAdd({ id: 'newItem', label: "Dashboard" });
+    layoutActions.handleTabAdd({ id: 'newItem', label: "Create" });
   }, [layoutActions]);
 
   const saveSx = unsavedPages.length ? { color: "explorerItem.contrastText" } : undefined;
@@ -116,7 +116,7 @@ const Toolbar: React.FC<{}> = () => {
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
           value={layout.session.secondary}>
 
-          <StyledTab value='toolbar.dashboard' icon={<HomeOutlinedIcon />} />
+          <StyledTab value='toolbar.createitems' icon={<AddCircleOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.save'
             icon={<SaveIcon sx={saveSx} />}
             disabled={unsavedArticlePages.length === 0}

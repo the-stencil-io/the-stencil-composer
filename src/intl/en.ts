@@ -1,5 +1,7 @@
 const en = {
 
+  'toolbar.createitems': 'Create',
+  'createitems.title': 'Create resources',
   'link.type.internal': 'Internal link: My pages within my domain',
   'link.type.external': 'External link: Other websites',
   'link.type.phone': 'Phone number',
