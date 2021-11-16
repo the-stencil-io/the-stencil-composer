@@ -44,14 +44,9 @@ const ArticleExplorer: React.FC<{}> = () => {
           fontVariant: 'all-petite-caps',
           fontWeight: 'bold',
           color: 'explorerItem.main',
-          ml: 1,
-          mr: 1,
-          mb: 1,
+          ml: 1, mr: 1, mb: 1,
           borderBottom: '1px solid'
-        
         }}>
-        <FormattedMessage id='article.explorer.title' />
-
       </Typography>
       {articles.length !== 0 ? null : (
         <div>

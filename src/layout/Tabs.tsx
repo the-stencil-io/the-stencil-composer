@@ -27,20 +27,19 @@ const Tabs: React.FC<{}> = () => {
     console.log("init tabs");
     return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"
       sx={{
-          "& .MuiTabs-indicator": {
-            backgroundColor: theme.palette.uiElements.main,
-            marginRight: "49px"
-          }
+        "& .MuiTabs-indicator": {
+          backgroundColor: theme.palette.uiElements.main,
+          marginRight: "49px"
         }
       }
-
-        >
+      }
+    >
       {
         tabs.map((tab, index) => (
           <MuiTab key={index} value={index} wrapped={true}
             label={tab.label}
             iconPosition="end"
-            sx={{ minHeight: 'unset', color: "mainContent.dark", "&:focus":{color: "uiElements.main"} }}
+            sx={{ minHeight: 'unset', color: "mainContent.dark", "&:focus": { color: "uiElements.main" } }}
             icon={(<>
               {tab.icon ? tab.icon : null}
               <CloseIcon color="disabled"
