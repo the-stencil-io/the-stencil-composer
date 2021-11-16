@@ -96,7 +96,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   },
 ]);
 
-const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
+const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
 
   const title = useIntl().formatMessage({ id: props.data.title })
 
@@ -135,7 +135,7 @@ const DashboardItem: React.FC<{ data: CardData, onCreate: () => void }> = (props
 
 
 //card view for all CREATE views
-const Dashboard: React.FC<{}> = () => {
+const CreateView: React.FC<{}> = () => {
   const theme = useTheme();
   const layout = Composer.useLayout();
   const { site } = Composer.useComposer();
@@ -155,11 +155,11 @@ const Dashboard: React.FC<{}> = () => {
 
       }}>
         {open === undefined ? null : (cards[open].composer(handleClose))}
-        {cards.map((card, index) => (<DashboardItem key={index} data={card} onCreate={() => setOpen(index)} />))}
+        {cards.map((card, index) => (<CreateViewItem key={index} data={card} onCreate={() => setOpen(index)} />))}
       </Box>
 
     </>
   );
 }
 
-export { Dashboard }
+export { CreateView }

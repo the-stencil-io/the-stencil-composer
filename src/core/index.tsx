@@ -29,7 +29,7 @@ export type { StencilComposerProps };
 export { StencilComposer, StencilClient, messages, Layout };
 export * from './Main';
 export * from './Secondary';
-export * from './Dashboard';
+export * from './CreateView';
 
 export * from './page';
 export * from './link';
