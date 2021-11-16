@@ -16,7 +16,12 @@ const en = {
   'transferlist.noItemsSelected': 'No items selected',
   'transferlist.search': 'Search',
   'transferlist.noSearchResults': 'No search results found',
-  'article.explorer.title': 'Article Explorer',
+  
+  
+  'explorer.tabs.articles': 'Articles',
+  'explorer.tabs.links': 'Links',
+  'explorer.tabs.workflows': 'Workflows',
+
 
   'links.change': 'Change existing links',
   'workflows.change': 'Change existing workflows',
