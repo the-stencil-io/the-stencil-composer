@@ -13,6 +13,8 @@ import { WorkflowComposer } from './workflow';
 import { LocaleComposer } from './locale';
 import { ReleaseComposer } from './release';
 import { NewPage } from './page';
+import { MigrationComposer } from './migration';
+
 
 import { Composer, StencilClient, Layout } from './context';
 
@@ -21,21 +23,21 @@ interface CardData {
   title: string;
   desc: string;
   buttonCreate: string;
-  buttonViewAll: string;
+  buttonViewAll?: string;
   color: string;
-  onView: () => void;
+  onView?: () => void;
   composer: (handleClose: () => void) => React.ReactChild;
   //viewer: (() => void) => xxx;
 }
 
-type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale";
+type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale" | "migration";
 
 const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
-    title: "composer.article.title",
-    desc: "composer.article.desc",
+    title: "createview.article.title",
+    desc: "createview.article.desc",
     color: theme.palette.article?.main,
     type: "article",
     buttonCreate: "article.create",
@@ -44,18 +46,18 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
     onView: () => console.log("nothing to see here"),
-    title: "composer.page.title",
-    desc: "composer.page.desc",
+    title: "createview.page.title",
+    desc: "createview.page.desc",
     color: theme.palette.page?.main,
     type: "page",
     buttonCreate: "page.create",
-    buttonViewAll: "button.view.all.pages"
+    buttonViewAll: "button.view.all.pages" || undefined
   },
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
-    title: "composer.link.title",
-    desc: "composer.link.desc",
+    title: "createview.link.title",
+    desc: "createview.link.desc",
     color: theme.palette.link?.main,
     type: "link",
     buttonCreate: "link.create",
@@ -76,8 +78,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'locales', label: "Locales" }),
-    title: "composer.locale.title",
-    desc: "composer.locale.desc",
+    title: "createview.locale.title",
+    desc: "createview.locale.desc",
     color: theme.palette.locale?.main,
     type: "locale",
     buttonCreate: "locale.create",
@@ -87,13 +89,24 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'releases', label: "Releases" }),
-    title: "composer.release.title",
-    desc: "composer.release.desc",
+    title: "createview.release.title",
+    desc: "createview.release.desc",
     color: theme.palette.release?.main,
     type: "release",
     buttonCreate: "release.create",
     buttonViewAll: "button.view.all.releases"
   },
+  {
+    composer: (handleClose) => <MigrationComposer onClose={handleClose}/>,
+    onView: undefined,
+    title: "createview.migration.title",
+    desc: "createview.migration.desc",
+    color: theme.palette.release?.main,
+    type: "migration",
+    buttonCreate: "migration.create",
+    buttonViewAll: undefined
+  },
+
 ]);
 
 const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
@@ -125,7 +138,7 @@ const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (prop
       <Divider />
       <CardActions>
         <ButtonGroup variant="text" fullWidth sx={{ justifyContent: 'space-between' }}>
-          <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} />
+         {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box/>}
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
         </ButtonGroup>
       </CardActions>
@@ -146,7 +159,7 @@ const CreateView: React.FC<{}> = () => {
 
   return (
     <>
-      <Typography variant="h3" fontWeight="bold" sx={{p:1, m:2}}><FormattedMessage id={"createitems.title"} /></Typography>
+      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1}}><FormattedMessage id={"createitems.title"} /></Typography>
       <Box sx={{
         margin: 1,
         display: 'flex',

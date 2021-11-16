@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 import {
   CreateView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
-  ReleasesView, LocalesView, ImportView,
+  ReleasesView, LocalesView,
   HelpView, ReleaseGraph
 } from './';
 
@@ -37,8 +37,6 @@ const Main: React.FC<{}> = () => {
       return (<Box sx={root}><LocalesView /></Box>);
     } else if (active.id === 'workflows') {
       return (<Box sx={root}><WorkflowsView /></Box>);
-    } else if (active.id === 'import') {
-      return (<Box sx={root}><ImportView /></Box>);
     } else if (active.id === 'graph') {
       return (<Box sx={root}><ReleaseGraph /></Box>);
 

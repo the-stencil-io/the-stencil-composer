@@ -1,6 +1,23 @@
 const en = {
 
 
+
+  'createview.article.title': 'Article',
+  'createview.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
+  'createview.locale.title': 'Locale',
+  'createview.locale.desc': 'Locales are your languages: Add, activate, and deactivate sitewide locales here. You can add a Page in a specific language if you have defined a locale for that page.',
+  'createview.page.title': 'Page',
+  'createview.page.desc': 'A Page is one content file within an Article. It represents one language and any links / workflows that are associated with an Article',
+  'createview.link.title': 'Hyperlink',
+  'createview.link.desc': 'A Hyperlink will connect users to webpages you own, webpages of other organisations, and your telephone numbers',
+  'createview.workflow.title': 'Workflow Link',
+  'createview.workflow.desc': 'A Workflow link will connect your workflows(forms and processes) to your portal frontend, so users can fill out your forms.',
+  'createview.release.title': 'Release',
+  'createview.release.desc': 'A Release is a snapshot of all site content at one certain point of time. Use this for testing, prouduction, or backup purposes.',
+  'createview.migration.title': 'Migrations',
+  'createview.migration.desc': 'Import site data as a JSON file for restoring site from a backup, content updates, etc.',
+  'migration.create': 'Migrate data',
+
   'toolbar.services': 'Services',
   'services': 'Services',
   'services.create': 'Create service',
@@ -144,18 +161,6 @@ const en = {
   'button.remove': 'Continue and remove',
   'button.apply': 'Apply changes and exit',
 
-  'composer.article.title': 'Article',
-  'composer.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
-  'composer.locale.title': 'Locale',
-  'composer.locale.desc': 'Locales are your languages: Add, activate, and deactivate sitewide locales here. You can add a Page in a specific language if you have defined a locale for that page.',
-  'composer.page.title': 'Page',
-  'composer.page.desc': 'A Page is one content file within an Article. It represents one language and any links / workflows that are associated with an Article',
-  'composer.link.title': 'Hyperlink',
-  'composer.link.desc': 'A Hyperlink will connect users to webpages you own, webpages of other organisations, and your telephone numbers',
-  'composer.workflow.title': 'Workflow Link',
-  'composer.workflow.desc': 'A Workflow link will connect your workflows(forms and processes) to your portal frontend, so users can fill out your forms.',
-  'composer.release.title': 'Release',
-  'composer.release.desc': 'A Release is a snapshot of all site content at one certain point of time. Use this for testing, prouduction, or backup purposes.',
 
   'link.article.add.title': 'Add link to an Article',
   'link.article.select': 'Select Article',
