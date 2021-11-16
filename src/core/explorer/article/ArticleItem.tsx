@@ -130,7 +130,7 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
 
         {/** Workflows options */}
         <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
-          labelText={<FormattedMessage id="workflows" />}
+          labelText={<FormattedMessage id="services" />}
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${workflows.length}`}
           labelcolor="workflow">

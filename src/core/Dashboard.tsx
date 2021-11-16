@@ -65,7 +65,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'workflows', label: "Workflows" }),
-    title: "services.title",
+    title: "services",
     desc: "services.desc",
     color: theme.palette.workflow?.main,
     type: "workflow",

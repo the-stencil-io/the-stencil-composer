@@ -49,7 +49,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   return (
     <StencilStyles.Dialog open={true} onClose={onClose} 
       backgroundColor="uiElements.main"
-      title="workflow.edit.title" 
+      title="services.edit" 
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       
       <>
@@ -58,7 +58,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
-        <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname'
+        <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname'
           value={technicalname}
           onChange={setTechnicalname} />
 
@@ -81,8 +81,8 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           <StencilStyles.Switch
             checked={devMode ? devMode : false}
             onChange={setDevMode}
-            helperText={"workflow.devmode.helper"}
-            label={"workflow.devmode"}
+            helperText={"services.devmode.helper"}
+            label={"services.devmode"}
           />
         </Paper>
       </>

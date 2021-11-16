@@ -24,11 +24,11 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
-      title="workflow.delete.title"
+      title="services.delete"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
 
       <DialogContentText>
-        <FormattedMessage id="workflow.delete" />
+        <FormattedMessage id="services.delete" />
       </DialogContentText>
     </StencilStyles.Dialog>
   );

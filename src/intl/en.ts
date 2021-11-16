@@ -1,12 +1,27 @@
 const en = {
 
-  'services.title': 'Services',
+
+  'explorer.tabs.services': 'Services',
+  'toolbar.services': 'Services',
+  'services': 'Services',
+  'services.name': "Localised name of service",
   'services.desc': 'Connect your forms and other integrations to your content with the Wrench and Dialob workflows',
-  
-  
-  
+  'services.add': 'Add a service',
+  'services.change': 'Change existing services',
+  'services.edit': 'Edit service',
+
+  'services.technicalname': 'Technical name',
+  'services.technicalname.description': 'Flow name as defined in the Wrench',
+  'services.selected': 'Selected services',
+  'services.siteservices': 'Site services',
+  'services.devmode.helper': 'If Development mode is active, this service will only appear in the development environment for testing. It will not be included in production releases.',
+  'services.devmode': 'Development mode',
+  'services.delete': 'Permanently delete this service?',
+  'services.removepage.title': 'Remove this service',
+  'services.removepage': 'Removing the service only removes its association with this article',
+
   'toolbar.createitems': 'Create',
-  'createitems.title': 'Create and view site-wide resources',
+  'createitems.title': 'Create and view site resources',
   'link.type.internal': 'Internal link: My pages within my domain',
   'link.type.external': 'External link: Other websites',
   'link.type.phone': 'Phone number',
@@ -19,12 +34,12 @@ const en = {
   'link.search.title': 'Search links by value',
   'article.order': 'Article order number',
   'article.links.selectedlinks': 'Selected links',
-  'article.workflows.selectedworkflows': 'Selected workflows',
+
   'transferlist.noItemsSelected': 'No items selected',
   'transferlist.search': 'Search',
   'transferlist.noSearchResults': 'No search results found',
-  
-  
+
+
   'explorer.tabs.articles': 'Articles',
   'explorer.tabs.links': 'Links',
   'explorer.tabs.workflows': 'Workflows',
@@ -35,11 +50,6 @@ const en = {
   'link.create': 'Create new link',
   'workflow.create': 'Create new Workflow',
 
-  'search': 'Search',
-  'search.tooltip': 'I want to find...',
-  'workflow.technicalname.description': 'Flow name as defined in the Wrench',
-  'workflow.devmode.helper': 'If Development mode is active, this workflow will only appear in the development environment for testing. It will not be included in production releases.',
-  'workflow.devmode': 'Development mode',
 
   'select.multiple': 'Select one or many items',
   'resource.options': 'Resource options',
@@ -54,10 +64,7 @@ const en = {
 
   'composer.select.article': 'Select articles',
 
-
-  'toolbar.preview': 'Live preview', //not in use
   'toolbar.help': 'Help and user documentation',
-  'workflow.edit.title': 'Edit Workflow',
 
   'article.create': 'Create Article',
   'page.create': 'Create Page',
@@ -104,7 +111,6 @@ const en = {
   'remove': 'Remove',
 
 
-  'explorer.pages': 'Pages', //not in use
   'explorer.pages.create': 'Create Page',
   'explorer.pages.dualview': 'Dual View',
   'explorer.locale.empty': 'No Locales',
@@ -127,22 +133,12 @@ const en = {
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
 
   'article.options': 'Article options',
-  'article.addlink': 'Add this link to Article', //not in use
   'article.links.addremove': 'Add or remove Article links',
-  'article.links': 'Article links', //not in use
   'article.links.sitelinks': 'Site links',
-  'article.workflows.siteworkflows': 'Site workflows',
 
-  'article.links.remove': 'Remove this link association with this Article', //not in use
-
-  'article.workflows.addremove': 'Add or remove Article Workflows',
-  'article.workflows': 'Article Workflows',
-  'article.workflows.add': 'Associate this Workflow with this Article', //not in use
-  'article.workflows.remove': 'Remove this Workflow association with this Article', //not in use
 
   'button.cancel': 'Cancel',
   'button.create': 'Create',
-  'button.view': 'View', //not in use
   'button.add': 'Add',
   'button.addremove': 'Add/Remove',
   'button.update': 'Update',
@@ -153,7 +149,7 @@ const en = {
   'button.apply': 'Apply changes and exit',
 
   'composer.article.title': 'Article',
-  'composer.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows' ,
+  'composer.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
   'composer.locale.title': 'Locale',
   'composer.locale.desc': 'Locales are your languages: Add, activate, and deactivate sitewide locales here. You can add a Page in a specific language if you have defined a locale for that page.',
   'composer.page.title': 'Page',
@@ -165,10 +161,6 @@ const en = {
   'composer.release.title': 'Release',
   'composer.release.desc': 'A Release is a snapshot of all site content at one certain point of time. Use this for testing, prouduction, or backup purposes.',
 
-  'toolbar.dashboard': 'Dashboard',
-  'dashboard.view.helper': 'View, edit, and delete items',
-
-  'link.associate.title': 'Associate a link with an Article', //not in use
   'link.article.add.title': 'Add link to an Article',
   'link.article.select': 'Select Article',
   'links.message': 'Expand rows to view Link - Article associations',
@@ -192,8 +184,6 @@ const en = {
 
   'link.options': 'Link options',
   'link.options.add': 'Add links to article',
-  'link.options.edit': 'Edit Article links', //not in use
-  'link.options.remove': 'Remove links from this Article', //not in use
 
   'locale.composer.title': 'Create a new locale',
   'locale.composer.helper': 'Two-letter locale code',
@@ -209,7 +199,6 @@ const en = {
   'locales.nopage': 'There is no page for this locale in this Article',
 
   'locales.label.table.locale': 'Language code',
-
 
   'newpage.title': 'Create a new page',
   'newpage.info': 'A page consists of localised content and must be associated with an Article.',
@@ -229,30 +218,8 @@ const en = {
   'release.composer.note': "Note",
   'release.composer.helper': 'Optional additional information for future reference',
 
-  'workflow.associate.title': 'Associate a Workflow with an Article', //not in use
-
-  'workflow.composer.title': "Add a workflow",
-  'workflow.composer.name': "Localised name",
-  'workflow.technicalname': 'Technical name',
-  'workflow.composer.select': 'Select existing Workflow',
-  'workflow.composer.helper': 'Name to be displayed to users',
-  'workflow.composer.placeholder': 'Permit application form', //not in use
-
-  'workflow.delete.title': 'Permanently delete this workflow?',
-  'workflow.delete': 'Deleting this workflow will remove it globally from the application.',
-
-  'workflow.removepage.title': 'Remove this Workflow?',
-  'workflow.removepage': 'Removing the Workflow only removes its association with this article. To delete this item permanently, click the Delete icon.',
-
-  'workflow.options': 'Workflow options', //not in use
-  'workflow.add': 'Add a workflow', //not in use
-  'workflow.edit': 'Edit a workflow',
-  'workflow.remove': 'Remove a workflow', //not in use
-
 
   'toolbar.articles': 'Articles overview',
-  'toolbar.newarticle': 'Create new Article', //not in use
-  'toolbar.newlocale': 'Add new Locale', //not in use
   'toolbar.explorer': 'Explorer',
   'toolbar.links': 'Links overview',
   'toolbar.workflows': 'Workflows overview',

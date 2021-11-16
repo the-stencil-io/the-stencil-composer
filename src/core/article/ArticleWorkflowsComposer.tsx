@@ -25,7 +25,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
       workflows: [...selectedWorkflows],
       links: undefined
     };
-    console.log("saving selected workflows" + selectedWorkflows);
+    console.log("saving selected services" + selectedWorkflows);
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
       .then(() => layout.actions.handleTabCloseCurrent())
@@ -34,10 +34,10 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
   return (
     <>
       <StencilStyles.TransferList
-        title="article.workflows.siteworkflows"
-        searchTitle="workflow.technicalname"
-        selectedTitle="article.workflows.selectedworkflows"
-        headers={["workflow.technicalname", "workflow.devmode"]}
+        title="services.siteservices"
+        searchTitle="services.technicalname"
+        selectedTitle="services.selected"
+        headers={["services.technicalname", "services.devmode"]}
         rows={workflows.map(row => row.id)}
         filterRow={(row, search) => {
           const workflow = site.workflows[row];

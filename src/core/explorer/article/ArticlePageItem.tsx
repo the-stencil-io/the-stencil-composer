@@ -1,5 +1,4 @@
 import React from "react";
-import { SxProps } from '@mui/system';
 import { Box, Typography, Theme, useTheme } from "@mui/material";
 
 import LeftEditIcon from "@mui/icons-material/BorderLeft";

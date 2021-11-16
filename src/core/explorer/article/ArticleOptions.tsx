@@ -77,13 +77,13 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       <ArticleOptionItem nodeId={article.id + 'resource.create.workflows'}
         color='workflow'
         onClick={() => setDialogOpen('WorkflowComposer')}
-        labelText={<FormattedMessage id="workflow.create" />}>
+        labelText={<FormattedMessage id="services.add" />}>
       </ArticleOptionItem>
 
       <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
         color='workflow'
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
-        labelText={<FormattedMessage id="workflows.change" />}>
+        labelText={<FormattedMessage id="services.change" />}>
       </ArticleOptionItem>
     </>
   );

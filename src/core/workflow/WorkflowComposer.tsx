@@ -30,7 +30,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
-      title="workflow.composer.title"
+      title="services.add"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
       <>
         <LocaleLabels
@@ -38,7 +38,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
-        <StencilStyles.TextField label='workflow.technicalname' helperText='workflow.technicalname.description'
+        <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname.description'
           value={technicalname}
           onChange={setTechnicalname} />
 
@@ -59,8 +59,8 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <Paper variant="elevation" sx={{ mt: 1, pl: 1, pr: 1, pb: 1, borderRadius: 2 }}>
           <StencilStyles.Switch
             checked={devMode}
-            helperText="workflow.devmode.helper"
-            label="workflow.devmode"
+            helperText="services.devmode.helper"
+            label="services.devmode"
             onChange={setDevMode}
           />
         </Paper>
