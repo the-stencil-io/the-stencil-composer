@@ -33,7 +33,7 @@ const SecondaryArticles: React.FC<{}> = () => {
     <Box>
       <StyledTabs value={tab} onChange={(_event, value) => setTab(value)}>
         <StyledTab label={getLabel("explorer.tabs.articles")} value='toolbar.articles' />
-        <StyledTab label={getLabel("services")} value='services' />
+        <StyledTab label={getLabel("explorer.tabs.services")} value='toolbar.services' />
         <StyledTab label={getLabel("explorer.tabs.links")} value='toolbar.links' />
       </StyledTabs>
     </Box>

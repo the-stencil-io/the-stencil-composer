@@ -1,9 +1,9 @@
 const en = {
 
 
-  'explorer.tabs.services': 'Services',
   'toolbar.services': 'Services',
   'services': 'Services',
+  'services.create': 'Create service',
   'services.name': "Localised name of service",
   'services.desc': 'Connect your forms and other integrations to your content with the Wrench and Dialob workflows',
   'services.add': 'Add a service',
@@ -42,19 +42,16 @@ const en = {
 
   'explorer.tabs.articles': 'Articles',
   'explorer.tabs.links': 'Links',
-  'explorer.tabs.workflows': 'Workflows',
+  'explorer.tabs.services': 'Services',
 
 
   'links.change': 'Change existing links',
-  'workflows.change': 'Change existing workflows',
   'link.create': 'Create new link',
-  'workflow.create': 'Create new Workflow',
-
 
   'select.multiple': 'Select one or many items',
   'resource.options': 'Resource options',
   'resource.edit.links': 'Edit links',
-  'resource.edit.workflows': 'Edit workflows',
+  'resource.edit.services': 'Edit services',
 
   'link.addremove': 'Add or remove links',
 
@@ -66,14 +63,14 @@ const en = {
 
   'toolbar.help': 'Help and user documentation',
 
-  'article.create': 'Create Article',
-  'page.create': 'Create Page',
+  'article.create': 'Create article',
+  'page.create': 'Create page',
   'locale.create': 'Create locale',
   'release.create': 'Create release',
-  'button.view.all.articles': 'View all Articles',
-  'button.view.all.pages': 'View all Pages',
-  'button.view.all.links': 'View all Links',
-  'button.view.all.workflows': 'View all Workflows',
+  'button.view.all.articles': 'View all articles',
+  'button.view.all.pages': 'View all pages',
+  'button.view.all.links': 'View all links',
+  'button.view.all.services': 'View all services',
   'button.view.all.locales': 'View all locales',
   'button.view.all.releases': 'View all releases',
   'toolbar.import': 'Import data',
@@ -84,7 +81,6 @@ const en = {
 
   'pages': 'Pages',
   'articles': 'Articles',
-  'workflows': 'Workflows',
   'locale': 'Locale',
   'locales': 'Locales',
   'tag': 'Tag',

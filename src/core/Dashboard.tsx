@@ -69,8 +69,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     desc: "services.desc",
     color: theme.palette.workflow?.main,
     type: "workflow",
-    buttonCreate: "workflow.create",
-    buttonViewAll: "button.view.all.workflows"
+    buttonCreate: "services.create",
+    buttonViewAll: "button.view.all.services"
   },
 
   {
