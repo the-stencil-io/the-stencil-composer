@@ -4,6 +4,9 @@ import StencilClient from '../client';
 class SiteCache {
   private _site: StencilClient.Site;
   private _articles: Record<StencilClient.ArticleId, Composer.ArticleView> = {};
+  private _workflows: Record<StencilClient.WorkflowId, Composer.WorkflowView> = {};
+  private _links: Record<StencilClient.LinkId, Composer.LinkView> = {};
+
   private _pagesByArticle: Record<StencilClient.ArticleId, Composer.PageView[]> = {};
   private _linksByArticle: Record<StencilClient.ArticleId, Composer.LinkView[]> = {};
   private _workflowsByArticle: Record<StencilClient.ArticleId, Composer.WorkflowView[]> = {};
@@ -22,7 +25,12 @@ class SiteCache {
   getArticles() {
     return this._articles;
   }
-
+  getWorkflows() {
+    return this._workflows;
+  }
+  getLinks() {
+    return this._links;
+  }
   private visitPage(page: StencilClient.Page) {
     const site = this._site;
     const view = new ImmutablePageView({ page, locale: site.locales[page.body.locale] });
@@ -48,6 +56,7 @@ class SiteCache {
         articleLinks = [];
         this._linksByArticle[articleId] = articleLinks;
       }
+      this._links[view.link.id] = view;
       articleLinks.push(view);
     }
   }
@@ -64,6 +73,7 @@ class SiteCache {
         articleWorkflows = [];
         this._workflowsByArticle[articleId] = articleWorkflows;
       }
+      this._workflows[view.workflow.id] = view;
       articleWorkflows.push(view);
     }
   }
@@ -110,18 +120,18 @@ class SiteCache {
 
 class ImmutableSessionFilter implements Composer.SessionFilter {
   private _locale?: string;
-   
+
   constructor(props: {
     locale?: string
   }) {
     this._locale = props.locale;
   }
-  
+
   get locale() {
     return this._locale;
   }
   withLocale(locale?: StencilClient.LocaleId) {
-    return new ImmutableSessionFilter({locale});
+    return new ImmutableSessionFilter({ locale });
   }
 }
 
@@ -148,30 +158,73 @@ class SessionData implements Composer.Session {
   get articles() {
     return Object.values(this._cache.getArticles());
   }
+  get workflows() {
+    return Object.values(this._cache.getWorkflows());
+  }
+  get links() {
+    return Object.values(this._cache.getLinks());
+  }
   get site() {
     return this._site;
   }
   get pages() {
     return this._pages;
   }
-  getArticleName(articleId : StencilClient.ArticleId) {
+  getArticleName(articleId: StencilClient.ArticleId) {
     const article = this.getArticleView(articleId);
     const articleName = article.article.body.name;
     const locale = this._filter.locale;
-    
-    if(locale) {
+
+    if (locale) {
       const pages = article.pages.filter(p => p.locale.id === locale);
-      if(pages.length === 0) {
-        return {missing: true, name: "_not_translated_" + articleName};    
+      if (pages.length === 0) {
+        return { missing: true, name: "_not_translated_" + articleName };
       }
       const name = pages.length ? pages[0].title : '';
-      return {missing: false, name: name ? name : 'no-h1'};
+      return { missing: false, name: name ? name : 'no-h1' };
     }
-    return {missing: false, name: articleName};
+    return { missing: false, name: articleName };
+  }
+  getWorkflowName(workflowId: StencilClient.WorkflowId) {
+    const view = this.getWorkflowView(workflowId);
+    const workflowName: string = view.workflow.body.value;
+    const locale = this._filter.locale;
+
+    if (locale) {
+      const pages = view.labels.filter(p => p.locale.id === locale);
+      if (pages.length === 0) {
+        return { missing: true, name: "_not_translated_" + workflowName };
+      }
+      const name = pages.length ? pages[0].label.labelValue : '';
+      return { missing: false, name: name ? name : 'no-h1' };
+    }
+    return { missing: false, name: workflowName };
+  }
+  getLinkName(workflowId: StencilClient.WorkflowId) {
+    const view = this.getLinkView(workflowId);
+    const linkName = view.link.body.value;
+    const locale = this._filter.locale;
+
+    if (locale) {
+      const pages = view.labels.filter(p => p.locale.id === locale);
+      if (pages.length === 0) {
+        return { missing: true, name: "_not_translated_" + linkName };
+      }
+      const name = pages.length ? pages[0].label.labelValue : '';
+      return { missing: false, name: name ? name : 'no-h1' };
+    }
+    return { missing: false, name: linkName };
   }
   getArticleView(articleId: StencilClient.ArticleId): Composer.ArticleView {
     return this._cache.getArticles()[articleId];
   }
+  getWorkflowView(workflowId: StencilClient.WorkflowId): Composer.WorkflowView {
+    return this._cache.getWorkflows()[workflowId];
+  }
+  getLinkView(linkId: StencilClient.LinkId): Composer.LinkView {
+    return this._cache.getLinks()[linkId];
+  }
+  
   getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[] {
     const pages = Object.values(this._site.pages)
     return locale ? Object.values(this._site.articles).filter(article => {
@@ -226,7 +279,7 @@ class SessionData implements Composer.Session {
 
     return new SessionData({ site: session.site, pages, cache: this._cache, filter: this._filter });
   }
-  
+
   withLocaleFilter(locale?: StencilClient.LocaleId) {
     return new SessionData({ site: this._site, pages: this._pages, cache: this._cache, filter: this._filter.withLocale(locale) });
   }

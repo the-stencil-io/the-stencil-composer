@@ -1,5 +1,6 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
+import EditIcon from '@mui/icons-material/ModeEdit';
 import { Typography, Box, useTheme } from "@mui/material";
 import TreeItem, { TreeItemProps, treeItemClasses } from "@mui/lab/TreeItem";
 import { SvgIconProps } from "@mui/material/SvgIcon";
@@ -95,5 +96,34 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
   );
 }
 
+const StyledTreeItemOption: React.FC<{
+  labelText: React.ReactNode;
+  nodeId: string;
+  color: string;
+  onClick: () => void
+}> = (props) => {
+  const theme = useTheme();
+
+  return (
+    <StyledTreeItemRoot
+      onClick={props.onClick}
+      nodeId={props.nodeId}
+
+      label={
+        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
+          <Box component={EditIcon} color={theme.palette[props.color].main} sx={{ pl: 1, mr: 1 }} />
+          <Typography
+            variant="body2"
+            sx={{ fontWeight: "inherit", flexGrow: 1 }}
+          >
+            {props.labelText}
+          </Typography>
+        </Box>
+      }
+    />
+  );
+}
+
+
 export type { StyledTreeItemProps };
-export { StyledTreeItem, StyledTreeItemRoot };
+export { StyledTreeItem, StyledTreeItemRoot, StyledTreeItemOption };

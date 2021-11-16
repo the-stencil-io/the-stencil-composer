@@ -17,8 +17,6 @@ import StencilStyles from '../../styles';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticlePageItem from './ArticlePageItem';
-import { LinkEdit } from '../../link/LinkEdit';
-import { WorkflowEdit } from '../../workflow/WorkflowEdit';
 
 
 
@@ -35,7 +33,7 @@ function WorkflowItem(props: {
       nodeId={props.nodeId}
       onClick={props.onClick}
       label={
-        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}> 
+        <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={props.devMode ? ConstructionIcon : AccountTreeOutlinedIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
           <Typography
             variant="body2"
@@ -84,17 +82,21 @@ const saveIconColorSx: SxProps<Theme> = {
   color: "text.primary",
 }
 
+interface ArticleItemOptions {
+  setEditWorkflow: (workflowId: StencilClient.WorkflowId) => void,
+  setEditLink: (linkId: StencilClient.LinkId) => void
+}
 
-const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
+const ArticleItem: React.FC<{
+  articleId: StencilClient.ArticleId,
+  nodeId?: string,
+  options?: ArticleItemOptions
+}> = ({ articleId, nodeId, options }) => {
 
   const { session, isArticleSaved } = Composer.useComposer();
   const view = session.getArticleView(articleId);
   const { article, pages, workflows, links } = view;
   const saved = isArticleSaved(article);
-
-  const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
-  const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
-
 
   const saveIcon = saved ? undefined : (<Box component={SaveIcon} sx={saveIconColorSx} />)
 
@@ -105,17 +107,17 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
     }
     return update.saved;
   }
-  
+
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
-      { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
+      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
 
-      <StencilStyles.TreeItem nodeId={article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
-        <StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
-          <ArticleOptions article={article} />
-        </StencilStyles.TreeItem>
+        {/** Article options */
+          options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+            <ArticleOptions article={article} />
+          </StencilStyles.TreeItem>) : null
+        }
 
         {/** Pages */}
         <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'}
@@ -130,33 +132,38 @@ const ArticleItem: React.FC<{ articleId: StencilClient.ArticleId }> = ({ article
             saveIcon={isPageSaved(pageView) ? undefined : saveIcon} />))}
         </StencilStyles.TreeItem>
 
-        {/** Workflows options */}
-        <StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
-          labelText={<FormattedMessage id="services" />}
-          labelIcon={FolderOutlinedIcon}
-          labelInfo={`${workflows.length}`}
-          labelcolor="workflow">
 
-          {workflows.map(view => (<WorkflowItem
-            key={view.workflow.id}
-            labelText={view.workflow.body.value}
-            devMode={view.workflow.body.devMode}
-            nodeId={view.workflow.id}
+        {/** Workflows options */
+          options ? (<StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
+            labelText={<FormattedMessage id="services" />}
+            labelIcon={FolderOutlinedIcon}
+            labelInfo={`${workflows.length}`}
+            labelcolor="workflow">
 
-            onClick={() => setEditWorkflow(view.workflow.id)} />))}
-        </StencilStyles.TreeItem>
+            {workflows.map(view => (<WorkflowItem
+              key={view.workflow.id}
+              labelText={view.workflow.body.value}
+              devMode={view.workflow.body.devMode}
+              nodeId={view.workflow.id}
 
-        {/** Links options */}
-        <StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={FolderOutlinedIcon} labelInfo={`${links.length}`} labelcolor="link">
-          {links.map(view => (<LinkItem key={view.link.id}
-            labelText={view.link.body.value}
-            nodeId={view.link.id}
-            onClick={() => setEditLink(view.link.id)} />)
-          )}
-        </StencilStyles.TreeItem>
+              onClick={() => options.setEditWorkflow(view.workflow.id)} />))}
+          </StencilStyles.TreeItem>) : null
+        }
+
+        {/** Links options */
+          options ? (<StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={FolderOutlinedIcon} labelInfo={`${links.length}`} labelcolor="link">
+            {links.map(view => (<LinkItem key={view.link.id}
+              labelText={view.link.body.value}
+              nodeId={view.link.id}
+              onClick={() => options.setEditLink(view.link.id)} />)
+            )}
+          </StencilStyles.TreeItem>) : null
+
+        }
 
       </StencilStyles.TreeItem>
     </>)
 }
 
+export type {ArticleItemOptions}
 export default ArticleItem;

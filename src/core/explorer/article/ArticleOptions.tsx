@@ -5,8 +5,8 @@ import { LinkComposer } from '../../link';
 import { WorkflowComposer } from '../../workflow';
 import { ArticleEdit, ArticleDelete } from '../../article';
 import { NewPage, PageEdit, PageDelete } from '../../page';
-import ArticleOptionItem from './ArticleOptionItem';
 import { Composer, StencilClient } from '../../context';
+import StencilStyles from '../../styles';
 
 interface ArticleOptionsProps {
   article: StencilClient.Article,
@@ -31,60 +31,59 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
 
 
-
       {/** Page options */}
-      <ArticleOptionItem nodeId={article.id + 'pages.add'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.add'}
         color='page'
         onClick={() => setDialogOpen('NewPage')}
         labelText={<FormattedMessage id="pages.add" />}>
-      </ArticleOptionItem>
-      <ArticleOptionItem nodeId={article.id + 'pages.change'}
+      </StencilStyles.TreeItemOption>
+      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.change'}
         color='page'
         onClick={() => setDialogOpen('PageEdit')}
         labelText={<FormattedMessage id="pages.change" />}>
-      </ArticleOptionItem>
-      <ArticleOptionItem nodeId={article.id + 'pages.delete'}
+      </StencilStyles.TreeItemOption>
+      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.delete'}
         color='page'
         onClick={() => setDialogOpen('PageDelete')}
         labelText={<FormattedMessage id="pages.delete" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
 
       {/** Article options */}
-      <ArticleOptionItem nodeId={article.id + 'edit-nested'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'edit-nested'}
         color='article'
         onClick={() => setDialogOpen('ArticleEdit')}
         labelText={<FormattedMessage id="article.edit.title" />}>
-      </ArticleOptionItem>
-      <ArticleOptionItem nodeId={article.id + 'delete-nested'}
+      </StencilStyles.TreeItemOption>
+      <StencilStyles.TreeItemOption nodeId={article.id + 'delete-nested'}
         color='article'
         onClick={() => setDialogOpen('ArticleDelete')}
         labelText={<FormattedMessage id="article.delete.title" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
 
 
-      <ArticleOptionItem nodeId={article.id + 'resource.create.links'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.links'}
         color='link'
         onClick={() => setDialogOpen('LinkComposer')}
         labelText={<FormattedMessage id="link.create" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
 
-      <ArticleOptionItem nodeId={article.id + 'resource.edit.links'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.links'}
         color='link'
         onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
         labelText={<FormattedMessage id="links.change" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
 
-      <ArticleOptionItem nodeId={article.id + 'resource.create.workflows'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.workflows'}
         color='workflow'
         onClick={() => setDialogOpen('WorkflowComposer')}
         labelText={<FormattedMessage id="services.add" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
 
-      <ArticleOptionItem nodeId={article.id + 'resource.edit.workflows'}
+      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.workflows'}
         color='workflow'
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
         labelText={<FormattedMessage id="services.change" />}>
-      </ArticleOptionItem>
+      </StencilStyles.TreeItemOption>
     </>
   );
 }

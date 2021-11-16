@@ -3,7 +3,7 @@ import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
 
-import { ArticleExplorer, WorkflowExplorer } from './explorer';
+import { ArticleExplorer, WorkflowExplorer, LinkExplorer } from './explorer';
 import { Composer } from './context';
 import { useIntl } from 'react-intl';
 
@@ -28,6 +28,15 @@ const SecondaryArticles: React.FC<{}> = () => {
   const intl = useIntl();
   const getLabel = (id: string) => intl.formatMessage({ id });
   const [tab, setTab] = React.useState("toolbar.articles") 
+  let component = <></>;
+  
+  if (tab === 'toolbar.workflows') {
+    component = (<WorkflowExplorer />)
+  } else if(tab === 'toolbar.links') {
+    component = (<LinkExplorer />)
+  } else {
+    component = <ArticleExplorer />;
+  }
 
   return (<>
     <Box>
@@ -37,7 +46,7 @@ const SecondaryArticles: React.FC<{}> = () => {
         <StyledTab label={getLabel("explorer.tabs.links")} value='toolbar.links' />
       </StyledTabs>
     </Box>
-    <ArticleExplorer />
+    {component}
   </>);
 }
 

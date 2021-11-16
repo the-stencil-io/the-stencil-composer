@@ -54,7 +54,7 @@ const links: StencilClient.Link[] = [
   { id: "l11", body: { articles: ["a2"], contentType: "internal",              value: "http://www.vanhukset.fi",        labels: [{locale: "l1", labelValue: "elder care"}]}},
   { id: "l12", body: { articles: ["a2"], contentType: "phone",                 value: "+664-4185-6512",                 labels: [{locale: "l1", labelValue: "main secretary phone"}]}},
   { id: "l13", body: { articles: ["a2"], contentType: "phone",                 value: "+124-2241-1188",                 labels: [{locale: "l3", labelValue: "main manager phone"}]}},
-  { id: "l14", body: { articles: ["a2"], contentType: "internal",              value: "http://www.example.com",         labels: [{locale:"fi", labelValue:"general information"}]}},
+  { id: "l14", body: { articles: ["a2"], contentType: "internal",              value: "http://www.example.com",         labels: [{locale: "l1", labelValue:"general information"}]}},
   { id: "l15", body: { articles: ["a2"], contentType: "external",              value: "http://www.adult-learning.com",  labels: [{locale: "l1", labelValue: "vocational training"}]}},
   { id: "l16", body: { articles: ["a2"], contentType: "internal",              value: "http://www.learn.fi",            labels: [{locale: "l1", labelValue:"education"}]}},
 

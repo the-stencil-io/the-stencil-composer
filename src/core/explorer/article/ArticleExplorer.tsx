@@ -1,13 +1,13 @@
 import React from 'react';
-import { Button, Box, Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
 import TreeView from "@mui/lab/TreeView";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
-import { FormattedMessage } from 'react-intl';
-import { Composer } from '../../context';
-import { ArticleComposer } from '../../article';
-import ArticleItem from './ArticleItem';
+import { Composer, StencilClient } from '../../context';
+import ArticleItem, {ArticleItemOptions} from './ArticleItem';
+import { LinkEdit } from '../../link/LinkEdit';
+import { WorkflowEdit } from '../../workflow/WorkflowEdit';
 
 
 const findMainId = (values: string[]) => {
@@ -21,24 +21,28 @@ const findMainId = (values: string[]) => {
 
 const ArticleExplorer: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
-
-
-  const [openArticleComposer, setOpenArticleComposer] = React.useState(false);
   const [expanded, setExpanded] = React.useState<string[]>([]);
+
+  const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
+  const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
+  const articleOptions: ArticleItemOptions = { setEditLink, setEditWorkflow }
 
   const articles = session.articles.filter(view => !view.article.body.parentId).map((view) => [
     (<div key={view.article.id}>
-      <ArticleItem articleId={view.article.id} />
+      <ArticleItem articleId={view.article.id} options={articleOptions} />
     </div>),
     ...view.children.map((child) => (
       (<div key={child.article.id}>
-        <ArticleItem articleId={child.article.id} />
+        <ArticleItem articleId={child.article.id} options={articleOptions} />
       </div>)
     ))
   ]);
 
   return (
     <Box>
+      { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
+      { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
+      
       <Typography align="left"
         sx={{
           fontVariant: 'all-petite-caps',
@@ -48,14 +52,6 @@ const ArticleExplorer: React.FC<{}> = () => {
           borderBottom: '1px solid'
         }}>
       </Typography>
-      {articles.length !== 0 ? null : (
-        <div>
-          {openArticleComposer ? <ArticleComposer onClose={() => setOpenArticleComposer(false)} /> : null}
-          <Button variant="contained" color="primary" onClick={() => setOpenArticleComposer(true)} >
-            <FormattedMessage id='article.composer.title' />
-          </Button>
-        </div>)
-      }
 
       <TreeView expanded={expanded}
         defaultCollapseIcon={<ArrowDropDownIcon />}
