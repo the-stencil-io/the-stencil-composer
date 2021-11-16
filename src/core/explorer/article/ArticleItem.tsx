@@ -65,6 +65,8 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
           <Typography
+            noWrap={true}
+            maxWidth="300px"
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >

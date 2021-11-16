@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemText, Checkbox } from '@mui/material';
+import { ListItemText } from '@mui/material';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';

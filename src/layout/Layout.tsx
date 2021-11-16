@@ -12,7 +12,7 @@ interface ContainerProps {
   toolbar: React.ReactElement;
 };
 
-const drawerWidth = { expanded: 400, collapsed: 56 };
+const drawerWidth = { expanded: 500, collapsed: 56 };
 const contentStyle = { flexGrow: 1, overflow: "auto" };
 
 
