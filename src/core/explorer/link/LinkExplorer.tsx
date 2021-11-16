@@ -6,8 +6,8 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 
 import { Composer, StencilClient } from '../../context';
-import { WorkflowEdit } from '../../workflow/WorkflowEdit';
-import WorkflowItem from './WorkflowItem';
+import { LinkEdit } from '../../link/LinkEdit';
+import LinkItem from './LinkItem';
 
 
 const findMainId = (values: string[]) => {
@@ -19,18 +19,18 @@ const findMainId = (values: string[]) => {
 }
 
 
-const WorkflowExplorer: React.FC<{}> = () => {
+const LinkExplorer: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
-  const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
+  const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
 
-  const workflows = session.workflows.map((view) => (
-    <WorkflowItem key={view.workflow.id} workflowId={view.workflow.id} />
+  const links = session.links.map((view) => (
+    <LinkItem key={view.link.id} linkId={view.link.id} />
   ));
 
   return (
     <Box>
-      {editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
+      {editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
 
       <Typography align="left"
         sx={{
@@ -54,11 +54,11 @@ const WorkflowExplorer: React.FC<{}> = () => {
           }
           setExpanded(nodeIds);
         }}>
-        {workflows}
+        {links}
       </TreeView>
     </Box>
   );
 }
 
-export { WorkflowExplorer }
+export { LinkExplorer }
 

@@ -1,5 +1,5 @@
 import { StyledDialog, StyledDialogProps } from './StyledDialog';
-import { StyledTreeItem, StyledTreeItemRoot, StyledTreeItemProps } from './StyledTreeItem';
+import { StyledTreeItem, StyledTreeItemRoot, StyledTreeItemOption, StyledTreeItemProps } from './StyledTreeItem';
 import { StyledSelect, StyledSelectMultiple, StyledSelectProps } from './StyledSelect';
 import { StyledTextField, StyledNumberField, StyledFileField, StyledSearchField, StyledTextFieldProps } from './StyledTextField';
 import { StyledTransferList, StyledTransferListProps } from './StyledTransferList';
@@ -20,8 +20,11 @@ namespace StencilStyles {
   export const TextField = StyledTextField;
   export const NumberField = StyledNumberField;
   export const FileField = StyledFileField;
+  
   export const TreeItem = StyledTreeItem;
   export const TreeItemRoot = StyledTreeItemRoot;
+  export const TreeItemOption = StyledTreeItemOption;
+  
   export const SearchField = StyledSearchField;
   export const TransferList = StyledTransferList;
   export const PrimaryButton = StyledPrimaryButton;

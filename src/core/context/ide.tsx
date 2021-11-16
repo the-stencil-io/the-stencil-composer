@@ -40,10 +40,18 @@ declare namespace Composer {
     site: StencilClient.Site,
     pages: Record<StencilClient.PageId, PageUpdate>;
     articles: ArticleView[];
+    workflows: WorkflowView[];
+    links: LinkView[];
     filter: SessionFilter;
     
     getArticleName(articleId: StencilClient.ArticleId): {missing: boolean, name: string};
     getArticleView(articleId: StencilClient.ArticleId): ArticleView;
+
+    getLinkView(linkId: StencilClient.LinkId): LinkView;
+    getLinkName(linkId: StencilClient.LinkId): {missing: boolean, name: string};
+    
+    getWorkflowView(workflowId: StencilClient.WorkflowId): WorkflowView;
+    getWorkflowName(workflowId: StencilClient.WorkflowId): {missing: boolean, name: string};
 
     getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
     getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[];
