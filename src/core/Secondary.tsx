@@ -3,7 +3,7 @@ import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
 
-import { ArticleExplorer, WorkflowExplorer, LinkExplorer } from './explorer';
+import { ArticleExplorer, WorkflowExplorer, LinkExplorer, SearchExplorer } from './explorer';
 import { Composer } from './context';
 import { useIntl } from 'react-intl';
 
@@ -56,13 +56,11 @@ const Secondary: React.FC<{}> = () => {
 
   let component = <></>;
   if (layout.session.secondary === 'toolbar.search') {
-    component = (<WorkflowExplorer />)
+    component = (<SearchExplorer />)
   } else {
     component = <SecondaryArticles />;
   }
-  return (<Box sx={{ backgroundColor: "explorer.main", height: '100%' }}>
-    {component}
-  </Box>)
+  return (<Box sx={{ backgroundColor: "explorer.main", height: '100%' }}>{component}</Box>)
 }
 export { Secondary }
 

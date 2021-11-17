@@ -1,32 +1,28 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import {
-  Avatar, Theme, Box, Typography, IconButton, Table, TableBody, 
-  TableCell, TableContainer, TableRow, TableHead, Paper
-} from '@mui/material';
+import { Box } from '@mui/material';
 
-
-import { FormattedMessage, useIntl } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import {ReleaseGraphVisitor} from './ReleaseGraphVisitor';
+import { ReleaseGraphVisitor } from './ReleaseGraphVisitor';
 
 
-const ReleaseGraph: React.FC<{}> = () => {
 
-  const {site, service} = Composer.useComposer();
+const ReleaseGraphRef: React.FC<{ site: StencilClient.Site }> = ({ site }) => {
   const ref = React.createRef<HTMLDivElement>();
-  
+
   React.useLayoutEffect(() => {
-    new ReleaseGraphVisitor({site, ref}).visit();
-    
+    new ReleaseGraphVisitor({ site, ref }).visit();
   }, [ref])
 
+  return (<Box display="flex" width="900px" height="900px" ref={ref} />);
+}
 
-  return (
-      <Box display="flex" width="900px" height="900px" ref={ref}>
-      </Box>
-  );
+const ReleaseGraph: React.FC<{}> = () => {
+  const { site } = Composer.useComposer();
+
+  //const graph = React.useMemo(() => <ReleaseGraphRef site={site} />, [site])
+  //return (graph);
+  return <ReleaseGraphRef site={site} />;
 }
 
 

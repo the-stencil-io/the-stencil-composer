@@ -70,7 +70,9 @@ const Toolbar: React.FC<{}> = () => {
 
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
-
+    } else if (newValue === 'toolbar.search') {
+      layoutActions.handleSecondary("toolbar.search")
+      
     } else if (newValue === 'toolbar.graph') {
       layoutActions.handleTabAdd({id: "graph", label: "Release Graph"})
 
