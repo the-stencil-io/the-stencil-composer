@@ -1,25 +1,13 @@
 import React from 'react';
-import { alpha, styled } from '@mui/material/styles';
 
-import { ListItemText, Paper, FormControlLabel, Switch, FormHelperText } from '@mui/material';
-import { FormattedMessage } from 'react-intl';
+import { ListItemText, Paper, Switch} from '@mui/material';
 
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 import { LocaleLabels } from '../locale';
 
-const StyledSwitch = styled(Switch)(({ theme }) => ({
-  '& .MuiSwitch-switchBase.Mui-checked': {
-    color: theme.palette.uiElements.main,
-    '&:hover': {
-      backgroundColor: alpha(theme.palette.uiElements.main, 0.1),
-    },
-  },
-  '& .MuiSwitch-switchBase.Mui-checked + .MuiSwitch-track': {
-    backgroundColor: alpha(theme.palette.uiElements.main, 0.5),
-  },
-}));
+
 
 interface WorkflowEditProps {
   workflowId: StencilClient.WorkflowId,
