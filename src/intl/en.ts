@@ -1,5 +1,6 @@
 const en = {
 
+  'button.releasegraph': 'Graph',
   'search.field.placeholder': 'Enter search keyword',
   'search.field.label': 'Search',
   'createview.article.title': 'Article',

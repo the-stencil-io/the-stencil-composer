@@ -2,8 +2,10 @@ import React from 'react';
 import { useTheme } from '@mui/styles';
 import {
   ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
-  Typography, Box, Divider
+  Typography, Box, Divider, darken
 } from '@mui/material';
+import PieChartIcon from '@mui/icons-material/PieChart';
+
 import { FormattedMessage, useIntl } from 'react-intl';
 import StencilStyles from './styles';
 
@@ -24,6 +26,7 @@ interface CardData {
   desc: string;
   buttonCreate: string;
   buttonViewAll?: string;
+  buttonTertiary?: string;
   color: string;
   onView?: () => void;
   composer: (handleClose: () => void) => React.ReactChild;
@@ -94,10 +97,11 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.release?.main,
     type: "release",
     buttonCreate: "release.create",
-    buttonViewAll: "button.view.all.releases"
+    buttonViewAll: "button.view.all.releases",
+    buttonTertiary: "button.releasegraph"
   },
   {
-    composer: (handleClose) => <MigrationComposer onClose={handleClose}/>,
+    composer: (handleClose) => <MigrationComposer onClose={handleClose} />,
     onView: undefined,
     title: "createview.migration.title",
     desc: "createview.migration.desc",
@@ -110,9 +114,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 ]);
 
 const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
-
   const title = useIntl().formatMessage({ id: props.data.title })
-
+  const layout = Composer.useLayout();
   return (
 
     <Card sx={{
@@ -138,8 +141,16 @@ const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (prop
       <Divider />
       <CardActions>
         <ButtonGroup variant="text" fullWidth sx={{ justifyContent: 'space-between' }}>
-         {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box/>}
+          {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
+          {props.data.buttonTertiary && props.data.onView ?
+            <StencilStyles.SecondaryButton label="button.releasegraph" onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })}
+              sx={{
+                color: "uiElements.main",
+                alignSelf: 'center',
+              }} /> : null}
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
+
+
         </ButtonGroup>
       </CardActions>
     </Card>
@@ -159,7 +170,7 @@ const CreateView: React.FC<{}> = () => {
 
   return (
     <>
-      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1}}><FormattedMessage id={"createitems.title"} /></Typography>
+      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"createitems.title"} /></Typography>
       <Box sx={{
         margin: 1,
         display: 'flex',

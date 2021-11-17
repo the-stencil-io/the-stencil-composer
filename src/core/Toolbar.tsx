@@ -6,7 +6,6 @@ import { styled } from "@mui/material/styles";
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
-import TranslateIcon from '@mui/icons-material/Translate';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
@@ -80,9 +79,6 @@ const Toolbar: React.FC<{}> = () => {
     } else if (newValue === 'toolbar.releases') {
       layoutActions.handleTabAdd({ id: 'releases', label: "Releases" })
 
-    } else if (newValue === 'toolbar.locales') {
-      layoutActions.handleTabAdd({ id: 'locales', label: "Locales" })
-
     } else if (newValue === 'toolbar.import') {
       layoutActions.handleTabAdd({ id: 'import', label: 'Import' })
 
@@ -119,7 +115,6 @@ const Toolbar: React.FC<{}> = () => {
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
           <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
           <StyledTab value='toolbar.releases' icon={<LocalOfferOutlinedIcon />} />
-          <StyledTab value='toolbar.locales' icon={<TranslateIcon />} />
           <StyledTab value='toolbar.graph' icon={<PieChartIcon />} />
           <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
