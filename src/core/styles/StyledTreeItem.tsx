@@ -73,7 +73,7 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
               mr: 1,
               color: labelcolor ? theme.palette[labelcolor].main : "inherit",
             }} />}
-          <Typography noWrap={true}
+          <Typography noWrap={true} maxWidth="300px"
             variant="body2"
             sx={{ flexGrow: 1 }}
           >
