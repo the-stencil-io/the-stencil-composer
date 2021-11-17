@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Avatar, Box, Typography, Card } from '@mui/material';
+import { Box, Typography, Card } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -16,54 +15,34 @@ import { LocaleDisable } from './LocaleDisable';
 import { Composer, StencilClient } from '../context';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    container: {
-      display: 'flex'
-    },
-    card: {
-      margin: theme.spacing(1),
-      width: '40vw',
-      flexDirection: 'column',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.secondary.dark,
-        fontWeight: 'bold',
-      }
-    },
-    title: {
-      margin: theme.spacing(1),
-      color: theme.palette.text.primary
-    },
-    avatar: {
-      alignSelf: "center",
-      marginLeft: theme.spacing(1),
-      backgroundColor: theme.palette.locale.main,
-      textTransform: 'uppercase'
-    }
-  }));
-
 const LocalesView: React.FC<{}> = () => {
-  const classes = useStyles();
-  const {site} = Composer.useComposer();
+  const { site } = Composer.useComposer();
   const locales = Object.values(site.locales);
   const title = useIntl().formatMessage({ id: "locales" });
 
   return (
     <>
-      <Box display="flex">
-        <Avatar className={classes.avatar}>{title.substring(0, 2)}</Avatar>
-        <Typography variant="h3" className={classes.title}><FormattedMessage id="locales" />: {locales.length}</Typography>
+      <Box display="flex" sx={{ p: 1, justifyItems: 'center', flexDirection: 'column' }}>
+        <Typography variant="h3" sx={{ fontWeight: 'bold', p: 1 }}>{title}{": "}{locales.length}</Typography>
       </Box>
 
-      <div className={classes.container} >
-        <Card className={classes.card}>
-          <Typography variant="h3" className={classes.title}><FormattedMessage id="locales" /> </Typography>
+      <div>
+        <Card sx={{
+          margin: 1,
+          width: '50vw'
+        }}>
+          <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}><FormattedMessage id="locales" /> </Typography>
+
           <TableContainer component={Paper}>
             <Table size="small">
               <TableHead>
-                <TableRow>
-                  <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="locale" /></TableCell>
-                  <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="status" /></TableCell>
+                <TableRow >
+                  <TableCell sx={{ fontWeight: 'bold' }} align="left">
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      <FormattedMessage id="locale" /></Typography></TableCell>
+                  <TableCell sx={{ fontWeight: 'bold' }} align="left">
+                    <Typography sx={{ fontWeight: 'bold' }}>
+                      <FormattedMessage id="status" /></Typography></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody >
@@ -84,7 +63,7 @@ interface RowProps {
 }
 
 const Row: React.FC<RowProps> = ({ locale }) => {
-  const {site} = Composer.useComposer();
+  const { site } = Composer.useComposer();
 
   /*const handleUpdate = () => {
     const entity: StencilClient.LocaleMutator = { enabled, id: locale.id };

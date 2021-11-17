@@ -1,6 +1,5 @@
 import React from 'react';
-import { createStyles, makeStyles } from '@mui/styles';
-import { Theme, Typography, Table, Tooltip, Card, Paper } from '@mui/material';
+import { Typography, Table, Tooltip, Card, Paper } from '@mui/material';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableRow from '@mui/material/TableRow';
@@ -11,42 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import { StencilClient } from '../context';
 
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    card: {
-      margin: theme.spacing(1),
-      width: '40vw',
-      flexGrow: 1,
-      flexDirection: 'column',
-      "&:hover, &.Mui-focusVisible": {
-        color: theme.palette.secondary.dark,
-        fontWeight: 'bold',
-      }
-    },
-    bold: {
-      fontWeight: 'bold',
-    },
-    title: {
-      margin: theme.spacing(1),
-      color: theme.palette.text.primary,
-    },
-    checkIcon: {
-      color: theme.palette.success.main
-    },
-    checkIconOrange: {
-      color: theme.palette.warning.main
-    }
-  }),
-);
-
-
 interface LocalesOverviewProps {
   site: StencilClient.Site;
 }
 
 
 const LocalesOverview: React.FC<LocalesOverviewProps> = ({ site }) => {
-  const classes = useStyles();
 
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales);
   const articles: StencilClient.Article[] = Object.values(site.articles);
@@ -73,27 +42,32 @@ const LocalesOverview: React.FC<LocalesOverviewProps> = ({ site }) => {
 
   return (
     <div >
-      <Card className={classes.card}>
-        <Typography variant="h3" className={classes.title}><FormattedMessage id="locale.overview" /></Typography>
+      <Card sx={{
+        margin: 1,
+        width: '50vw',
+        flexGrow: 1,
+        mt: 2,
+      }}>
+        <Typography variant="h4" sx={{p:2, backgroundColor: "table.main"}}><FormattedMessage id="locale.overview" /></Typography>
         <TableContainer component={Paper}>
           <Table size="small">
             <TableRow>
-              <TableCell className={classes.bold} align="left"><FormattedMessage id="article.name" /></TableCell>
-              {locales.map((locale, index) => <TableCell key={index} className={classes.bold} align="left" >{locale.body.value}</TableCell>
+              <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="article.name" /></TableCell>
+              {locales.map((locale, index) => <TableCell key={index} sx={{fontWeight: 'bold'}} align="left" >{locale.body.value}</TableCell>
               )}
             </TableRow>
 
 
             {articles.map((article, index) => (
-              <TableRow key={index} hover>
-                <TableCell align="left">{article.body.name}</TableCell>
+              <TableRow key={index} sx={{p:1}}>
+                <TableCell align="left" >{article.body.name}</TableCell>
                 {locales.map((locale, index) => (
-                  <TableCell key={index} className={classes.bold} align="left">
+                  <TableCell key={index} sx={{fontWeight: 'bold'}} align="left">
                     {isLocale(locale, article) && isContent(locale, article) ?
-                      (<span><Tooltip title={<FormattedMessage id="locales.content" />}><CheckCircleOutlineIcon className={classes.checkIcon} /></Tooltip></span>) :
+                      (<span><Tooltip title={<FormattedMessage id="locales.content" />}><CheckCircleOutlineIcon sx={{ color: 'uiElements.main'}} /></Tooltip></span>) :
                       isLocale(locale, article) === true ?
-                        (<span><Tooltip title={<FormattedMessage id="locales.nocontent" />}><CheckCircleOutlineIcon className={classes.checkIconOrange} /></Tooltip></span>) :
-                        (<span><Tooltip title={<FormattedMessage id="locales.nopage" />}><ErrorOutlineIcon /></Tooltip></span>)
+                        (<span><Tooltip title={<FormattedMessage id="locales.nocontent" />}><CheckCircleOutlineIcon sx={{ color: 'warning.main'}}/></Tooltip></span>) :
+                        (<span><Tooltip title={<FormattedMessage id="locales.nopage" />}><ErrorOutlineIcon sx={{color: 'error.main'}}/></Tooltip></span>)
                     }
                   </TableCell>)
                 )}

@@ -1,7 +1,6 @@
 const en = {
 
 
-
   'createview.article.title': 'Article',
   'createview.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
   'createview.locale.title': 'Locale',
