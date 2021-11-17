@@ -42,12 +42,7 @@ const LocalesOverview: React.FC<LocalesOverviewProps> = ({ site }) => {
 
   return (
     <div >
-      <Card sx={{
-        margin: 1,
-        width: '50vw',
-        flexGrow: 1,
-        mt: 2,
-      }}>
+      <Card sx={{ margin: 1, mt: 2 }}>
         <Typography variant="h4" sx={{p:2, backgroundColor: "table.main"}}><FormattedMessage id="locale.overview" /></Typography>
         <TableContainer component={Paper}>
           <Table size="small">

@@ -21,39 +21,43 @@ const LocalesView: React.FC<{}> = () => {
   const title = useIntl().formatMessage({ id: "locales" });
 
   return (
-    <>
-      <Box display="flex" sx={{ p: 1, justifyItems: 'center', flexDirection: 'column' }}>
-        <Typography variant="h3" sx={{ fontWeight: 'bold', p: 1 }}>{title}{": "}{locales.length}</Typography>
+    <Box sx={{ paddingBottom: 1, m: 2 }}>
+
+      <Box display="flex">
+        <Box alignSelf="center">
+          <Typography variant="h3" sx={{ fontWeight: 'bold', p: 1 }}>{title}{": "}{locales.length}</Typography>
+        </Box>
+    </Box>
+
+        <Box sx={{ justifyContent: 'center' }}>
+
+          <Card sx={{ margin: 1 }}>
+            <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}><FormattedMessage id="locales" /> </Typography>
+
+            <TableContainer component={Paper}>
+              <Table size="small">
+                <TableHead>
+                  <TableRow >
+                    <TableCell sx={{ fontWeight: 'bold' }} align="left">
+                      <Typography sx={{ fontWeight: 'bold' }}>
+                        <FormattedMessage id="locale" /></Typography></TableCell>
+                    <TableCell sx={{ fontWeight: 'bold' }} align="left">
+                      <Typography sx={{ fontWeight: 'bold' }}>
+                        <FormattedMessage id="status" /></Typography></TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody >
+                  {locales.map((locale, index) => (<Row key={index} site={site} locale={locale} />))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Card>
+          <LocalesOverview site={site} />
+
+        </Box>
       </Box>
+  
 
-      <div>
-        <Card sx={{
-          margin: 1,
-          width: '50vw'
-        }}>
-          <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}><FormattedMessage id="locales" /> </Typography>
-
-          <TableContainer component={Paper}>
-            <Table size="small">
-              <TableHead>
-                <TableRow >
-                  <TableCell sx={{ fontWeight: 'bold' }} align="left">
-                    <Typography sx={{ fontWeight: 'bold' }}>
-                      <FormattedMessage id="locale" /></Typography></TableCell>
-                  <TableCell sx={{ fontWeight: 'bold' }} align="left">
-                    <Typography sx={{ fontWeight: 'bold' }}>
-                      <FormattedMessage id="status" /></Typography></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody >
-                {locales.map((locale, index) => (<Row key={index} site={site} locale={locale} />))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Card>
-        <LocalesOverview site={site} />
-      </div>
-    </>
   );
 }
 
