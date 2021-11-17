@@ -10,17 +10,12 @@ import { FormattedMessage } from 'react-intl';
 import { StencilClient } from '../context';
 
 
-interface LocalesOverviewProps {
-  site: StencilClient.Site;
-}
 
-
-const LocalesOverview: React.FC<LocalesOverviewProps> = ({ site }) => {
+const LocalesOverview: React.FC<{site: StencilClient.Site}> = ({ site }) => {
 
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales);
   const articles: StencilClient.Article[] = Object.values(site.articles);
   const pages: StencilClient.Page[] = Object.values(site.pages);
-
 
 
   //check if page has content
@@ -41,37 +36,35 @@ const LocalesOverview: React.FC<LocalesOverviewProps> = ({ site }) => {
   }
 
   return (
-    <div >
-      <Card sx={{ margin: 1, mt: 2 }}>
-        <Typography variant="h4" sx={{p:2, backgroundColor: "table.main"}}><FormattedMessage id="locale.overview" /></Typography>
-        <TableContainer component={Paper}>
-          <Table size="small">
-            <TableRow>
-              <TableCell sx={{fontWeight: 'bold'}} align="left"><FormattedMessage id="article.name" /></TableCell>
-              {locales.map((locale, index) => <TableCell key={index} sx={{fontWeight: 'bold'}} align="left" >{locale.body.value}</TableCell>
+    <Card sx={{ margin: 1, mt: 2 }}>
+      <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}><FormattedMessage id="locale.overview" /></Typography>
+      <TableContainer component={Paper}>
+        <Table size="small">
+          <TableRow>
+            <TableCell sx={{ fontWeight: 'bold' }} align="left"><FormattedMessage id="article.name" /></TableCell>
+            {locales.map((locale, index) => <TableCell key={index} sx={{ fontWeight: 'bold' }} align="left" >{locale.body.value}</TableCell>
+            )}
+          </TableRow>
+
+
+          {articles.map((article, index) => (
+            <TableRow key={index} sx={{ p: 1 }}>
+              <TableCell align="left" >{article.body.name}</TableCell>
+              {locales.map((locale, index) => (
+                <TableCell key={index} sx={{ fontWeight: 'bold' }} align="left">
+                  {isLocale(locale, article) && isContent(locale, article) ?
+                    (<span><Tooltip title={<FormattedMessage id="locales.content" />}><CheckCircleOutlineIcon sx={{ color: 'uiElements.main' }} /></Tooltip></span>) :
+                    isLocale(locale, article) === true ?
+                      (<span><Tooltip title={<FormattedMessage id="locales.nocontent" />}><CheckCircleOutlineIcon sx={{ color: 'warning.main' }} /></Tooltip></span>) :
+                      (<span><Tooltip title={<FormattedMessage id="locales.nopage" />}><ErrorOutlineIcon sx={{ color: 'error.main' }} /></Tooltip></span>)
+                  }
+                </TableCell>)
               )}
             </TableRow>
-
-
-            {articles.map((article, index) => (
-              <TableRow key={index} sx={{p:1}}>
-                <TableCell align="left" >{article.body.name}</TableCell>
-                {locales.map((locale, index) => (
-                  <TableCell key={index} sx={{fontWeight: 'bold'}} align="left">
-                    {isLocale(locale, article) && isContent(locale, article) ?
-                      (<span><Tooltip title={<FormattedMessage id="locales.content" />}><CheckCircleOutlineIcon sx={{ color: 'uiElements.main'}} /></Tooltip></span>) :
-                      isLocale(locale, article) === true ?
-                        (<span><Tooltip title={<FormattedMessage id="locales.nocontent" />}><CheckCircleOutlineIcon sx={{ color: 'warning.main'}}/></Tooltip></span>) :
-                        (<span><Tooltip title={<FormattedMessage id="locales.nopage" />}><ErrorOutlineIcon sx={{color: 'error.main'}}/></Tooltip></span>)
-                    }
-                  </TableCell>)
-                )}
-              </TableRow>
-            ))}
-          </Table>
-        </TableContainer>
-      </Card>
-    </div >
+          ))}
+        </Table>
+      </TableContainer>
+    </Card>
 
   );
 }

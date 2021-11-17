@@ -17,7 +17,7 @@ const WorkflowOptions: React.FC<{workflow: StencilClient.Workflow}> = ({ workflo
       <StencilStyles.TreeItemOption nodeId={workflow.id + 'workflow.edit'}
         color='workflow'
         onClick={() => setDialogOpen('WorkflowEdit')}
-        labelText={<FormattedMessage id="workflow.edit.title" />}>
+        labelText={<FormattedMessage id="services.edit" />}>
       </StencilStyles.TreeItemOption>
     </>
   );

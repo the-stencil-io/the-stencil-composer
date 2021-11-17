@@ -22,8 +22,8 @@ const StyledSwitchRoot = styled(Switch)(({ theme }) => ({
 interface StyledSwitchProps {
   onChange: (newValue: boolean) => void,
   checked: boolean,
-  label: string,
-  helperText: string
+  label?: string,
+  helperText?: string
 }
 
 const StyledSwitch: React.FC<StyledSwitchProps> = (props) => {
@@ -32,6 +32,9 @@ const StyledSwitch: React.FC<StyledSwitchProps> = (props) => {
     onChange={(event) => props.onChange(event.target.checked)}
     checked={props.checked}
   />
+  if(!props.label) {
+    return switchControl;
+  }
 
   return (
     <>
@@ -39,16 +42,16 @@ const StyledSwitch: React.FC<StyledSwitchProps> = (props) => {
         sx={{ mt: 2 }}
         control={switchControl}
         label={<FormattedMessage id={props.label} />} />
-        
-      <FormHelperText>
-        <FormattedMessage id={props.helperText} />
-      </FormHelperText>
 
+      {  props.helperText ? (<FormHelperText>
+        <FormattedMessage id={props.helperText} />
+      </FormHelperText>) : null
+      }
     </>
   )
 }
 
-export type {StyledSwitchProps}
+export type { StyledSwitchProps }
 export { StyledSwitch }
 
 

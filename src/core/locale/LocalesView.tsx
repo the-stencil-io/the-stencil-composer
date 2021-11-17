@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Card } from '@mui/material';
+import { Box, Typography, Card, DialogContentText } from '@mui/material';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -8,88 +8,100 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
+
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { LocalesOverview } from './LocalesOverview';
-import { LocaleDisable } from './LocaleDisable';
+import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
 
+const Header: React.FC<{ label: string }> = ({ label }) => {
+  return (<TableCell sx={{ fontWeight: 'bold' }} align="left">
+    <Typography sx={{ fontWeight: 'bold' }}>
+      <FormattedMessage id={label} />
+    </Typography>
+  </TableCell>)
+}
+
 const LocalesView: React.FC<{}> = () => {
-  const { site } = Composer.useComposer();
+  const { site, service, actions } = Composer.useComposer();
+  const [editLocale, setEditLocale] = React.useState<StencilClient.SiteLocale | undefined>();
   const locales = Object.values(site.locales);
   const title = useIntl().formatMessage({ id: "locales" });
 
-  return (
-    <Box sx={{ paddingBottom: 1, m: 2 }}>
+  const handleEnable = (locale: StencilClient.SiteLocale, enabled: boolean) => {
+    const entity: StencilClient.LocaleMutator = { localeId: locale.id, value: locale.body.value, enabled: enabled };
+    console.log("entity", entity)
+    service.update().locale(entity).then(success => {
+      console.log(success)
+      setEditLocale(undefined);
+      actions.handleLoadSite();
+    });
+  }
 
+
+
+  return (<>
+    { editLocale ?
+      (<StencilStyles.Dialog open={true} onClose={() => setEditLocale(undefined)}
+        backgroundColor="uiElements.main" title={editLocale.body.enabled === true ? "locale.disable.title" : "locale.enable.title"}
+        submit={{
+          title: editLocale.body.enabled ? "button.disable" : "button.enable",
+          onClick: editLocale.body.enabled ? () => handleEnable(editLocale, false) : () => handleEnable(editLocale, true),
+          disabled: false
+        }}>
+
+        <DialogContentText>
+          {editLocale.body.enabled ? <FormattedMessage id="locale.disable" /> : <FormattedMessage id="locale.enable" />}
+        </DialogContentText>
+      </StencilStyles.Dialog>) : null
+    }
+
+    <Box sx={{ paddingBottom: 1, m: 2 }}>
       <Box display="flex">
         <Box alignSelf="center">
           <Typography variant="h3" sx={{ fontWeight: 'bold', p: 1 }}>{title}{": "}{locales.length}</Typography>
         </Box>
+      </Box>
+
+      <Box sx={{ justifyContent: 'center' }}>
+        <Card sx={{ margin: 1 }}>
+          <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}>
+            <FormattedMessage id="locales" />
+          </Typography>
+          <TableContainer component={Paper}>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <Header label="locale"/>
+                  <Header label="status"/>
+                </TableRow>
+              </TableHead>
+              <TableBody >
+                {locales.map((locale) => (
+                  <TableRow key={locale.id} hover>
+                    <TableCell align="left">{locale.body.value}</TableCell>
+                    <TableCell>
+                      <StencilStyles.Switch
+                        checked={locale.body.enabled}
+                        onChange={() => setEditLocale(locale)}
+                        label={undefined}
+                        helperText={undefined}
+                      />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        </Card>
+        <LocalesOverview site={site} />
+      </Box>
     </Box>
 
-        <Box sx={{ justifyContent: 'center' }}>
-
-          <Card sx={{ margin: 1 }}>
-            <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}><FormattedMessage id="locales" /> </Typography>
-
-            <TableContainer component={Paper}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow >
-                    <TableCell sx={{ fontWeight: 'bold' }} align="left">
-                      <Typography sx={{ fontWeight: 'bold' }}>
-                        <FormattedMessage id="locale" /></Typography></TableCell>
-                    <TableCell sx={{ fontWeight: 'bold' }} align="left">
-                      <Typography sx={{ fontWeight: 'bold' }}>
-                        <FormattedMessage id="status" /></Typography></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody >
-                  {locales.map((locale, index) => (<Row key={index} site={site} locale={locale} />))}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </Card>
-          <LocalesOverview site={site} />
-
-        </Box>
-      </Box>
-  
-
+  </>
   );
-}
-
-interface RowProps {
-  site: StencilClient.Site,
-  locale: StencilClient.SiteLocale,
-}
-
-const Row: React.FC<RowProps> = ({ locale }) => {
-  const { site } = Composer.useComposer();
-
-  /*const handleUpdate = () => {
-    const entity: StencilClient.LocaleMutator = { enabled, id: locale.id };
-    console.log("entity", entity)
-    ide.service.update().locale(entity).then(success => {
-      console.log(success)
-      ide.actions.handleLoadSite();
-    });
-  }
-  */
-
-  //const locales: StencilClient.SiteLocale[] = Object.values(site.locales);
-
-
-  return (
-    <TableRow key={locale.id} hover>
-      <TableCell align="left">{locale.body.value}</TableCell>
-      <TableCell>
-        <LocaleDisable site={site} locale={locale} />
-      </TableCell>
-    </TableRow>
-  )
 }
 
 export { LocalesView }
