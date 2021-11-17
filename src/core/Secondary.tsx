@@ -30,7 +30,7 @@ const SecondaryArticles: React.FC<{}> = () => {
   const [tab, setTab] = React.useState("toolbar.articles") 
   let component = <></>;
   
-  if (tab === 'toolbar.workflows') {
+  if (tab === 'toolbar.services') {
     component = (<WorkflowExplorer />)
   } else if(tab === 'toolbar.links') {
     component = (<LinkExplorer />)
