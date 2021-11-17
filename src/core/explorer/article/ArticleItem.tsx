@@ -107,7 +107,7 @@ const ArticleItem: React.FC<{
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
+      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem" sx={{ backgroundColor: "explorer.main" }}>
 
         {/** Article options */
           options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'}

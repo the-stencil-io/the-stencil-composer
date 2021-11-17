@@ -394,7 +394,8 @@ class ImmutablePageView implements Composer.PageView {
     if (lineBreak2 > 0) {
       return page.body.content.substring(0, Math.min(lineBreak2, 30)).substring(2);
     }
-    return "";
+    
+    return page.body.content.substring(2);
 
   }
 

@@ -61,6 +61,7 @@ class ReleaseGraphVisitor {
   private _articles: ReleaseNode = { type: "articles", name: "articles", children: [], imports: [] };
   private _releases: ReleaseNode = { type: "releases", name: "releases", children: [], imports: [] };
   private _locales: ReleaseNode = { type: "locales", name: "locales", children: [], imports: [] };
+  private _svgNode: any;
 
   private _data: ReleaseNode = {
     type: "root", name: "graph", imports: [], children: [
@@ -181,6 +182,8 @@ class ReleaseGraphVisitor {
       .attr("transform", d => (d as any).x >= Math.PI ? "rotate(180)" : null)
       .text(d => (d as any).data.name)
       .each(function(d) { (d as any).text = this; })
+      .on("mouseover", overed)
+      .on("mouseout", outed)
       .call(text => text.append("title").text(d => {
         //console.log(d);
         return `${id(d)} ${(d as any).outgoing.length} outgoing ${(d as any).incoming.length} incoming`;
@@ -206,29 +209,31 @@ class ReleaseGraphVisitor {
       })
       .each(function(d) { (d as any).path = this; });
 
+    const that = this;
 
-    /*
-    
-        function overed(event, d) {
-          link.style("mix-blend-mode", null);
-          //d3.select(this).attr("font-weight", "bold");
-          d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", colorin).raise();
-          d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
-          d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", colorout).raise();
-          d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", colorout).attr("font-weight", "bold");
-        }
-    
-        function outed(event, d) {
-          link.style("mix-blend-mode", "multiply");
-          //d3.select(node).attr("font-weight", null);
-          d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null);
-          d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", null).attr("font-weight", null);
-          d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null);
-          d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", null).attr("font-weight", null);
-        }
-    */
-    const svgNode = svg.node() as any;
-    this._ref.current?.append(svgNode);
+    function overed(event, d) {
+      link.style("mix-blend-mode", null);
+      d3.select(that._svgNode).attr("font-weight", "bold");
+      d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", colorin).raise();
+      d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
+      d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", colorout).raise();
+      d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", colorout).attr("font-weight", "bold");
+    }
+
+    function outed(event, d) {
+      link.style("mix-blend-mode", "multiply");
+      d3.select(that._svgNode).attr("font-weight", null);
+      d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null);
+      d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", null).attr("font-weight", null);
+      d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null);
+      d3.selectAll(d.outgoing.map(([, d]) => d.text)).attr("fill", null).attr("font-weight", null);
+    }
+    const oldNodes = this._ref.current?.childNodes;
+    if (oldNodes) {
+      oldNodes.forEach(n => this._ref.current?.removeChild(n));
+    }
+    this._svgNode = svg.node() as any;
+    this._ref.current?.append(this._svgNode);
   }
 }
 

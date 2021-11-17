@@ -3,20 +3,9 @@ import React from 'react';
 import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
-import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
-import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import NewReleasesOutlinedIcon from '@mui/icons-material/NewReleasesOutlined';
-import LinkIcon from '@mui/icons-material/Link';
-import TranslateIcon from '@mui/icons-material/Translate';
-import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import ImportExportIcon from '@mui/icons-material/ImportExport';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import SaveIcon from '@mui/icons-material/Save';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 
-import { Composer, StencilClient } from '../../context';
+import { Composer } from '../../context';
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   "&.MuiButtonBase-root": {
@@ -40,7 +29,6 @@ const LocaleFilter: React.FC<{}> = () => {
   const {site, session, actions} = Composer.useComposer();
   const locales = Object.values(site.locales);
   const selected = session.filter.locale ? session.filter.locale : '';
-console.log(session.filter);
 
   return (<StyledTabs orientation="vertical" sx={{ borderRight: 1, borderColor: 'explorerItem.dark', maxHeight: '200px' }} value={selected}
     onChange={(_event, newValue) => actions.handleLocaleFilter(newValue)}
