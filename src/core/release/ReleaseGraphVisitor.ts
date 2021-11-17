@@ -142,7 +142,7 @@ class ReleaseGraphVisitor {
     Object.values(this._site.releases).forEach(rel => this.visitRelease(rel))
 
     const svg = d3.create("svg").attr("viewBox", viewBox);
-    const tree = d3.cluster().size([2 * Math.PI, radius - 100])
+    const tree = d3.cluster().size([2 * Math.PI, radius - 150])
     const line = d3.lineRadial()
       .curve(d3.curveBundle.beta(0.85))
       .radius(d => (d as any).y)
@@ -213,7 +213,7 @@ class ReleaseGraphVisitor {
 
     function overed(event, d) {
       link.style("mix-blend-mode", null);
-      d3.select(that._svgNode).attr("font-weight", "bold");
+      //d3.select(that._svgNode).attr("font-weight", "bold");
       d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", colorin).raise();
       d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", colorin).attr("font-weight", "bold");
       d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", colorout).raise();
@@ -222,7 +222,7 @@ class ReleaseGraphVisitor {
 
     function outed(event, d) {
       link.style("mix-blend-mode", "multiply");
-      d3.select(that._svgNode).attr("font-weight", null);
+      //d3.select(that._svgNode).attr("font-weight", null);
       d3.selectAll(d.incoming.map(d => d.path)).attr("stroke", null);
       d3.selectAll(d.incoming.map(([d]) => d.text)).attr("fill", null).attr("font-weight", null);
       d3.selectAll(d.outgoing.map(d => d.path)).attr("stroke", null);

@@ -59,8 +59,7 @@ const LinkItem: React.FC<{ view: Composer.LinkView }> = ({ view }) => {
         nodeId={view.link.id}
         labelText={view.link.body.value}
         labelcolor="link"
-        labelIcon={LinkIcon} 
-        sx={{ backgroundColor: "explorer.main" }}>
+        labelIcon={LinkIcon}>
       </StencilStyles.TreeItem>
     </>)
 }
@@ -72,8 +71,7 @@ const WorkflowItem: React.FC<{ view: Composer.WorkflowView }> = ({ view }) => {
         nodeId={view.workflow.id}
         labelText={view.workflow.body.value}
         labelcolor="workflow"
-        labelIcon={view.workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}
-        sx={{ backgroundColor: "explorer.main" }}>
+        labelIcon={view.workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}>
       </StencilStyles.TreeItem>
     </>)
 }
@@ -85,8 +83,7 @@ const PageItem: React.FC<{ view: Composer.PageView }> = ({ view }) => {
         nodeId={view.page.id}
         labelText={view.title}
         labelcolor="page"
-        labelIcon={TranslateIcon}
-        sx={{ backgroundColor: "explorer.main" }}>
+        labelIcon={TranslateIcon}>
       </StencilStyles.TreeItem>
     </>)
 
@@ -99,8 +96,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView }> = ({ view }) => {
         nodeId={view.article.id}
         labelText={view.article.body.name}
         labelcolor="article"
-        labelIcon={ArticleOutlinedIcon}
-        sx={{ backgroundColor: "explorer.main" }}>
+        labelIcon={ArticleOutlinedIcon}>
       </StencilStyles.TreeItem>
     </>)
 

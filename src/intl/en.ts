@@ -1,6 +1,7 @@
 const en = {
 
-
+  'search.field.placeholder': 'Enter search keyword',
+  'search.field.label': 'Search',
   'createview.article.title': 'Article',
   'createview.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
   'createview.locale.title': 'Locale',
@@ -36,7 +37,7 @@ const en = {
   'services.removepage.title': 'Remove this service',
   'services.removepage': 'Removing the service only removes its association with this article',
 
-  'toolbar.createitems': 'Create',
+  'toolbar.createitems': 'Create Resources',
   'createitems.title': 'Create and view site resources',
   'link.type.internal': 'Internal link: My pages within my domain',
   'link.type.external': 'External link: Other websites',

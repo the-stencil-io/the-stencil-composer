@@ -66,10 +66,11 @@ const Toolbar: React.FC<{}> = () => {
 
 
     } else if (newValue === 'toolbar.createitems') {
-      layoutActions.handleTabAdd({ id: 'newItem', label: "Create" });
+      layoutActions.handleTabAdd({ id: 'newItem', label: "Create Resources" });
 
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
+      
     } else if (newValue === 'toolbar.search') {
       layoutActions.handleSecondary("toolbar.search")
       

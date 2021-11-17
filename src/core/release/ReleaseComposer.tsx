@@ -6,7 +6,7 @@ import StencilStyles from '../styles';
 
 
 const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { service, actions, session } = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const [name, setName] = React.useState('');
   const [note, setNote] = React.useState('');

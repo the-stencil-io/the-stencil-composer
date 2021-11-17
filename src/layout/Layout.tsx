@@ -24,7 +24,7 @@ const Container: React.FC<ContainerProps> = (components) => {
   const secondaryWindow = React.useMemo(() => secondary, [secondary]);
   const toolbarWindow = React.useMemo(() => toolbar, [toolbar]);
 
-    return (<Box sx={{ display: 'flex', width: "100vw", height: "100vh" }}>
+    return (<Box sx={{ display: 'flex', height: "100vh" }}>
       <CssBaseline />
       <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
         <Toolbar>

@@ -26,7 +26,8 @@ const LinkItem: React.FC<{ linkId: StencilClient.LinkId }> = ({ linkId }) => {
         nodeId={link.id}
         labelText={workflowName.name}
         labelcolor="explorerItem"
-        labelIcon={LinkIcon}>
+        labelIcon={LinkIcon}
+        >
 
         <StencilStyles.TreeItem nodeId={link.id + 'options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <LinkOptions link={link} />

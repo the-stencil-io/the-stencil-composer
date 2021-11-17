@@ -66,6 +66,7 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
 
   return (
     <StyledTreeItemRoot
+      sx={{ backgroundColor: "explorer.main" }}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           {labelButton ? labelButton : <Box component={LabelIcon}

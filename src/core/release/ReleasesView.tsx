@@ -9,15 +9,16 @@ import fileDownload from 'js-file-download'
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
-
+import { ReleaseComposer } from './ReleaseComposer';
 
 
 const ReleasesView: React.FC<{}> = () => {
 
   const { site, service } = Composer.useComposer();
+  const layout = Composer.useLayout();
   const releases = Object.values(site.releases);
-  const []
-  const title = useIntl().formatMessage({ id: "releases" });
+  const [releaseComposer, setReleaseComposer] = React.useState(false);
+  
 
   const onDownload = (release: StencilClient.Release) => {
     service.getReleaseContent(release).then(content => {
@@ -29,6 +30,7 @@ const ReleasesView: React.FC<{}> = () => {
 
   return (
     <>
+      {releaseComposer ? <ReleaseComposer onClose={() => setReleaseComposer(false)} /> : null }
       <Box sx={{ paddingBottom: 1, m: 2 }}>
         <Box display="flex">
           <Box alignSelf="center">
@@ -38,8 +40,8 @@ const ReleasesView: React.FC<{}> = () => {
           </Box>
           <Box flexGrow={1} />
           <Box>
-            <StencilStyles.SecondaryButton label={"button.cancel"} onClick={cancel.onClick} sx={{ marginRight: 1 }} />
-            <StencilStyles.PrimaryButton label={"button.create"} onClick={() => submit.onClick(selected)} />
+            <StencilStyles.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
+            <StencilStyles.PrimaryButton label={"button.create"} onClick={() => setReleaseComposer(true)} />
           </Box>
         </Box>
 
