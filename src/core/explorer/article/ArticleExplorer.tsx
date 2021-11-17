@@ -43,13 +43,13 @@ const ArticleExplorer: React.FC<{}> = () => {
       { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
       { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
       
-      <Typography align="left"
+      <Typography align="left" 
         sx={{
           fontVariant: 'all-petite-caps',
           fontWeight: 'bold',
           color: 'explorerItem.main',
           ml: 1, mr: 1, mb: 1,
-          borderBottom: '1px solid'
+          borderBottom: '1px solid',
         }}>
       </Typography>
 

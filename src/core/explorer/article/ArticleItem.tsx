@@ -35,8 +35,7 @@ function WorkflowItem(props: {
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={props.devMode ? ConstructionIcon : AccountTreeOutlinedIcon} color="workflow.main" sx={{ pl: 1, mr: 1 }} />
-          <Typography
-            variant="body2"
+          <Typography noWrap={true} maxWidth="300px" variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >
             {props.labelText}
@@ -62,10 +61,7 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
-          <Typography
-            noWrap={true}
-            maxWidth="300px"
-            variant="body2"
+          <Typography align="left" maxWidth="300px" noWrap={true} variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >
             {props.labelText}
@@ -114,7 +110,9 @@ const ArticleItem: React.FC<{
       <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
 
         {/** Article options */
-          options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+          options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'}
+            labelText={<FormattedMessage id="options" />}
+            labelIcon={EditIcon}>
             <ArticleOptions article={article} />
           </StencilStyles.TreeItem>) : null
         }
@@ -151,7 +149,12 @@ const ArticleItem: React.FC<{
         }
 
         {/** Links options */
-          options ? (<StencilStyles.TreeItem nodeId={article.id + 'links-nested'} labelText={<FormattedMessage id="links" />} labelIcon={FolderOutlinedIcon} labelInfo={`${links.length}`} labelcolor="link">
+          options ? (<StencilStyles.TreeItem nodeId={article.id + 'links-nested'}
+            labelText={<FormattedMessage id="links" />}
+            labelIcon={FolderOutlinedIcon}
+            labelInfo={`${links.length}`}
+            labelcolor="link">
+            
             {links.map(view => (<LinkItem key={view.link.id}
               labelText={view.link.body.value}
               nodeId={view.link.id}
@@ -165,5 +168,5 @@ const ArticleItem: React.FC<{
     </>)
 }
 
-export type {ArticleItemOptions}
+export type { ArticleItemOptions }
 export default ArticleItem;

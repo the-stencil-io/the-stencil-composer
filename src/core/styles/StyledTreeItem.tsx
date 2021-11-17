@@ -73,13 +73,13 @@ const StyledTreeItem: React.FC<StyledTreeItemProps> = (props) => {
               mr: 1,
               color: labelcolor ? theme.palette[labelcolor].main : "inherit",
             }} />}
-          <Typography
+          <Typography noWrap={true}
             variant="body2"
             sx={{ flexGrow: 1 }}
           >
             {labelText}
           </Typography>
-          <Typography variant="caption" color="inherit">
+          <Typography variant="caption" color="inherit" >
             {labelInfo}
           </Typography>
         </Box>
@@ -112,7 +112,7 @@ const StyledTreeItemOption: React.FC<{
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
           <Box component={EditIcon} color={theme.palette[props.color].main} sx={{ pl: 1, mr: 1 }} />
-          <Typography
+          <Typography 
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >
