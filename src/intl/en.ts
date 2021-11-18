@@ -24,6 +24,12 @@ const en = {
   'activities.templates.desc': 'Use templates to customise and standardise the default Markdown content and/or structure of a page. Templates can be applied to new pages upon creation. ',
   'templates.create': 'Create template',
   'templates.view.all.templates': 'View templates',
+  'templates.name': 'Template name',
+  'templates.name.desc': 'User-given name for this template',
+  'templates.description': 'Write templates in Markdown to apply to new pages. Templates help speed up your development and unify your content structure.',
+  'templates.desc': 'Description',
+  'templates.description.desc': 'Additional information to help identify the use cases of this template',
+
   'activities.migration.title': 'Migrations',
   'activities.migration.desc': 'Import site data as a JSON file for restoring site from a backup, content updates, etc.',
   'migration.create': 'Migrate data',

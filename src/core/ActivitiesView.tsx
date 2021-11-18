@@ -2,7 +2,7 @@ import React from 'react';
 import { useTheme } from '@mui/styles';
 import {
   ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
-  Typography, Box, Divider, darken
+  Typography, Box, Divider
 } from '@mui/material';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -15,6 +15,7 @@ import { LocaleComposer } from './locale';
 import { ReleaseComposer } from './release';
 import { NewPage } from './page';
 import { MigrationComposer } from './migration';
+import { TemplateComposer } from './template';
 
 
 import { Composer, StencilClient, Layout } from './context';
@@ -100,7 +101,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     buttonTertiary: "button.releasegraph"
   },
   {
-    composer: (handleClose) => <></>,
+    composer: (handleClose) => <TemplateComposer onClose={handleClose}/>,
     onView: undefined,
     title: "activities.templates.title",
     desc: "activities.templates.desc",
