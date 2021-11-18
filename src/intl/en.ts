@@ -1,5 +1,6 @@
 const en = {
 
+  'explorer.tabs.search': 'Search',
   'releases.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'button.releasegraph': 'Graph',
   'search.field.placeholder': 'Enter search keyword',
@@ -43,6 +44,7 @@ const en = {
   'services.removepage.title': 'Remove this service',
   'services.removepage': 'Removing the service only removes its association with this article',
 
+  'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
   'link.type.internal': 'Internal link: My pages within my domain',
   'link.type.external': 'External link: Other websites',
