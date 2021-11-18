@@ -4,7 +4,7 @@ import { Box } from '@mui/material';
 import {
   ActivitiesView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
   ReleasesView, LocalesView,
-  HelpView, ReleaseGraph
+  ReleaseGraph
 } from './';
 
 import { Composer } from './context';
@@ -39,9 +39,6 @@ const Main: React.FC<{}> = () => {
       return (<Box sx={root}><WorkflowsView /></Box>);
     } else if (active.id === 'graph') {
       return (<Box sx={root}><ReleaseGraph /></Box>);
-
-    } else if (active.id === 'help') {
-      return (<Box sx={root}><HelpView /></Box>);
     }
 
     //article-based composers

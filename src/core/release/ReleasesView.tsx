@@ -36,6 +36,7 @@ const ReleasesView: React.FC<{}> = () => {
           <Box alignSelf="center">
             <Typography variant="h3" sx={{ p: 1, mb: 3, fontWeight: "bold", color: "mainContent.dark" }}>
               <FormattedMessage id="releases" />: {releases.length}
+              <Typography variant="body2" sx={{ pt: 1 }}><FormattedMessage id={"releases.desc"} /></Typography>
             </Typography>
           </Box>
           <Box flexGrow={1} />

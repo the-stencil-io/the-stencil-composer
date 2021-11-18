@@ -73,9 +73,6 @@ const Toolbar: React.FC<{}> = () => {
     } else if (newValue === 'toolbar.import') {
       layoutActions.handleTabAdd({ id: 'import', label: 'Import' })
 
-    } else if (newValue === 'toolbar.help') {
-      layoutActions.handleTabAdd({ id: 'help', label: "Help" })
-
     } else if (newValue === 'toolbar.expand') {
       layoutActions.handleDrawerOpen(!drawerOpen)
     }
@@ -105,7 +102,7 @@ const Toolbar: React.FC<{}> = () => {
             label={unsavedPages.length ? (<Box sx={saveSx}>{unsavedPages.length}</Box>) : undefined} />
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
           <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
-          <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
+          <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon onClick={() => window.open("https://github.com/the-stencil-io/the-stencil-composer/wiki", "_blank")}/>}  />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
         </StyledTabs>
         <Box flexGrow={1} sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} />

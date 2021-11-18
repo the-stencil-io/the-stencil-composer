@@ -179,9 +179,9 @@ const ActivitiesView: React.FC<{}> = () => {
 
   return (
     <>
-      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"activities.title"} /></Typography>
-      <Typography variant="body2" sx={{ pl: 1, m: 1 }}><FormattedMessage id={"activities.desc"} /></Typography>
-
+      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"activities.title"} />
+        <Typography variant="body2" sx={{pt: 1}}><FormattedMessage id={"activities.desc"} /></Typography>
+      </Typography>
       <Box sx={{
         margin: 1,
         display: 'flex',

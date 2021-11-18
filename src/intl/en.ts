@@ -1,5 +1,6 @@
 const en = {
 
+  'releases.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'button.releasegraph': 'Graph',
   'search.field.placeholder': 'Enter search keyword',
   'search.field.label': 'Search',
