@@ -61,8 +61,8 @@ const Toolbar: React.FC<{}> = () => {
       });
 
 
-    } else if (newValue === 'toolbar.createitems') {
-      layoutActions.handleTabAdd({ id: 'newItem', label: "Create Resources" });
+    } else if (newValue === 'toolbar.activities') {
+      layoutActions.handleTabAdd({ id: 'newItem', label: "Activities" });
 
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
@@ -85,7 +85,7 @@ const Toolbar: React.FC<{}> = () => {
   React.useLayoutEffect(() => {
     console.log("init toolbar");
     layoutActions.handleSecondary("toolbar.articles")
-    layoutActions.handleTabAdd({ id: 'newItem', label: "Create" });
+    layoutActions.handleTabAdd({ id: 'newItem', label: "Activities" });
   }, [layoutActions]);
 
   const saveSx = unsavedPages.length ? { color: "explorerItem.contrastText" } : undefined;
@@ -98,7 +98,7 @@ const Toolbar: React.FC<{}> = () => {
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
           value={layout.session.secondary}>
 
-          <StyledTab value='toolbar.createitems' icon={<AddCircleOutlineOutlinedIcon />} />
+          <StyledTab value='toolbar.activities' icon={<AddCircleOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.save'
             icon={<SaveIcon sx={saveSx} />}
             disabled={unsavedArticlePages.length === 0}

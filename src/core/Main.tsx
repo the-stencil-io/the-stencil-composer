@@ -2,7 +2,7 @@ import React from 'react';
 import { Box } from '@mui/material';
 
 import {
-  CreateView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
+  ActivitiesView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
   ReleasesView, LocalesView,
   HelpView, ReleaseGraph
 } from './';
@@ -32,7 +32,7 @@ const Main: React.FC<{}> = () => {
     if (active.id === 'releases') {
       return (<Box sx={root}><ReleasesView /></Box>);
     } else if (active.id === 'newItem') {
-      return (<Box sx={root}><CreateView /></Box>);
+      return (<Box sx={root}><ActivitiesView /></Box>);
     } else if (active.id === 'locales') {
       return (<Box sx={root}><LocalesView /></Box>);
     } else if (active.id === 'workflows') {

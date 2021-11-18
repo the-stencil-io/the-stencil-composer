@@ -4,7 +4,6 @@ import {
   ButtonGroup, Card, CardHeader, CardActions, CardContent, Theme,
   Typography, Box, Divider, darken
 } from '@mui/material';
-import PieChartIcon from '@mui/icons-material/PieChart';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 import StencilStyles from './styles';
@@ -39,8 +38,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
-    title: "createview.article.title",
-    desc: "createview.article.desc",
+    title: "activities.article.title",
+    desc: "activities.article.desc",
     color: theme.palette.article?.main,
     type: "article",
     buttonCreate: "article.create",
@@ -49,8 +48,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
     onView: () => console.log("nothing to see here"),
-    title: "createview.page.title",
-    desc: "createview.page.desc",
+    title: "activities.page.title",
+    desc: "activities.page.desc",
     color: theme.palette.page?.main,
     type: "page",
     buttonCreate: "page.create",
@@ -59,8 +58,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
-    title: "createview.link.title",
-    desc: "createview.link.desc",
+    title: "activities.link.title",
+    desc: "activities.link.desc",
     color: theme.palette.link?.main,
     type: "link",
     buttonCreate: "link.create",
@@ -81,8 +80,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'locales', label: "Locales" }),
-    title: "createview.locale.title",
-    desc: "createview.locale.desc",
+    title: "activities.locale.title",
+    desc: "activities.locale.desc",
     color: theme.palette.locale?.main,
     type: "locale",
     buttonCreate: "locale.create",
@@ -92,8 +91,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
     onView: () => layout.actions.handleTabAdd({ id: 'releases', label: "Releases" }),
-    title: "createview.release.title",
-    desc: "createview.release.desc",
+    title: "activities.release.title",
+    desc: "activities.release.desc",
     color: theme.palette.release?.main,
     type: "release",
     buttonCreate: "release.create",
@@ -103,8 +102,8 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   {
     composer: (handleClose) => <MigrationComposer onClose={handleClose} />,
     onView: undefined,
-    title: "createview.migration.title",
-    desc: "createview.migration.desc",
+    title: "activities.migration.title",
+    desc: "activities.migration.desc",
     color: theme.palette.release?.main,
     type: "migration",
     buttonCreate: "migration.create",
@@ -113,7 +112,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
 ]);
 
-const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
+const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
   const title = useIntl().formatMessage({ id: props.data.title })
   const layout = Composer.useLayout();
   return (
@@ -159,7 +158,7 @@ const CreateViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (prop
 
 
 //card view for all CREATE views
-const CreateView: React.FC<{}> = () => {
+const ActivitiesView: React.FC<{}> = () => {
   const theme = useTheme();
   const layout = Composer.useLayout();
   const { site } = Composer.useComposer();
@@ -170,7 +169,7 @@ const CreateView: React.FC<{}> = () => {
 
   return (
     <>
-      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"createitems.title"} /></Typography>
+      <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"activities.title"} /></Typography>
       <Box sx={{
         margin: 1,
         display: 'flex',
@@ -179,11 +178,11 @@ const CreateView: React.FC<{}> = () => {
 
       }}>
         {open === undefined ? null : (cards[open].composer(handleClose))}
-        {cards.map((card, index) => (<CreateViewItem key={index} data={card} onCreate={() => setOpen(index)} />))}
+        {cards.map((card, index) => (<ActivitiesViewItem key={index} data={card} onCreate={() => setOpen(index)} />))}
       </Box>
 
     </>
   );
 }
 
-export { CreateView }
+export { ActivitiesView }
