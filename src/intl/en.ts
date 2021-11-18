@@ -4,6 +4,7 @@ const en = {
   'releases.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'button.releasegraph': 'Graph',
   'search.field.placeholder': 'Enter search keyword',
+  'search.results.title': 'Search results',
   'search.field.label': 'Search',
   'activities.title': 'Activities',
   'activities.desc': 'Create, view, and navigate site resources',
@@ -21,6 +22,8 @@ const en = {
   'activities.release.desc': 'A Release is a snapshot of all site content at one certain point of time. Use this for testing, prouduction, or backup purposes.',
   'activities.templates.title': 'Templates',
   'activities.templates.desc': 'Use templates to customise and standardise the default Markdown content and/or structure of a page. Templates can be applied to new pages upon creation. ',
+  'templates.create': 'Create template',
+  'templates.view.all.templates': 'View templates',
   'activities.migration.title': 'Migrations',
   'activities.migration.desc': 'Import site data as a JSON file for restoring site from a backup, content updates, etc.',
   'migration.create': 'Migrate data',
@@ -226,13 +229,6 @@ const en = {
   'release.composer.note': "Note",
   'release.composer.helper': 'Optional additional information for future reference',
 
-
-  'toolbar.articles': 'Articles overview',
-  'toolbar.explorer': 'Explorer',
-  'toolbar.links': 'Links overview',
-  'toolbar.workflows': 'Workflows overview',
-  'toolbar.releases': 'Releases',
-  'toolbar.locales': 'Locales',
 };
 
 export default en;

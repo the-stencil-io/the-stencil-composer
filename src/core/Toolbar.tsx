@@ -5,7 +5,7 @@ import { styled } from "@mui/material/styles";
 
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
+import DashboardIcon from '@mui/icons-material/Dashboard';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
@@ -95,7 +95,7 @@ const Toolbar: React.FC<{}> = () => {
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
           value={layout.session.secondary}>
 
-          <StyledTab value='toolbar.activities' icon={<AddCircleOutlineOutlinedIcon />} />
+          <StyledTab value='toolbar.activities' icon={<DashboardIcon />} />
           <StyledTab value='toolbar.save'
             icon={<SaveIcon sx={saveSx} />}
             disabled={unsavedArticlePages.length === 0}

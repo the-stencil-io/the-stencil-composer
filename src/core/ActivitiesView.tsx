@@ -107,7 +107,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.release?.main,
     type: "templates",
     buttonCreate: "templates.create",
-    buttonViewAll: undefined
+    buttonViewAll: "templates.view.all.templates"
   },
   {
     composer: (handleClose) => <MigrationComposer onClose={handleClose} />,
