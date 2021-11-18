@@ -32,7 +32,7 @@ interface CardData {
   //viewer: (() => void) => xxx;
 }
 
-type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale" | "migration";
+type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale" | "migration" | "templates";
 
 const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
   {
@@ -98,6 +98,16 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     buttonCreate: "release.create",
     buttonViewAll: "button.view.all.releases",
     buttonTertiary: "button.releasegraph"
+  },
+  {
+    composer: (handleClose) => <></>,
+    onView: undefined,
+    title: "activities.templates.title",
+    desc: "activities.templates.desc",
+    color: theme.palette.release?.main,
+    type: "templates",
+    buttonCreate: "templates.create",
+    buttonViewAll: undefined
   },
   {
     composer: (handleClose) => <MigrationComposer onClose={handleClose} />,
@@ -170,6 +180,8 @@ const ActivitiesView: React.FC<{}> = () => {
   return (
     <>
       <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"activities.title"} /></Typography>
+      <Typography variant="body2" sx={{ pl: 1, m: 1 }}><FormattedMessage id={"activities.desc"} /></Typography>
+
       <Box sx={{
         margin: 1,
         display: 'flex',
