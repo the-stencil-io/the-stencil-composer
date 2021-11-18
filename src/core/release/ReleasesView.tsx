@@ -4,7 +4,7 @@ import {
   TableCell, TableContainer, TableRow, TableHead, Paper, Card
 } from '@mui/material';
 import GetAppIcon from '@mui/icons-material/GetApp';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { FormattedMessage } from 'react-intl';
 import fileDownload from 'js-file-download'
 
 import StencilStyles from '../styles';
@@ -18,7 +18,7 @@ const ReleasesView: React.FC<{}> = () => {
   const layout = Composer.useLayout();
   const releases = Object.values(site.releases);
   const [releaseComposer, setReleaseComposer] = React.useState(false);
-  
+
 
   const onDownload = (release: StencilClient.Release) => {
     service.getReleaseContent(release).then(content => {
@@ -30,7 +30,7 @@ const ReleasesView: React.FC<{}> = () => {
 
   return (
     <>
-      {releaseComposer ? <ReleaseComposer onClose={() => setReleaseComposer(false)} /> : null }
+      {releaseComposer ? <ReleaseComposer onClose={() => setReleaseComposer(false)} /> : null}
       <Box sx={{ paddingBottom: 1, m: 2 }}>
         <Box display="flex">
           <Box alignSelf="center">
@@ -41,6 +41,7 @@ const ReleasesView: React.FC<{}> = () => {
           <Box flexGrow={1} />
           <Box>
             <StencilStyles.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
+            <StencilStyles.SecondaryButton label={"button.releasegraph"} onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })} sx={{ marginRight: 1 }} />
             <StencilStyles.PrimaryButton label={"button.create"} onClick={() => setReleaseComposer(true)} />
           </Box>
         </Box>

@@ -5,13 +5,10 @@ import { styled } from "@mui/material/styles";
 
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
-import LocalOfferOutlinedIcon from '@mui/icons-material/LocalOfferOutlined';
 import AddCircleOutlineOutlinedIcon from '@mui/icons-material/AddCircleOutlineOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
-import PieChartIcon from '@mui/icons-material/PieChart';
-
 
 import { Composer, StencilClient } from './context';
 import { LocaleFilter } from './explorer/filter';
@@ -72,12 +69,6 @@ const Toolbar: React.FC<{}> = () => {
       
     } else if (newValue === 'toolbar.search') {
       layoutActions.handleSecondary("toolbar.search")
-      
-    } else if (newValue === 'toolbar.graph') {
-      layoutActions.handleTabAdd({id: "graph", label: "Release Graph"})
-
-    } else if (newValue === 'toolbar.releases') {
-      layoutActions.handleTabAdd({ id: 'releases', label: "Releases" })
 
     } else if (newValue === 'toolbar.import') {
       layoutActions.handleTabAdd({ id: 'import', label: 'Import' })
@@ -114,8 +105,6 @@ const Toolbar: React.FC<{}> = () => {
             label={unsavedPages.length ? (<Box sx={saveSx}>{unsavedPages.length}</Box>) : undefined} />
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
           <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
-          <StyledTab value='toolbar.releases' icon={<LocalOfferOutlinedIcon />} />
-          <StyledTab value='toolbar.graph' icon={<PieChartIcon />} />
           <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon />} />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
         </StyledTabs>
