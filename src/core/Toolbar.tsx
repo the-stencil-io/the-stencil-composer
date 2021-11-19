@@ -9,6 +9,7 @@ import DashboardIcon from '@mui/icons-material/Dashboard';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
 import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
 import SaveIcon from '@mui/icons-material/Save';
+import FeedbackOutlinedIcon from '@mui/icons-material/FeedbackOutlined';
 
 import { Composer, StencilClient } from './context';
 import { LocaleFilter } from './explorer/filter';
@@ -66,7 +67,7 @@ const Toolbar: React.FC<{}> = () => {
 
     } else if (newValue === 'toolbar.articles') {
       layoutActions.handleSecondary("toolbar.articles")
-      
+
     } else if (newValue === 'toolbar.search') {
       layoutActions.handleSecondary("toolbar.search")
 
@@ -102,8 +103,10 @@ const Toolbar: React.FC<{}> = () => {
             label={unsavedPages.length ? (<Box sx={saveSx}>{unsavedPages.length}</Box>) : undefined} />
           <StyledTab value='toolbar.search' icon={<SearchOutlinedIcon />} />
           <StyledTab value='toolbar.articles' icon={<ArticleOutlinedIcon />} />
-          <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon onClick={() => window.open("https://github.com/the-stencil-io/the-stencil-composer/wiki", "_blank")}/>}  />
+          <StyledTab value='toolbar.help' icon={<HelpOutlineOutlinedIcon onClick={() => window.open("https://github.com/the-stencil-io/the-stencil-composer/wiki", "_blank")} />} />
           <StyledTab value='toolbar.expand' icon={<FlipToFrontOutlinedIcon />} />
+          <StyledTab value='feedback' icon={<FeedbackOutlinedIcon />} />
+
         </StyledTabs>
         <Box flexGrow={1} sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }} />
         <LocaleFilter />

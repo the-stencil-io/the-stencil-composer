@@ -49,8 +49,7 @@ const TemplatesView: React.FC<{}> = () => {
             <Table size="small">
               <TableHead>
                 <TableRow sx={{ p: 1 }}>
-                  <TableCell align="left" sx={{width: "80px"}}></TableCell>
-                  <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.name" /></TableCell>
+                  <TableCell align="left" sx={{ fontWeight: 'bold' }} colSpan={2}><FormattedMessage id="templates.name" /></TableCell>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.templatesview.note" /></TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
@@ -58,7 +57,7 @@ const TemplatesView: React.FC<{}> = () => {
               
               <TableBody>
                 <TableRow sx={{ p: 1 }} hover>
-                  <TableCell align="left" sx={{ fontWeight: 'bold' }}>
+                  <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
                     <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateComposer(true)}><EditIcon /></IconButton>
                   </TableCell>
                   <TableCell>Page template 1</TableCell>

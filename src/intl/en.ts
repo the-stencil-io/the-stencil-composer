@@ -26,7 +26,7 @@ const en = {
   'templates.create': 'Create template',
   'button.view.all.templates': 'View templates',
   'templates': 'Templates',
-  'templates.templatesview.description': 'Cool templates description',
+  'templates.templatesview.description': 'Templates have a cool description here',
   'templates.templatesview.note': 'Description',
   'templates.name': 'Template name',
   'templates.name.desc': 'User-given name for this template',
