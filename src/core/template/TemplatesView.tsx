@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { FormattedMessage } from 'react-intl';
 
-import { TemplateComposer } from './';
+import { TemplateComposer, TemplateDelete } from './';
 import { Composer } from '../context';
 import StencilStyles from '../styles';
 
@@ -17,13 +17,14 @@ const TemplatesView: React.FC<{}> = () => {
 
   const layout = Composer.useLayout();
   const [templateComposer, setTemplateComposer] = React.useState(false);
-
-
+  const [templateDelete, setTemplateDelete] = React.useState(false);
+  
   return (
     <>
 
       { templateComposer ? <TemplateComposer onClose={() => setTemplateComposer(false)} /> : null}
-
+      { templateDelete ? <TemplateDelete onClose={() => setTemplateDelete(false)}/> : null}
+      
       <Box sx={{ paddingBottom: 1, m: 2 }}>
         <Box display="flex">
           <Box alignSelf="center">
@@ -58,12 +59,12 @@ const TemplatesView: React.FC<{}> = () => {
               <TableBody>
                 <TableRow sx={{ p: 1 }} hover>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }}>
-                    <IconButton sx={{ color: 'uiElements.main' }}><EditIcon onClick={() => setTemplateComposer(true)} /></IconButton>
+                    <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateComposer(true)}><EditIcon /></IconButton>
                   </TableCell>
                   <TableCell>Page template 1</TableCell>
                   <TableCell>General page structure</TableCell>
                   <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
-                    <IconButton sx={{ color: 'uiElements.main' }}><DeleteOutlineOutlinedIcon /></IconButton>
+                    <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateDelete(true)}><DeleteOutlineOutlinedIcon /></IconButton>
                   </TableCell>
                 </TableRow>
 

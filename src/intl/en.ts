@@ -34,7 +34,8 @@ const en = {
   'templates.description': 'Write templates in Markdown to apply to new pages. Templates help speed up your development and unify your content structure.',
   'templates.desc': 'Description',
   'templates.description.desc': 'Additional information to help identify the use cases of this template',
-
+  'template.delete': 'Delete template',
+  'template.delete.message': 'This template will be permanently removed from the application',
   'activities.migration.title': 'Migrations',
   'activities.migration.desc': 'Import site data as a JSON file for restoring site from a backup, content updates, etc.',
   'migration.create': 'Migrate data',
