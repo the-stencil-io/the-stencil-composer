@@ -3,6 +3,8 @@ import {
   Box, Typography, IconButton, Table, TableBody,
   TableCell, TableContainer, TableRow, TableHead, Paper, Card
 } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { FormattedMessage } from 'react-intl';
 
 import { TemplateComposer } from './';
@@ -46,15 +48,23 @@ const TemplatesView: React.FC<{}> = () => {
             <Table size="small">
               <TableHead>
                 <TableRow sx={{ p: 1 }}>
+                  <TableCell align="left" sx={{width: "80px"}}></TableCell>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.name" /></TableCell>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.templatesview.note" /></TableCell>
-
+                  <TableCell align="left"></TableCell>
                 </TableRow>
               </TableHead>
+              
               <TableBody>
-                <TableRow sx={{ p: 1 }}>
-                  <TableCell>name</TableCell>
-                  <TableCell>description</TableCell>
+                <TableRow sx={{ p: 1 }} hover>
+                  <TableCell align="left" sx={{ fontWeight: 'bold' }}>
+                    <IconButton sx={{ color: 'uiElements.main' }}><EditIcon onClick={() => setTemplateComposer(true)} /></IconButton>
+                  </TableCell>
+                  <TableCell>Page template 1</TableCell>
+                  <TableCell>General page structure</TableCell>
+                  <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
+                    <IconButton sx={{ color: 'uiElements.main' }}><DeleteOutlineOutlinedIcon /></IconButton>
+                  </TableCell>
                 </TableRow>
 
               </TableBody>
