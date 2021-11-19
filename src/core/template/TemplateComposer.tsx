@@ -2,17 +2,11 @@ import React from 'react';
 import { Typography, Box } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
-import { Composer, StencilClient } from '../context';
 
 import StencilStyles from '../styles';
 
 
-
-interface TemplateComposerProps {
-  onClose: () => void
-}
-
-const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
+const TemplateComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
@@ -20,7 +14,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
     return null;
   }
   const handleChange = (value: string | undefined) => {
-    setContent(value ? value : '' ) 
+    setContent(value ? value : '')
   }
 
   return (
@@ -29,6 +23,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
       backgroundColor={"uiElements.main"}
       submit={{ title: "button.add", disabled: !name || !content, onClick: handleCreate }}
     >
+
       <>
         <Typography variant="body2" ><FormattedMessage id={"templates.description"} /></Typography>
 
@@ -40,8 +35,9 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
           value={description}
           onChange={setDescription} />
 
+        <Typography variant="body2" sx={{ mt: 2, fontWeight: 'bold' }}><FormattedMessage id={"templates.intro"} /></Typography>
 
-        <Box display="flex" flexDirection="row" flexWrap="wrap" sx={{mt: 2}}>
+        <Box display="flex" flexDirection="row" flexWrap="wrap" sx={{ mt: 2 }}>
           <Box flex="1" sx={{ paddingRight: 1 }}>
             <MDEditor key={1} value={content} onChange={handleChange}
               textareaProps={{ placeholder: '# Title' }}

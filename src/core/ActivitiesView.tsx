@@ -102,13 +102,13 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   },
   {
     composer: (handleClose) => <TemplateComposer onClose={handleClose}/>,
-    onView: undefined,
+    onView: () => layout.actions.handleTabAdd({ id: 'templates', label: "Templates" }),
     title: "activities.templates.title",
     desc: "activities.templates.desc",
     color: theme.palette.release?.main,
     type: "templates",
     buttonCreate: "templates.create",
-    buttonViewAll: "templates.view.all.templates"
+    buttonViewAll: "button.view.all.templates"
   },
   {
     composer: (handleClose) => <MigrationComposer onClose={handleClose} />,
@@ -159,8 +159,6 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
                 alignSelf: 'center',
               }} /> : null}
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
-
-
         </ButtonGroup>
       </CardActions>
     </Card>

@@ -38,3 +38,4 @@ export * from './article';
 export * from './locale';
 export * from './release';
 export * from './migration';
+export * from './template';
