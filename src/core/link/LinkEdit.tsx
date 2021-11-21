@@ -1,5 +1,7 @@
 import React from 'react';
-import { ListItemText } from '@mui/material';
+import { ListItemText, Box, Typography, } from '@mui/material';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import { FormattedMessage } from 'react-intl';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -37,7 +39,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   }
 
   return (<StencilStyles.Dialog open={true} onClose={onClose}
-    backgroundColor="uiElements.main" 
+    backgroundColor="uiElements.main"
     title="link.edit.title"
     submit={{ title: "button.update", onClick: handleUpdate, disabled: !value || changeInProgress }}>
     <>
@@ -57,6 +59,12 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
         value={value}
         onChange={setValue} />
 
+      <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+        <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+        <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+        <WarningAmberRoundedIcon sx={{ ml: 3 }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
+      </Box>
+
       <StencilStyles.SelectMultiple label='link.article.select' multiline
         selected={articleId}
         onChange={setArticleId}
@@ -65,7 +73,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
           id: article.id,
           value: (<>
             <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1}
-            
+
             />
             <ListItemText primary={article.body.name} />
           </>)

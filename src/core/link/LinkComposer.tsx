@@ -1,5 +1,7 @@
 import React from 'react';
-import { Checkbox, ListItemText } from '@mui/material';
+import { ListItemText, Box, Typography } from '@mui/material';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
@@ -13,9 +15,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [value, setValue] = React.useState('');
   const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
   const [changeInProgress, setChangeInProgress] = React.useState(false);
-  const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([])
-  const locales = labels.map(l => l.locale);
-  const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
+  const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
+  const articles: StencilClient.Article[] = Object.values(site.articles);
 
   const handleCreate = () => {
     const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels };
@@ -43,13 +44,19 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           items={[
             { id: 'internal', value: 'link.type.internal' },
             { id: 'external', value: 'link.type.external' },
-            { id: 'phone',    value: 'link.type.phone' }
+            { id: 'phone', value: 'link.type.phone' }
           ]} />
 
         <StencilStyles.TextField label='value' helperText='link.composer.valuehelper'
           required
           value={value}
           onChange={setValue} />
+
+        <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+          <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+          <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+          <WarningAmberRoundedIcon  sx={{ ml: 3}} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
+        </Box>
 
         <StencilStyles.SelectMultiple label='composer.select.article'
           multiline
@@ -59,7 +66,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           items={articles.map(article => ({
             id: article.id,
             value: (<>
-              <Checkbox checked={articleId.indexOf(article.id) > -1} />
+              <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
               <ListItemText primary={article.body.name} />
             </>)
           }))}

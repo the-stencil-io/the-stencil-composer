@@ -1,5 +1,8 @@
 const en = {
-
+  'allarticles': 'Select all articles',
+  'allarticles.individual': 'De-select all articles',
+  'add.allarticles.link.help': 'This link will be added to (or removed from) all articles. Any previous link-article associations will be lost. Individual articles will need to be re-selected one by one if you wish to restore the previous associations.',
+  'add.allarticles.service.help': 'This service will be added to (or removed from) all articles. Any previous service-article associations will be lost. Individual articles will need to be re-selected one by one if you wish to restore the previous associations.',
   'explorer.tabs.search': 'Search',
   'releases.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'button.releasegraph': 'Graph',

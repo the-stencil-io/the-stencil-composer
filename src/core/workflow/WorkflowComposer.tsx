@@ -1,6 +1,9 @@
 import React from 'react';
 
-import { Checkbox, ListItemText, Paper } from '@mui/material';
+import { Checkbox, ListItemText, Paper, Box, Typography } from '@mui/material';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
+
+import { FormattedMessage } from 'react-intl';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -41,6 +44,12 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname.description'
           value={technicalname}
           onChange={setTechnicalname} />
+
+        <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+          <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+          <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+          <WarningAmberRoundedIcon sx={{ ml: 3 }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.service.help" /></Typography>
+        </Box>
 
         <StencilStyles.SelectMultiple label='composer.select.article'
           multiline

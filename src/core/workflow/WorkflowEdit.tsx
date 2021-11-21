@@ -1,7 +1,9 @@
 import React from 'react';
 
-import { ListItemText, Paper, Switch} from '@mui/material';
+import { ListItemText, Paper, Box, Typography } from '@mui/material';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 
+import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
@@ -35,11 +37,11 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   }
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose} 
+    <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
-      title="services.edit" 
+      title="services.edit"
       submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
-      
+
       <>
         <LocaleLabels
           onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
@@ -49,6 +51,14 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
         <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname'
           value={technicalname}
           onChange={setTechnicalname} />
+
+
+        <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
+          <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+          <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+          <WarningAmberRoundedIcon sx={{ ml: 3 }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.service.help" /></Typography>
+        </Box>
+
 
         <StencilStyles.SelectMultiple label='composer.select.article'
           multiline
