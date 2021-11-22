@@ -1,4 +1,5 @@
 const en = {
+  'article.composer.orderhelper': 'The lower the number, the higher up this article will appear in your portal UI Topic Menu.  Example: 000 will be the first Topic menu item, while 999 will be the last.',
   'allarticles': 'Select all articles',
   'allarticles.individual': 'De-select all articles',
   'add.allarticles.link.help': 'This link will be added to (or removed from) all articles. Any previous link-article associations will be lost once this change has been applied',
@@ -155,8 +156,8 @@ const en = {
 
   'article.composer.title': 'Create new Article',
   'article.composer.parent': 'Parent Article',
-  'article.composer.parent.unselected': 'None',
-  'article.composer.orderhelper': 'Number for menu ordering purposes',
+  'article.parent.helper': 'If a Parent article is selected, this article will live inside this parent, like a file inside a folder does.',
+  'article.composer.parent.unselected': 'No parent article',
 
   'article.name': 'Article name',
   'articles.message': 'Expand rows to view Pages associated with Articles and modify these associations',
