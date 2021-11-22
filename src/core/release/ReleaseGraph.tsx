@@ -22,7 +22,8 @@ const ReleaseGraph: React.FC<{}> = () => {
 
   //const graph = React.useMemo(() => <ReleaseGraphRef site={site} />, [site])
   //return (graph);
-  return <ReleaseGraphRef site={site} />;
+  return  <ReleaseGraphRef site={site} />;
+ 
 }
 
 

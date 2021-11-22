@@ -44,7 +44,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.article?.main,
     type: "article",
     buttonCreate: "article.create",
-    buttonViewAll: "button.view.all.articles"
+    buttonViewAll: undefined
   },
   {
     composer: (handleClose) => (<NewPage onClose={handleClose} />),
@@ -54,7 +54,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.page?.main,
     type: "page",
     buttonCreate: "page.create",
-    buttonViewAll: "button.view.all.pages" || undefined
+    buttonViewAll: undefined
   },
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
@@ -64,7 +64,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.link?.main,
     type: "link",
     buttonCreate: "link.create",
-    buttonViewAll: "button.view.all.links"
+    buttonViewAll: undefined
   },
 
   {
@@ -75,7 +75,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     color: theme.palette.workflow?.main,
     type: "workflow",
     buttonCreate: "services.create",
-    buttonViewAll: "button.view.all.services"
+    buttonViewAll: undefined
   },
 
   {
