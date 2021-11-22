@@ -29,7 +29,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   return (
     <>      
       <StencilStyles.TransferList
-        title="article.links.sitelinks"
+        title="articlelinks"
         searchTitle="link.search.title"
         selectedTitle="article.links.selectedlinks"
         headers={["link.value", "link.type"]}

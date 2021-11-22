@@ -34,7 +34,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
   return (
     <>
       <StencilStyles.TransferList
-        title="services.siteservices"
+        title="articleservices"
         searchTitle="services.technicalname"
         selectedTitle="services.selected"
         headers={["services.technicalname", "services.devmode"]}
