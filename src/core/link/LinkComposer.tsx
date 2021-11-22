@@ -55,7 +55,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
           <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
           <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
-          <WarningAmberRoundedIcon  sx={{ ml: 3}} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
+          <WarningAmberRoundedIcon  sx={{ ml: 3, color: "warning.main"}} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
         </Box>
 
         <StencilStyles.SelectMultiple label='composer.select.article'
