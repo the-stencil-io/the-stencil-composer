@@ -1,7 +1,16 @@
 import { createTheme, PaletteOptions, Theme } from "@mui/material/styles";
 
+declare module 'react' {
+  interface CSSProperties {
+    '--tree-view-text-color'?: string;
+    '--tree-view-color'?: string;
+    '--tree-view-bg-color'?: string;
+    '--tree-view-hover-color'?: string;
+  }
+}
+
 declare module '@mui/styles/defaultTheme' {
-  interface DefaultTheme extends Theme {}
+  interface DefaultTheme extends Theme { }
 }
 
 declare module '@mui/material/styles' {
@@ -14,6 +23,12 @@ declare module '@mui/material/styles' {
     locale: Palette['primary'];
     import: Palette['primary'];
     activeItem: Palette['primary'];
+    save: Palette['primary'];
+    explorer: Palette['primary'];
+    explorerItem: Palette['primary'];
+    mainContent: Palette['primary'];
+    uiElements: Palette['primary'];
+    table: Palette['primary'];
   }
   interface PaletteOptions {
     article: Palette['primary'];
@@ -24,6 +39,13 @@ declare module '@mui/material/styles' {
     locale: Palette['primary'];
     import: Palette['primary'];
     activeItem: Palette['primary'];
+    save: Palette['primary'];
+    explorer: Palette['primary'];
+    explorerItem: Palette['primary'];
+    mainContent: Palette['primary'];
+    uiElements: Palette['primary'];
+    table: Palette['primary'];
+
   }
 }
 
@@ -65,41 +87,70 @@ const palette = {
     disabled: 'rgba(0,0,0,0.36)',
     hint: 'rgba(0,0,0,0.37)',
   },
+  explorer: {
+    main: 'rgb(17, 24, 39)', // background colour, dark grey-black
+    dark: '',
+    light: '',
+    contrastText: '' 
+  },
+  explorerItem: {
+    main: 'rgb(209, 213, 219)', // inactive item 
+    dark: 'rgb(16, 185, 129)', // active item
+    light: 'rgba(255, 255, 255, 0.08)', // active item hover
+    contrastText: 'rgba(253, 205, 73)' // indicative item
+  },
+  mainContent: {
+    main: 'rgb(249, 250, 252)', // primary bg colour for behind content boxes, light gray
+    dark: 'rgb(18, 24, 40)', // primary content text, dark gray/black
+    light: 'rgb(255, 255, 255) ', // primary content bg colour, white
+    contrastText: 'rgb(101, 116, 139)' // secondary content text, medium gray
+  },
+  uiElements: {
+    main: 'rgb(80, 72, 229)', // primary ui element, blue-purple (button fill, button text, text, checkboxes, etc.)
+    dark: '#F3F4F6', // table header gray
+    light: 'rgba(80, 72, 229, 0.04)', // transparent purple for hover backgrounds, secondary button fill on hover
+    contrastText: ''
+  },
+  table: {
+    main: '#F3F4F6', // table header gray
+    dark: '#e8eaed', // table header darker gray
+    light: '',
+    contrastText: ''
+  },
   article: {
-    main: '#127EE2',
-    dark: '#0c5497',
-    light: '#1D88ED',
+    main: '#5048E5', // blue
+    dark: '#3229e0',
+    light: '#3229e0',
     contrastText: ' #fff'
   },
   page: {
-    main: '#aa4b77',
-    dark: '#803859',
-    light: '#BB638C',
-    contrastText: '#fff'
-
+    main: '#14B8A6', // turquoise
+    dark: '#109384',
+    light: '#18dcc5',
+    contrastText: '#fff',
   },
   link: {
-    main: '#8ab800',
-    dark: '#6b8f00',
-    light: '#A8E000',
+    main: '#a0548b', // purple
+    dark: '#864674',
+    light: '#b26c9e',
     contrastText: '#fff'
   },
   workflow: {
-    main: '#8332AC',
-    dark: '#6d298e',
-    light: '#a351cd',
+    main: '#D14343', // red
+    dark: '#c53030',
+    light: '#db6b6b',
     contrastText: '#fff'
   },
   release: {
-    main: '#D7901D',
-    dark: '#A26C16',
-    light: '#D7901D',
+    main: '#91bc24', // green
+    dark: '#779a1d',
+    light: '#a9d831',
     contrastText: '#fff'
   },
   locale: {
-    main: '#1bc5a3',
-    dark: '#117E68',
-    light: '#1dd7b2',
+    main: '#FFB020', // orange-yellow
+    dark: '#f59f00',
+    light: '#ffbf47',
     contrastText: '#fff'
   },
   import: {
@@ -113,8 +164,13 @@ const palette = {
     dark: '#edf6f9',
     light: '#edf6f9',
     contrastText: '#000'
-  }
-
+  },
+  save: {
+    main: 'rgba(255, 99, 71, 0.8)',
+    dark: 'rgba(255, 183, 3)',
+    light: 'rgba(255, 183, 3)',
+    contrastText: '#000'
+  },
 
 }
 
@@ -241,9 +297,6 @@ const siteTheme = createTheme({
           transition: 'unset'
         }
       },
-      defaultProps: {
-        square: true,
-      }
     },
 
 

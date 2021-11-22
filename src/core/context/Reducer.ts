@@ -1,8 +1,9 @@
 import Ide from './ide';
-import { API } from '../deps';
+import StencilClient from '../client';
 
 
 enum ActionType {
+  setFilterLocale = "setFilterLocale",
   setSite = "setSite",
   setPageUpdate = "setPageUpdate",
   setPageUpdateRemove = "setPageUpdateRemove"
@@ -11,23 +12,25 @@ enum ActionType {
 interface Action {
   type: ActionType;
 
-  setPageUpdateRemove?: {pages: API.CMS.PageId[]}
-  setPageUpdate?: { page: API.CMS.PageId, value: API.CMS.LocalisedContent };
-  setSite?: { site: API.CMS.Site };
+  setFilterLocale?: StencilClient.LocaleId;
+  setPageUpdateRemove?: {pages: StencilClient.PageId[]}
+  setPageUpdate?: { page: StencilClient.PageId, value: StencilClient.LocalisedContent };
+  setSite?: { site: StencilClient.Site };
 }
 
 const ActionBuilder = {
-  setPageUpdateRemove: (setPageUpdateRemove: { pages: API.CMS.PageId[] } ) => ({type: ActionType.setPageUpdateRemove, setPageUpdateRemove }),
-  setPageUpdate: (setPageUpdate: { page: API.CMS.PageId, value: API.CMS.LocalisedContent }) => ({ type: ActionType.setPageUpdate, setPageUpdate }),
-  setSite: (setSite: { site: API.CMS.Site }) => ({ type: ActionType.setSite, setSite }),
+  setFilterLocale: (locale?: StencilClient.LocaleId ) => ({type: ActionType.setFilterLocale, setFilterLocale: locale }),
+  setPageUpdateRemove: (setPageUpdateRemove: { pages: StencilClient.PageId[] } ) => ({type: ActionType.setPageUpdateRemove, setPageUpdateRemove }),
+  setPageUpdate: (setPageUpdate: { page: StencilClient.PageId, value: StencilClient.LocalisedContent }) => ({ type: ActionType.setPageUpdate, setPageUpdate }),
+  setSite: (setSite: { site: StencilClient.Site }) => ({ type: ActionType.setSite, setSite }),
 }
 
 class ReducerDispatch implements Ide.Actions {
 
   private _sessionDispatch: React.Dispatch<Action>;
-  private _service: API.CMS.Service;
+  private _service: StencilClient.Service;
   
-  constructor(session: React.Dispatch<Action>, service: API.CMS.Service) {
+  constructor(session: React.Dispatch<Action>, service: StencilClient.Service) {
     this._sessionDispatch = session;
     this._service = service;
   }
@@ -41,13 +44,16 @@ class ReducerDispatch implements Ide.Actions {
         }
       });
   }
+  handleLocaleFilter(locale?: StencilClient.LocaleId) {
+    this._sessionDispatch(ActionBuilder.setFilterLocale(locale));
+  }
   async handleLoadSite(): Promise<void> {
     return this._service.getSite().then(site => this._sessionDispatch(ActionBuilder.setSite({site})));
   }
-  handlePageUpdate(page: API.CMS.PageId, value: API.CMS.LocalisedContent): void {
+  handlePageUpdate(page: StencilClient.PageId, value: StencilClient.LocalisedContent): void {
     this._sessionDispatch(ActionBuilder.setPageUpdate({page, value}));
   }
-  handlePageUpdateRemove(pages: API.CMS.PageId[]): void {
+  handlePageUpdateRemove(pages: StencilClient.PageId[]): void {
     this._sessionDispatch(ActionBuilder.setPageUpdateRemove({pages}));
   }
 }
@@ -61,6 +67,9 @@ const Reducer = (state: Ide.Session, action: Action): Ide.Session => {
       }
       console.error("Action data error", action);
       return state;
+    }
+    case ActionType.setFilterLocale: {
+      return state.withLocaleFilter(action.setFilterLocale);
     }
     case ActionType.setPageUpdate: {
       if (action.setPageUpdate) {

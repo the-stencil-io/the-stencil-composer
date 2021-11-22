@@ -1,3 +1,5 @@
-import Ide from './ide';
+import Composer from './ide';
+import StencilClient from '../client';
+import { Layout } from '../';
 
-export default Ide;
+export {Composer, StencilClient, Layout};
