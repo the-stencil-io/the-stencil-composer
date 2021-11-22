@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { StencilComposer, StencilClient, messages } from './core';
+import { StencilComposer, StencilClient, messages, siteTheme } from './core';
 import { ThemeProvider, StyledEngineProvider } from '@mui/material/styles';
 import { IntlProvider } from 'react-intl'
-import { siteTheme } from './themes/siteTheme'
 
 var locale = (navigator.languages && navigator.languages[0]) || navigator.language || (navigator as any).userLanguage || 'en-US';
 
