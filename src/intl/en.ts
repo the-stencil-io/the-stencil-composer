@@ -17,7 +17,7 @@ const en = {
   'activities.title': 'Activities',
   'activities.desc': 'Create, view, and navigate site resources',
   'activities.article.title': 'Article',
-  'activities.article.desc': 'An Article is like a category: It groups Pages, Links, Workflows',
+  'activities.article.desc': 'An Article is like a category: It groups Pages, Links, and Services together under one roof.',
   'activities.locale.title': 'Locale',
   'activities.locale.desc': 'Locales are your languages: Add, activate, and deactivate sitewide locales here. You can add a Page in a specific language if you have defined a locale for that page.',
   'activities.page.title': 'Page',
