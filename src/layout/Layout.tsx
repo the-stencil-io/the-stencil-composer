@@ -13,7 +13,8 @@ interface ContainerProps {
 };
 
 const drawerWidth = { expanded: 500, collapsed: 56 };
-const contentStyle = { flexGrow: 1, overflow: "auto" };
+const contentStyle = { flexGrow: 1, overflow: "auto"};
+const contentStyleCollapsed = { flexGrow: 1, overflow: "auto", marginLeft: '60px' }
 
 
 const Container: React.FC<ContainerProps> = (components) => {
@@ -24,43 +25,42 @@ const Container: React.FC<ContainerProps> = (components) => {
   const secondaryWindow = React.useMemo(() => secondary, [secondary]);
   const toolbarWindow = React.useMemo(() => toolbar, [toolbar]);
 
-    return (<Box sx={{ display: 'flex', height: "100vh" }}>
-      <CssBaseline />
-      <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
-        <Toolbar>
-          <Typography noWrap component="h1" variant="h6" color="inherit" sx={{ flexGrow: 1 }}>
-            <Tabs />
-          </Typography>
-        </Toolbar>
-      </StyledAppBar>
+  return (<Box sx={{ display: 'flex', height: "100vh" }}>
+    <CssBaseline />
+    <StyledAppBar position="fixed" open={drawerOpen} drawerWidth={drawerWidth}>
+      <Toolbar>
+        <Typography noWrap component="h1" variant="h6" color="inherit" sx={{ flexGrow: 1 }}>
+          <Tabs />
+        </Typography>
+      </Toolbar>
+    </StyledAppBar>
 
-      <StyledDrawer variant="permanent" open={drawerOpen} drawerWidth={drawerWidth}>
-        <Box sx={{ display: 'flex', overflowY: "scroll", height: "100vh" }}>
-          <Box sx={{
-            backgroundColor: "primary.main",
-            color: "primary.contrastText",
-            overflow: "hidden",
-            position: "fixed",
-            height: "100%"
-          }}>
-            {toolbarWindow}
-          </Box>
-          {!drawerOpen ? null :
-            (<Box sx={{width: drawerWidth.expanded, marginLeft: `${drawerWidth.collapsed + 1}px`, height: "100%"}}>
-              {secondaryWindow}
-            </Box>)
-          }
+    <StyledDrawer variant="permanent" open={drawerOpen} drawerWidth={drawerWidth}>
+      <Box sx={{ display: 'flex', overflowY: "scroll", height: "100vh" }}>
+        <Box sx={{
+          backgroundColor: "primary.main",
+          color: "primary.contrastText",
+          overflow: "hidden",
+          position: "fixed",
+          height: "100%"
+        }}>
+          {toolbarWindow}
         </Box>
-      </StyledDrawer>
+        {!drawerOpen ? null :
+          (<Box sx={{ width: drawerWidth.expanded, marginLeft: `${drawerWidth.collapsed + 1}px`, height: "100%" }}>
+            {secondaryWindow}
+          </Box>)
+        }
+      </Box>
+    </StyledDrawer>
 
-      <main style={{ width: "100%" }}>
-        <Toolbar />
-        <Box sx={contentStyle}>
-          {mainWindow}
-        </Box>
-      </main>
-    </Box>
-    );
+    <main style={{ width: "100%" }}>
+      <Toolbar />
+
+       <Box sx={drawerOpen ? contentStyle: contentStyleCollapsed}>{mainWindow}</Box>
+    </main>
+  </Box>
+  );
 }
 
 export type { ContainerProps };

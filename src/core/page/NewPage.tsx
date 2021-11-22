@@ -53,7 +53,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
         items={articles.map((article) => ({
           id: article.id,
           sx: article.body.parentId ? { ml: 2, color: "article.dark" } : undefined,
-          value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`
+          value: `${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`
         }))}
       />
       <StencilStyles.Select
