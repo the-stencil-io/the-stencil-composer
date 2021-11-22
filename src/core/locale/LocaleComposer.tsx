@@ -24,7 +24,7 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       title="locale.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !locale || locales.includes(locale) || locale.length !== 2 }}>
 
-      <StencilStyles.TextField label='locale.composer.helper' helperText='locale.composer.helper' placeholder="en"
+      <StencilStyles.TextField label='locale.composer.placeholder' helperText='locale.composer.helper' placeholder="en"
         required
         value={locale}
         onChange={setLocale}

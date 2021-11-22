@@ -56,7 +56,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
         <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
           <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
           <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
-          <WarningAmberRoundedIcon sx={{ ml: 3 }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.service.help" /></Typography>
+          <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main"}}/><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.service.help" /></Typography>
         </Box>
 
 
