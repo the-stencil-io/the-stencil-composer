@@ -3,6 +3,7 @@ import { ListItemText, Box, MenuItem } from '@mui/material';
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
+const DUMMY_ID = "none-selected"
 
 const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
@@ -13,7 +14,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [parentId, setParentId] = React.useState("");
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateArticle = { name, parentId, order };
+    const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId: undefined, order };
     console.log("entity", entity)
     service.create().article(entity).then(success => {
       console.log(success)
@@ -39,13 +40,10 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           helperText={"article.parent.helper"}
           selected={parentId} 
           onChange={setParentId}
-          empty={{ id: "none-selected", label: 'article.composer.parent.unselected' }}
+          empty={{ id: DUMMY_ID, label: 'article.composer.parent.unselected' }}
           items={articles.map((article) => ({
             id: article.id,
-            value: (
-              <>
-                <ListItemText primary={article.value} />
-              </>)
+            value: (<ListItemText primary={article.value} />)
           }))}
         />
 
