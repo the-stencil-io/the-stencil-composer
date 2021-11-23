@@ -1,5 +1,8 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import EditIcon from '@mui/icons-material/ModeEdit';
 
 import { LinkComposer } from '../../link';
 import { WorkflowComposer } from '../../workflow';
@@ -34,16 +37,19 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       {/** Page options */}
       <StencilStyles.TreeItemOption nodeId={article.id + 'pages.add'}
         color='page'
+        icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('NewPage')}
         labelText={<FormattedMessage id="pages.add" />}>
       </StencilStyles.TreeItemOption>
       <StencilStyles.TreeItemOption nodeId={article.id + 'pages.change'}
         color='page'
+        icon={EditIcon}
         onClick={() => setDialogOpen('PageEdit')}
         labelText={<FormattedMessage id="pages.change" />}>
       </StencilStyles.TreeItemOption>
       <StencilStyles.TreeItemOption nodeId={article.id + 'pages.delete'}
         color='page'
+        icon={DeleteForeverOutlinedIcon}
         onClick={() => setDialogOpen('PageDelete')}
         labelText={<FormattedMessage id="pages.delete" />}>
       </StencilStyles.TreeItemOption>
@@ -51,36 +57,41 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       {/** Article options */}
       <StencilStyles.TreeItemOption nodeId={article.id + 'edit-nested'}
         color='article'
+        icon={EditIcon}
         onClick={() => setDialogOpen('ArticleEdit')}
         labelText={<FormattedMessage id="article.edit.title" />}>
       </StencilStyles.TreeItemOption>
       <StencilStyles.TreeItemOption nodeId={article.id + 'delete-nested'}
         color='article'
+        icon={DeleteForeverOutlinedIcon}
         onClick={() => setDialogOpen('ArticleDelete')}
         labelText={<FormattedMessage id="article.delete.title" />}>
       </StencilStyles.TreeItemOption>
 
-
       <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.links'}
         color='link'
+        icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('LinkComposer')}
         labelText={<FormattedMessage id="link.create" />}>
       </StencilStyles.TreeItemOption>
 
       <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.links'}
         color='link'
+        icon={EditIcon}
         onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
         labelText={<FormattedMessage id="links.change" />}>
       </StencilStyles.TreeItemOption>
 
       <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.workflows'}
         color='workflow'
+        icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('WorkflowComposer')}
         labelText={<FormattedMessage id="services.add" />}>
       </StencilStyles.TreeItemOption>
 
       <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.workflows'}
         color='workflow'
+        icon={EditIcon}
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
         labelText={<FormattedMessage id="services.change" />}>
       </StencilStyles.TreeItemOption>
