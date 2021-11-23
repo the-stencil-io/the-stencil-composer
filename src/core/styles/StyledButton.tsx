@@ -21,9 +21,9 @@ const StyledButtonPrimaryRoot = styled(Button)<ButtonProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),
   fontWeight: 'bold',
   backgroundColor: theme.palette.uiElements.main,
-
   '&:hover': {
     backgroundColor: darken(theme.palette.uiElements.main, 0.2),
+    border: 'none',
   },
 }));
 
@@ -44,7 +44,6 @@ const StyledSecondaryButton: React.FC<{ label?: string, onClick: () => void, sx?
   const title = <FormattedMessage id={props.label} />;
   return (
     <StyledButtonRoot
-      variant='outlined'
       onClick={props.onClick}
       sx={props.sx}>{title}</StyledButtonRoot>
   );
