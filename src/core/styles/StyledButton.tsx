@@ -8,6 +8,7 @@ import { FormattedMessage } from 'react-intl';
 
 const StyledButtonRoot = styled(Button)<ButtonProps>(({ theme }) => ({
   borderRadius: theme.spacing(1),
+  borderWidth: 0,
   fontWeight: 'bold',
   color: theme.palette.uiElements.main,
   '&:hover': {
@@ -43,7 +44,7 @@ const StyledSecondaryButton: React.FC<{ label?: string, onClick: () => void, sx?
   const title = <FormattedMessage id={props.label} />;
   return (
     <StyledButtonRoot
-      variant='contained'
+      variant='outlined'
       onClick={props.onClick}
       sx={props.sx}>{title}</StyledButtonRoot>
   );
