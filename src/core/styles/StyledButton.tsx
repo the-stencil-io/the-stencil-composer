@@ -43,7 +43,7 @@ const StyledSecondaryButton: React.FC<{ label?: string, onClick: () => void, sx?
   const title = <FormattedMessage id={props.label} />;
   return (
     <StyledButtonRoot
-      variant='text'
+      variant='contained'
       onClick={props.onClick}
       sx={props.sx}>{title}</StyledButtonRoot>
   );

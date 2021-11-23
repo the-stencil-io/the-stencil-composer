@@ -43,7 +43,7 @@ const StyledDialog: React.FC<StyledDialogProps> = (props) => {
       <StyledDialogTitle sx={{ mb: 2, backgroundColor: alpha(color, 0.9) }}><FormattedMessage id={props.title} /></StyledDialogTitle>
       <DialogContent sx={{color: "mainContent.dark", fontWeight: '400'}}>{props.children}</DialogContent>
       <DialogActions>
-        <ButtonGroup variant="text" sx={{ color: props.backgroundColor }}>
+        <ButtonGroup variant="contained" sx={{ color: props.backgroundColor }}>
           <StencilStyles.SecondaryButton sx={{ mr: 1 }} onClick={props.onClose} label="button.cancel" />
           <StencilStyles.PrimaryButton onClick={props.submit.onClick} disabled={props.submit.disabled} label={props.submit.title} />
         </ButtonGroup>

@@ -150,7 +150,7 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
       </CardContent>
       <Divider />
       <CardActions>
-        <ButtonGroup variant="text" fullWidth sx={{ justifyContent: 'space-between' }}>
+        <ButtonGroup variant="contained" fullWidth sx={{ justifyContent: 'space-between' }}>
           {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
           {props.data.buttonTertiary && props.data.onView ?
             <StencilStyles.SecondaryButton label="button.releasegraph" onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })}
