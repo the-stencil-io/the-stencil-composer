@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
-import DeleteForeverOutlinedIcon from '@mui/icons-material/DeleteForeverOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditIcon from '@mui/icons-material/ModeEdit';
 
 import { LinkComposer } from '../../link';
@@ -49,7 +49,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       </StencilStyles.TreeItemOption>
       <StencilStyles.TreeItemOption nodeId={article.id + 'pages.delete'}
         color='page'
-        icon={DeleteForeverOutlinedIcon}
+        icon={DeleteOutlineOutlinedIcon}
         onClick={() => setDialogOpen('PageDelete')}
         labelText={<FormattedMessage id="pages.delete" />}>
       </StencilStyles.TreeItemOption>
@@ -63,7 +63,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       </StencilStyles.TreeItemOption>
       <StencilStyles.TreeItemOption nodeId={article.id + 'delete-nested'}
         color='article'
-        icon={DeleteForeverOutlinedIcon}
+        icon={DeleteOutlineOutlinedIcon}
         onClick={() => setDialogOpen('ArticleDelete')}
         labelText={<FormattedMessage id="article.delete.title" />}>
       </StencilStyles.TreeItemOption>

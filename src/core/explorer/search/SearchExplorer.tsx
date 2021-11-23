@@ -16,7 +16,6 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 
 import StencilStyles from '../../styles';
 import { Composer, StencilClient } from '../../context';
-import { LinkEdit } from '../../link/LinkEdit';
 
 
 //color: theme.palette.explorerItem.dark,
