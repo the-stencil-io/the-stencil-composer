@@ -13,6 +13,7 @@ const StyledButtonRoot = styled(Button)<ButtonProps>(({ theme }) => ({
   color: theme.palette.uiElements.main,
   '&:hover': {
     backgroundColor: alpha(theme.palette.uiElements.main, 0.1),
+    border: 'none',
   },
 }));
 
@@ -23,14 +24,13 @@ const StyledButtonPrimaryRoot = styled(Button)<ButtonProps>(({ theme }) => ({
   backgroundColor: theme.palette.uiElements.main,
   '&:hover': {
     backgroundColor: darken(theme.palette.uiElements.main, 0.2),
-    border: 'none',
   },
 }));
 
 
 
-const StyledPrimaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme>, disabled?: boolean  }> = (props) => {
-  const title = <FormattedMessage id={props.label} /> ;
+const StyledPrimaryButton: React.FC<{ label: string, onClick: () => void, sx?: SxProps<Theme>, disabled?: boolean }> = (props) => {
+  const title = <FormattedMessage id={props.label} />;
   return (
     <StyledButtonPrimaryRoot
       variant='contained'

@@ -149,8 +149,9 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
         <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
       <Divider />
-      <CardActions>
-        <ButtonGroup variant="contained" fullWidth sx={{ justifyContent: 'space-between' }}>
+      
+      <CardActions sx={{ alignSelf: "flex-end" }}>
+        <Box display="flex">
           {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
           {props.data.buttonTertiary && props.data.onView ?
             <StencilStyles.SecondaryButton label="button.releasegraph" onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })}
@@ -159,7 +160,7 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
                 alignSelf: 'center',
               }} /> : null}
           <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
-        </ButtonGroup>
+        </Box>
       </CardActions>
     </Card>
   )
