@@ -1,11 +1,10 @@
 import React from 'react';
 import { Tabs, Tab, Box, TabProps, TabsProps, TextField, TextFieldProps, alpha } from '@mui/material';
 import { styled } from "@mui/material/styles";
-
+import { useIntl } from 'react-intl';
 
 import { ArticleExplorer, WorkflowExplorer, LinkExplorer, SearchExplorer } from './explorer';
 import { Composer } from './context';
-import { useIntl } from 'react-intl';
 
 const TextFieldRoot = styled(TextField)<TextFieldProps>(({ theme }) => ({
 
@@ -54,10 +53,11 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ }) => ({
 
 const SecondaryArticles: React.FC<{}> = () => {
   const intl = useIntl();
-  const [searchString, setSearchString] = React.useState("");
   const getLabel = (id: string) => intl.formatMessage({ id });
-  const getPlaceholder = (id: string) => intl.formatMessage({ id});
+  const getPlaceholder = (id: string) => intl.formatMessage({ id });
   const [tab, setTab] = React.useState("toolbar.articles")
+  const [searchString, setSearchString] = React.useState("");
+
   let component = <></>;
 
   if (tab === 'toolbar.services') {

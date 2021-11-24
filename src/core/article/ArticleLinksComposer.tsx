@@ -12,7 +12,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
 
   const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
 
-  const handleSave = (selectedLinks:string[]) => {
+  const handleSave = (selectedLinks: string[]) => {
     const article = site.articles[props.articleId]
     const entity: StencilClient.ArticleMutator = {
       articleId: article.id,
@@ -26,10 +26,13 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
       .then(_success => actions.handleLoadSite());
   }
 
+  const articleName = site.articles[props.articleId].body.name;
+  
   return (
-    <>      
+    <>
       <StencilStyles.TransferList
-        title="articlelinks"
+        title="articlelinks" 
+        titleArgs={{name: articleName}}
         searchTitle="link.search.title"
         selectedTitle="article.links.selectedlinks"
         headers={["link.value", "link.type"]}
@@ -42,7 +45,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
         selected={view.links.map(l => l.link.id)}
         cancel={{
           label: 'button.cancel',
-          onClick: () => layout.actions.handleTabCloseCurrent() 
+          onClick: () => layout.actions.handleTabCloseCurrent()
         }}
         submit={{
           label: "button.apply",

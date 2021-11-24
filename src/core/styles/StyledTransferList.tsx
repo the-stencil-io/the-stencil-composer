@@ -10,6 +10,7 @@ import StencilStyles from '../styles';
 
 interface StyledTransferListProps {
   title: string;
+  titleArgs?: {};
   selectedTitle: string;
   searchTitle: string;
   searchPlaceholder?: string;
@@ -67,7 +68,7 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
       <Box sx={{ paddingBottom: 1, m: 2}}>
         <Box display="flex">
           <Box alignSelf="center">
-            <Typography variant="h3" fontWeight="bold"><FormattedMessage id={title} /></Typography>
+            <Typography variant="h3" fontWeight="bold"><FormattedMessage id={title} values={props.titleArgs} /></Typography>
           </Box>
           <Box flexGrow={1} />
           <Box>

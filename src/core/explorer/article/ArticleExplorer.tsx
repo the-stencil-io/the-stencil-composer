@@ -5,7 +5,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 
 import { Composer, StencilClient } from '../../context';
-import ArticleItem, {ArticleItemOptions} from './ArticleItem';
+import ArticleItem, { ArticleItemOptions } from './ArticleItem';
 import { LinkEdit } from '../../link/LinkEdit';
 import { WorkflowEdit } from '../../workflow/WorkflowEdit';
 
@@ -42,8 +42,8 @@ const ArticleExplorer: React.FC<{}> = () => {
     <Box>
       { editLink ? <LinkEdit linkId={editLink} onClose={() => setEditLink(undefined)} /> : undefined}
       { editWorkflow ? <WorkflowEdit workflowId={editWorkflow} onClose={() => setEditWorkflow(undefined)} /> : undefined}
-      
-      <Typography align="left" 
+
+      <Typography align="left"
         sx={{
           fontVariant: 'all-petite-caps',
           fontWeight: 'bold',

@@ -1,7 +1,7 @@
 const en = {
   
-  'articleservices': 'Article services',
-  'articlelinks': 'Article links',
+  'articleservices': 'Article services: {name}',
+  'articlelinks': 'Article links: {name}',
   'article.composer.orderhelper': 'The lower the number, the higher up this article will appear in your portal UI Topic Menu.  Example: 000 will be the first Topic menu item, while 999 will be the last.',
   'allarticles': 'Select all articles',
   'allarticles.individual': 'De-select all articles',

@@ -4,19 +4,19 @@ import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
-const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => ((o1.body.devMode ? "a-" : "b-") +o1.body.value)
-      .localeCompare(((o2.body.devMode ? "a-" : "b-") +o2.body.value));
+const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => ((o1.body.devMode ? "a-" : "b-") + o1.body.value)
+  .localeCompare(((o2.body.devMode ? "a-" : "b-") + o2.body.value));
 
-const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ({ articleId }) => {
+const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ( props) => {
 
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Composer.useLayout();
 
-  const view = session.getArticleView(articleId);
+  const view = session.getArticleView(props.articleId);
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort(comparator);
 
   const handleSave = (selectedWorkflows: string[]) => {
-    const article = site.articles[articleId]
+    const article = site.articles[props.articleId]
     const entity: StencilClient.ArticleMutator = {
       articleId: article.id,
       name: article.body.name,
@@ -30,11 +30,14 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
       .then(_success => actions.handleLoadSite())
       .then(() => layout.actions.handleTabCloseCurrent())
   }
+  const articleName = site.articles[props.articleId].body.name;
+
 
   return (
     <>
       <StencilStyles.TransferList
         title="articleservices"
+        titleArgs={{name: articleName}}
         searchTitle="services.technicalname"
         selectedTitle="services.selected"
         headers={["services.technicalname", "services.devmode"]}

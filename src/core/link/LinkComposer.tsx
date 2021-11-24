@@ -26,7 +26,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       actions.handleLoadSite();
     })
   }
-
+  
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
