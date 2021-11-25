@@ -21,6 +21,7 @@ interface SelectedValue {
 
 interface LocaleLabelsProps {
   selected: SelectedValue[];
+  disablePaper?: boolean;
   onChange: (selected: SelectedValue[]) => void;
   onChangeStart: () => void;
 }
@@ -89,6 +90,64 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
       onChange={(newValue) => setEdit({ locale: edit.locale, value: newValue })} />
   ) : null;
 
+  const table = (<Table size="small">
+    <TableHead sx={{ backgroundColor: "table.main" }}>
+      <TableRow sx={{ borderBottom: 0 }}>
+        <TableCell colSpan={3} sx={{ borderBottom: 0 }}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: "mainContent.dark" }}><FormattedMessage id={"locales.label.table.title"} /></Typography>
+        </TableCell>
+
+        <TableCell sx={{ borderBottom: 0 }} align="right">
+          <IconButton sx={{ color: 'uiElements.main' }}
+            disabled={(edit ? true : false)}
+            onClick={(event) => setAnchorEl(event.currentTarget)}>
+            <AddCircleOutlineIcon />
+          </IconButton>
+        </TableCell>
+      </TableRow>
+
+      <TableRow>
+        <TableCell sx={{ width: "100px" }} colSpan={2} align="left" color="mainContent.contrastText"><FormattedMessage id="locales.label.table.locale" /></TableCell>
+        <TableCell sx={{}} colSpan={2} align="left"><FormattedMessage id="locales.label.table.value" /></TableCell>
+      </TableRow>
+    </TableHead>
+    <TableBody>
+      {rows.length === 0 ? <TableRow>
+        <TableCell colSpan={4}>
+          <Typography variant="h5" sx={{ marginBottom: 1, marginTop: 1 }}><FormattedMessage id="transferlist.noItemsSelected" /></Typography>
+        </TableCell>
+      </TableRow> : null}
+
+      {rows.map((row, index) => (
+        <TableRow hover key={index} sx={{ height: "85px" }}>
+          <TableCell sx={{ width: "40px" }}>
+            <IconButton onClick={() => handleRemoveLabel(row.locale)} sx={{ color: 'uiElements.main' }}>
+              <DeleteOutlineIcon />
+            </IconButton>
+          </TableCell>
+          <TableCell align="left">{site.locales[row.locale].body.value}</TableCell>
+          <TableCell align="left">{edit?.locale === row.locale ? editField : row.value}
+          </TableCell>
+          <TableCell align="right">
+            <IconButton sx={{ color: 'uiElements.main' }}
+              disabled={(edit && edit.locale !== row.locale) ? true : false}
+              onClick={() => {
+                if (edit) {
+                  handleEditEnd()
+                } else {
+                  setEdit(row);
+                  props.onChangeStart();
+                }
+
+              }}>
+              {edit?.locale === row.locale ? <CheckIcon /> : <EditIcon />}
+            </IconButton>
+          </TableCell>
+        </TableRow>
+      ))}
+    </TableBody>
+  </Table>);
+
   return (
     <>
       <Popover id={selectLocaleToAdd ? 'selectLocaleToAdd' : undefined}
@@ -113,65 +172,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
       </Popover>
 
       <Box sx={{ marginTop: 1 }}>
-        <TableContainer component={Paper}>
-          <Table size="small">
-            <TableHead sx={{ backgroundColor: "table.main" }}>
-              <TableRow sx={{ borderBottom: 0 }}>
-                <TableCell colSpan={3} sx={{ borderBottom: 0 }}>
-                  <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: "mainContent.dark" }}><FormattedMessage id={"locales.label.table.title"} /></Typography>
-                </TableCell>
-
-                <TableCell sx={{ borderBottom: 0 }} align="right">
-                  <IconButton sx={{ color: 'uiElements.main' }}
-                    disabled={(edit ? true : false)}
-                    onClick={(event) => setAnchorEl(event.currentTarget)}>
-                    <AddCircleOutlineIcon />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-
-              <TableRow>
-                <TableCell sx={{ width: "100px" }} colSpan={2} align="left" color="mainContent.contrastText"><FormattedMessage id="locales.label.table.locale" /></TableCell>
-                <TableCell sx={{  }} colSpan={2} align="left"><FormattedMessage id="locales.label.table.value" /></TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.length === 0 ? <TableRow>
-                <TableCell colSpan={4}>
-                  <Typography variant="h5" sx={{ marginBottom: 1, marginTop: 1 }}><FormattedMessage id="transferlist.noItemsSelected" /></Typography>
-                </TableCell>
-              </TableRow> : null}
-
-              {rows.map((row, index) => (
-                <TableRow hover key={index} sx={{ height: "85px" }}>
-                  <TableCell sx={{ width: "40px" }}>
-                    <IconButton onClick={() => handleRemoveLabel(row.locale)} sx={{ color: 'uiElements.main' }}>
-                      <DeleteOutlineIcon />
-                    </IconButton>
-                  </TableCell>
-                  <TableCell align="left">{site.locales[row.locale].body.value}</TableCell>
-                  <TableCell align="left">{edit?.locale === row.locale ? editField : row.value}
-                  </TableCell>
-                  <TableCell align="right">
-                    <IconButton sx={{ color: 'uiElements.main' }}
-                      disabled={(edit && edit.locale !== row.locale) ? true : false}
-                      onClick={() => {
-                        if (edit) {
-                          handleEditEnd()
-                        } else {
-                          setEdit(row);
-                          props.onChangeStart();
-                        }
-
-                      }}>
-                      {edit?.locale === row.locale ? <CheckIcon /> : <EditIcon />}
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+        { props.disablePaper ? table : (<TableContainer component={Paper}>{table}</TableContainer>) }
       </Box>
     </>
   );
