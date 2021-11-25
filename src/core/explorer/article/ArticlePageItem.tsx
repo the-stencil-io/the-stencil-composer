@@ -12,7 +12,7 @@ import { Composer } from '../../context';
 
 
 
-const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saveIcon?: React.ReactChild}> = (props) => {
+const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saved?: boolean}> = (props) => {
 
   const theme = useTheme<Theme>();
   const localeIconColor = theme.palette.page.main;
@@ -41,6 +41,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale, secondary })
     }
   }
+  
 
   return (
     <StencilStyles.TreeItemRoot
@@ -52,9 +53,9 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       label={
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          {
-            props.saveIcon ? props.saveIcon : (<Box component={LeftEditIcon} color={nav?.value === page.body.locale ? localeIconColor : "inherit"} />) 
-          }
+          <Box component={LeftEditIcon} color={props.saved === false ? 
+            "explorerItem.contrastText": 
+            (nav?.value === page.body.locale ? localeIconColor : "inherit")} />
           
           <Typography
             variant="body2"

@@ -94,7 +94,6 @@ const ArticleItem: React.FC<{
   const { article, pages, workflows, links } = view;
   const saved = isArticleSaved(article);
 
-  const saveIcon = saved ? undefined : (<Box component={SaveIcon} sx={saveIconColorSx} />)
 
   const isPageSaved = (pageView: Composer.PageView) => {
     const update = session.pages[pageView.page.id];
@@ -107,7 +106,7 @@ const ArticleItem: React.FC<{
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelButton={saveIcon} labelcolor="explorerItem">
+      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText" }>
 
         {/** Article options */
           options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'}
@@ -120,14 +119,13 @@ const ArticleItem: React.FC<{
         {/** Pages */}
         <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'}
           labelText={<FormattedMessage id="pages" />}
-          labelButton={saveIcon}
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${pages.length}`}
-          labelcolor="page">
+          labelcolor={saved ? "page" : "explorerItem.contrastText"}>
           {pages.map(pageView => (<ArticlePageItem key={pageView.page.id}
+            saved={isPageSaved(pageView)}
             article={view}
-            page={pageView}
-            saveIcon={isPageSaved(pageView) ? undefined : saveIcon} />))}
+            page={pageView} />))}
         </StencilStyles.TreeItem>
 
 
