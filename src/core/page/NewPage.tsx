@@ -38,10 +38,14 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
         - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
     });
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
-
-  return (<StencilStyles.Dialog open={true} onClose={props.onClose}
+  const articleName = site.articles[articleId].body.name;
+  
+  
+  return (
+    <StencilStyles.Dialog open={true} onClose={props.onClose}
     backgroundColor="uiElements.main"
     title="newpage.title"
+    //titleArgs={{articleId ? name: articleName : undefined}}
     submit={{ title: "button.create", onClick: handleCreate, disabled: !locale }}>
     <>
       <FormattedMessage id='newpage.info' />

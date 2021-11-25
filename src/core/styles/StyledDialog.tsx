@@ -1,6 +1,6 @@
 import React from 'react';
 import { styled } from "@mui/material/styles";
-import { Button, Dialog, DialogTitle, DialogContent, DialogActions, ButtonGroup, Box, alpha, lighten, useTheme } from '@mui/material';
+import { Button, Dialog, DialogTitle, DialogContent, DialogActions, Box, alpha, useTheme } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import StencilStyles from '../styles';
 
@@ -21,6 +21,7 @@ const StyledDialogTitle = styled(DialogTitle)(({ theme }) => ({
 
 interface StyledDialogProps {
   title: string;
+  titleArgs?: {};
   onClose: () => void;
   submit: {
     title: string;
@@ -40,7 +41,8 @@ const StyledDialog: React.FC<StyledDialogProps> = (props) => {
 
   return (
     <Dialog open={props.open} onClose={props.onClose} fullWidth maxWidth="md" >
-      <StyledDialogTitle sx={{ mb: 2, backgroundColor: alpha(color, 0.9) }}><FormattedMessage id={props.title} /></StyledDialogTitle>
+      <StyledDialogTitle sx={{ mb: 2, backgroundColor: alpha(color, 0.9) }}>
+        <FormattedMessage id={props.title} values={props.titleArgs} /></StyledDialogTitle>
       <DialogContent sx={{ color: "mainContent.dark", fontWeight: '400' }}>{props.children}</DialogContent>
       <DialogActions>
         <Box display="inline-flex">

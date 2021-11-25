@@ -231,7 +231,7 @@ const en = {
 
   'locales.label.table.locale': 'Language code',
 
-  'newpage.title': 'Create a new page',
+  'newpage.title': 'Create a new page: {name}',
   'newpage.info': 'A page consists of localised content and must be associated with an Article.',
   'newpage.article.info': 'Confirm creation of page for: {article} with locale: {locale}',
 

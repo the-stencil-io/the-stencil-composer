@@ -15,7 +15,7 @@ interface NewArticlePageProps {
 }
 
 const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose, onCreate }) => {
-  const { service, actions } = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
   if (!open) {
     return null;
   }
@@ -30,10 +30,13 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
       })
   }
 
+  const articleName = site.articles[article.id].body.name;
+
   return (
     <StyledDialog open={open ? true : false} onClose={onClose}
       backgroundColor="uiElements.main"
       title="newpage.title"
+      titleArgs={{name: articleName}}
       submit={{ title: "button.create", onClick: handleCreate, disabled: false }}>
 
       <Typography>
