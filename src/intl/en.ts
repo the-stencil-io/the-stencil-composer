@@ -56,7 +56,7 @@ const en = {
   'services.change': 'Change existing services',
   'services.edit': 'Edit service',
 
-  'services.technicalname': 'Technical name',
+  'services.technicalname': 'Workflow name',
   'services.technicalname.description': 'Flow name as defined in the Wrench',
   'services.selected': 'Selected services',
   'services.siteservices': 'Site services',

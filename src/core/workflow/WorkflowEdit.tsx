@@ -48,7 +48,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
-        <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname'
+        <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname.description'
           value={technicalname}
           onChange={setTechnicalname} />
 
