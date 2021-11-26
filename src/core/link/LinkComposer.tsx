@@ -26,7 +26,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       actions.handleLoadSite();
     })
   }
-  
+
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
@@ -40,11 +40,14 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
-        <StencilStyles.Select label='link.type' selected={type} onChange={setType}
+        <StencilStyles.Select label='link.type'
+          selected={type}
+          onChange={setType}
+          
           items={[
-            { id: 'internal', value: 'link.type.internal' },
-            { id: 'external', value: 'link.type.external' },
-            { id: 'phone', value: 'link.type.phone' }
+            { id: 'internal', value: <FormattedMessage id='link.type.internal' /> },
+            { id: 'external', value: <FormattedMessage id='link.type.external'/> },
+            { id: 'phone', value: <FormattedMessage id={'link.type.phone'} /> }
           ]} />
 
         <StencilStyles.TextField label='value' helperText='link.composer.valuehelper'
@@ -55,7 +58,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
           <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
           <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
-          <WarningAmberRoundedIcon  sx={{ ml: 3, color: "warning.main"}} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
+          <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main" }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
         </Box>
 
         <StencilStyles.SelectMultiple label='composer.select.article'

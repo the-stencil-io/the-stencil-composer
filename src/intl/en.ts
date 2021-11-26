@@ -68,8 +68,8 @@ const en = {
 
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
-  'link.type.internal': 'Internal link: My pages within my domain',
-  'link.type.external': 'External link: Other websites',
+  'link.type.internal': 'Internal link: Connect to my pages within my domain',
+  'link.type.external': 'External link: Connect to other websites',
   'link.type.phone': 'Phone number',
 
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',

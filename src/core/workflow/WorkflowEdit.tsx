@@ -52,6 +52,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
           <Box display="flex">
             <Box flexGrow={1}>
               <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname.description'
+                required
                 value={technicalname}
                 onChange={setTechnicalname} />
             </Box>
