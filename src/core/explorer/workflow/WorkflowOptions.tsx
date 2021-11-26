@@ -2,7 +2,7 @@ import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
 import { WorkflowEdit } from '../../workflow';
-import { Composer, StencilClient } from '../../context';
+import { StencilClient } from '../../context';
 import StencilStyles from '../../styles';
 
 

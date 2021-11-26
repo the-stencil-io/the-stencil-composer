@@ -38,7 +38,6 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
         - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
     });
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
-  const articleName = site.articles[articleId].body.name;
   
   
   return (

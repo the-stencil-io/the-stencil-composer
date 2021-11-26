@@ -12,7 +12,7 @@ const ReleaseGraphRef: React.FC<{ site: StencilClient.Site }> = ({ site }) => {
 
   React.useLayoutEffect(() => {
     new ReleaseGraphVisitor({ site, ref }).visit();
-  }, [ref])
+  }, [ref, site])
 
   return (<Box display="flex" width="900px" height="900px" ref={ref} />);
 }

@@ -9,7 +9,7 @@ import { LocaleLabels } from '../locale';
 
 
 const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { service, actions, session, site } = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
 
   const [type, setType] = React.useState<'internal' | 'external' | 'phone' | string>('internal');
   const [value, setValue] = React.useState('');

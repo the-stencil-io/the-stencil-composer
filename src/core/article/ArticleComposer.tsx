@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemText, Box, MenuItem } from '@mui/material';
+import { ListItemText } from '@mui/material';
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
@@ -7,7 +7,7 @@ const DUMMY_ID = "none-selected"
 
 const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
-  const { service, actions, session, site } = Composer.useComposer();
+  const { service, actions, session } = Composer.useComposer();
 
   const [name, setName] = React.useState("");
   const [order, setOrder] = React.useState(0);

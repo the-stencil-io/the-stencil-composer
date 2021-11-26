@@ -15,7 +15,7 @@ import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import ConstructionIcon from '@mui/icons-material/Construction';
 
 import StencilStyles from '../../styles';
-import { Composer, StencilClient } from '../../context';
+import { Composer } from '../../context';
 
 
 //color: theme.palette.explorerItem.dark,

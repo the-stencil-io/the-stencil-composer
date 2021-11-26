@@ -160,7 +160,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
         }}
       >
         <List>
-          {selection.map(item => (<ListItem disablePadding>
+          {selection.map((item, index) => (<ListItem disablePadding key={index}>
             <ListItemButton disabled={item.added} onClick={() => handleAddLabel(item.id)}>
               <ListItemIcon sx={{ color: 'uiElements.main' }}>
                 <AddCircleOutlineIcon />

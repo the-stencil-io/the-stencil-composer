@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
+import { Tabs, Tab, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';

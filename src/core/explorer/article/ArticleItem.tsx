@@ -1,14 +1,10 @@
 import * as React from "react";
-import { Box, Typography, Theme } from "@mui/material";
-import { SxProps } from '@mui/system';
+import { Box, Typography } from "@mui/material";
 
 import FolderOutlinedIcon from '@mui/icons-material/FolderOutlined';
-
-
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import LinkIcon from '@mui/icons-material/Link';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
-import SaveIcon from '@mui/icons-material/Save';
 import EditIcon from '@mui/icons-material/ModeEdit';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { FormattedMessage } from 'react-intl';
@@ -72,11 +68,6 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
   );
 }
 
-const saveIconColorSx: SxProps<Theme> = {
-  mr: 1, p: .3, borderRadius: 3,
-  backgroundColor: "explorerItem.contrastText",
-  color: "text.primary",
-}
 
 interface ArticleItemOptions {
   setEditWorkflow: (workflowId: StencilClient.WorkflowId) => void,

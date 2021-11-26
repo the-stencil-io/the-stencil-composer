@@ -2,7 +2,7 @@ import React from 'react'
 
 import * as d3 from 'd3';
 
-import { Composer, StencilClient } from '../context';
+import { StencilClient } from '../context';
 
 const width = 600;
 const radius = width / 2;
