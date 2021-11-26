@@ -18,6 +18,7 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     });
   }
   const locales: StencilClient.Locale[] = Object.values(site.locales).map(l => l.body.value);
+  
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"

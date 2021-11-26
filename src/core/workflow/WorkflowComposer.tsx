@@ -37,7 +37,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="services.add"
-      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress }}>
+      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress || labels.length < 1 }}>
       <>
         <LocaleLabels
           onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
@@ -74,7 +74,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             items={articles.map((article) => ({
               id: article.id,
               value: (<>
-                <Checkbox checked={articleId.indexOf(article.id) > -1} />
+                <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
                 <ListItemText primary={article.body.name} />
               </>)
             }))}
