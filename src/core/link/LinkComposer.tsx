@@ -32,7 +32,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="link.composer.title"
-      submit={{ title: "button.create", onClick: handleCreate, disabled: !value || changeInProgress }}>
+      submit={{ title: "button.create", onClick: handleCreate, disabled: !value || changeInProgress || labels.length < 1 }}>
 
       <>
         <LocaleLabels

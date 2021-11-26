@@ -41,7 +41,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   return (<StencilStyles.Dialog open={true} onClose={onClose}
     backgroundColor="uiElements.main"
     title="link.edit.title"
-    submit={{ title: "button.update", onClick: handleUpdate, disabled: !value || changeInProgress }}>
+    submit={{ title: "button.update", onClick: handleUpdate, disabled: !value || changeInProgress || labels.length < 1 }}>
     <>
       <LocaleLabels
         onChange={(labels) => { setChangeInProgress(false); setLabels(labels.map(l => ({ locale: l.locale, labelValue: l.value }))); }}
