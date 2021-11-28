@@ -578,6 +578,7 @@ class ImmutableArticleSearchEntry implements Composer.SearchDataEntry {
   }) {
     this._id = props.id;
     this._values = props.values;
+    this._values.sort((e1, e2) => e1.type.localeCompare(e2.type));
   }
   get id() { return this._id }
   get values() { return this._values }
