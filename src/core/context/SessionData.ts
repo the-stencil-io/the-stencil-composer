@@ -1,7 +1,79 @@
 import Composer from './ide';
 import StencilClient from '../client';
 
+class ImmutableSearchData implements Composer.SearchData {
+  private _articles: ImmutableArticleSearchEntry[];
+  private _links: ImmutableLinkSearchEntry[];
+  private _workflows: ImmutableWorkflowSearchEntry[];
+
+  constructor(
+    articles: ImmutableArticleSearchEntry[],
+    links: ImmutableLinkSearchEntry[],
+    workflows: ImmutableWorkflowSearchEntry[]) {
+
+    this._articles = articles;
+    this._links = links;
+    this._workflows = workflows;
+  }
+  
+  get values(): Composer.SearchDataEntry[] {
+    return [...this._articles, ...this._links, ...this._workflows];
+  }
+  
+  filterArticles(keyword: string): Composer.SearchResult[] {
+    const results: Composer.SearchResult[] = [];
+    const keywordLowerCase = keyword.toLowerCase();
+    for(const article of this._articles) {
+      const match = this.findMatch(article, keywordLowerCase);
+      if(match) {
+        results.push(match); 
+      }
+    }
+    return results;
+  }
+  filterWorkflows(keyword: string): Composer.SearchResult[] {
+    const results: Composer.SearchResult[] = [];
+    const keywordLowerCase = keyword.toLowerCase();
+    for(const workflow of this._workflows) {
+      const match = this.findMatch(workflow, keywordLowerCase);
+      if(match) {
+        results.push(match); 
+      }
+    }
+    return results;
+  }
+  filterLinks(keyword: string): Composer.SearchResult[] {
+    const results: Composer.SearchResult[] = [];
+    const keywordLowerCase = keyword.toLowerCase();
+    for(const link of this._links) {
+      const match = this.findMatch(link, keywordLowerCase);
+      if(match) {
+        results.push(match); 
+      }
+    }
+    return results;
+  }
+  
+  findMatch(source: Composer.SearchDataEntry, keyword: string): Composer.SearchResult | undefined {
+              
+    let matches: Composer.SearchableValue[] = []
+    for(const searchableValue of source.values) {
+      if(searchableValue.value.toLowerCase().indexOf(keyword) > -1) {
+        matches.push(searchableValue);
+      }
+    }
+    
+    return matches.length > 0 ? { source, matches} : undefined;
+    
+  }
+}
+
 class SiteCache {
+  private _articleSearchData: Record<StencilClient.ArticleId, ImmutableArticleSearchEntry> = {};
+  private _linkSearchData: Record<StencilClient.ArticleId, ImmutableLinkSearchEntry> = {};
+  private _workflowSearchData: Record<StencilClient.ArticleId, ImmutableWorkflowSearchEntry> = {};
+  private _searchData: Composer.SearchData;
+
   private _site: StencilClient.Site;
   private _articles: Record<StencilClient.ArticleId, Composer.ArticleView> = {};
   private _workflows: Record<StencilClient.WorkflowId, Composer.WorkflowView> = {};
@@ -19,9 +91,18 @@ class SiteCache {
     Object.values(site.articles).sort((l0, l1) => (
       (l0.body.order + (l0.body.parentId !== undefined ? 10000 : 0)) -
       (l1.body.order + (l1.body.parentId !== undefined ? 10000 : 0))
-    )).forEach(article => this.visitArticle(article))
+    )).forEach(article => this.visitArticle(article));
+
+    this._searchData = new ImmutableSearchData(
+      Object.values(this._articleSearchData),
+      Object.values(this._linkSearchData),
+      Object.values(this._workflowSearchData)
+    );
   }
 
+  getSearchData() {
+    return this._searchData;
+  }
   getArticles() {
     return this._articles;
   }
@@ -41,6 +122,13 @@ class SiteCache {
       this._pagesByArticle[articleId] = articlePages;
     }
     articlePages.push(view);
+
+    // article search data
+    let searchData = this._articleSearchData[articleId];
+    if (!searchData) {
+      searchData = new ImmutableArticleSearchEntry({ id: articleId, values: [] })
+    }
+    this._articleSearchData[articleId] = searchData.withPage(view);
   }
 
   private visitLink(link: StencilClient.Link) {
@@ -50,15 +138,22 @@ class SiteCache {
       labels: link.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
     });
 
+    this._links[view.link.id] = view;
     for (const articleId of link.body.articles) {
       let articleLinks = this._linksByArticle[articleId];
       if (!articleLinks) {
         articleLinks = [];
         this._linksByArticle[articleId] = articleLinks;
       }
-      this._links[view.link.id] = view;
       articleLinks.push(view);
     }
+
+    // link search data
+    let searchData = this._linkSearchData[link.id];
+    if (!searchData) {
+      searchData = new ImmutableLinkSearchEntry({ id: link.id, values: [] })
+    }
+    this._linkSearchData[link.id] = searchData.withLink(view);
   }
   private visitWorkflow(workflow: StencilClient.Workflow) {
     const site = this._site;
@@ -67,15 +162,22 @@ class SiteCache {
       labels: workflow.body.labels.map(l => (new ImmutableLabelView({ label: l, locale: site.locales[l.locale] })))
     });
 
+    this._workflows[view.workflow.id] = view;
     for (const articleId of workflow.body.articles) {
       let articleWorkflows = this._workflowsByArticle[articleId];
       if (!articleWorkflows) {
         articleWorkflows = [];
         this._workflowsByArticle[articleId] = articleWorkflows;
       }
-      this._workflows[view.workflow.id] = view;
       articleWorkflows.push(view);
     }
+
+    // link search data
+    let searchData = this._workflowSearchData[workflow.id];
+    if (!searchData) {
+      searchData = new ImmutableWorkflowSearchEntry({ id: workflow.id, values: [] })
+    }
+    this._workflowSearchData[workflow.id] = searchData.withWorkflow(view);
   }
   private visitArticle(article: StencilClient.Article) {
     const articleId = article.id;
@@ -110,6 +212,13 @@ class SiteCache {
     }
 
     this._articles[articleId] = view;
+
+    // search data
+    let searchData = this._articleSearchData[articleId];
+    if (!searchData) {
+      searchData = new ImmutableArticleSearchEntry({ id: articleId, values: [] })
+    }
+    this._articleSearchData[articleId] = searchData.withArticle(view);
   }
 
   private empty<T>(arrayType: T) {
@@ -151,6 +260,9 @@ class SessionData implements Composer.Session {
     this._site = props.site ? props.site : { name: "", contentType: "OK", releases: {}, articles: {}, links: {}, locales: {}, pages: {}, workflows: {} };
     this._pages = props.pages ? props.pages : {};
     this._cache = props.cache ? props.cache : new SiteCache(this._site);
+  }
+  get search() {
+    return this._cache.getSearchData();
   }
   get filter() {
     return this._filter;
@@ -224,7 +336,7 @@ class SessionData implements Composer.Session {
   getLinkView(linkId: StencilClient.LinkId): Composer.LinkView {
     return this._cache.getLinks()[linkId];
   }
-  
+
   getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[] {
     const pages = Object.values(this._site.pages)
     return locale ? Object.values(this._site.articles).filter(article => {
@@ -394,7 +506,7 @@ class ImmutablePageView implements Composer.PageView {
     if (lineBreak2 > 0) {
       return page.body.content.substring(0, Math.min(lineBreak2, 30)).substring(2);
     }
-    
+
     return page.body.content.substring(2);
 
   }
@@ -451,6 +563,92 @@ class ImmutableLabelView implements Composer.LabelView {
 
   get locale(): StencilClient.SiteLocale { return this._locale };
   get label(): StencilClient.LocaleLabel { return this._label };
+}
+
+
+
+class ImmutableArticleSearchEntry implements Composer.SearchDataEntry {
+  private _id: string;
+  private _values: Composer.SearchableValue[];
+
+
+  constructor(props: {
+    id: StencilClient.ArticleId;
+    values: Composer.SearchableValue[];
+  }) {
+    this._id = props.id;
+    this._values = props.values;
+  }
+  get id() { return this._id }
+  get values() { return this._values }
+  get type(): "ARTICLE" { return "ARTICLE" };
+
+  withPage(view: Composer.PageView): ImmutableArticleSearchEntry {
+    const values: Composer.SearchableValue[] = [...this.values];
+    values.push({ type: "ARTICLE_PAGE", value: view.page.body.content, id: view.page.id });
+    return new ImmutableArticleSearchEntry({ id: this._id, values });
+  }
+
+  withArticle(view: Composer.ArticleView): ImmutableArticleSearchEntry {
+    const values: Composer.SearchableValue[] = [...this.values];
+    values.push({ type: "ARTICLE_NAME", value: view.article.body.name, id: view.article.id });
+    return new ImmutableArticleSearchEntry({ id: this._id, values });
+  }
+}
+
+class ImmutableLinkSearchEntry implements Composer.SearchDataEntry {
+  private _id: string;
+  private _values: Composer.SearchableValue[];
+
+
+  constructor(props: {
+    id: StencilClient.LinkId;
+    values: Composer.SearchableValue[];
+  }) {
+    this._id = props.id;
+    this._values = props.values;
+  }
+  get id() { return this._id }
+  get values() { return this._values }
+  get type(): "LINK" { return "LINK" };
+
+  withLink(view: Composer.LinkView): ImmutableLinkSearchEntry {
+    const values: Composer.SearchableValue[] = [...this.values];
+    values.push({ type: "LINK_VALUE", value: view.link.body.value, id: view.link.id });
+
+    for (const label of view.labels) {
+      values.push({ type: "LINK_LABEL", value: label.label.labelValue, id: label.locale.id });
+    }
+    return new ImmutableLinkSearchEntry({ id: this._id, values });
+  }
+}
+
+
+
+class ImmutableWorkflowSearchEntry implements Composer.SearchDataEntry {
+  private _id: string;
+  private _values: Composer.SearchableValue[];
+
+  constructor(props: {
+    id: StencilClient.WorkflowId;
+    values: Composer.SearchableValue[];
+  }) {
+    this._id = props.id;
+    this._values = props.values;
+  }
+  get id() { return this._id }
+  get values() { return this._values }
+  get type(): "WORKFLOW" { return "WORKFLOW" };
+
+  withWorkflow(view: Composer.WorkflowView): ImmutableWorkflowSearchEntry {
+    const values: Composer.SearchableValue[] = [...this.values];
+    values.push({ type: "WORKFLOW_NAME", value: view.workflow.body.value, id: view.workflow.id });
+
+    for (const label of view.labels) {
+      values.push({ type: "WORKFLOW_LABEL", value: label.label.labelValue, id: label.locale.id });
+    }
+    return new ImmutableWorkflowSearchEntry({ id: this._id, values });
+  }
 }
 
 

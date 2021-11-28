@@ -1,47 +1,52 @@
 import React from 'react';
+import { Box, TextField, TextFieldProps } from '@mui/material';
+import { styled } from "@mui/material/styles";
+import { useIntl } from 'react-intl';
 
 
-/*
-Services / Links
+// needs to know which tab is currently open and show search results accordingly
+// need individual searchSecondary components, like linkResults, workflowResults, etc?
+// workflows in dev mode should always appear at the top of the workflowResults
 
-Searchable by
-* Label value
-* Technical name (Service)
-* Value (Links)
+const TextFieldRoot = styled(TextField)<TextFieldProps>(({ theme }) => ({
 
-Results:
-* List is filtered
-* SearchString in match is highlighted
+  color: theme.palette.explorerItem.main,
+  backgroundColor: theme.palette.explorer.main,
+  '& .MuiOutlinedInput-input': {
+    color: theme.palette.explorerItem.main,
+  },
+  '& .MuiOutlinedInput-root': {
+    fontSize: '10pt',
+    height: '2rem',
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.explorerItem.dark,
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: theme.palette.explorerItem.main,
+  },
+  '& .MuiFormHelperText-root': {
+    color: theme.palette.explorerItem.main,
+    marginLeft: 1
+  }
+}));
 
-
-
-Articles
-
-Searchable by
-* Page 1, 2, 3 Headings
-* Link label value, value
-* Service label value, technical name
-* Search goes through all locales
-
-Results:
-* Search result Article is expanded with a background colour
-* Exact search result seachString is highlighted within the Article item
-* What about if user is in a different locale filter for explorer? Does it matter?
-
-
-Questions:
-* How to deal with Link, Article, and Workflow explorer? How can SecondarySearch differentiate between which explorer is open?
-* Need a submit button to avoid expanding / contracting explorer?
-* What if you're in Workflows view with FI language filter and you search for a SV workflow name?'
-
-*/
 
 interface SearchSecondaryProps {
-  
+
 }
 
 const SearchSecondary: React.FC<SearchSecondaryProps> = () => {
-  return null;
+  const intl = useIntl();
+  const getPlaceholder = (id: string) => intl.formatMessage({ id });
+  const [searchString, setSearchString] = React.useState("");
+  const searchKeyword = searchString.toLowerCase();
+
+  return (
+    <Box alignSelf="center" sx={{ m: 1 }}>
+      <TextFieldRoot placeholder={getPlaceholder("explorer.tabs.search")} value={searchString} onChange={({ target }) => setSearchString(target.value)} focused />
+    </Box>
+  );
 }
 
 export { SearchSecondary }

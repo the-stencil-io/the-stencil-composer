@@ -40,7 +40,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="services.edit"
-      submit={{ title: "button.add", onClick: handleCreate, disabled: !technicalname || changeInProgress || labels.length < 1 }}>
+      submit={{ title: "button.apply", onClick: handleCreate, disabled: !technicalname || changeInProgress || labels.length < 1 }}>
 
       <>
         <LocaleLabels

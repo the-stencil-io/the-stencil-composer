@@ -7,6 +7,33 @@ import { SessionData, ImmutableTabData } from './SessionData';
 
 declare namespace Composer {
 
+  interface SearchData {
+    values: readonly SearchDataEntry[];
+    filterLinks(keyword: string): readonly SearchResult[];
+    filterWorkflows(keyword: string): readonly SearchResult[];
+    filterArticles(keyword: string): readonly SearchResult[];
+  }
+  
+  interface SearchDataEntry {
+    id: string;
+    type: "ARTICLE" | "LINK" | "WORKFLOW";
+    values: readonly SearchableValue[];  
+  }
+  interface SearchResult {
+    source: SearchDataEntry;
+    matches: SearchableValue[];
+  }
+  
+  interface SearchableValue {
+    id: string;
+    value: string;
+    type: "ARTICLE_NAME"  | "ARTICLE_PAGE" |
+          "WORKFLOW_NAME" | "WORKFLOW_LABEL" | 
+          "LINK_VALUE"    | "LINK_LABEL" 
+  }
+
+
+
   type NavType = "ARTICLE_LINKS" | "ARTICLE_WORKFLOWS" | "ARTICLE_PAGES";
 
   interface Nav {
@@ -30,7 +57,7 @@ declare namespace Composer {
     value: StencilClient.LocalisedContent;
     withValue(value: StencilClient.LocalisedContent): PageUpdate;
   }
-  
+
   interface SessionFilter {
     locale?: StencilClient.LocaleId;
     withLocale(locale?: StencilClient.LocaleId): SessionFilter;
@@ -42,16 +69,17 @@ declare namespace Composer {
     articles: ArticleView[];
     workflows: WorkflowView[];
     links: LinkView[];
+    search: SearchData;
     filter: SessionFilter;
-    
-    getArticleName(articleId: StencilClient.ArticleId): {missing: boolean, name: string};
+
+    getArticleName(articleId: StencilClient.ArticleId): { missing: boolean, name: string };
     getArticleView(articleId: StencilClient.ArticleId): ArticleView;
 
     getLinkView(linkId: StencilClient.LinkId): LinkView;
-    getLinkName(linkId: StencilClient.LinkId): {missing: boolean, name: string};
-    
+    getLinkName(linkId: StencilClient.LinkId): { missing: boolean, name: string };
+
     getWorkflowView(workflowId: StencilClient.WorkflowId): WorkflowView;
-    getWorkflowName(workflowId: StencilClient.WorkflowId): {missing: boolean, name: string};
+    getWorkflowName(workflowId: StencilClient.WorkflowId): { missing: boolean, name: string };
 
     getArticlesForLocale(locale: StencilClient.LocaleId): StencilClient.Article[];
     getArticlesForLocales(locales: StencilClient.LocaleId[]): StencilClient.Article[];
@@ -182,9 +210,9 @@ namespace Composer {
         layout.actions.handleTabData(props.article.id, (oldData: Composer.TabData) => oldData.withNav(nav));
       } else {
         // open or add the tab
-        layout.actions.handleTabAdd(tab);  
+        layout.actions.handleTabAdd(tab);
       }
-      
+
     }
 
     const findTab = (article: StencilClient.Article): Composer.Tab | undefined => {
@@ -223,12 +251,12 @@ const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Comp
   const { isArticleSaved } = Composer.useComposer();
   const saved = isArticleSaved(article);
   console.log("INDICATOR", saved);
-  return <span style={{ 
-    paddingLeft: "5px", 
+  return <span style={{
+    paddingLeft: "5px",
     fontSize: '30px',
-    color: theme.palette.explorerItem.contrastText, 
-    display: saved ? "none" : undefined 
-    }}>*</span>
+    color: theme.palette.explorerItem.contrastText,
+    display: saved ? "none" : undefined
+  }}>*</span>
 }
 
 

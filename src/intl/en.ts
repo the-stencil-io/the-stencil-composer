@@ -68,8 +68,8 @@ const en = {
 
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
-  'link.type.internal': 'Internal link: Connect to my pages within my domain',
-  'link.type.external': 'External link: Connect to other websites',
+  'link.type.internal': 'Internal',
+  'link.type.external': 'External',
   'link.type.phone': 'Phone number',
 
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
@@ -188,7 +188,7 @@ const en = {
   'button.disable': 'Continue and disable',
   'button.enable': 'Continue and enable',
   'button.remove': 'Continue and remove',
-  'button.apply': 'Apply changes and exit',
+  'button.apply': 'Apply changes',
 
 
   'link.article.add.title': 'Add link to an Article',

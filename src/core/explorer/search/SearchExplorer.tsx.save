@@ -1,3 +1,4 @@
+exit
 import React from 'react';
 import { Box, Typography, TextField, TextFieldProps, InputAdornment } from '@mui/material';
 import { styled } from "@mui/material/styles";
@@ -51,7 +52,7 @@ const findMainId = (values: string[]) => {
 }
 
 
-const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.SearchResult }> = ({ view }) => {
+const LinkItem: React.FC<{ view: Composer.LinkView }> = ({ view }) => {
   return (
     <>
       <StencilStyles.TreeItem
@@ -63,7 +64,7 @@ const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.Searc
     </>)
 }
 
-const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Composer.SearchResult }> = ({ view }) => {
+const WorkflowItem: React.FC<{ view: Composer.WorkflowView }> = ({ view }) => {
   return (
     <>
       <StencilStyles.TreeItem
@@ -75,39 +76,29 @@ const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Compos
     </>)
 }
 
-const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer.SearchResult }> = ({ view, searchResult }) => {
-  const items: React.ReactElement[] = [];
-
-  let index = 1;
-  for (const match of searchResult.matches) {
-    if (match.type === 'ARTICLE_NAME') {
-      items.push(<StencilStyles.TreeItem
-        key={index++}
-        nodeId={`${view.article.id}-nested`}
-        labelText="article name was matched"
-        labelcolor="article"
-        labelIcon={TranslateIcon}>
-      </StencilStyles.TreeItem>)
-    } else {
-      const pageView = view.pages.filter(p => p.page.id === match.id)[0]; 
-      items.push(<StencilStyles.TreeItem
-        key={index++}
-        nodeId={`${pageView.page.id}-nested`}
-        labelText={pageView.title}
+const PageItem: React.FC<{ view: Composer.PageView }> = ({ view }) => {
+  return (
+    <>
+      <StencilStyles.TreeItem
+        nodeId={view.page.id}
+        labelText={view.title}
         labelcolor="page"
         labelIcon={TranslateIcon}>
-      </StencilStyles.TreeItem>)
-    }
-  }
+      </StencilStyles.TreeItem>
+    </>)
+
+}
+
+const ArticleItem: React.FC<{ view: Composer.ArticleView }> = ({ view }) => {
   return (
-    <StencilStyles.TreeItem
-      nodeId={`${view.article.id}`}
-      labelText={view.article.body.name}
-      labelcolor="article"
-      labelIcon={ArticleOutlinedIcon}>
-      {items}
-    </StencilStyles.TreeItem>
-  )
+    <>
+      <StencilStyles.TreeItem
+        nodeId={view.article.id}
+        labelText={view.article.body.name}
+        labelcolor="article"
+        labelIcon={ArticleOutlinedIcon}>
+      </StencilStyles.TreeItem>
+    </>)
 
 }
 
@@ -120,13 +111,13 @@ const SearchExplorer: React.FC<{}> = () => {
   const [searchString, setSearchString] = React.useState("");
 
   const articles = session.search.filterArticles(searchString)
-    .map(result => (<ArticleItem key={result.source.id} view={session.getArticleView(result.source.id)} searchResult={result} />));
+    .map(result => (<ArticleItem key={result.source.id} view={session.getArticleView(result.source.id)} />));
 
-  const workflows = session.search.filterWorkflows(searchString)
-    .map(result => (<WorkflowItem key={result.source.id} view={session.getWorkflowView(result.source.id)} searchResult={result} />));
+  const workflows = session.search.filterArticles(searchString)
+    .map(result => (<WorkflowItem key={result.source.id} view={session.getWorkflowView(result.source.id)} />));
 
-  const links = session.search.filterLinks(searchString)
-    .map(result => (<LinkItem key={result.source.id} view={session.getLinkView(result.source.id)} searchResult={result} />));
+  const links = session.search.filterArticles(searchString)
+    .map(result => (<LinkItem key={result.source.id} view={session.getLinkView(result.source.id)} />));
 
 
   return (
@@ -170,7 +161,6 @@ const SearchExplorer: React.FC<{}> = () => {
           }
           setExpanded(nodeIds);
         }}>
-
         {articles}
         {workflows}
         {links}
