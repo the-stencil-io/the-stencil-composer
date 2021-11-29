@@ -1,6 +1,6 @@
 {
   "name": "@the-stencil-io/composer",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "private": false,
   "license": "Apache-2.0",
   "main": "build/core/index.js",
