@@ -88,9 +88,10 @@ class SiteCache {
     Object.values(site.pages).sort((l0, l1) => l0.body.locale.localeCompare(l1.body.locale)).forEach(page => this.visitPage(page))
     Object.values(site.links).sort((l0, l1) => l0.body.contentType.localeCompare(l1.body.contentType)).forEach(link => this.visitLink(link))
     Object.values(site.workflows).sort((l0, l1) => l0.body.value.localeCompare(l1.body.value)).forEach(workflow => this.visitWorkflow(workflow))
+    
     Object.values(site.articles).sort((l0, l1) => (
-      (l0.body.order + (l0.body.parentId !== undefined ? 10000 : 0)) -
-      (l1.body.order + (l1.body.parentId !== undefined ? 10000 : 0))
+      (l1.body.order + (l1.body.parentId !== undefined ? 10000 : 0)) -
+      (l0.body.order + (l0.body.parentId !== undefined ? 10000 : 0))
     )).forEach(article => this.visitArticle(article));
 
     this._searchData = new ImmutableSearchData(
@@ -287,15 +288,18 @@ class SessionData implements Composer.Session {
     const articleName = article.article.body.name;
     const locale = this._filter.locale;
 
+    const parent = article.article.body.parentId ? this.getArticleName(article.article.body.parentId).name + "/" : ""
+
     if (locale) {
       const pages = article.pages.filter(p => p.locale.id === locale);
       if (pages.length === 0) {
         return { missing: true, name: "_not_translated_" + articleName };
       }
       const name = pages.length ? pages[0].title : '';
-      return { missing: false, name: name ? name : 'no-h1' };
+      return { missing: false, name: name ? parent + name : parent + 'no-h1' };
     }
-    return { missing: false, name: articleName };
+    
+    return { missing: false, name: parent + articleName };
   }
   getWorkflowName(workflowId: StencilClient.WorkflowId) {
     const view = this.getWorkflowView(workflowId);
