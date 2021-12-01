@@ -6,6 +6,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import SearchIcon from '@mui/icons-material/Search';
 import LinkIcon from '@mui/icons-material/Link';
+import EditIcon from '@mui/icons-material/ModeEdit';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
@@ -13,6 +14,7 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import ConstructionIcon from '@mui/icons-material/Construction';
 
+import { ArticleEdit } from '../../article';
 import { WorkflowEdit } from '../../workflow/';
 import { LinkEdit } from '../../link/';
 import StencilStyles from '../../styles';
@@ -149,9 +151,14 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
   const { handleInTab } = Composer.useNav();
   const onLeftEdit = (page: StencilClient.Page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })
 
-  const items: React.ReactElement[] = [];
+  const [articleEditOpen, setArticleEditOpen] = React.useState<boolean>(false);
+  const [noCollapseIcon, setNoCollapseIcon] = React.useState<boolean>(false)
+
+  let items: React.ReactElement[] = [];
+
   let index = 1;
   for (const match of searchResult.matches) {
+
     if (match.type === 'ARTICLE_PAGE') {
       const pageView: Composer.PageView = view.pages.filter(p => p.page.id === match.id)[0];
       const lines = pageView.page.body.content.split(/\r?\n/);
@@ -174,16 +181,38 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
         lineIndex++;
       }
     }
+
   }
+
+
+  if (items.length > 0) {
+    const articleEditButton: React.ReactElement =
+      <StencilStyles.TreeItemOption nodeId={article.id + 'edit-nested'}
+        color='article'
+        icon={EditIcon}
+        onClick={() => setArticleEditOpen(true)}
+        labelText={<FormattedMessage id="article.edit.title" />}>
+      </StencilStyles.TreeItemOption>
+
+    items = [articleEditButton, ...items];
+  }
+
   return (
     <>
+      { articleEditOpen ? <ArticleEdit articleId={view.article.id} onClose={() => setArticleEditOpen(false)} /> : null}
+
       <StencilStyles.TreeItem
         key={index++}
         nodeId={view.article.id}
         labelText={<span>{findMatch(`${view.article.body.name}`, keyword, true)}</span>}
         labelcolor="page"
-        labelIcon={ArticleOutlinedIcon}>
-
+        labelIcon={ArticleOutlinedIcon}
+        onClick={() => {
+          if (items.length === 0) {
+            setArticleEditOpen(true)
+            setNoCollapseIcon(true)
+          }
+        }}>
         {items}
       </StencilStyles.TreeItem>
     </>
@@ -195,6 +224,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
 const SearchExplorer: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
+
 
   const intl = useIntl();
   const [searchString, setSearchString] = React.useState("");
@@ -210,8 +240,6 @@ const SearchExplorer: React.FC<{}> = () => {
 
 
   return (
-
-
     <Box>
       <TextFieldRoot fullWidth
         variant="outlined"
@@ -241,6 +269,7 @@ const SearchExplorer: React.FC<{}> = () => {
       </Typography>
 
       <TreeView expanded={expanded}
+        //noCollapseIcon ? undefined : <ArrowDropDownIcon />
         defaultCollapseIcon={<ArrowDropDownIcon />}
         defaultExpandIcon={<ArrowRightIcon />}
         defaultEndIcon={<div style={{ width: 24 }} />}
