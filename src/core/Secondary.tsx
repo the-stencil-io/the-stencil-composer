@@ -21,7 +21,7 @@ const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   },
 }));
 
-const StyledTabs = styled(Tabs)<TabsProps>(({ }) => ({
+const StyledTabs = styled(Tabs)<TabsProps>(() => ({
   "& .MuiTabs-indicator": {
     backgroundColor: "unset",
   }

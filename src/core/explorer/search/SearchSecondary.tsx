@@ -40,7 +40,6 @@ const SearchSecondary: React.FC<SearchSecondaryProps> = () => {
   const intl = useIntl();
   const getPlaceholder = (id: string) => intl.formatMessage({ id });
   const [searchString, setSearchString] = React.useState("");
-  const searchKeyword = searchString.toLowerCase();
 
   return (
     <Box alignSelf="center" sx={{ m: 1 }}>
