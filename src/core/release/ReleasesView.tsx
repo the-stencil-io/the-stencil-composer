@@ -52,7 +52,7 @@ const ReleasesView: React.FC<{}> = () => {
 
           <Card sx={{ margin: 1, width: 'fill-available' }}>
             <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}>
-              <FormattedMessage id="locales" />
+              <FormattedMessage id="releases" />
             </Typography>
 
             <TableContainer component={Paper}>

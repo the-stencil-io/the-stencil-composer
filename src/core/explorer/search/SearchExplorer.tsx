@@ -13,6 +13,8 @@ import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import AccountTreeOutlinedIcon from '@mui/icons-material/AccountTreeOutlined';
 import ConstructionIcon from '@mui/icons-material/Construction';
 
+import { WorkflowEdit } from '../../workflow/';
+import { LinkEdit } from '../../link/';
 import StencilStyles from '../../styles';
 import { Composer } from '../../context';
 
@@ -50,7 +52,7 @@ const findMatch = (line: string, keyword: string, fallback?: boolean) => {
   }
 
   const end = start + keyword.length;
-  const fragment_0 = line.substring(start > 20 ? start-20: 0, start);
+  const fragment_0 = line.substring(start > 20 ? start - 20 : 0, start);
   const fragment_1 = line.substring(start, end);
   const fragment_2 = line.substring(end);
 
@@ -71,6 +73,9 @@ const findMainId = (values: string[]) => {
 
 
 const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.SearchResult, keyword: string }> = ({ view, keyword }) => {
+
+  const [linkEditOpen, setLinkEditOpen] = React.useState<boolean>(false);
+
   const items: React.ReactElement[] = [];
   for (const label of view.labels) {
     const match = findMatch(label.label.labelValue, keyword);
@@ -79,15 +84,18 @@ const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.Searc
     }
 
     items.push(<StencilStyles.TreeItem
+      onClick={() => setLinkEditOpen(true)}
       key={items.length}
       nodeId={`${view.link.id}-${items.length}-nested`}
-      labelText={<span>{label.locale.body.value}.md - {match}</span>}
+      labelText={<span>{label.locale.body.value} - {match}</span>}
       labelcolor="page"
     >
     </StencilStyles.TreeItem>);
   }
   return (
     <>
+      { linkEditOpen ? <LinkEdit linkId={view.link.id} onClose={() => setLinkEditOpen(false)} /> : null}
+
       <StencilStyles.TreeItem
         nodeId={view.link.id}
         labelText={view.link.body.value}
@@ -100,6 +108,8 @@ const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.Searc
 
 const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Composer.SearchResult, keyword: string }> = ({ view, keyword }) => {
 
+  const [workflowEditOpen, setWorkflowEditOpen] = React.useState<boolean>(false);
+
   const items: React.ReactElement[] = [];
   for (const label of view.labels) {
     const match = findMatch(label.label.labelValue, keyword);
@@ -107,21 +117,30 @@ const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Compos
       continue;
     }
 
-    items.push(<StencilStyles.TreeItem
-      key={items.length}
-      nodeId={`${view.workflow.id}-${items.length}-nested`}
-      labelText={<span>{label.locale.body.value}.md - {match}</span>}
-      labelcolor="page"
-    >
-    </StencilStyles.TreeItem>);
+    items.push(
+      <>
+        <StencilStyles.TreeItem
+          onClick={() => setWorkflowEditOpen(true)}
+          key={items.length}
+          nodeId={`${view.workflow.id}-${items.length}-nested`}
+          labelText={<span>{label.locale.body.value} - {match}</span>}
+          labelcolor="page"
+        >
+        </StencilStyles.TreeItem>
+      </>);
   }
-  return (<StencilStyles.TreeItem
-    nodeId={view.workflow.id}
-    labelText={<span>{findMatch(view.workflow.body.value, keyword, true)}</span>}
-    labelcolor="workflow"
-    labelIcon={view.workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}>
-    {items}
-  </StencilStyles.TreeItem>)
+  return (
+    <>
+      {workflowEditOpen ? <WorkflowEdit workflowId={view.workflow.id} onClose={() => setWorkflowEditOpen(false)} /> : null}
+
+      <StencilStyles.TreeItem
+        nodeId={view.workflow.id}
+        labelText={<span>{findMatch(view.workflow.body.value, keyword, true)}</span>}
+        labelcolor="workflow"
+        labelIcon={view.workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}>
+        {items}
+      </StencilStyles.TreeItem>
+    </>)
 }
 
 const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer.SearchResult, keyword: string }> = ({ view, searchResult, keyword }) => {
@@ -166,6 +185,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
 const SearchExplorer: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
+
   const intl = useIntl();
   const [searchString, setSearchString] = React.useState("");
 
@@ -180,11 +200,13 @@ const SearchExplorer: React.FC<{}> = () => {
 
 
   return (
+
+
     <Box>
       <TextFieldRoot fullWidth
         variant="outlined"
         label={<FormattedMessage id="search.field.label" />}
-        type="string"
+        type="search"
         focused
         placeholder={intl.formatMessage({ id: "search.field.placeholder" })}
         value={searchString}
