@@ -16,7 +16,7 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 import { WorkflowEdit } from '../../workflow/';
 import { LinkEdit } from '../../link/';
 import StencilStyles from '../../styles';
-import { Composer } from '../../context';
+import { Composer, Layout, StencilClient } from '../../context';
 
 
 //color: theme.palette.explorerItem.dark,
@@ -144,11 +144,16 @@ const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Compos
 }
 
 const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer.SearchResult, keyword: string }> = ({ view, searchResult, keyword }) => {
+
+  const { article } = view;
+  const { handleInTab } = Composer.useNav();
+  const onLeftEdit = (page: StencilClient.Page) => handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale })
+
   const items: React.ReactElement[] = [];
   let index = 1;
   for (const match of searchResult.matches) {
     if (match.type === 'ARTICLE_PAGE') {
-      const pageView = view.pages.filter(p => p.page.id === match.id)[0];
+      const pageView: Composer.PageView = view.pages.filter(p => p.page.id === match.id)[0];
       const lines = pageView.page.body.content.split(/\r?\n/);
       let lineIndex = 1;
       for (const line of lines) {
@@ -157,26 +162,31 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
           continue;
         }
 
-        items.push(<StencilStyles.TreeItem
-          key={index++}
-          nodeId={`${pageView.page.id}-${lineIndex}-nested`}
-          labelText={<span>{pageView.locale.body.value}.md ({lineIndex}) - {match}</span>}
-          labelcolor="page"
-        >
-        </StencilStyles.TreeItem>);
+        items.push(
+          <StencilStyles.TreeItem
+            onClick={() => onLeftEdit(pageView.page)}
+            key={index++}
+            nodeId={`${pageView.page.id}-${lineIndex}-nested`}
+            labelText={<span>{pageView.locale.body.value}.md ({lineIndex}) - {match}</span>}
+            labelcolor="page"
+          >
+          </StencilStyles.TreeItem>);
         lineIndex++;
       }
     }
   }
-  return (<StencilStyles.TreeItem
-    key={index++}
-    nodeId={view.article.id}
-    labelText={<span>{findMatch(`${view.article.body.name}`, keyword, true)}</span>}
-    labelcolor="page"
-    labelIcon={ArticleOutlinedIcon}>
+  return (
+    <>
+      <StencilStyles.TreeItem
+        key={index++}
+        nodeId={view.article.id}
+        labelText={<span>{findMatch(`${view.article.body.name}`, keyword, true)}</span>}
+        labelcolor="page"
+        labelIcon={ArticleOutlinedIcon}>
 
-    {items}
-  </StencilStyles.TreeItem>
+        {items}
+      </StencilStyles.TreeItem>
+    </>
   )
 }
 
