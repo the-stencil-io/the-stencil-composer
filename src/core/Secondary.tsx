@@ -78,6 +78,7 @@ const SecondaryExplorer: React.FC<{}> = () => {
       </StyledTabs>
       <Box alignSelf="center" sx={{ m: 1 }}>
         <StyledSearch focused
+          type="search"
           placeholder={getLabel("explorer.tabs.search")}
           value={searchString}
           onChange={({ target }) => setSearchString(target.value)} />

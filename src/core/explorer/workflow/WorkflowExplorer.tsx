@@ -8,8 +8,6 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { Composer, StencilClient } from '../../context';
 import { WorkflowEdit } from '../../workflow/WorkflowEdit';
 import WorkflowItem from './WorkflowItem';
-import { WorkflowsView } from '../../workflow';
-
 
 const findMainId = (values: string[]) => {
   const result = values.filter(id => !id.endsWith("-nested"));
