@@ -81,6 +81,8 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
     const newSelection: Record<string, SelectedValue> = {};
     Object.values(selected).filter(s => s.locale !== id).forEach(s => newSelection[s.locale] = s);
     setSelected(newSelection);
+    {console.log("remove label")}
+    props.onChange(Object.values(newSelection));
   }
 
   const editField = edit ? (
@@ -121,7 +123,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
       {rows.map((row, index) => (
         <TableRow hover key={index} sx={{ height: "85px" }}>
           <TableCell sx={{ width: "40px" }}>
-            <IconButton onClick={() => handleRemoveLabel(row.locale)} sx={{ color: 'uiElements.main' }}>
+            <IconButton onClick={() => handleRemoveLabel(row.locale) } sx={{ color: 'uiElements.main' }}>
               <DeleteOutlineIcon />
             </IconButton>
           </TableCell>

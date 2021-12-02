@@ -56,8 +56,8 @@ const WorkflowExplorer: React.FC<{ searchString: string }> = ({ searchString }) 
           }
           setExpanded(nodeIds);
         }}>
-        {workflows.map((view) => (
-          <WorkflowItem key={view.workflow.id} workflowId={view.workflow.id} />
+        {workflows.map((view, index) => (
+          <WorkflowItem key={index} workflowId={view.workflow.id} />
         ))}
       </TreeView>
     </Box>
