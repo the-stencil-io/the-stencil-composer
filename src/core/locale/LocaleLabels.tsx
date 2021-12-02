@@ -6,6 +6,7 @@ import {
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import EditIcon from '@mui/icons-material/Create';
+import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import CheckIcon from '@mui/icons-material/Check';
 
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -81,7 +82,6 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
     const newSelection: Record<string, SelectedValue> = {};
     Object.values(selected).filter(s => s.locale !== id).forEach(s => newSelection[s.locale] = s);
     setSelected(newSelection);
-    {console.log("remove label")}
     props.onChange(Object.values(newSelection));
   }
 
@@ -96,7 +96,9 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
     <TableHead sx={{ backgroundColor: "table.main" }}>
       <TableRow sx={{ borderBottom: 0 }}>
         <TableCell colSpan={3} sx={{ borderBottom: 0 }}>
-          <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: "mainContent.dark" }}><FormattedMessage id={"locales.label.table.title"} /></Typography>
+          <Typography variant="h4" sx={{ fontWeight: 'bold', marginBottom: 1, color: "mainContent.dark" }}>
+            <FormattedMessage id={"locales.label.table.title"} />
+          </Typography>
         </TableCell>
 
         <TableCell sx={{ borderBottom: 0 }} align="right">
@@ -117,13 +119,19 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
       {rows.length === 0 ? <TableRow>
         <TableCell colSpan={4}>
           <Typography variant="h5" sx={{ marginBottom: 1, marginTop: 1 }}><FormattedMessage id="transferlist.noItemsSelected" /></Typography>
+          <Box display="flex" alignItems="center">
+            <WarningAmberRoundedIcon sx={{ color: 'warning.main' }} />
+            <Typography variant="caption" sx={{ fontWeight: 'bold', color: "uiElements.main" }}>
+              <FormattedMessage id={"locales.label.title.helper"} />
+            </Typography>
+          </Box>
         </TableCell>
       </TableRow> : null}
 
       {rows.map((row, index) => (
         <TableRow hover key={index} sx={{ height: "85px" }}>
           <TableCell sx={{ width: "40px" }}>
-            <IconButton onClick={() => handleRemoveLabel(row.locale) } sx={{ color: 'uiElements.main' }}>
+            <IconButton onClick={() => handleRemoveLabel(row.locale)} sx={{ color: 'uiElements.main' }}>
               <DeleteOutlineIcon />
             </IconButton>
           </TableCell>
@@ -174,7 +182,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
       </Popover>
 
       <Box sx={{ marginTop: 1 }}>
-        { props.disablePaper ? table : (<TableContainer component={Paper}>{table}</TableContainer>) }
+        {props.disablePaper ? table : (<TableContainer component={Paper}>{table}</TableContainer>)}
       </Box>
     </>
   );

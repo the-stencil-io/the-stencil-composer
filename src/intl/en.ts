@@ -75,6 +75,7 @@ const en = {
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
   'sitelocale.label.table.editLocaleValue': 'Edit locale value',
   'locales.label.table.title': 'Locale labels',
+  'locales.label.title.helper': 'At least one language code (locale) + locale label value is required',
   'locales.label.table.value': 'Locale label values',
   'link.value': 'Link value',
   'link.search.title': 'Search links by value',
