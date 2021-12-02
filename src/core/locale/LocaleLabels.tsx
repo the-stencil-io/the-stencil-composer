@@ -25,6 +25,7 @@ interface LocaleLabelsProps {
   disablePaper?: boolean;
   onChange: (selected: SelectedValue[]) => void;
   onChangeStart: () => void;
+  onKeyDown?: (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 
@@ -85,11 +86,14 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
     props.onChange(Object.values(newSelection));
   }
 
+
   const editField = edit ? (
     <StencilStyles.TextField
       label="sitelocale.label.table.editLocaleValue"
       value={edit.value}
-      onChange={(newValue) => setEdit({ locale: edit.locale, value: newValue })} />
+      onEnter={() => handleEditEnd()}
+      onChange={(newValue) => setEdit({ locale: edit.locale, value: newValue })}
+    />
   ) : null;
 
   const table = (<Table size="small">
@@ -136,7 +140,13 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
             </IconButton>
           </TableCell>
           <TableCell align="left">{site.locales[row.locale].body.value}</TableCell>
-          <TableCell align="left">{edit?.locale === row.locale ? editField : row.value}
+          <TableCell align="left" onClick={() => {
+            if (!edit) {
+              setEdit(row);
+              props.onChangeStart();
+            }
+          }}>
+            {edit?.locale === row.locale ? editField : row.value}
           </TableCell>
           <TableCell align="right">
             <IconButton sx={{ color: 'uiElements.main' }}
@@ -148,7 +158,6 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
                   setEdit(row);
                   props.onChangeStart();
                 }
-
               }}>
               {edit?.locale === row.locale ? <CheckIcon /> : <EditIcon />}
             </IconButton>

@@ -52,7 +52,6 @@ const StyledSearch = styled(TextField)<TextFieldProps>(({ theme }) => ({
 
 
 
-
 const SecondaryExplorer: React.FC<{}> = () => {
   const intl = useIntl();
   const getLabel = (id: string) => intl.formatMessage({ id });

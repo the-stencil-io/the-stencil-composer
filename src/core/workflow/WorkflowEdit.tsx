@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ListItemText, Paper, Box, Typography } from '@mui/material';
+import { ListItemText, Paper, Box, Typography, TextField } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 
 import { FormattedMessage } from 'react-intl';
@@ -65,7 +65,6 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
               />
             </Box>
           </Box>
-
 
           <StencilStyles.SelectMultiple label='composer.select.article'
             multiline
