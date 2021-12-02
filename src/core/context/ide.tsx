@@ -113,6 +113,7 @@ declare namespace Composer {
     links: LinkView[];
     workflows: WorkflowView[];
     children: Composer.ArticleView[];
+    displayOrder: number;
   }
 
   interface PageView {

@@ -18,25 +18,22 @@ const findMainId = (values: string[]) => {
   return undefined;
 }
 
-
-const ArticleExplorer: React.FC<{}> = () => {
+const ArticleExplorer: React.FC<{ searchString: string }> = ({searchString}) => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
 
   const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
   const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
   const articleOptions: ArticleItemOptions = { setEditLink, setEditWorkflow }
+    
+  const treeItems: Composer.ArticleView[] = React.useMemo(() => {
+    if(searchString) {
+      return session.search.filterArticles(searchString).map(searchResult => session.getArticleView(searchResult.source.id))
+    }
+    return session.articles;
+  }, [searchString, session]);
 
-  const articles = session.articles.filter(view => !view.article.body.parentId).map((view) => [
-    (<div key={view.article.id}>
-      <ArticleItem articleId={view.article.id} options={articleOptions} />
-    </div>),
-    ...view.children.map((child) => (
-      (<div key={child.article.id}>
-        <ArticleItem articleId={child.article.id} options={articleOptions} />
-      </div>)
-    ))
-  ]);
+  treeItems.sort((l0, l1) => l1.displayOrder - l0.displayOrder);
 
   return (
     <Box>
@@ -65,7 +62,7 @@ const ArticleExplorer: React.FC<{}> = () => {
           }
           setExpanded(nodeIds);
         }}>
-        {articles}
+        {treeItems.map((view) => <ArticleItem key={view.article.id} articleId={view.article.id} options={articleOptions} />)}
       </TreeView>
     </Box>
   );

@@ -195,7 +195,8 @@ class SiteCache {
       article, pages, canCreate,
       links,
       workflows,
-      children: []
+      children: [],
+      displayOrder: 10000 + article.body.order + (article.body.parentId ? this._site.articles[article.body.parentId].body.order : 0)
     });
 
     if (article.body.parentId) {
@@ -207,7 +208,8 @@ class SiteCache {
           canCreate: parent.canCreate,
           links: parent.links,
           workflows: parent.workflows,
-          children: [...parent.children, view]
+          children: [...parent.children, view],
+          displayOrder: 10000 + article.body.order + (article.body.parentId ? this._site.articles[article.body.parentId].body.order : 0)
         });
       }
     }
@@ -457,7 +459,7 @@ class ImmutableArticleView implements Composer.ArticleView {
   private _links: Composer.LinkView[];
   private _workflows: Composer.WorkflowView[];
   private _children: Composer.ArticleView[];
-
+  private _displayOrder: number;
   constructor(props: {
     article: StencilClient.Article;
     pages: Composer.PageView[];
@@ -465,6 +467,7 @@ class ImmutableArticleView implements Composer.ArticleView {
     links: Composer.LinkView[];
     workflows: Composer.WorkflowView[];
     children: Composer.ArticleView[];
+    displayOrder: number;
   }) {
     this._article = props.article;
     this._pages = props.pages;
@@ -472,7 +475,9 @@ class ImmutableArticleView implements Composer.ArticleView {
     this._links = props.links;
     this._workflows = props.workflows;
     this._children = props.children;
+    this._displayOrder = props.displayOrder;
   }
+  get displayOrder(): number { return this._displayOrder };
   get children(): Composer.ArticleView[] { return this._children };
   get article(): StencilClient.Article { return this._article };
   get pages(): Composer.PageView[] { return this._pages };

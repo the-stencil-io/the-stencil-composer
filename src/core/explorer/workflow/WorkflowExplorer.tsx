@@ -8,6 +8,7 @@ import ArrowRightIcon from "@mui/icons-material/ArrowRight";
 import { Composer, StencilClient } from '../../context';
 import { WorkflowEdit } from '../../workflow/WorkflowEdit';
 import WorkflowItem from './WorkflowItem';
+import { WorkflowsView } from '../../workflow';
 
 
 const findMainId = (values: string[]) => {
@@ -19,14 +20,17 @@ const findMainId = (values: string[]) => {
 }
 
 
-const WorkflowExplorer: React.FC<{}> = () => {
+const WorkflowExplorer: React.FC<{ searchString: string }> = ({ searchString }) => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [editWorkflow, setEditWorkflow] = React.useState<undefined | StencilClient.WorkflowId>(undefined);
 
-  const workflows = session.workflows.map((view) => (
-    <WorkflowItem key={view.workflow.id} workflowId={view.workflow.id} />
-  ));
+  const workflows: Composer.WorkflowView[] = React.useMemo(() => {
+    if (searchString) {
+      return session.search.filterWorkflows(searchString).map(searchResult => session.getWorkflowView(searchResult.source.id))
+    }
+    return session.workflows;
+  }, [searchString, session]);
 
   return (
     <Box>
@@ -54,7 +58,9 @@ const WorkflowExplorer: React.FC<{}> = () => {
           }
           setExpanded(nodeIds);
         }}>
-        {workflows}
+        {workflows.map((view) => (
+          <WorkflowItem key={view.workflow.id} workflowId={view.workflow.id} />
+        ))}
       </TreeView>
     </Box>
   );
