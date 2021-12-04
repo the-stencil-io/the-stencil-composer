@@ -17,8 +17,8 @@ import { NewPage } from './page';
 import { MigrationComposer } from './migration';
 import { TemplateComposer } from './template';
 
-
 import { Composer, StencilClient, Layout } from './context';
+
 
 interface CardData {
   type: CardType;
