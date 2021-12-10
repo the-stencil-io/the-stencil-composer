@@ -13,9 +13,11 @@ declare namespace StencilClient {
   type LocalisedMarkdown = string;
   type LocalisedContent = string;
   type ReleaseId = string;
+  type TemplateId = string;
   type LinkType = "internal" | "external" | "phone";
-  
-  
+  type TemplateType = "PAGE";
+
+
   interface Site {
     name: string,
     contentType: "OK" | "NOT_CREATED" | "EMPTY" | "ERRORS" | "NO_CONNECTION",
@@ -24,9 +26,10 @@ declare namespace StencilClient {
     links: Record<LinkId, Link>,
     articles: Record<ArticleId, Article>,
     workflows: Record<WorkflowId, Workflow>,
-    releases: Record<ReleaseId, Release>
+    releases: Record<ReleaseId, Release>,
+    templates: Record<TemplateId, Template>
   }
-  
+
   interface SiteLocale {
     id: LocaleId,
     body: {
@@ -34,9 +37,9 @@ declare namespace StencilClient {
       enabled: boolean
     }
   }
-  
+
   interface LocaleMutator {
-    localeId: LocaleId, 
+    localeId: LocaleId,
     value: string,
     enabled: boolean
   }
@@ -51,11 +54,31 @@ declare namespace StencilClient {
       content: LocalisedMarkdown
     }
   }
-  
+
   interface PageMutator {
     pageId: PageId,
     locale: Locale;
     content: LocalisedContent;
+  }
+
+  interface Template {
+    id: TemplateId,
+    created?: string,
+    modified?: string,
+    body: {
+      templateType: TemplateType,
+      name: string,
+      description: string
+      content: string,
+    }
+  }
+
+  interface TemplateMutator {
+    id: TemplateId,
+    templateType: "PAGE",
+    name: string,
+    description: string
+    content: string,
   }
 
   interface Article {
@@ -66,11 +89,11 @@ declare namespace StencilClient {
       order: number,
     }
   }
-  
+
   interface ArticleMutator {
-    articleId: ArticleId, 
-    parentId?: ArticleId, 
-    name: string, 
+    articleId: ArticleId,
+    parentId?: ArticleId,
+    name: string,
     order: number,
     links: LinkId[] | undefined,
     workflows: WorkflowId[] | undefined,
@@ -89,12 +112,12 @@ declare namespace StencilClient {
       pages: PageReleaseItem[];
     }
   }
-  
+
   interface LinkReleaseItem extends ReleaseItem {
     value: string;
     contentType: string;
     articles: string;
-    labels: LocaleLabel[];    
+    labels: LocaleLabel[];
   }
   interface WorkflowReleaseItem extends ReleaseItem {
     value: string; // pointer to actual workflow
@@ -127,13 +150,13 @@ declare namespace StencilClient {
       labels: LocaleLabel[],
     }
   }
-  
- interface LocaleLabel {
-   locale: LocaleId;     // locale id
-   labelValue: LocalisedContent; // translation in locale
+
+  interface LocaleLabel {
+    locale: LocaleId;     // locale id
+    labelValue: LocalisedContent; // translation in locale
   }
-  
-  
+
+
   interface LinkMutator {
     linkId: LinkId,
     type: LinkType,
@@ -151,10 +174,10 @@ declare namespace StencilClient {
       devMode?: boolean
     }
   }
-  
+
   interface WorkflowMutator {
-    workflowId: WorkflowId, 
-    value: string, 
+    workflowId: WorkflowId,
+    value: string,
     articles: ArticleId[] | undefined,
     labels: LocaleLabel[] | undefined,
     devMode: boolean | undefined
@@ -166,19 +189,19 @@ declare namespace StencilClient {
 
   interface Service {
     getSite(): Promise<Site>,
-    getReleaseContent(release: Release): Promise<{}>, 
-    
+    getReleaseContent(release: Release): Promise<{}>,
+
     create(): CreateBuilder;
     delete(): DeleteBuilder;
     update(): UpdateBuilder;
   }
-  
-  interface CreateArticle { 
+
+  interface CreateArticle {
     parentId?: ArticleId;
     name: string;
-    order: number; 
+    order: number;
   }
-  
+
   interface CreateLocale {
     locale: Locale;
   }
@@ -187,24 +210,32 @@ declare namespace StencilClient {
     locale: LocaleId;
     content?: string
   }
-  interface CreateLink { 
-    type: "internal" | "external" | string;
-    value: string; 
-    labels: LocaleLabel[];
-    articles: ArticleId[];
+  interface CreateTemplate {
+    type: TemplateType;
+    name: string,
+    description: string;
+    content: string;
+    created?: string,
   }
   
-  interface CreateWorkflow { 
+  interface CreateLink {
+    type: "internal" | "external" | string;
     value: string;
     labels: LocaleLabel[];
     articles: ArticleId[];
-    devMode: boolean | undefined 
+  }
+
+  interface CreateWorkflow {
+    value: string;
+    labels: LocaleLabel[];
+    articles: ArticleId[];
+    devMode: boolean | undefined
   }
   interface CreateRelease {
     name: string,
     note?: string
   }
-  
+
   interface CreateBuilder {
     site(): Promise<Site>;
     importData(init: string): Promise<void>;
@@ -213,6 +244,7 @@ declare namespace StencilClient {
     article(init: CreateArticle): Promise<Article>;
     page(init: CreatePage): Promise<Page>;
     link(init: CreateLink): Promise<Link>;
+    template(init: CreateTemplate): Promise<Template>;
     workflow(init: CreateWorkflow): Promise<Workflow>;
   }
   interface DeleteBuilder {
@@ -220,10 +252,11 @@ declare namespace StencilClient {
     article(id: ArticleId): Promise<void>;
     page(id: PageId): Promise<void>;
     link(id: LinkId): Promise<void>;
+    template(id: TemplateId): Promise<void>;
     linkArticlePage(link: LinkId, article: ArticleId, locale: Locale): Promise<void>;
     workflow(id: WorkflowId): Promise<void>;
     workflowArticlePage(workflow: WorkflowId, article: ArticleId, locale: Locale): Promise<void>;
-    
+
   }
   interface UpdateBuilder {
     locale(article: LocaleMutator): Promise<SiteLocale>;
@@ -231,11 +264,12 @@ declare namespace StencilClient {
     pages(pages: PageMutator[]): Promise<Page[]>;
     link(link: LinkMutator): Promise<Link>;
     workflow(workflow: WorkflowMutator): Promise<Workflow>;
+    template(template: TemplateMutator): Promise<Template>;
   }
   interface Store {
     fetch<T>(path: string, init?: RequestInit): Promise<T>;
   }
-  
+
   interface ErrorMsg {
     id: string;
     value: string;
@@ -249,14 +283,14 @@ declare namespace StencilClient {
 }
 
 namespace StencilClient {
-    export const mock = (): Service => {
+  export const mock = (): Service => {
     return createMock();
   };
-  export const service = (init: {store?: Store, url?: string}): Service => {
+  export const service = (init: { store?: Store, url?: string }): Service => {
     return createService(init);
   };
-  
-  
+
+
   export class StoreError extends Error {
     private _props: ErrorProps;
 
@@ -311,15 +345,15 @@ const parseErrors = (props: any): StencilClient.ErrorMsg[] => {
   if (!props) {
     return []
   }
-  
-  if(props.appcode) {
+
+  if (props.appcode) {
     return [
-      {id: props.appcode, value: props.appcode}
+      { id: props.appcode, value: props.appcode }
     ]
   }
-  
-  
-  if(!props.map) {
+
+
+  if (!props.map) {
     return [];
   }
   const result: StencilClient.ErrorMsg[] = props.map((error: any) => ({

@@ -4,14 +4,29 @@ import { FormattedMessage } from 'react-intl';
 import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
 
 import StencilStyles from '../styles';
+import { Composer, StencilClient } from '../context';
 
 
-const TemplateComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+
+interface TemplateComposerProps {
+  onClose: () => void;
+}
+
+const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
+  const [type, setType] = React.useState<StencilClient.TemplateType>('PAGE');
+  const { service, actions, site, session } = Composer.useComposer();
+
   const handleCreate = () => {
-    return null;
+    const entity: StencilClient.CreateTemplate = {content, description, name, type
+ };
+    service.create().template(entity).then(success => {
+      console.log(success, entity);
+      onClose();
+      actions.handleLoadSite();
+    })
   }
   const handleChange = (value: string | undefined) => {
     setContent(value ? value : '')
