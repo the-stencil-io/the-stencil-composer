@@ -10,7 +10,7 @@ const en = {
   'explorer.tabs.search': 'Search',
   'releases.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'button.releasegraph': 'Graph',
-  'button.markdownhelp': 'Markdown guide',
+  'button.markdownhelp': 'Markdown guide', //not in use
   'search.field.placeholder': 'Enter search keyword',
   'search.results.title': 'Search results',
   'search.field.label': 'Search',
@@ -24,8 +24,8 @@ const en = {
   'activities.page.desc': 'A Page is one content file within an Article. It represents one language and any links / workflows that are associated with an Article. It is written using Markdown syntax. ',
   'activities.link.title': 'Hyperlink',
   'activities.link.desc': 'A Hyperlink will connect users to webpages you own, webpages of other organisations, and your telephone numbers.',
-  'activities.workflow.title': 'Workflow Link',
-  'activities.workflow.desc': 'A Workflow link will connect your workflows(forms and processes) to your portal frontend, so users can fill out your forms.',
+  'activities.workflow.title': 'Workflow Link', //not in use
+  'activities.workflow.desc': 'A Workflow link will connect your workflows(forms and processes) to your portal frontend, so users can fill out your forms.', //not in use
   'activities.release.title': 'Release',
   'activities.release.desc': 'A Release is a snapshot of all site content at one certain point of time. Use this for testing, prouduction, or backup purposes.',
   'activities.templates.title': 'Templates',
@@ -50,7 +50,7 @@ const en = {
   'toolbar.services': 'Services',
   'services': 'Services',
   'services.create': 'Create service',
-  'services.name': "Localised name of service",
+  'services.name': "Localised name of service", //not in use
   'services.desc': 'Connect your forms and other integrations to your content with the Wrench and Dialob workflows',
   'services.add': 'Add a service',
   'services.change': 'Change existing services',
@@ -59,12 +59,12 @@ const en = {
   'services.technicalname': 'Workflow name',
   'services.technicalname.description': 'Flow name as defined in the Wrench',
   'services.selected': 'Selected services',
-  'services.siteservices': 'Site services',
+  'services.siteservices': 'Site services', //not in use
   'services.devmode.helper': 'If Development mode is active, this service will only appear in the development environment for testing. It will not be included in production releases.',
   'services.devmode': 'Development mode',
   'services.delete': 'Permanently delete this service?',
-  'services.removepage.title': 'Remove this service',
-  'services.removepage': 'Removing the service only removes its association with this article',
+  'services.removepage.title': 'Remove this service', //not in use
+  'services.removepage': 'Removing the service only removes its association with this article', //not in use
 
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
@@ -95,12 +95,12 @@ const en = {
   'links.change': 'Change existing links',
   'link.create': 'Create new link',
 
-  'select.multiple': 'Select one or many items',
-  'resource.options': 'Resource options',
+  'select.multiple': 'Select one or many items',  //not in use
+  'resource.options': 'Resource options', //not in use
   'resource.edit.links': 'Edit links',
-  'resource.edit.services': 'Edit services',
+  'resource.edit.services': 'Edit services', //not in use
 
-  'link.addremove': 'Add or remove links',
+  'link.addremove': 'Add or remove links', //not in use
 
   'pages.edit.selectpage': 'Select page',
   'pages.edit.selectTargetLocale': 'Select target locale',
@@ -114,10 +114,10 @@ const en = {
   'page.create': 'Create page',
   'locale.create': 'Create locale',
   'release.create': 'Create release',
-  'button.view.all.articles': 'View articles',
-  'button.view.all.pages': 'View pages',
-  'button.view.all.links': 'View links',
-  'button.view.all.services': 'View services',
+  'button.view.all.articles': 'View articles', //not in use
+  'button.view.all.pages': 'View pages', //not in use
+  'button.view.all.links': 'View links', //not in use
+  'button.view.all.services': 'View services', //not in use
   'button.view.all.locales': 'View locales',
   'button.view.all.releases': 'View releases',
   'toolbar.import': 'Import data',
@@ -141,7 +141,7 @@ const en = {
   'description': 'Description',
   'name': 'Name',
 
-  'associations.add': 'Associate with an article',
+  'associations.add': 'Associate with an article', //not in use
 
   'delete': 'Delete',
   'download': 'Download JSON',
@@ -154,9 +154,9 @@ const en = {
   'remove': 'Remove',
 
 
-  'explorer.pages.create': 'Create Page',
-  'explorer.pages.dualview': 'Dual View',
-  'explorer.locale.empty': 'No Locales',
+  'explorer.pages.create': 'Create Page', //not in use
+  'explorer.pages.dualview': 'Dual View', //not in use
+  'explorer.locale.empty': 'No Locales', //not in use
 
   'article.composer.title': 'Create new Article',
   'article.composer.parent': 'Parent Article',
@@ -164,26 +164,26 @@ const en = {
   'article.composer.parent.unselected': 'No parent article',
 
   'article.name': 'Article name',
-  'articles.message': 'Expand rows to view Pages associated with Articles and modify these associations',
+  'articles.message': 'Expand rows to view Pages associated with Articles and modify these associations', //not in use
 
   'article.delete.title': 'Delete article',
   'article.delete': 'Deleting this article will remove it and its associated pages globally from the application.',
-  'article.deletepage.title': 'Delete this page?',
-  'article.deletepage': 'Deleting this page will permanently remove it from the application.',
+  'article.deletepage.title': 'Delete this page?', //not in use
+  'article.deletepage': 'Deleting this page will permanently remove it from the application.', //not in use
 
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
 
-  'article.options': 'Article options',
-  'article.links.addremove': 'Add or remove Article links',
-  'article.links.sitelinks': 'Site links',
+  'article.options': 'Article options', //not in use
+  'article.links.addremove': 'Add or remove Article links', //not in use
+  'article.links.sitelinks': 'Site links', //not in use
 
 
   'button.cancel': 'Cancel',
   'button.create': 'Create',
   'button.add': 'Add',
-  'button.addremove': 'Add/Remove',
+  'button.addremove': 'Add/Remove', //not in use
   'button.update': 'Update',
   'button.delete': 'Continue and delete',
   'button.disable': 'Continue and disable',
