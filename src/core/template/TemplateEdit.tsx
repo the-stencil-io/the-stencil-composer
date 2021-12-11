@@ -7,11 +7,11 @@ import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
 
-interface TemplateComposerProps {
+interface TemplateEditProps {
   onClose: () => void;
 }
 
-const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
+const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose }) => {
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
@@ -34,9 +34,9 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
-      title={"template.create"}
+      title={"template.edit"}
       backgroundColor={"uiElements.main"}
-      submit={{ title: "button.add", disabled: !name || !content || !templateType, onClick: handleCreate }}
+      submit={{ title: "button.update", disabled: !name || !content || !templateType, onClick: handleCreate }}
     >
 
       <>
@@ -75,4 +75,4 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
   );
 }
 
-export { TemplateComposer }
+export { TemplateEdit }

@@ -213,7 +213,6 @@ declare namespace StencilClient {
     name: string,
     description: string;
     content: string;
-    created?: string,
   }
   
   interface CreateLink {
