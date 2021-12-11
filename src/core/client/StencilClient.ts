@@ -15,7 +15,7 @@ declare namespace StencilClient {
   type ReleaseId = string;
   type TemplateId = string;
   type LinkType = "internal" | "external" | "phone";
-  type TemplateType = "PAGE";
+  type TemplateType = "page";
 
 
   interface Site {
@@ -63,8 +63,6 @@ declare namespace StencilClient {
 
   interface Template {
     id: TemplateId,
-    created?: string,
-    modified?: string,
     body: {
       templateType: TemplateType,
       name: string,
@@ -75,7 +73,7 @@ declare namespace StencilClient {
 
   interface TemplateMutator {
     id: TemplateId,
-    templateType: "PAGE",
+    templateType: TemplateType,
     name: string,
     description: string
     content: string,
@@ -211,7 +209,7 @@ declare namespace StencilClient {
     content?: string
   }
   interface CreateTemplate {
-    type: TemplateType;
+    templateType: "page" | string;
     name: string,
     description: string;
     content: string;

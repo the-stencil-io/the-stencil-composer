@@ -84,12 +84,12 @@ const releases: StencilClient.Release[] = [
 
 const templates: StencilClient.Template[] = [
   {
-    id: 't1', created: '15/11/2021', modified: '16/11/2021',
+    id: 't1',
     body: {
       content: '# Header 1',
       description: 'General Page template',
       name: 'Page Template 1',
-      templateType: 'PAGE'
+      templateType: 'page'
     },
   }
 ]
