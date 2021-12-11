@@ -64,7 +64,7 @@ declare namespace StencilClient {
   interface Template {
     id: TemplateId,
     body: {
-      templateType: TemplateType,
+      type: TemplateType,
       name: string,
       description: string
       content: string,
@@ -73,7 +73,7 @@ declare namespace StencilClient {
 
   interface TemplateMutator {
     id: TemplateId,
-    templateType: TemplateType,
+    type: TemplateType,
     name: string,
     description: string
     content: string,
@@ -209,7 +209,7 @@ declare namespace StencilClient {
     content?: string
   }
   interface CreateTemplate {
-    templateType: "page" | string;
+    type: "page" | string;
     name: string,
     description: string;
     content: string;

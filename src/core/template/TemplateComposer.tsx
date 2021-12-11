@@ -20,7 +20,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
 
   const handleCreate = () => {
     const entity: StencilClient.CreateTemplate = {
-      content, description, name, templateType
+      content, description, name, type: templateType
     };
     service.create().template(entity).then(success => {
       console.log(success, entity);

@@ -89,7 +89,7 @@ const templates: StencilClient.Template[] = [
       content: '# Header 1',
       description: 'General Page template',
       name: 'Page Template 1',
-      templateType: 'page'
+      type: 'page'
     },
   }
 ]
