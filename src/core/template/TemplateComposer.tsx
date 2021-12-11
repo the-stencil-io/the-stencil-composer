@@ -36,7 +36,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       title={"template.create"}
       backgroundColor={"uiElements.main"}
-      submit={{ title: "button.add", disabled: !name || !content || !templateType, onClick: handleCreate }}
+      submit={{ title: "button.add", disabled: !name || !content, onClick: handleCreate }}
     >
 
       <>

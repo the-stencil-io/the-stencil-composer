@@ -55,7 +55,7 @@ const en = {
   'template.type': 'Template type',
   'template.page': 'Page template',
   'template.page.desc': 'This template can be applied to a new page upon creation of that page.',
-  'template.description': 'Write templates in Markdown to apply to new pages. Templates help speed up your development and unify your content structure.',
+  'template.description': 'Write templates in Markdown to apply to your pages and content. Templates help speed up your development and unify your content structure.',
   'template.desc': 'Description',
   'template.description.desc': 'Additional information to help identify the use cases of this template',
   'template.delete': 'Delete template',
@@ -111,6 +111,7 @@ const en = {
   'imports.import.action': 'Import selected',
   
   'article.order': 'Article order number',
+  'article.select': 'Select Articles',
   'article.links.selectedlinks': 'Selected links',
   'article.composer.title': 'Create new Article',
   'article.composer.parent': 'Parent Article',

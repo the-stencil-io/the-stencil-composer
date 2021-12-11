@@ -66,7 +66,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
           </Box>
 
-          <StencilStyles.SelectMultiple label='composer.select.article'
+          <StencilStyles.SelectMultiple label='article.select'
             multiline
             open={articleSelectOpen}
             selected={articleId}

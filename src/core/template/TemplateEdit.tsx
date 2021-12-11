@@ -36,7 +36,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       title={"template.edit"}
       backgroundColor={"uiElements.main"}
-      submit={{ title: "button.update", disabled: !name || !content || !templateType, onClick: handleCreate }}
+      submit={{ title: "button.update", disabled: !name || !content, onClick: handleCreate }}
     >
 
       <>

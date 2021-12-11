@@ -61,7 +61,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main" }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
         </Box>
 
-        <StencilStyles.SelectMultiple label='composer.select.article'
+        <StencilStyles.SelectMultiple label='article.select'
           multiline
           onChange={setArticleId}
           selected={articleId}
