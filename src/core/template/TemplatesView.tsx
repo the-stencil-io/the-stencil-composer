@@ -27,7 +27,7 @@ const TemplatesView: React.FC<{}> = () => {
     <>
 
       { templateComposer ? <TemplateComposer onClose={() => setTemplateComposer(false)} /> : null}
-      { templateDelete ? <TemplateDelete onClose={() => setTemplateDelete(undefined)} /> : null}
+      { templateDelete ? <TemplateDelete templateId={templateDelete} onClose={() => setTemplateDelete(undefined)} /> : null}
       { templateEdit ? <TemplateEdit templateId={templateEdit} onClose={() => setTemplateEdit(undefined)} /> : null}
 
       <Box sx={{ paddingBottom: 1, m: 2 }}>
@@ -55,7 +55,7 @@ const TemplatesView: React.FC<{}> = () => {
               <TableHead>
                 <TableRow sx={{ p: 1 }}>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }} colSpan={2}><FormattedMessage id="template.name" /></TableCell>
-                  <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.templatesview.note" /></TableCell>
+                  <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="template.desc" /></TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
               </TableHead>

@@ -61,8 +61,7 @@ const en = {
   'template.delete': 'Delete template',
   'template.delete.message': 'This template will be permanently removed from the application',
 
-  'templates.templatesview.description': 'Templates view description!',
-  'templates.templatesview.note': 'Description',
+  'templates.templatesview.description': 'A new Page can be created from a Template',
   'templates.intro': 'Remember to use a Markdown Level 1 Heading (# My Heading 1) when composing your templates.',
 
   'services': 'Services',
