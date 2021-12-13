@@ -8,25 +8,28 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { FormattedMessage } from 'react-intl';
 
 import { TemplateComposer, TemplateDelete, TemplateEdit } from './';
-import { Composer } from '../context';
+import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
 
 const TemplatesView: React.FC<{}> = () => {
-
   const layout = Composer.useLayout();
+  const { site } = Composer.useComposer();
+  const templates = Object.values(site.templates);
+
+
   const [templateComposer, setTemplateComposer] = React.useState(false);
-  const [templateDelete, setTemplateDelete] = React.useState(false);
-  const [templateEdit, setTemplateEdit] = React.useState(false);
-  
+  const [templateDelete, setTemplateDelete] = React.useState<StencilClient.TemplateId>();
+  const [templateEdit, setTemplateEdit] = React.useState<StencilClient.TemplateId>();
+
   return (
     <>
 
       { templateComposer ? <TemplateComposer onClose={() => setTemplateComposer(false)} /> : null}
-      { templateDelete ? <TemplateDelete onClose={() => setTemplateDelete(false)}/> : null}
-      { templateEdit ? <TemplateEdit onClose={() => setTemplateEdit(false)}/> : null}
-      
+      { templateDelete ? <TemplateDelete onClose={() => setTemplateDelete(undefined)} /> : null}
+      { templateEdit ? <TemplateEdit templateId={templateEdit} onClose={() => setTemplateEdit(undefined)} /> : null}
+
       <Box sx={{ paddingBottom: 1, m: 2 }}>
         <Box display="flex">
           <Box alignSelf="center">
@@ -51,23 +54,25 @@ const TemplatesView: React.FC<{}> = () => {
             <Table size="small">
               <TableHead>
                 <TableRow sx={{ p: 1 }}>
-                  <TableCell align="left" sx={{ fontWeight: 'bold' }} colSpan={2}><FormattedMessage id="templates.name" /></TableCell>
+                  <TableCell align="left" sx={{ fontWeight: 'bold' }} colSpan={2}><FormattedMessage id="template.name" /></TableCell>
                   <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="templates.templatesview.note" /></TableCell>
                   <TableCell align="left"></TableCell>
                 </TableRow>
               </TableHead>
-              
+
               <TableBody>
-                <TableRow sx={{ p: 1 }} hover>
-                  <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
-                    <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateEdit(true)}><EditIcon /></IconButton>
-                  </TableCell>
-                  <TableCell>Page template 1</TableCell>
-                  <TableCell>General page structure</TableCell>
-                  <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
-                    <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateDelete(true)}><DeleteOutlineOutlinedIcon /></IconButton>
-                  </TableCell>
-                </TableRow>
+                {templates.map((template, index) => (
+                  <TableRow sx={{ p: 1 }} hover>
+                    <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
+                      <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateEdit(template.id)}><EditIcon /></IconButton>
+                    </TableCell>
+                    <TableCell>{template.body.name}</TableCell>
+                    <TableCell>{template.body.description}</TableCell>
+                    <TableCell align="left" sx={{ fontWeight: 'bold', width: "80px" }}>
+                      <IconButton sx={{ color: 'uiElements.main' }} onClick={() => setTemplateDelete(template.id)}><DeleteOutlineOutlinedIcon /></IconButton>
+                    </TableCell>
+                  </TableRow>))
+                }
 
               </TableBody>
             </Table>

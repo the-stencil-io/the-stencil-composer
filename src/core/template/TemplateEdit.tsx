@@ -8,21 +8,25 @@ import { Composer, StencilClient } from '../context';
 
 
 interface TemplateEditProps {
+  templateId: StencilClient.TemplateId;
   onClose: () => void;
 }
 
-const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose }) => {
-  const [name, setName] = React.useState('');
-  const [description, setDescription] = React.useState('');
-  const [content, setContent] = React.useState('');
-  const [templateType, setTemplateType] = React.useState<'page' | string>('page');
+const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
+  const { site } = Composer.useComposer();
+  const template = site.templates[templateId];
+
+  const [name, setName] = React.useState(template.body.name);
+  const [description, setDescription] = React.useState(template.body.description);
+  const [content, setContent] = React.useState(template.body.content);
+  const [templateType, setTemplateType] = React.useState(template.body.type);
   const { service, actions} = Composer.useComposer();
 
-  const handleCreate = () => {
-    const entity: StencilClient.CreateTemplate = {
-      content, description, name, type: templateType
+  const handleUpdate = () => {
+    const entity: StencilClient.TemplateMutator = {
+      content, description, name, type: templateType, id: templateId
     };
-    service.create().template(entity).then(success => {
+    service.update().template(entity).then(success => {
       console.log(success, entity);
       onClose();
       actions.handleLoadSite();
@@ -31,12 +35,14 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose }) => {
   const handleContentChange = (value: string | undefined) => {
     setContent(value ? value : '')
   }
+  
+  const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       title={"template.edit"}
       backgroundColor={"uiElements.main"}
-      submit={{ title: "button.update", disabled: !name || !content, onClick: handleCreate }}
+      submit={{ title: "button.update", disabled: !name || !content, onClick: handleUpdate }}
     >
 
       <>
@@ -48,9 +54,8 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose }) => {
 
         <StencilStyles.Select label='template.type'
           selected={templateType}
-          onChange={setTemplateType}
+          onChange={setTemplateType as any}
           helperText={"template.page.desc"}
-
           items={[
             { id: 'page', value: <FormattedMessage id='template.page' /> },
           ]} />

@@ -15,7 +15,7 @@ const TemplateDelete: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <StencilStyles.Dialog onClose={onClose} open={true}
       title={"template.delete"}
       backgroundColor="uiElements.main"
-      submit={{ title: 'button.delete', disabled: true, onClick: handleDelete, }}
+      submit={{ title: 'button.delete', disabled: false, onClick: handleDelete, }}
     >
       <>
         <FormattedMessage id='template.delete.message' />

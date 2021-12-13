@@ -48,7 +48,7 @@ const en = {
   'activities.templates.desc': 'Use templates to customise and standardise a page default Markdown content and/or structure. Templates can be applied to new pages upon creation. ',
    
   'templates': 'Templates',
-  'template.name': 'Template name',
+  'template.name': 'Name',
   'template.name.desc': 'User-given name for this template',
   'template.create': 'Create template',
   'template.edit': 'Edit Template',
