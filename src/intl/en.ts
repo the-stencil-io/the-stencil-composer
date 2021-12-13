@@ -60,7 +60,7 @@ const en = {
   'template.description.desc': 'Additional information to help identify the use cases of this template',
   'template.delete': 'Delete template',
   'template.delete.message': 'This template will be permanently removed from the application',
-
+  'template.newpage.none': 'None',
   'templates.templatesview.description': 'A new Page can be created from a Template',
   'templates.intro': 'Remember to use a Markdown Level 1 Heading (# My Heading 1) when composing your templates.',
 

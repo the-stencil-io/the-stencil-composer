@@ -78,7 +78,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
             selected={template}
             onChange={setTemplate}
             label='template'
-            empty={{ id: '', label: 'newpage.template.none' }}
+            empty={{ id: '', label: 'template.newpage.none' }}
             items={templates.map((template) => ({ id: template.id, value: template.body.name }))}
           />
           : null}
