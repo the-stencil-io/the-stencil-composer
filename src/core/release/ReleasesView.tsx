@@ -37,7 +37,7 @@ const ReleasesView: React.FC<{}> = () => {
           <Box alignSelf="center">
             <Typography variant="h3" sx={{ p: 1, mb: 3, fontWeight: "bold", color: "mainContent.dark" }}>
               <FormattedMessage id="releases" />: {releases.length}
-              <Typography variant="body2" sx={{ pt: 1 }}><FormattedMessage id={"releases.desc"} /></Typography>
+              <Typography variant="body2" sx={{ pt: 1 }}><FormattedMessage id={"release.desc"} /></Typography>
             </Typography>
           </Box>
           <Box flexGrow={1} />
@@ -52,7 +52,7 @@ const ReleasesView: React.FC<{}> = () => {
 
           <Card sx={{ margin: 1, width: 'fill-available' }}>
             <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}>
-              <FormattedMessage id="locales" />
+              <FormattedMessage id="releases" />
             </Typography>
 
             <TableContainer component={Paper}>

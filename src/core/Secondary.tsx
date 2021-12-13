@@ -1,9 +1,9 @@
 import React from 'react';
-import { Tabs, Tab, Box, TabProps, TabsProps, alpha } from '@mui/material';
+import { Tabs, Tab, Box, TabProps, TabsProps, TextFieldProps, TextField, alpha } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import { useIntl } from 'react-intl';
 
-import { ArticleExplorer, WorkflowExplorer, LinkExplorer, SearchExplorer, SearchSecondary } from './explorer';
+import { ArticleExplorer, WorkflowExplorer, LinkExplorer, SearchExplorer } from './explorer';
 import { Composer } from './context';
 
 
@@ -21,27 +21,51 @@ const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
   },
 }));
 
-const StyledTabs = styled(Tabs)<TabsProps>(({ }) => ({
+const StyledTabs = styled(Tabs)<TabsProps>(() => ({
   "& .MuiTabs-indicator": {
     backgroundColor: "unset",
   }
 }));
 
 
+const StyledSearch = styled(TextField)<TextFieldProps>(({ theme }) => ({
+  color: theme.palette.explorerItem.main,
+  backgroundColor: theme.palette.explorer.main,
+  '& .MuiOutlinedInput-input': {
+    color: theme.palette.explorerItem.main,
+  },
+  '& .MuiOutlinedInput-root': {
+    fontSize: '10pt',
+    height: '2rem',
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.explorerItem.dark,
+    },
+  },
+  '& .MuiFormLabel-root': {
+    color: theme.palette.explorerItem.main,
+  },
+  '& .MuiFormHelperText-root': {
+    color: theme.palette.explorerItem.main,
+    marginLeft: 1
+  }
+}));
 
-const SecondaryArticles: React.FC<{}> = () => {
+
+
+const SecondaryExplorer: React.FC<{}> = () => {
   const intl = useIntl();
   const getLabel = (id: string) => intl.formatMessage({ id });
-  const [tab, setTab] = React.useState("toolbar.articles")
+  const [tab, setTab] = React.useState("toolbar.articles");
+  const [searchString, setSearchString] = React.useState<string>("");
 
   let component = <></>;
 
   if (tab === 'toolbar.services') {
-    component = (<WorkflowExplorer />)
+    component = (<WorkflowExplorer searchString={searchString.toLocaleLowerCase()} />)
   } else if (tab === 'toolbar.links') {
-    component = (<LinkExplorer />)
+    component = (<LinkExplorer searchString={searchString.toLocaleLowerCase()} />)
   } else {
-    component = <ArticleExplorer />;
+    component = <ArticleExplorer searchString={searchString.toLocaleLowerCase()} />;
   }
 
   return (<>
@@ -51,7 +75,13 @@ const SecondaryArticles: React.FC<{}> = () => {
         <StyledTab label={getLabel("explorer.tabs.services")} value='toolbar.services' />
         <StyledTab label={getLabel("explorer.tabs.links")} value='toolbar.links' />
       </StyledTabs>
-      <SearchSecondary />
+      <Box alignSelf="center" sx={{ m: 1 }}>
+        <StyledSearch focused
+          type="search"
+          placeholder={getLabel("explorer.tabs.search")}
+          value={searchString}
+          onChange={({ target }) => setSearchString(target.value)} />
+      </Box>
     </Box>
     {component}
   </>);
@@ -65,7 +95,7 @@ const Secondary: React.FC<{}> = () => {
   if (layout.session.secondary === 'toolbar.search') {
     component = (<SearchExplorer />)
   } else {
-    component = <SecondaryArticles />;
+    component = <SecondaryExplorer />;
   }
   return (<Box sx={{ backgroundColor: "explorer.main", height: '100%' }}>{component}</Box>)
 }

@@ -2,11 +2,11 @@ import StencilClient from './StencilClient';
 
 const createService = (init: { store?: StencilClient.Store, url?: string }): StencilClient.Service => {
   const backend: StencilClient.Store = init.url ? store(init.url) : init.store as any;
-  
+
   const getSite: () => Promise<StencilClient.Site> = async () => backend.fetch("/").then((data) => data as any)
     .catch(resp => {
 
-        // finish error handling
+      // finish error handling
 
       const result: StencilClient.Site = {
         contentType: 'NO_CONNECTION',
@@ -16,9 +16,10 @@ const createService = (init: { store?: StencilClient.Store, url?: string }): Ste
         locales: {},
         pages: {},
         releases: {},
-        workflows: {}
+        workflows: {},
+        templates: {},
       };
-      
+
       return result;
     })
 
@@ -63,6 +64,9 @@ class CreateBuilderImpl implements StencilClient.CreateBuilder {
   async workflow(init: StencilClient.CreateWorkflow): Promise<StencilClient.Workflow> {
     return this._backend.fetch(`/workflows`, { method: "POST", body: JSON.stringify(init) }).then((data) => data as any)
   }
+  async template(init: StencilClient.CreateTemplate): Promise<StencilClient.Template> {
+    return this._backend.fetch(`/templates`, { method: "POST", body: JSON.stringify(init) }).then((data) => data as any)
+  }
 }
 
 class UpdateBuilderImpl implements StencilClient.UpdateBuilder {
@@ -84,6 +88,9 @@ class UpdateBuilderImpl implements StencilClient.UpdateBuilder {
   }
   async workflow(init: StencilClient.WorkflowMutator): Promise<StencilClient.Workflow> {
     return this._backend.fetch(`/workflows`, { method: "PUT", body: JSON.stringify(init) }).then((data) => data as any)
+  }
+  async template(init: StencilClient.TemplateMutator): Promise<StencilClient.Template> {
+    return this._backend.fetch(`/templates`, { method: "PUT", body: JSON.stringify(init) }).then((data) => data as any)
   }
 }
 
@@ -112,6 +119,9 @@ class DeleteBuilderImpl implements StencilClient.DeleteBuilder {
   }
   async linkArticlePage(link: StencilClient.LinkId, article: StencilClient.ArticleId, _locale: StencilClient.Locale): Promise<void> {
     return this._backend.fetch(`/links/${link}?articleId=${article}`, { method: "DELETE" }).then((data) => data as any)
+  }
+  async template(init: StencilClient.TemplateId): Promise<void> {
+    return this._backend.fetch(`/templates/${init}`, { method: "DELETE" }).then((data) => data as any)
   }
 }
 

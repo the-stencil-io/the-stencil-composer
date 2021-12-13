@@ -17,8 +17,8 @@ import { NewPage } from './page';
 import { MigrationComposer } from './migration';
 import { TemplateComposer } from './template';
 
-
 import { Composer, StencilClient, Layout } from './context';
+
 
 interface CardData {
   type: CardType;
@@ -107,7 +107,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
     desc: "activities.templates.desc",
     color: theme.palette.release?.main,
     type: "templates",
-    buttonCreate: "templates.create",
+    buttonCreate: "template.create",
     buttonViewAll: "button.view.all.templates"
   },
   {

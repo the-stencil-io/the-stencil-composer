@@ -49,6 +49,7 @@ interface StyledTextFieldProps<T> {
   placeholder?: T;
   required?: boolean;
   onChange: (newValue: T) => void;
+  onEnter?: () => void;
 }
 
 const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
@@ -74,8 +75,9 @@ const StyledFileField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
   );
 }
 
-const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, label, value, required, placeholder, helperText, disabled }) => {
+const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onEnter: onEnterDelegate, onChange, label, value, required, placeholder, helperText, disabled }) => {
   const helperTextLocalized = helperText ? <FormattedMessage id={helperText} /> : helperText;
+
   return (
     <TextFieldRoot fullWidth
       disabled={disabled}
@@ -85,7 +87,14 @@ const StyledTextField: React.FC<StyledTextFieldProps<string>> = ({ onChange, lab
       helperText={helperTextLocalized}
       placeholder={placeholder !== null && placeholder !== undefined ? placeholder : ''}
       value={value}
-      onChange={({ target }) => onChange(target.value)} />
+      onKeyDown={onEnterDelegate ? (event) => {
+        if (event.code === 'Enter') {
+          onEnterDelegate();
+        }
+      } : undefined}
+      onChange={({ target }) => onChange(target.value)}
+    />
+
   );
 }
 

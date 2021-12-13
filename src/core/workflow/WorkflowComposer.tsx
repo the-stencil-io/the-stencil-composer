@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Checkbox, ListItemText, Paper, Box, Typography } from '@mui/material';
+import { ListItemText, Paper, Box, Typography } from '@mui/material';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 
 import { FormattedMessage } from 'react-intl';
@@ -14,7 +14,9 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { service, actions, site, session } = Composer.useComposer();
 
   const [devMode, setDevMode] = React.useState<boolean>(true);
-  const [articleSelectOpen, setArticleSelectOpen] = React.useState<boolean | undefined>(undefined);
+
+  let articleSelectOpen: boolean | undefined;
+
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
   const [technicalname, setTechnicalname] = React.useState('');
   const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>([]);
@@ -53,7 +55,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
                 value={technicalname}
                 onChange={setTechnicalname} />
             </Box>
-            <Box maxWidth="50%" sx={{ml: 1}}>
+            <Box maxWidth="50%" sx={{ ml: 1 }}>
               <StencilStyles.Switch
                 checked={devMode}
                 helperText="services.devmode.helper"
@@ -64,7 +66,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
           </Box>
 
-          <StencilStyles.SelectMultiple label='composer.select.article'
+          <StencilStyles.SelectMultiple label='article.select'
             multiline
             open={articleSelectOpen}
             selected={articleId}
