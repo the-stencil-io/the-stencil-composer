@@ -31,7 +31,7 @@ const getMdCommands = (locale: StencilClient.SiteLocale, color: string, site: St
       name: 'templates',
       groupName: 'templates',
       buttonProps: { 'aria-label': 'Insert Template' },
-      icon: (<div style={{ fontWeight: 'bold', fontSize: 15, alignItems: 'center' }}>T</div>)
+      icon: (<div style={{ fontWeight: 'bold', fontSize: 15, alignItems: 'center', color: 'blue'}}>T</div>)
     }),
     commands.group([commands.title1, commands.title2, commands.title3, commands.title4, commands.title5, commands.title6], {
       name: 'title',
