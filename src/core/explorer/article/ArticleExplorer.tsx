@@ -33,7 +33,11 @@ const ArticleExplorer: React.FC<{ searchString: string }> = ({searchString}) => 
     return session.articles;
   }, [searchString, session]);
 
-  treeItems.sort((l0, l1) => l1.displayOrder - l0.displayOrder);
+  treeItems.sort((l0, l1) => {
+    
+    
+    return l0.displayOrder - l1.displayOrder;
+  });
 
   return (
     <Box>
