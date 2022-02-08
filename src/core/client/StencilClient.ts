@@ -99,10 +99,10 @@ declare namespace StencilClient {
 
   interface Release {
     id: string,
-    created: string,
     body: {
       note?: string,
       name: string,
+      created: string,
       locales: LocaleReleaseItem[];
       articles: ArticleReleaseItem[];
       links: LinkReleaseItem[];
@@ -230,7 +230,8 @@ declare namespace StencilClient {
   }
   interface CreateRelease {
     name: string,
-    note?: string
+    note?: string,
+    created: string
   }
 
   interface CreateBuilder {

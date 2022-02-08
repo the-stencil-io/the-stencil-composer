@@ -31,7 +31,7 @@ const ReleasesView: React.FC<{}> = () => {
   return (
     <>
       {releaseComposer ? <ReleaseComposer onClose={() => setReleaseComposer(false)} /> : null}
-      
+
       <Box sx={{ paddingBottom: 1, m: 2 }}>
         <Box display="flex">
           <Box alignSelf="center">
@@ -66,11 +66,13 @@ const ReleasesView: React.FC<{}> = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {releases.map((release, index) => (
-                    <Row key={index}
-                      release={release}
-                      onDownload={() => onDownload(release)}
-                    />))}
+                  {releases.map(r => ({ id: new Date(r.body.created as string), body: r }))
+                    .sort(({ id: a }, { id: b }) => a > b ? -1 : a < b ? 1 : 0)
+                    .map((release, index) => (
+                      <Row key={index}
+                        release={release.body}
+                        onDownload={() => onDownload(release.body)}
+                      />))}
                 </TableBody>
               </Table>
             </TableContainer>
@@ -84,12 +86,11 @@ const ReleasesView: React.FC<{}> = () => {
 
 const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> = ({ release, onDownload }) => {
 
-
   return (
     <>
       <TableRow key={release.id}>
         <TableCell align="left" >{release.body.name}</TableCell>
-        <TableCell align="left">{release.created}</TableCell>
+        <TableCell align="left">{release.body.created}</TableCell>
         <TableCell align="left">{release.body.note}</TableCell>
         <TableCell align="center" >
           <IconButton onClick={onDownload} sx={{ color: 'uiElements.main' }}><GetAppIcon /> </IconButton>

@@ -10,9 +10,10 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const [name, setName] = React.useState('');
   const [note, setNote] = React.useState('');
+  const created = new Date().toISOString();
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateRelease = { name, note };
+    const entity: StencilClient.CreateRelease = { name, note, created };
     service.create().release(entity).then(success => {
       console.log(success)
       onClose();
@@ -27,7 +28,6 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       <>
         <StencilStyles.TextField label='release.composer.label' onChange={setName} value={name} />
         <StencilStyles.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note} />
-        <StencilStyles.TextField disabled label='date' value={new Date().toISOString()} onChange={() => { }} />
       </>
     </StencilStyles.Dialog>
   );
