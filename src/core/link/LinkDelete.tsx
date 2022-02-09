@@ -9,7 +9,6 @@ import StencilStyles from '../styles';
 
 interface LinkDeleteProps {
   linkId: StencilClient.LinkId,
-  open: boolean,
   onClose: () => void,
 }
 
@@ -27,8 +26,8 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
-      title="article.composer.title"
-      submit={{ title: "article.create", onClick: handleDelete, disabled: false }}>
+      title="link.delete.title"
+      submit={{ title: "link.delete.title", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="link.delete" />
       </DialogContentText>

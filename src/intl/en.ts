@@ -25,6 +25,8 @@ const en = {
   'reorder': 'Re-order',
   'remove': 'Remove',
   
+  'composer.select.article': 'Select Article',
+  
   'search.field.placeholder': 'Enter search keyword',
   'search.results.title': 'Search results',
   'search.field.label': 'Search',
@@ -76,7 +78,9 @@ const en = {
   'services.selected': 'Selected services',
   'services.devmode.helper': 'If Development mode is active, this service will only appear in the development environment for testing. It will not be included in production releases.',
   'services.devmode': 'Development mode',
-  'services.delete': 'Permanently delete this service?',
+  'services.delete': 'Delete service',
+  'services.delete.desc': 'Deleting this service will permanently remove it from the application, and all associations with Articles/Pages will be lost.',
+
 
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
@@ -160,7 +164,7 @@ const en = {
   'link.composer.descriptionhelper': 'Text that the user will see',
   'link.composer.valuehelper': 'URL / path of link (http://www.example.com)',
   'link.edit.title': 'Edit link',
-  'link.delete.title': 'Permanently delete this link?',
+  'link.delete.title': 'Delete link',
   'link.delete': 'Deleting this link will permanently remove it from the application, and all associations with Articles/Pages will be lost.',
   'link.removepage.title': 'Remove this link?',
   'link.removepage': 'Removing the link only removes its association with this article. To delete this item permanently, click the Delete icon.',

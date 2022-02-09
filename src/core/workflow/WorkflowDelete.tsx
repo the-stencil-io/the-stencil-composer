@@ -28,7 +28,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
 
       <DialogContentText>
-        <FormattedMessage id="services.delete" />
+        <FormattedMessage id="services.delete.desc" />
       </DialogContentText>
     </StencilStyles.Dialog>
   );
