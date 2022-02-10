@@ -10,9 +10,15 @@ import Layout from '../layout';
 
 interface StencilComposerProps {
   service: StencilClient.Service,
+  locked?: boolean;
 };
 
-const StencilComposer: React.FC<StencilComposerProps> = ({ service }) => {
+const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) => {
+  
+  if(locked === true) {
+    return (<div>Content editing locked by deployment.</div>)
+  }
+  
   return (
     <Layout.Provider drawerOpen={true}>
       <Composer.Provider service={service} >
