@@ -9,9 +9,10 @@ import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 import { LocaleLabels } from '../locale';
 
+const selectSub = { ml: 2, color: "article.dark" }
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { service, actions, site, session } = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
 
   const [devMode, setDevMode] = React.useState<boolean>(true);
 
@@ -34,7 +35,27 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     })
   }
 
-  const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
+  //const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
+  
+  const articles: { id: string, value: string }[] = Object.values(site.articles)
+    .sort((a1, a2) => {
+      if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
+        const children = a1.body.order - a2.body.order;
+        if (children === 0) {
+          return a1.body.name.localeCompare(a2.body.name);
+        }
+        return children;
+      }
+
+      return (a1.body.parentId ? site.articles[a1.body.parentId].body.order + 1 : a1.body.order)
+        - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
+    })
+    .map(article => ({
+      id: article.id,
+      value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`,
+      sx: article.body.parentId ? selectSub : undefined
+    }));
+    
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
@@ -78,7 +99,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               id: article.id,
               value: (<>
                 <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
-                <ListItemText primary={article.body.name} />
+                <ListItemText primary={article.value} />
               </>)
             }))}
           />

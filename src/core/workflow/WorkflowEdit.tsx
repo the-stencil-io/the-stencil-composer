@@ -23,7 +23,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const [devMode, setDevMode] = React.useState(workflow.body.devMode);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(workflow.body.articles);
   const [technicalname, setTechnicalname] = React.useState(workflow.body.value);
-  const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
+  //const articles: StencilClient.Article[] = session.getArticlesForLocales(workflow.body.labels.map(l => l.locale));
   const [labels, setLabels] = React.useState<StencilClient.LocaleLabel[]>(workflow.body.labels);
   const [changeInProgress, setChangeInProgress] = React.useState(false);
 
@@ -35,6 +35,24 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
       actions.handleLoadSite();
     })
   }
+
+  const articles: { id: string, value: string }[] = Object.values(site.articles)
+    .sort((a1, a2) => {
+      if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
+        const children = a1.body.order - a2.body.order;
+        if (children === 0) {
+          return a1.body.name.localeCompare(a2.body.name);
+        }
+        return children;
+      }
+
+      return (a1.body.parentId ? site.articles[a1.body.parentId].body.order + 1 : a1.body.order)
+        - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
+    })
+    .map(article => ({
+      id: article.id,
+      value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`,
+    }));
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
@@ -76,7 +94,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
               id: article.id,
               value: (<>
                 <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
-                <ListItemText primary={article.body.name} />
+                <ListItemText primary={article.value} />
               </>
               )
             }))}
