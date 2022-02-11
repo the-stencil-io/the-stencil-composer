@@ -1,12 +1,15 @@
 import React from 'react';
-
+import { Typography } from '@mui/material';
+import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
 
 const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
-  const { service, actions } = Composer.useComposer();
+  const { service, actions, session } = Composer.useComposer();
+  const { site } = session;
+
 
   const [name, setName] = React.useState('');
   const [note, setNote] = React.useState('');
@@ -24,8 +27,18 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="release.composer.title"
-      submit={{ title: "button.create", onClick: handleCreate, disabled: !name }}>
+      submit={{ title: "button.create", onClick: handleCreate, disabled: !name || site.contentType === 'EMPTY' }}>
       <>
+        {site.contentType === 'EMPTY' ? <Typography variant="h4" sx={{
+          color: 'error.main',
+          fontWeight: 'bold',
+          p: 2,
+          borderRadius: 3,
+          textAlign: 'center',
+          border: '1px solid',
+          borderColor: 'error.main'
+        }}>
+          <FormattedMessage id={'site.content.empty'} /></Typography> : null}
         <StencilStyles.TextField label='release.composer.label' onChange={setName} value={name} />
         <StencilStyles.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note} />
       </>

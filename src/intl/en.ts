@@ -1,5 +1,5 @@
 const en = {
-  
+
   'pages': 'Pages',
   'articles': 'Articles',
   'locale': 'Locale',
@@ -24,13 +24,14 @@ const en = {
   'rename': 'Rename',
   'reorder': 'Re-order',
   'remove': 'Remove',
-  
+
+  'site.content.empty': 'Site has no content! Create content before making a release!',
   'composer.select.article': 'Select Article',
-  
+
   'search.field.placeholder': 'Enter search keyword',
   'search.results.title': 'Search results',
   'search.field.label': 'Search',
-  
+
   'activities.title': 'Activities',
   'activities.desc': 'Create, view, and navigate site resources',
   'activities.article.title': 'Article',
@@ -48,7 +49,7 @@ const en = {
   'activities.migration.desc': 'Import site data as a JSON file for restoring site from a backup, content updates, etc.',
   'activities.templates.title': 'Templates',
   'activities.templates.desc': 'Use templates to customise and standardise a page default Markdown content and/or structure. Templates can be applied to new pages upon creation. ',
-   
+
   'templates': 'Templates',
   'template.name': 'Name',
   'template.name.desc': 'User-given name for this template',
@@ -87,13 +88,13 @@ const en = {
   'toolbar.help': 'Help and user documentation',
   'toolbar.services': 'Services',
   'toolbar.import': 'Import data',
-  
+
   'link.type.internal': 'Internal',
   'link.type.external': 'External',
   'link.type.phone': 'Phone number',
   'link.search.title': 'Search links by value',
   'link.value': 'Link value',
-  
+
   'sitelocale.label.select.alreadyDefined': 'Cannot add because this locale is already defined',
   'sitelocale.label.table.editLocaleValue': 'Edit locale value',
   'locales.label.table.title': 'Locale labels',
@@ -112,7 +113,7 @@ const en = {
   'imports': 'Imports',
   'imports.select': 'Select a file to import',
   'imports.import.action': 'Import selected',
-  
+
   'article.order': 'Article order number',
   'article.select': 'Select Articles',
   'article.links.selectedlinks': 'Selected links',
@@ -135,7 +136,7 @@ const en = {
   'allarticles.individual': 'De-select all articles',
   'add.allarticles.link.help': 'This link will be added to (or removed from) all articles. Any previous link-article associations will be lost once this change has been applied',
   'add.allarticles.service.help': 'This service will be added to (or removed from) all articles. Any previous service-article associations will be lost once this change has been applied.',
-  
+
   'button.cancel': 'Cancel',
   'button.create': 'Create',
   'button.add': 'Add',
@@ -146,13 +147,13 @@ const en = {
   'button.remove': 'Continue and remove',
   'button.apply': 'Apply changes',
   'button.releasegraph': 'Graph',
-  
+
   'button.view.all.locales': 'View locales',
   'button.view.all.releases': 'View releases',
   'button.view.all.templates': 'View templates',
 
   'links.message': 'Expand rows to view Link - Article associations',
-  
+
   'link.article.add.title': 'Add link to an Article',
   'link.article.select': 'Select Article',
   'link.type': 'Type',
