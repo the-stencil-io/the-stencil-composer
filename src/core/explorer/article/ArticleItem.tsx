@@ -97,7 +97,7 @@ const ArticleItem: React.FC<{
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText" }>
+      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText"}>
 
         {/** Article options */
           options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'}
@@ -127,13 +127,17 @@ const ArticleItem: React.FC<{
             labelInfo={`${workflows.length}`}
             labelcolor="workflow">
 
-            {workflows.map(view => (<WorkflowItem
-              key={view.workflow.id}
-              labelText={view.workflow.body.value}
-              devMode={view.workflow.body.devMode}
-              nodeId={view.workflow.id}
+            {workflows
+              .map((w) => ({ w, name: session.getWorkflowName(w.workflow.id)?.name }))
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((w) => w.w)
+              .map(view => (<WorkflowItem
+                key={view.workflow.id}
+                labelText={session.getWorkflowName(view.workflow.id).name}
+                devMode={view.workflow.body.devMode}
+                nodeId={view.workflow.id}
 
-              onClick={() => options.setEditWorkflow(view.workflow.id)} />))}
+                onClick={() => options.setEditWorkflow(view.workflow.id)} />))}
           </StencilStyles.TreeItem>) : null
         }
 
@@ -143,12 +147,16 @@ const ArticleItem: React.FC<{
             labelIcon={FolderOutlinedIcon}
             labelInfo={`${links.length}`}
             labelcolor="link">
-            
-            {links.map(view => (<LinkItem key={view.link.id}
-              labelText={view.link.body.value}
-              nodeId={view.link.id}
-              onClick={() => options.setEditLink(view.link.id)} />)
-            )}
+
+            {links
+              .map((w) => ({ w, name: session.getLinkName(w.link.id)?.name }))
+              .sort((a, b) => a.name.localeCompare(b.name))
+              .map((w) => w.w)
+              .map(view => (<LinkItem key={view.link.id}
+                labelText={session.getLinkName(view.link.id).name}
+                nodeId={view.link.id}
+                onClick={() => options.setEditLink(view.link.id)} />)
+              )}
           </StencilStyles.TreeItem>) : null
 
         }

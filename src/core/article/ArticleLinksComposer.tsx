@@ -10,7 +10,10 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   const layout = Composer.useLayout();
   const view = session.getArticleView(props.articleId);
 
-  const links: StencilClient.Link[] = Object.values(site.links).sort((o1, o2) => o1.body.value.localeCompare(o2.body.value));
+  const links: StencilClient.Link[] = Object.values(site.links)
+    .map((w) => ({ w, name: session.getLinkName(w.id)?.name }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((w) => w.w);
 
   const handleSave = (selectedLinks: string[]) => {
     const article = site.articles[props.articleId]
@@ -27,12 +30,12 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   }
 
   const articleName = site.articles[props.articleId].body.name;
-  
+
   return (
     <>
       <StencilStyles.TransferList
-        title="articlelinks" 
-        titleArgs={{name: articleName}}
+        title="articlelinks"
+        titleArgs={{ name: articleName }}
         searchTitle="link.search.title"
         selectedTitle="article.links.selectedlinks"
         headers={["link.value", "link.type"]}
@@ -41,8 +44,13 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
           const link = site.links[row];
           return link.body.value.toLowerCase().indexOf(search) > -1;
         }}
-        renderCells={(row) => [site.links[row].body.value, site.links[row].body.contentType]}
-        selected={view.links.map(l => l.link.id)}
+        renderCells={(row) => [session.getLinkName(site.links[row].id)?.name, site.links[row].body.contentType]}
+        selected={view.links
+          .map((w) => ({ w, name: session.getLinkName(w.link.id)?.name }))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((w) => w.w)
+          .map(l => l.link.id)
+        }
         cancel={{
           label: 'button.cancel',
           onClick: () => layout.actions.handleTabCloseCurrent()

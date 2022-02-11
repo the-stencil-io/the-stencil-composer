@@ -293,7 +293,7 @@ class SessionData implements Composer.Session {
     const parent = article.article.body.parentId ? this.getArticleName(article.article.body.parentId).name + "/" : ""
 
     if (locale) {
-      const pages = article.pages.filter(p => p.locale.id === locale);
+      const pages = article.pages.filter(p => p.locale?.id === locale);
       if (pages.length === 0) {
         return { missing: true, name: "_not_translated_" + articleName };
       }
@@ -309,7 +309,7 @@ class SessionData implements Composer.Session {
     const locale = this._filter.locale;
 
     if (locale) {
-      const pages = view.labels.filter(p => p.locale.id === locale);
+      const pages = view.labels.filter(p => p.locale?.id === locale);
       if (pages.length === 0) {
         return { missing: true, name: "_not_translated_" + workflowName };
       }
@@ -655,7 +655,10 @@ class ImmutableWorkflowSearchEntry implements Composer.SearchDataEntry {
     values.push({ type: "WORKFLOW_NAME", value: view.workflow.body.value, id: view.workflow.id });
 
     for (const label of view.labels) {
-      values.push({ type: "WORKFLOW_LABEL", value: label.label.labelValue, id: label.locale.id });
+      if(!label.locale){
+        console.error("no locale", label);
+      }
+      values.push({ type: "WORKFLOW_LABEL", value: label.label.labelValue, id: label.locale?.id });
     }
     return new ImmutableWorkflowSearchEntry({ id: this._id, values });
   }

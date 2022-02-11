@@ -17,11 +17,11 @@ const templateCommand = (template: StencilClient.Template): ICommand => ({
 
 const getMdCommands = (locale: StencilClient.SiteLocale, color: string, site: StencilClient.Site) => {
   const localeTitle: ICommand = {
-    name: locale.body.value,
+    name: locale?.body.value,
     groupName: 'title',
     keyCommand: 'title1',
-    buttonProps: { 'aria-label': locale.body.value },
-    icon: (<div style={{ fontWeight: 'bold', fontSize: 15, alignItems: 'center', color }}>{locale.body.value}</div>)
+    buttonProps: { 'aria-label': locale?.body.value },
+    icon: (<div style={{ fontWeight: 'bold', fontSize: 15, alignItems: 'center', color }}>{locale?.body.value}</div>)
 
   };
 

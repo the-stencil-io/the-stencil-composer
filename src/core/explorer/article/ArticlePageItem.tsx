@@ -61,7 +61,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
             variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1, pl: 1 }}
           >
-            {props.page.locale.body.value}
+            {props.page.locale?.body.value}
           </Typography>
 
           <Box component={RightEditIcon}

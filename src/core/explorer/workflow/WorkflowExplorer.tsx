@@ -56,7 +56,11 @@ const WorkflowExplorer: React.FC<{ searchString: string }> = ({ searchString }) 
           }
           setExpanded(nodeIds);
         }}>
-        {workflows.map((view, index) => (
+        {workflows
+          .map((w) => ({w, name: session.getWorkflowName(w.workflow.id)?.name}))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((w) => (w.w))
+          .map((view, index) => (
           <WorkflowItem key={index} workflowId={view.workflow.id} />
         ))}
       </TreeView>

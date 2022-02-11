@@ -139,7 +139,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
               <DeleteOutlineIcon />
             </IconButton>
           </TableCell>
-          <TableCell align="left">{site.locales[row.locale].body.value}</TableCell>
+          <TableCell align="left">{site.locales[row.locale]?.body.value}</TableCell>
           <TableCell align="left" onClick={() => {
             if (!edit) {
               setEdit(row);

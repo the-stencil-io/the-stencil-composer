@@ -214,7 +214,7 @@ declare namespace StencilClient {
     description: string;
     content: string;
   }
-  
+
   interface CreateLink {
     type: "internal" | "external" | string;
     value: string;
@@ -267,7 +267,12 @@ declare namespace StencilClient {
   interface Store {
     fetch<T>(path: string, init?: RequestInit): Promise<T>;
   }
-
+  interface StoreConfig {
+    url: string;
+    oidc?: string;
+    status?: string;
+    csrf?: { key: string, value: string }
+  }
   interface ErrorMsg {
     id: string;
     value: string;
@@ -284,83 +289,11 @@ namespace StencilClient {
   export const mock = (): Service => {
     return createMock();
   };
-  export const service = (init: { store?: Store, url?: string }): Service => {
+  export const service = (init: { store?: Store, config?: StoreConfig }): Service => {
     return createService(init);
   };
-
-
-  export class StoreError extends Error {
-    private _props: ErrorProps;
-
-    constructor(props: ErrorProps) {
-      super(props.text);
-      this._props = {
-        text: props.text,
-        status: props.status,
-        errors: parseErrors(props.errors)
-      };
-
-
-      ///children.errors
-    }
-    get name() {
-      return this._props.text;
-    }
-    get status() {
-      return this._props.status;
-    }
-    get errors() {
-      return this._props.errors;
-    }
-  }
 }
 
-
-const getErrorMsg = (error: any) => {
-  if (error.msg) {
-    return error.msg;
-  }
-  if (error.value) {
-    return error.value
-  }
-  if (error.message) {
-    return error.message;
-  }
-}
-
-const getErrorId = (error: any) => {
-  if (error.id) {
-    return error.id;
-  }
-  if (error.code) {
-    return error.code
-  }
-  return "";
-}
-
-
-const parseErrors = (props: any): StencilClient.ErrorMsg[] => {
-  if (!props) {
-    return []
-  }
-
-  if (props.appcode) {
-    return [
-      { id: props.appcode, value: props.appcode }
-    ]
-  }
-
-
-  if (!props.map) {
-    return [];
-  }
-  const result: StencilClient.ErrorMsg[] = props.map((error: any) => ({
-    id: getErrorId(error),
-    value: getErrorMsg(error)
-  }));
-
-  return result;
-}
 
 export default StencilClient;
 

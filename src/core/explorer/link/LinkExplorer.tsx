@@ -19,7 +19,7 @@ const findMainId = (values: string[]) => {
 }
 
 
-const LinkExplorer: React.FC<{searchString: string}> = ({ searchString }) => {
+const LinkExplorer: React.FC<{ searchString: string }> = ({ searchString }) => {
   const { session } = Composer.useComposer();
   const [expanded, setExpanded] = React.useState<string[]>([]);
   const [editLink, setEditLink] = React.useState<undefined | StencilClient.LinkId>(undefined);
@@ -58,9 +58,13 @@ const LinkExplorer: React.FC<{searchString: string}> = ({ searchString }) => {
           }
           setExpanded(nodeIds);
         }}>
-        {links.map((view) => (
-          <LinkItem key={view.link.id} linkId={view.link.id} />
-        ))}
+        {links
+          .map((w) => ({ w, name: session.getLinkName(w.link.id)?.name }))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((w) => w.w)
+          .map((view) => (
+            <LinkItem key={view.link.id} linkId={view.link.id} />
+          ))}
       </TreeView>
     </Box>
   );

@@ -7,13 +7,16 @@ import StencilStyles from '../styles';
 const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => ((o1.body.devMode ? "a-" : "b-") + o1.body.value)
   .localeCompare(((o2.body.devMode ? "a-" : "b-") + o2.body.value));
 
-const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = ( props) => {
+const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
 
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Composer.useLayout();
 
   const view = session.getArticleView(props.articleId);
-  const workflows: StencilClient.Workflow[] = Object.values(site.workflows).sort(comparator);
+  const workflows: StencilClient.Workflow[] = Object.values(site.workflows)
+    .map((w) => ({ w, name: session.getWorkflowName(w.id)?.name }))
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((w) => w.w);
 
   const handleSave = (selectedWorkflows: string[]) => {
     const article = site.articles[props.articleId]
@@ -37,7 +40,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
     <>
       <StencilStyles.TransferList
         title="articleservices"
-        titleArgs={{name: articleName}}
+        titleArgs={{ name: articleName }}
         searchTitle="services.technicalname"
         selectedTitle="services.selected"
         headers={["services.technicalname", "services.devmode"]}
@@ -46,9 +49,13 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
           const workflow = site.workflows[row];
           return workflow.body.value.toLowerCase().indexOf(search) > -1;
         }}
-        renderCells={(row) => [site.workflows[row].body.value, site.workflows[row].body.devMode ? "DEV" : ""]}
-        selected={view.workflows.map(view => view.workflow).sort(comparator).map(v => v.id)}
-        cancel={{
+        renderCells={(row) => [session.getWorkflowName(row).name, site.workflows[row].body.devMode ? "DEV" : ""]}
+        selected={view.workflows
+          .map((w) => ({ w, name: session.getWorkflowName(w.workflow.id)?.name }))
+          .sort((a, b) => a.name.localeCompare(b.name))
+          .map((w) => w.w)
+          .map(l => l.workflow.id)
+        } cancel={{
           label: 'button.cancel',
           onClick: () => layout.actions.handleTabCloseCurrent()
         }}

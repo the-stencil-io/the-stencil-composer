@@ -1,7 +1,8 @@
 import StencilClient from './StencilClient';
+import { DefaultStore } from './store';
 
-const createService = (init: { store?: StencilClient.Store, url?: string }): StencilClient.Service => {
-  const backend: StencilClient.Store = init.url ? store(init.url) : init.store as any;
+const createService = (init: { store?: StencilClient.Store, config?: StencilClient.StoreConfig }): StencilClient.Service => {
+  const backend: StencilClient.Store = init.config ? new DefaultStore(init.config) : init.store as any;
 
   const getSite: () => Promise<StencilClient.Site> = async () => backend.fetch("/").then((data) => data as any)
     .catch(resp => {
@@ -124,44 +125,6 @@ class DeleteBuilderImpl implements StencilClient.DeleteBuilder {
     return this._backend.fetch(`/templates/${init}`, { method: "DELETE" }).then((data) => data as any)
   }
 }
-
-const store: (initUrl: string) => StencilClient.Store = (initUrl: string) => ({
-  fetch<T>(path: string, req?: RequestInit): Promise<T> {
-    if (!path) {
-      throw new Error("can't fetch with undefined url")
-    }
-
-    const defRef: RequestInit = {
-      method: "GET",
-      credentials: 'same-origin',
-      headers: {
-        "Content-Type": "application/json;charset=UTF-8"
-      }
-    };
-
-    const url = initUrl;
-    const finalInit: RequestInit = Object.assign(defRef, req ? req : {});
-
-    return fetch(url + path, finalInit)
-      .then(response => {
-        if (response.status === 302) {
-          return null;
-        }
-        if (!response.ok) {
-          return response.json().then(data => {
-            console.error(data);
-            throw new StencilClient.StoreError({
-              text: response.statusText,
-              status: response.status,
-              errors: data
-            });
-          });
-        }
-        return response.json();
-      });
-  }
-});
-
 
 export default createService;
 

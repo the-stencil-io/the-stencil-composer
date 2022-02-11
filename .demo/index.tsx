@@ -7,7 +7,7 @@ import { IntlProvider } from 'react-intl'
 var locale = (navigator.languages && navigator.languages[0]) || navigator.language || (navigator as any).userLanguage || 'en-US';
 
 const service = StencilClient.mock();
-//const service = StencilClient.service({url: "http://localhost:8080/q/ide-services"});
+//const service = StencilClient.service({ config: { url: "http://localhost:8080/q/ide-services" }});
 
 ReactDOM.render(
   <React.StrictMode>
