@@ -45,12 +45,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
           return link.body.value.toLowerCase().indexOf(search) > -1;
         }}
         renderCells={(row) => [session.getLinkName(site.links[row].id)?.name, site.links[row].body.contentType]}
-        selected={view.links
-          .map((w) => ({ w, name: session.getLinkName(w.link.id)?.name }))
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((w) => w.w)
-          .map(l => l.link.id)
-        }
+        selected={view.links.map(l => l.link.id)}
         cancel={{
           label: 'button.cancel',
           onClick: () => layout.actions.handleTabCloseCurrent()

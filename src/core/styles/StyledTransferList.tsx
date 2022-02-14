@@ -99,7 +99,7 @@ const StyledTransferList: React.FC<StyledTransferListProps> = (props) => {
                 </TableCell>
               </TableRow> : null}
 
-              {selected.map((row, index) => (
+              {rows.filter(row => selected.includes(row)).map((row, index) => (
                 <TableRow hover key={index}>
                   <TableCell>
                     <IconButton sx={{color: 'uiElements.main'}} onClick={() => handleChange(row, "remove")}>

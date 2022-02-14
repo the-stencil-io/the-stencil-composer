@@ -50,12 +50,8 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
           return workflow.body.value.toLowerCase().indexOf(search) > -1;
         }}
         renderCells={(row) => [session.getWorkflowName(row).name, site.workflows[row].body.devMode ? "DEV" : ""]}
-        selected={view.workflows
-          .map((w) => ({ w, name: session.getWorkflowName(w.workflow.id)?.name }))
-          .sort((a, b) => a.name.localeCompare(b.name))
-          .map((w) => w.w)
-          .map(l => l.workflow.id)
-        } cancel={{
+        selected={view.workflows.map(l => l.workflow.id)} 
+        cancel={{
           label: 'button.cancel',
           onClick: () => layout.actions.handleTabCloseCurrent()
         }}
