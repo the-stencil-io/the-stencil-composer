@@ -15,7 +15,7 @@ const StyledCheckboxRoot = styled(Checkbox)<CheckboxProps>(({ theme }) => ({
 
 const StyledCheckbox: React.FC<{ checked: boolean, sx?: SxProps<Theme> }> = (props) => {
   return (
-    <StyledCheckboxRoot />
+    <StyledCheckboxRoot { ... props}/>
   )
 }
 

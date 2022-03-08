@@ -17,7 +17,7 @@ interface LinkEditProps {
 }
 
 const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
-  const { service, actions, session, site } = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
   const link = site.links[linkId];
 
   const [value, setValue] = React.useState(link.body.value);
@@ -26,7 +26,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   const [contentType, setContentType] = React.useState(link.body.contentType);
 
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>(link.body.articles);
-  const locales = labels.map(l => l.locale);
+  //const locales = labels.map(l => l.locale);
   //const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
 
 

@@ -46,7 +46,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`,
       sx: article.body.parentId ? selectSub : undefined
     }));
-
+    
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
@@ -62,10 +62,10 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <StencilStyles.Select label='link.type'
           selected={type}
           onChange={setType}
-          
+
           items={[
             { id: 'internal', value: <FormattedMessage id='link.type.internal' /> },
-            { id: 'external', value: <FormattedMessage id='link.type.external'/> },
+            { id: 'external', value: <FormattedMessage id='link.type.external' /> },
             { id: 'phone', value: <FormattedMessage id={'link.type.phone'} /> }
           ]} />
 
@@ -84,15 +84,17 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           multiline
           onChange={setArticleId}
           selected={articleId}
+
           renderValue={(selected: StencilClient.ArticleId[]) => selected.map((articleId, index) => <div key={index}>{site.articles[articleId].body.name}</div>)}
           items={articles.map(article => ({
             id: article.id,
             value: (<>
-              <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
+              <StencilStyles.Checkbox checked={articleId.includes(article.id) ? true : false} />
               <ListItemText primary={article.value} />
             </>)
-          }))}
-        />
+          })
+          
+          )} />
       </>
     </StencilStyles.Dialog>
   );

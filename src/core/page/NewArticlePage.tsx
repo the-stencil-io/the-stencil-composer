@@ -23,7 +23,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
   }
 
   const handleCreate = () => {
-    const content = template ? site.templates[template].body.content : undefined;
+   // const content = template ? site.templates[template].body.content : undefined;
     const entity: StencilClient.CreatePage = { articleId: article.id, locale: open.id };
     service.create().page(entity)
       .then(success => actions.handleLoadSite().then(() => success))

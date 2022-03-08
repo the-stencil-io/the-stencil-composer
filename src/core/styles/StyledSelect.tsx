@@ -54,7 +54,9 @@ const StyledSelectMultiple: React.FC<{
   helpers?: { id: string, value: string | React.ReactChild, sx?: SxProps<Theme> }[];
   renderValue?: (values: string[]) => React.ReactNode;
 } & StyledSelectProps<string[]>> = (props) => {
+  
   const title = <FormattedMessage id={props.label} />;
+  
   return (
     <StyledFormControl variant="outlined" fullWidth>
       <InputLabel>{title}</InputLabel>
@@ -63,8 +65,9 @@ const StyledSelectMultiple: React.FC<{
         multiline={props.multiline}
         disabled={props.disabled}
         value={props.selected}
-        
-        onChange={({ target }) => props.onChange((target.value as string[]).filter(id => !id.startsWith("_helpers_")))}
+        onChange={({ target }) => {
+          props.onChange((target.value as string[]).filter(id => !id.startsWith("_helpers_")))
+        }}
         renderValue={props.renderValue}
         label={title}>
 

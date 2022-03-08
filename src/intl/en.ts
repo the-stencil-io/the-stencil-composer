@@ -115,6 +115,7 @@ const en = {
   'imports.import.action': 'Import selected',
 
   'article.order': 'Article order number',
+  'article.order.view': 'View current Article ordering hierarchy',
   'article.select': 'Select Articles',
   'article.links.selectedlinks': 'Selected links',
   'article.composer.title': 'Create new Article',
