@@ -5,9 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
-
+/*
 const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => ((o1.body.devMode ? "a-" : "b-") + o1.body.value)
   .localeCompare(((o2.body.devMode ? "a-" : "b-") + o2.body.value));
+*/
 
 const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
   const { enqueueSnackbar } = useSnackbar();

@@ -27,13 +27,18 @@ const MigrationComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   }
 
   const message = <FormattedMessage id="snack.migration.createdMessage" />
+  
 
+
+  
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main" title="toolbar.import"
       submit={{ title: "imports.import.action", onClick: handleCreate, disabled: loading || !file }}>
       <>
-        <StencilStyles.FileField value="" onChange={setFile} label="imports.select" />
+        <div>{file}</div>
+        <StencilStyles.FileField value='' onChange={setFile} label="imports.select" />
+
       </>
     </StencilStyles.Dialog>
 

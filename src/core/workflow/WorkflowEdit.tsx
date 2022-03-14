@@ -19,7 +19,7 @@ interface WorkflowEditProps {
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { service, actions, session, site } = Composer.useComposer();
+  const { service, actions, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId];
 
   const [devMode, setDevMode] = React.useState(workflow.body.devMode);

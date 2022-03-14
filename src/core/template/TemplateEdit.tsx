@@ -41,7 +41,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
   }
   
   const message = <FormattedMessage id="snack.template.editedMessage" />
-  const templates: StencilClient.Template[] = Object.values(site.templates);
+  //const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}

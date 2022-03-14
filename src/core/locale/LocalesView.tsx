@@ -37,9 +37,9 @@ const LocalesView: React.FC<{}> = () => {
     const entity: StencilClient.LocaleMutator = { localeId: locale.id, value: locale.body.value, enabled: enabled };
     console.log("entity", entity)
     service.update().locale(entity).then(success => {
-      {
-        editLocale?.body.enabled ? enqueueSnackbar(message, { variant: 'info' }) : enqueueSnackbar(message, { variant: 'success' })
-      }
+
+      editLocale?.body.enabled ? enqueueSnackbar(message, { variant: 'info' }) : enqueueSnackbar(message, { variant: 'success' })
+
       console.log(success, message)
       setEditLocale(undefined);
       actions.handleLoadSite();
