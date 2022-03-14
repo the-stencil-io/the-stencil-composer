@@ -69,9 +69,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [name, setName] = React.useState("");
   const [order, setOrder] = React.useState(0);
   const [parentId, setParentId] = React.useState("");
-
-  const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
-  
+    
   const handleCreate = () => {
     const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order };
     console.log("entity", entity)
@@ -84,6 +82,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     });
   }
 
+  const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}

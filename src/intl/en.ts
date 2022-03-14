@@ -90,13 +90,13 @@ const en = {
   'snack.page.createdMessage': 'Page created successfully',
   'snack.page.deletedMessage': 'Page deleted',
   'snack.page.editedMessage': 'Page changes saved',
-  
+
   'snack.link.createdMessage': 'Link created successfully',
   'snack.link.deletedMessage': 'Link deleted',
   'snack.link.editedMessage': 'Link changes saved',
   'snack.link.addedMessage': 'Link added to article',
   'snack.link.removedMessage': 'Link removed from article',
-  
+
   'snack.workflow.createdMessage': 'Service created successfully',
   'snack.workflow.deletedMessage': 'Service deleted',
   'snack.workflow.editedMessage': 'Service changes saved',
@@ -106,11 +106,13 @@ const en = {
   'snack.locale.createdMessage': 'Locale created successfully',
   'snack.locale.deletedMessage': 'Locale deleted',
   'snack.locale.editedMessage': 'Locale changes saved',
-  
+  'snack.locale.enabled': 'Locale enabled',
+  'snack.locale.disabled': 'Locale disabled',
+
   'snack.template.createdMessage': 'Template created successfully',
   'snack.template.deletedMessage': 'Template deleted',
   'snack.template.editedMessage': 'Template changes saved',
-  
+
   'snack.release.createdMessage': 'Release created successfully',
   'snack.release.deletedMessage': 'Release deleted',
 

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Box, Typography, Card, DialogContentText } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -25,6 +27,7 @@ const Header: React.FC<{ label: string }> = ({ label }) => {
 }
 
 const LocalesView: React.FC<{}> = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const { site, service, actions } = Composer.useComposer();
   const [editLocale, setEditLocale] = React.useState<StencilClient.SiteLocale | undefined>();
   const locales = Object.values(site.locales);
@@ -34,12 +37,21 @@ const LocalesView: React.FC<{}> = () => {
     const entity: StencilClient.LocaleMutator = { localeId: locale.id, value: locale.body.value, enabled: enabled };
     console.log("entity", entity)
     service.update().locale(entity).then(success => {
-      console.log(success)
+      {
+        editLocale?.body.enabled ? enqueueSnackbar(message, { variant: 'info' }) : enqueueSnackbar(message, { variant: 'success' })
+      }
+      console.log(success, message)
       setEditLocale(undefined);
       actions.handleLoadSite();
     });
   }
 
+  let message: React.ReactNode;
+  if (editLocale?.body.enabled) {
+    message = <FormattedMessage id='snack.locale.disabled' />
+  } else {
+    message = <FormattedMessage id='snack.locale.enabled' />
+  }
 
 
   return (<>
@@ -74,8 +86,8 @@ const LocalesView: React.FC<{}> = () => {
             <Table size="small">
               <TableHead>
                 <TableRow>
-                  <Header label="locale"/>
-                  <Header label="status"/>
+                  <Header label="locale" />
+                  <Header label="status" />
                 </TableRow>
               </TableHead>
               <TableBody >

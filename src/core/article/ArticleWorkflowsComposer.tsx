@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
@@ -8,7 +10,7 @@ const comparator = (o1: StencilClient.Workflow, o2: StencilClient.Workflow) => (
   .localeCompare(((o2.body.devMode ? "a-" : "b-") + o2.body.value));
 
 const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
-
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Composer.useLayout();
 
@@ -32,7 +34,10 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
       .then(() => layout.actions.handleTabCloseCurrent())
+    enqueueSnackbar(message, { variant: 'success' });
   }
+
+  const message = <FormattedMessage id="snack.workflow.editedMessage" />
   const articleName = site.articles[props.articleId].body.name;
 
 
@@ -50,7 +55,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
           return workflow.body.value.toLowerCase().indexOf(search) > -1;
         }}
         renderCells={(row) => [session.getWorkflowName(row).name, site.workflows[row].body.devMode ? "DEV" : ""]}
-        selected={view.workflows.map(l => l.workflow.id)} 
+        selected={view.workflows.map(l => l.workflow.id)}
         cancel={{
           label: 'button.cancel',
           onClick: () => layout.actions.handleTabCloseCurrent()

@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage } from 'react-intl';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -6,6 +8,7 @@ import { Composer, StencilClient } from '../context';
 
 
 const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Composer.useLayout();
   const view = session.getArticleView(props.articleId);
@@ -27,9 +30,11 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
       workflows: undefined
     };
     service.update().article(entity)
-      .then(_success => actions.handleLoadSite());
+      .then(_success => actions.handleLoadSite())
+      .then(() => layout.actions.handleTabCloseCurrent())
+    enqueueSnackbar(message, { variant: 'success' });
   }
-
+  const message = <FormattedMessage id="snack.link.editedMessage" />
   const articleName = site.articles[props.articleId].body.name;
 
   return (

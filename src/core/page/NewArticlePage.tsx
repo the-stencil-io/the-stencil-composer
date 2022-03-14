@@ -1,5 +1,7 @@
 import React from 'react';
 import { Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
@@ -15,6 +17,7 @@ interface NewArticlePageProps {
 }
 
 const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose, onCreate }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
 
@@ -23,7 +26,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
   }
 
   const handleCreate = () => {
-   // const content = template ? site.templates[template].body.content : undefined;
+    // const content = template ? site.templates[template].body.content : undefined;
     const entity: StencilClient.CreatePage = { articleId: article.id, locale: open.id };
     service.create().page(entity)
       .then(success => actions.handleLoadSite().then(() => success))
@@ -31,8 +34,12 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
         onCreate(success);
         onClose();
       })
+    enqueueSnackbar(message, { variant: 'success' });
+
   }
-  
+  const message = <FormattedMessage id="snack.page.createdMessage" />
+
+
   const articleName = site.articles[article.id].body.name;
   const templates: StencilClient.Template[] = Object.values(site.templates);
 
