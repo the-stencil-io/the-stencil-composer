@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage } from 'react-intl';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -8,6 +10,7 @@ const selectSub = { ml: 2, color: "article.dark" }
 
 const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () => void }> = ({ articleId, onClose }) => {
   const { service, actions, session } = Composer.useComposer();
+  const { enqueueSnackbar } = useSnackbar();
 
   const { site } = session;
   const article = site.articles[articleId];
@@ -15,9 +18,12 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
   const [order, setOrder] = React.useState(article.body.order);
   const [parentId, setParentId] = React.useState(article.body.parentId);
 
+  const message = <FormattedMessage id="snack.article.editedMessage" />
+
   const handleUpdate = () => {
     const entity: StencilClient.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined, workflows: undefined };
     service.update().article(entity).then(_success => {
+      enqueueSnackbar(message, {variant: 'info'});
       onClose();
       actions.handleLoadSite();
     });

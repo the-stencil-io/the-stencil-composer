@@ -83,6 +83,38 @@ const en = {
   'services.delete.desc': 'Deleting this service will permanently remove it from the application, and all associations with Articles/Pages will be lost.',
 
 
+  'snack.article.createdMessage': 'Article created successfully',
+  'snack.article.deletedMessage': 'Article deleted',
+  'snack.article.editedMessage': 'Article changes saved',
+
+  'snack.page.createdMessage': 'Page created successfully',
+  'snack.page.deletedMessage': 'Page deleted',
+  'snack.page.editedMessage': 'Page changes saved',
+  
+  'snack.link.createdMessage': 'Link created successfully',
+  'snack.link.deletedMessage': 'Link deleted',
+  'snack.link.editedMessage': 'Link changes saved',
+  'snack.link.addedMessage': 'Link added to article',
+  'snack.link.removedMessage': 'Link removed from article',
+  
+  'snack.workflow.createdMessage': 'Service created successfully',
+  'snack.workflow.deletedMessage': 'Service deleted',
+  'snack.workflow.editedMessage': 'Service changes saved',
+  'snack.workflow.addedMessage': 'Service added to article',
+  'snack.workflow.removedMessage': 'Service removed from article',
+
+  'snack.locale.createdMessage': 'Locale created successfully',
+  'snack.locale.deletedMessage': 'Locale deleted',
+  'snack.locale.editedMessage': 'Locale changes saved',
+  
+  'snack.template.createdMessage': 'Template created successfully',
+  'snack.template.deletedMessage': 'Template deleted',
+  'snack.template.editedMessage': 'Template changes saved',
+  
+  'snack.release.createdMessage': 'Release created successfully',
+  'snack.release.deletedMessage': 'Release deleted',
+
+
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',
   'toolbar.help': 'Help and user documentation',

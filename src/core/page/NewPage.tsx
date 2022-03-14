@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -8,6 +9,7 @@ import StencilStyles from '../styles';
 
 
 const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.ArticleId }> = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const [locale, setLocale] = React.useState('');
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
@@ -19,6 +21,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
     const content = template ? site.templates[template].body.content : undefined;
     const entity: StencilClient.CreatePage = { articleId, locale, content };
     service.create().page(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       props.onClose();
       actions.handleLoadSite().then(() => {
@@ -28,7 +31,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
 
     })
   }
-
+  const message = <FormattedMessage id="snack.page.createdMessage" />
   const definedLocales: StencilClient.LocaleId[] = Object.values(site.pages)
     .filter(p => p.body.article === articleId).map(p => p.body.locale);
 

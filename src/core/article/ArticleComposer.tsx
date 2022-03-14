@@ -1,5 +1,7 @@
 import React from 'react';
 import { ListItemText, Box, IconButton, Popover, Typography, Tooltip } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
@@ -63,16 +65,20 @@ const OrderNumberTooltip: React.FC<{}> = () => {
 const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   const { service, actions, session } = Composer.useComposer();
+  const { enqueueSnackbar } = useSnackbar();
   const [name, setName] = React.useState("");
   const [order, setOrder] = React.useState(0);
   const [parentId, setParentId] = React.useState("");
 
-
+  const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
+  
   const handleCreate = () => {
     const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order };
     console.log("entity", entity)
+
     service.create().article(entity).then(success => {
       console.log(success)
+      enqueueSnackbar(message, {variant: 'success'});
       onClose();
       actions.handleLoadSite();
     });

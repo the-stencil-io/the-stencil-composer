@@ -32,7 +32,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
         onClose();
       })
   }
-
+  
   const articleName = site.articles[article.id].body.name;
   const templates: StencilClient.Template[] = Object.values(site.templates);
 

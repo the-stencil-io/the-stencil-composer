@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
+import { useSnackbar } from 'notistack';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
@@ -7,6 +8,7 @@ import StencilStyles from '../styles';
 
 
 const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.ArticleId }> = (props) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const articleId = props.articleId;
   // const [articleId, setArticleId] = React.useState('');
@@ -16,11 +18,12 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
   const handleUpdate = () => {
     const entity: StencilClient.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content };
     service.update().pages([entity]).then(_success => {
+      enqueueSnackbar(message, { variant: 'success' });
       props.onClose();
       actions.handleLoadSite();
     })
   }
-
+  const message = <FormattedMessage id="snack.page.editedMessage" />
   const articlePages: StencilClient.Page[] = Object.values(site.pages).filter(p => p.body.article === articleId);
   const usedLocales: StencilClient.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
   const unusedLocales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(siteLocale => !usedLocales.includes(siteLocale.id));
