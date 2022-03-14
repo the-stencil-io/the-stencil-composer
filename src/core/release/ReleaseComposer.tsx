@@ -1,4 +1,6 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+
 import { Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
@@ -7,6 +9,7 @@ import StencilStyles from '../styles';
 
 
 const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, session } = Composer.useComposer();
   const { site } = session;
 
@@ -18,11 +21,14 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const handleCreate = () => {
     const entity: StencilClient.CreateRelease = { name, note, created };
     service.create().release(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     })
   }
+  const message = <FormattedMessage id="snack.release.createdMessage" />
+
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"

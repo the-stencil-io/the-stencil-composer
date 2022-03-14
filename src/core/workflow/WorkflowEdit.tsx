@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ListItemText, Paper, Box, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 
 import { FormattedMessage } from 'react-intl';
@@ -17,6 +18,7 @@ interface WorkflowEditProps {
 }
 
 const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, session, site } = Composer.useComposer();
   const workflow = site.workflows[workflowId];
 
@@ -30,11 +32,14 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
   const handleCreate = () => {
     const entity: StencilClient.WorkflowMutator = { workflowId: workflow.id, value: technicalname, articles: articleId, labels, devMode };
     service.update().workflow(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     })
   }
+  const message = <FormattedMessage id="snack.workflow.editedMessage" />
+
 
   const articles: { id: string, value: string }[] = Object.values(site.articles)
     .sort((a1, a2) => {

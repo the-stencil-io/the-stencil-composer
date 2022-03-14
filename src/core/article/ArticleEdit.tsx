@@ -23,7 +23,7 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
   const handleUpdate = () => {
     const entity: StencilClient.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined, workflows: undefined };
     service.update().article(entity).then(_success => {
-      enqueueSnackbar(message, {variant: 'info'});
+      enqueueSnackbar(message, {variant: 'success'});
       onClose();
       actions.handleLoadSite();
     });

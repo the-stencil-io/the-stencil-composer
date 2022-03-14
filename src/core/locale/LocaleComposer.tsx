@@ -1,10 +1,13 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
 
 const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const [locale, setLocale] = React.useState("");
 
@@ -12,11 +15,14 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     const entity: StencilClient.CreateLocale = { locale };
     console.log("entity", entity)
     service.create().locale(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     });
   }
+
+  const message = <FormattedMessage id="snack.locale.createdMessage" />
   const locales: StencilClient.Locale[] = Object.values(site.locales).map(l => l.body.value);
   
   return (

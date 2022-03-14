@@ -1,7 +1,9 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import { FormattedMessage } from 'react-intl';
-import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
+import MDEditor from '@uiw/react-md-editor';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -13,6 +15,7 @@ interface TemplateEditProps {
 }
 
 const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { site } = Composer.useComposer();
   const template = site.templates[templateId];
 
@@ -27,6 +30,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
       content, description, name, type: templateType, id: templateId
     };
     service.update().template(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success, entity);
       onClose();
       actions.handleLoadSite();
@@ -36,6 +40,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
     setContent(value ? value : '')
   }
   
+  const message = <FormattedMessage id="snack.template.editedMessage" />
   const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (

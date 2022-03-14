@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { FormattedMessage } from 'react-intl';
+import { useSnackbar } from 'notistack';
+
 import { Composer, StencilClient } from '../context';
 import StencilStyles from '../styles';
 
@@ -12,10 +14,12 @@ interface TemplateDeleteProps {
 
 
 const TemplateDelete: React.FC<TemplateDeleteProps> = ({ templateId, onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions } = Composer.useComposer();
 
   const handleDelete = () => {
     service.delete().template(templateId).then(success => {
+      enqueueSnackbar(message, { variant: 'warning' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
@@ -23,6 +27,7 @@ const TemplateDelete: React.FC<TemplateDeleteProps> = ({ templateId, onClose }) 
     return null;
   }
 
+  const message = <FormattedMessage id="snack.template.deletedMessage" />
 
 
   return (

@@ -1,5 +1,7 @@
 import React from 'react';
 import { DialogContentText } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
@@ -11,15 +13,18 @@ interface WorkflowDeleteProps {
 }
 
 const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions } = Composer.useComposer();
 
   const handleDelete = () => {
     service.delete().workflow(workflow.id).then(success => {
+      enqueueSnackbar(message, { variant: 'warning' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     })
   }
+  const message = <FormattedMessage id="snack.workflow.deletedMessage" />
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}

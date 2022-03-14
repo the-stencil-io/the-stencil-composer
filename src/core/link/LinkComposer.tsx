@@ -1,5 +1,7 @@
 import React from 'react';
 import { ListItemText, Box, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { FormattedMessage } from 'react-intl';
 
@@ -10,6 +12,7 @@ import { LocaleLabels } from '../locale';
 const selectSub = { ml: 2, color: "article.dark" }
 
 const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
 
   const [type, setType] = React.useState<'internal' | 'external' | 'phone' | string>('internal');
@@ -22,11 +25,14 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const handleCreate = () => {
     const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels };
     service.create().link(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     })
   }
+
+  const message = <FormattedMessage id="snack.link.createdMessage" />
 
   const articles: { id: string, value: string }[] = Object.values(site.articles)
     .sort((a1, a2) => {

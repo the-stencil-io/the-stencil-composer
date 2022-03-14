@@ -1,7 +1,9 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import { FormattedMessage } from 'react-intl';
-import MDEditor, { ICommand, getCommands } from '@uiw/react-md-editor';
+import MDEditor from '@uiw/react-md-editor';
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
@@ -12,17 +14,19 @@ interface TemplateComposerProps {
 }
 
 const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const [name, setName] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [content, setContent] = React.useState('');
   const [templateType, setTemplateType] = React.useState<'page' | string>('page');
-  const { service, actions} = Composer.useComposer();
+  const { service, actions } = Composer.useComposer();
 
   const handleCreate = () => {
     const entity: StencilClient.CreateTemplate = {
       content, description, name, type: templateType
     };
     service.create().template(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success, entity);
       onClose();
       actions.handleLoadSite();
@@ -31,6 +35,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
   const handleContentChange = (value: string | undefined) => {
     setContent(value ? value : '')
   }
+  const message = <FormattedMessage id="snack.template.createdMessage" />
 
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}

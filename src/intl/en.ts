@@ -114,6 +114,8 @@ const en = {
   'snack.release.createdMessage': 'Release created successfully',
   'snack.release.deletedMessage': 'Release deleted',
 
+  'snack.migration.createdMessage': 'Site data updated',
+
 
   'toolbar.search': 'Search',
   'toolbar.activities': 'Activities',

@@ -1,10 +1,9 @@
 import React from 'react';
 
 import { ListItemText, Paper, Box, Typography } from '@mui/material';
+import { useSnackbar } from 'notistack';
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
-
 import { FormattedMessage } from 'react-intl';
-
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 import { LocaleLabels } from '../locale';
@@ -12,6 +11,7 @@ import { LocaleLabels } from '../locale';
 const selectSub = { ml: 2, color: "article.dark" }
 
 const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
 
   const [devMode, setDevMode] = React.useState<boolean>(true);
@@ -29,14 +29,15 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const handleCreate = () => {
     const entity: StencilClient.CreateWorkflow = { value: technicalname, articles: articleId, devMode, labels };
     service.create().workflow(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     })
   }
-
+  const message = <FormattedMessage id="snack.workflow.createdMessage" />
   //const articles: StencilClient.Article[] = session.getArticlesForLocales(locales);
-  
+
   const articles: { id: string, value: string }[] = Object.values(site.articles)
     .sort((a1, a2) => {
       if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
@@ -55,7 +56,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       value: `${article.body.order} - ${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`,
       sx: article.body.parentId ? selectSub : undefined
     }));
-    
+
   return (
     <StencilStyles.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"

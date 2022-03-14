@@ -1,5 +1,7 @@
 import React from 'react';
 import { ListItemText, Box, Typography, } from '@mui/material';
+import { useSnackbar } from 'notistack';
+
 import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { FormattedMessage } from 'react-intl';
 
@@ -17,6 +19,7 @@ interface LinkEditProps {
 }
 
 const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
+  const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const link = site.links[linkId];
 
@@ -34,13 +37,15 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
     const entity: StencilClient.LinkMutator = { linkId: link.id, type: contentType, articles: articleId, labels, value };
     console.log("entity", entity)
     service.update().link(entity).then(success => {
+      enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
       onClose();
       actions.handleLoadSite();
     });
   }
-  
-    const articles: { id: string, value: string }[] = Object.values(site.articles)
+  const message = <FormattedMessage id="snack.link.editedMessage" />
+
+  const articles: { id: string, value: string }[] = Object.values(site.articles)
     .sort((a1, a2) => {
       if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
         const children = a1.body.order - a2.body.order;
@@ -83,7 +88,7 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
       <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
         <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
         <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
-        <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main"}} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
+        <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main" }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
       </Box>
 
       <StencilStyles.SelectMultiple label='link.article.select' multiline
