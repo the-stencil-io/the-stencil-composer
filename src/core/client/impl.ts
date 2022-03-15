@@ -103,6 +103,9 @@ class DeleteBuilderImpl implements StencilClient.DeleteBuilder {
   async locale(init: StencilClient.LocaleId): Promise<void> {
     return this._backend.fetch(`/locales/${init}`, { method: "DELETE" }).then((data) => data as any)
   }
+  async release(init: StencilClient.ReleaseId): Promise<void> {
+    return this._backend.fetch(`/releases/${init}`, { method: "DELETE" }).then((data) => data as any)
+  }
   async article(init: StencilClient.ArticleId): Promise<void> {
     return this._backend.fetch(`/articles/${init}`, { method: "DELETE" }).then((data) => data as any)
   }

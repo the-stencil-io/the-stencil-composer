@@ -254,6 +254,7 @@ declare namespace StencilClient {
     linkArticlePage(link: LinkId, article: ArticleId, locale: Locale): Promise<void>;
     workflow(id: WorkflowId): Promise<void>;
     workflowArticlePage(workflow: WorkflowId, article: ArticleId, locale: Locale): Promise<void>;
+    release(id: ReleaseId): Promise<void>;
 
   }
   interface UpdateBuilder {

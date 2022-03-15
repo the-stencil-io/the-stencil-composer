@@ -76,7 +76,7 @@ const locales: StencilClient.SiteLocale[] = [
   { id: "l3", body: { enabled: false, value: "en" } }
 ]
 const releases: StencilClient.Release[] = [
-  { id: "r3", body: { name: "LATEST", note: "", articles: [], links: [], workflows: [], locales: [], pages: [], created: "03/10/2021"  }},
+  { id: "r3", body: { name: "LATEST", note: "", articles: [], links: [], workflows: [], locales: [], pages: [], created: "03/10/2021" } },
   { id: "r1", body: { name: "v1.5", note: "super note here", articles: [], links: [], workflows: [], locales: [], pages: [], created: "04/02/2021" } },
   { id: "r2", body: { name: "v1.6", note: "Even better note here", articles: [], links: [], workflows: [], locales: [], pages: [], created: "12/02/2021" } },
 
@@ -172,6 +172,9 @@ class MockUpdateBuilder implements StencilClient.UpdateBuilder {
 
 class MockDeleteBuilder implements StencilClient.DeleteBuilder {
   async locale(init: StencilClient.LocaleId): Promise<void> {
+    return init as any;
+  }
+  async release(init: StencilClient.ReleaseId): Promise<void> {
     return init as any;
   }
   async article(init: StencilClient.ArticleId): Promise<void> {

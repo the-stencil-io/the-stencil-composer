@@ -4,21 +4,21 @@ import {
   TableCell, TableContainer, TableRow, TableHead, Paper, Card
 } from '@mui/material';
 import GetAppIcon from '@mui/icons-material/GetApp';
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
+
 import { FormattedMessage } from 'react-intl';
 import fileDownload from 'js-file-download'
 
 import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
-import { ReleaseComposer } from './ReleaseComposer';
+import { ReleaseComposer, ReleaseDelete } from './';
 
 
 const ReleasesView: React.FC<{}> = () => {
-
   const { site, service } = Composer.useComposer();
   const layout = Composer.useLayout();
   const releases = Object.values(site.releases);
   const [releaseComposer, setReleaseComposer] = React.useState(false);
-
 
   const onDownload = (release: StencilClient.Release) => {
     service.getReleaseContent(release).then(content => {
@@ -63,6 +63,7 @@ const ReleasesView: React.FC<{}> = () => {
                     <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="created" /></TableCell>
                     <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="release.composer.note" /></TableCell>
                     <TableCell align="center" sx={{ fontWeight: 'bold' }}><FormattedMessage id="download" /></TableCell>
+                    <TableCell align="center" sx={{ fontWeight: 'bold' }}><FormattedMessage id="delete" /></TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -85,15 +86,21 @@ const ReleasesView: React.FC<{}> = () => {
 
 
 const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> = ({ release, onDownload }) => {
+  const [releaseDeleteOpen, setReleaseDeleteOpen] = React.useState(false);
 
   return (
     <>
+      {releaseDeleteOpen ? <ReleaseDelete id={release.id} onClose={() => setReleaseDeleteOpen(false)} /> : null}
+
       <TableRow key={release.id}>
         <TableCell align="left" >{release.body.name}</TableCell>
         <TableCell align="left">{release.body.created}</TableCell>
         <TableCell align="left">{release.body.note}</TableCell>
         <TableCell align="center" >
           <IconButton onClick={onDownload} sx={{ color: 'uiElements.main' }}><GetAppIcon /> </IconButton>
+        </TableCell>
+        <TableCell align="center" >
+          <IconButton onClick={() => setReleaseDeleteOpen(true)} sx={{ color: 'error.main' }}><DeleteOutlineIcon /> </IconButton>
         </TableCell>
       </TableRow>
     </>
