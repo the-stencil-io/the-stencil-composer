@@ -89,7 +89,7 @@ const en = {
 
   'snack.page.createdMessage': 'Page created successfully',
   'snack.page.deletedMessage': 'Page deleted',
-  'snack.page.editedMessage': 'Page changes saved',
+  'snack.page.savedMessage': 'Page changes saved',
 
   'snack.link.createdMessage': 'Link created successfully',
   'snack.link.deletedMessage': 'Link deleted',

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useSnackbar } from 'notistack';
 
 import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
+import { FormattedMessage } from 'react-intl';
 
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
@@ -36,6 +38,7 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 
 
 const Toolbar: React.FC<{}> = () => {
+  const { enqueueSnackbar } = useSnackbar();
   const composer = Composer.useComposer();
   const layout = Composer.useLayout();
   const drawerOpen = layout.session.drawer;
@@ -48,6 +51,8 @@ const Toolbar: React.FC<{}> = () => {
   const unsavedArticlePages: Composer.PageUpdate[] = (article ? unsavedPages.filter(p => !p.saved).filter(p => p.origin.body.article === article.id) : []);
 
 
+  const message = <FormattedMessage id="snack.page.savedMessage" />
+
   const handleChange = (_event: React.SyntheticEvent, newValue: string) => {
 
     if (newValue === 'toolbar.save' && articlePagesView && article) {
@@ -56,6 +61,7 @@ const Toolbar: React.FC<{}> = () => {
       }
       const update: StencilClient.PageMutator[] = unsavedArticlePages.map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value }));
       composer.service.update().pages(update).then(success => {
+        enqueueSnackbar(message, {variant: 'success'});
         composer.actions.handlePageUpdateRemove(success.map(p => p.id));
       }).then(() => {
         composer.actions.handleLoadSite();
@@ -78,6 +84,7 @@ const Toolbar: React.FC<{}> = () => {
       layoutActions.handleDrawerOpen(!drawerOpen)
     }
   };
+
 
   // open dashboard
   React.useLayoutEffect(() => {
