@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListItemText, Box, IconButton, Popover, Typography, Tooltip } from '@mui/material';
+import { ListItemText, Box, IconButton, Popover, Typography, Tooltip, ListItem } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import StencilStyles from '../styles';
@@ -97,10 +97,9 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           empty={{ id: DUMMY_ID, label: 'article.composer.parent.unselected' }}
           items={session.articles
             .map(view => view.article)
-            .sort((l0, l1) => l0.body.order - l1.body.order)
             .map(({ id, body }) => ({
               id,
-              value: (<ListItemText primary={`${body.order} - ${body.name}`} />)
+              value: (<ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark' } : undefined }>{`${body.order} - ${body.name}`}</ListItem>)
             }))}
         />
         <Box display='flex'>

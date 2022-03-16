@@ -101,6 +101,8 @@ const LocalesView: React.FC<{}> = () => {
                         label={undefined}
                         helperText={undefined}
                       />
+                      {locale.body.enabled ? <FormattedMessage id="locales.enabledMessage" /> : <FormattedMessage id="locales.disabledMessage" />}
+
                     </TableCell>
                   </TableRow>
                 ))}

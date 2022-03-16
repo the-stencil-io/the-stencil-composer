@@ -13,7 +13,7 @@ interface ContainerProps {
 };
 
 const drawerWidth = { expanded: 500, collapsed: 56 };
-const contentStyle = { flexGrow: 1, overflow: "auto"};
+const contentStyle = { flexGrow: 1, overflow: "auto" };
 const contentStyleCollapsed = { flexGrow: 1, overflow: "auto", marginLeft: '60px' }
 
 
@@ -57,7 +57,7 @@ const Container: React.FC<ContainerProps> = (components) => {
     <main style={{ width: "100%" }}>
       <Toolbar />
 
-       <Box sx={drawerOpen ? contentStyle: contentStyleCollapsed}>{mainWindow}</Box>
+      <Box sx={drawerOpen ? contentStyle : contentStyleCollapsed}>{mainWindow}</Box>
     </main>
   </Box>
   );

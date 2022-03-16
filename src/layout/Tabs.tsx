@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Tabs as MuiTabs, Tab as MuiTab, useTheme, Box } from '@mui/material';
+import { Tabs as MuiTabs, Tab as MuiTab, useTheme, Box, Button } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { useLayout, Session } from './context';
 
@@ -25,38 +25,40 @@ const Tabs: React.FC<{}> = () => {
     };
 
     console.log("init tabs");
-    return (<MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"
-      sx={{
-        "& .MuiTabs-indicator": {
-          backgroundColor: theme.palette.uiElements.main,
-          marginRight: "49px"
-        }
-      }
-      }
-    >
-      {
-        tabs.map((tab, index) => (
-          <MuiTab key={index} value={index} wrapped={true}
-            label={tab.label}
-            iconPosition="end"
-            sx={{ minHeight: 'unset', color: "mainContent.dark", "&:focus": { color: "uiElements.main" } }}
-            icon={(<>
-              {tab.icon ? tab.icon : null}
-              <CloseIcon color="disabled"
-                onClick={(e) => handleTabClose(e, tab)}
-                sx={{
-                  m: 0,
-                  color: "uiElements.main",
-                  "&:hover": {
-                    color: "mainContent.dark"
-                  }
-                }}
-              />
-              <Box component="span" sx={{ flexGrow: 1 }}></Box>
-            </>)}
-          />))
-      }
-    </MuiTabs >
+    return (
+      <Box display='flex'>
+        <MuiTabs value={active} onChange={handleTabChange} variant="scrollable" scrollButtons="auto"
+          sx={{
+            "& .MuiTabs-indicator": {
+              backgroundColor: theme.palette.uiElements.main,
+              marginRight: "49px"
+            }
+          }}
+        >
+          {
+            tabs.map((tab, index) => (
+              <MuiTab key={index} value={index} wrapped={true}
+                label={tab.label}
+                iconPosition="end"
+                sx={{ minHeight: 'unset', color: "mainContent.dark", "&:focus": { color: "uiElements.main" } }}
+                icon={(<>
+                  {tab.icon ? tab.icon : null}
+                  <CloseIcon color="disabled"
+                    onClick={(e) => handleTabClose(e, tab)}
+                    sx={{
+                      m: 0,
+                      color: "uiElements.main",
+                      "&:hover": {
+                        color: "mainContent.dark"
+                      }
+                    }}
+                  />
+                  <Box component="span" sx={{ flexGrow: 1 }}></Box>
+                </>)}
+              />))
+          }
+        </MuiTabs >
+      </Box>
     )
   }, [tabs, active, theme, actions]);
 }

@@ -15,18 +15,18 @@ class ImmutableSearchData implements Composer.SearchData {
     this._links = links;
     this._workflows = workflows;
   }
-  
+
   get values(): Composer.SearchDataEntry[] {
     return [...this._articles, ...this._links, ...this._workflows];
   }
-  
+
   filterArticles(keyword: string): Composer.SearchResult[] {
     const results: Composer.SearchResult[] = [];
     const keywordLowerCase = keyword.toLowerCase();
-    for(const article of this._articles) {
+    for (const article of this._articles) {
       const match = this.findMatch(article, keywordLowerCase);
-      if(match) {
-        results.push(match); 
+      if (match) {
+        results.push(match);
       }
     }
     return results;
@@ -34,10 +34,10 @@ class ImmutableSearchData implements Composer.SearchData {
   filterWorkflows(keyword: string): Composer.SearchResult[] {
     const results: Composer.SearchResult[] = [];
     const keywordLowerCase = keyword.toLowerCase();
-    for(const workflow of this._workflows) {
+    for (const workflow of this._workflows) {
       const match = this.findMatch(workflow, keywordLowerCase);
-      if(match) {
-        results.push(match); 
+      if (match) {
+        results.push(match);
       }
     }
     return results;
@@ -45,26 +45,26 @@ class ImmutableSearchData implements Composer.SearchData {
   filterLinks(keyword: string): Composer.SearchResult[] {
     const results: Composer.SearchResult[] = [];
     const keywordLowerCase = keyword.toLowerCase();
-    for(const link of this._links) {
+    for (const link of this._links) {
       const match = this.findMatch(link, keywordLowerCase);
-      if(match) {
-        results.push(match); 
+      if (match) {
+        results.push(match);
       }
     }
     return results;
   }
-  
+
   findMatch(source: Composer.SearchDataEntry, keyword: string): Composer.SearchResult | undefined {
-              
+
     let matches: Composer.SearchableValue[] = []
-    for(const searchableValue of source.values) {
-      if(searchableValue.value.toLowerCase().indexOf(keyword) > -1) {
+    for (const searchableValue of source.values) {
+      if (searchableValue.value.toLowerCase().indexOf(keyword) > -1) {
         matches.push(searchableValue);
       }
     }
-    
-    return matches.length > 0 ? { source, matches} : undefined;
-    
+
+    return matches.length > 0 ? { source, matches } : undefined;
+
   }
 }
 
@@ -88,11 +88,20 @@ class SiteCache {
     Object.values(site.pages).sort((l0, l1) => l0.body.locale.localeCompare(l1.body.locale)).forEach(page => this.visitPage(page))
     Object.values(site.links).sort((l0, l1) => l0.body.contentType.localeCompare(l1.body.contentType)).forEach(link => this.visitLink(link))
     Object.values(site.workflows).sort((l0, l1) => l0.body.value.localeCompare(l1.body.value)).forEach(workflow => this.visitWorkflow(workflow))
-    
-    Object.values(site.articles).sort((l0, l1) => (
-      (l1.body.order + (l1.body.parentId !== undefined ? 10000 : 0)) -
-      (l0.body.order + (l0.body.parentId !== undefined ? 10000 : 0))
-    )).forEach(article => this.visitArticle(article));
+
+    Object.values(site.articles).sort((a1, a2) => {
+      if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
+        const children = a1.body.order - a2.body.order;
+        if (children === 0) {
+          return a1.body.name.localeCompare(a2.body.name);
+        }
+        return children;
+      }
+
+      return (a1.body.parentId ? site.articles[a1.body.parentId].body.order + 1 : a1.body.order)
+        - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
+
+    }).forEach(article => this.visitArticle(article));
 
     this._searchData = new ImmutableSearchData(
       Object.values(this._articleSearchData),
@@ -211,6 +220,8 @@ class SiteCache {
           children: [...parent.children, view],
           displayOrder: 10000 + article.body.order + (article.body.parentId ? this._site.articles[article.body.parentId].body.order : 0)
         });
+      } else {
+        console.error("Failed to attach to parent");
       }
     }
 
@@ -300,7 +311,7 @@ class SessionData implements Composer.Session {
       const name = pages.length ? pages[0].title : '';
       return { missing: false, name: name ? parent + name : parent + 'no-h1' };
     }
-    
+
     return { missing: false, name: parent + articleName };
   }
   getWorkflowName(workflowId: StencilClient.WorkflowId) {
@@ -655,7 +666,7 @@ class ImmutableWorkflowSearchEntry implements Composer.SearchDataEntry {
     values.push({ type: "WORKFLOW_NAME", value: view.workflow.body.value, id: view.workflow.id });
 
     for (const label of view.labels) {
-      if(!label.locale){
+      if (!label.locale) {
         console.error("no locale", label);
       }
       values.push({ type: "WORKFLOW_LABEL", value: label.label.labelValue, id: label.locale?.id });

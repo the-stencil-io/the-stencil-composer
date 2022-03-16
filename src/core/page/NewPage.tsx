@@ -10,7 +10,7 @@ import StencilStyles from '../styles';
 
 const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.ArticleId }> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
-  const { service, actions, site } = Composer.useComposer();
+  const { service, actions, site, session } = Composer.useComposer();
   const [locale, setLocale] = React.useState('');
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
   const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
@@ -35,19 +35,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
   const definedLocales: StencilClient.LocaleId[] = Object.values(site.pages)
     .filter(p => p.body.article === articleId).map(p => p.body.locale);
 
-  const articles: StencilClient.Article[] = Object.values(site.articles)
-    .sort((a1, a2) => {
-      if (a1.body.parentId && a1.body.parentId === a2.body.parentId) {
-        const children = a1.body.order - a2.body.order;
-        if (children === 0) {
-          return a1.body.name.localeCompare(a2.body.name);
-        }
-        return children;
-      }
-
-      return (a1.body.parentId ? site.articles[a1.body.parentId].body.order + 1 : a1.body.order)
-        - (a2.body.parentId ? site.articles[a2.body.parentId].body.order + 1 : a2.body.order);
-    });
+  const articles: StencilClient.Article[] = session.articles.map(w => w.article);
   const locales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(l => !definedLocales.includes(l.id));
   const templates: StencilClient.Template[] = Object.values(site.templates);
 
