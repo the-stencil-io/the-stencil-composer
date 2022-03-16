@@ -52,7 +52,7 @@ const OrderNumberTooltip: React.FC<{}> = () => {
           .map(view => view.article)
           .sort((l0, l1) => l0.body.order - l1.body.order)
           .map(({ id, body }) => (
-            <ListItemText key={id} primary={`${body.order} - ${body.name}`} />
+           <ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark', pb: 1,  } : {pb: 1} }>{`${body.order} - ${body.name}`}</ListItem>
           ))}
       </Typography>
     </Popover>
