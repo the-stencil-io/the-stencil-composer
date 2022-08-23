@@ -9,6 +9,7 @@ name: Main Release
 jobs:
   build:
     name: Create Release
+    if: "!startsWith(github.event.head_commit.message, 'release')"
     runs-on: ubuntu-latest
     steps:
 
