@@ -46,5 +46,5 @@ yarn publish --new-version ${PROJECT_VERSION_NEXT}  --access public
 
 git push origin ${branch}
 
-git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
-git push origin --tags
+# git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
+# git push origin --tags
