@@ -31,4 +31,5 @@ yarn publish --new-version ${PROJECT_VERSION_NEXT}  --access public
 git commit -am "release ${PROJECT_VERSION_NEXT}"
 git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
 git push origin --tags
+git push origin main
 
