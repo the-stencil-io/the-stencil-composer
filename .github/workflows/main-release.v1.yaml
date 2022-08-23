@@ -3,6 +3,9 @@ on:
     branches:
       - main
 
+permissions:
+  actions: write
+
 name: Main Release
 jobs:
   build:
