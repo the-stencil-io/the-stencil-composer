@@ -14,6 +14,7 @@ jobs:
       uses: actions/checkout@main
       with:
         ref: main
+        token: $
 
     - name: Setup node and yarn
       uses: actions/setup-node@v2
