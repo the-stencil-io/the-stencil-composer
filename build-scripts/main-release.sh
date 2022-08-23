@@ -28,10 +28,6 @@ yarn install
 yarn build
 yarn publish --new-version ${PROJECT_VERSION_NEXT}  --access public
 
-# github issue
-git remote remove origin
-git remote add origin https://${REPO_TOKEN}@github.com/the-stencil-io/the-stencil-composer.git
-
 git commit -am "release ${PROJECT_VERSION_NEXT}"
 git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
 git push origin --tags
