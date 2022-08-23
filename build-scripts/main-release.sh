@@ -17,7 +17,7 @@ git config --global user.email "$BOT_EMAIL";
 
 # resolve versions
 readonly local PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
-yarn version --patch
+yarn version --no-git-tag-version --patch
 readonly local PROJECT_VERSION_NEXT=$(node -e "console.log(require('./package.json').version);")
 
 # Log
@@ -28,7 +28,7 @@ yarn install
 yarn build
 yarn publish --new-version ${PROJECT_VERSION_NEXT}  --access public
 
-git push origin ${branch}
+git commit -am "release ${PROJECT_VERSION_NEXT}"
+git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
+git push origin --tags
 
-# git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
-# git push origin --tags
