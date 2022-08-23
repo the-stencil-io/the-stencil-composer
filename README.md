@@ -22,8 +22,3 @@ To run the Stencil locally, with backend and local database, run these commands
 
 /the-stencil-composer
 `yarn start`
-
-
-
-
-
