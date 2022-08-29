@@ -297,11 +297,18 @@ class SessionData implements Composer.Session {
     return this._pages;
   }
   getArticleName(articleId: StencilClient.ArticleId) {
+    return this.getArticleNameInternal(articleId, []);
+  }
+  getArticleNameInternal(articleId: StencilClient.ArticleId, visited: StencilClient.ArticleId[]) {
+    if(visited.includes(articleId)) {
+      return { missing: true, name: 'parent-child-cycle-for-article-' + articleId };
+    }
+    visited.push(articleId);
     const article = this.getArticleView(articleId);
     const articleName = article.article.body.name;
     const locale = this._filter.locale;
 
-    const parent = article.article.body.parentId ? this.getArticleName(article.article.body.parentId).name + "/" : ""
+    const parent = article.article.body.parentId ? this.getArticleNameInternal(article.article.body.parentId, visited).name + "/" : ""
 
     if (locale) {
       const pages = article.pages.filter(p => p.locale?.id === locale);
