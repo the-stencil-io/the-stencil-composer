@@ -3,10 +3,10 @@ import { Main } from './Main';
 import { Secondary } from './Secondary';
 import StencilClient from './client';
 import Toolbar from './Toolbar';
-import {Composer} from './context';
+import { Composer } from './context';
 import messages from '../intl';
 import Layout from '../layout';
-
+import { SnackbarProvider } from 'notistack';
 
 interface StencilComposerProps {
   service: StencilClient.Service,
@@ -14,20 +14,22 @@ interface StencilComposerProps {
 };
 
 const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) => {
-  
-  if(locked === true) {
+
+  if (locked === true) {
     return (<div>Content editing locked by deployment.</div>)
   }
-  
+
   return (
-    <Layout.Provider drawerOpen={true}>
-      <Composer.Provider service={service} >
-        <Layout.Container
-          main={<Main />}
-          secondary={<Secondary />}
-          toolbar={<Toolbar />} />
-      </Composer.Provider>
-    </Layout.Provider>
+    <SnackbarProvider maxSnack={3}>
+      <Layout.Provider drawerOpen={true}>
+        <Composer.Provider service={service} >
+          <Layout.Container
+            main={<Main />}
+            secondary={<Secondary />}
+            toolbar={<Toolbar />} />
+        </Composer.Provider>
+      </Layout.Provider>
+    </SnackbarProvider>
   );
 }
 
