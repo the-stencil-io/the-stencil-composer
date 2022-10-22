@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { FormattedMessage } from 'react-intl';
 
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../../context';
 
 import { WorkflowOptions } from './WorkflowOptions';
@@ -23,19 +23,19 @@ const WorkflowItem: React.FC<{ workflowId: StencilClient.WorkflowId }> = ({ work
 
   return (
     <>
-      <StencilStyles.TreeItem
+      <Burger.TreeItem
         nodeId={workflow.id}
         labelText={workflowName.name}
         labelcolor="explorerItem"
         labelIcon={workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}>
 
-        <StencilStyles.TreeItem nodeId={workflow.id + 'options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+        <Burger.TreeItem nodeId={workflow.id + 'options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <WorkflowOptions workflow={workflow} />
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
 
 
         {/** Article options */}
-        <StencilStyles.TreeItem nodeId={workflow.id + 'articles-nested'}
+        <Burger.TreeItem nodeId={workflow.id + 'articles-nested'}
           labelText={<FormattedMessage id="articles" />}
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${workflow.body.articles.length}`}
@@ -44,9 +44,9 @@ const WorkflowItem: React.FC<{ workflowId: StencilClient.WorkflowId }> = ({ work
           {workflow.body.articles.map((id => session.getArticleView(id))).map(view => (
             <ArticleItem key={view.article.id} articleId={view.article.id} nodeId={`${workflow.id}-${view.article.id}-nested`}/>
           ))}
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
 
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>)
 }
 

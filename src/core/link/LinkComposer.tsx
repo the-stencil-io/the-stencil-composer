@@ -6,7 +6,7 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { LocaleLabels } from '../locale';
 
 const selectSub = { ml: 2, color: "article.dark" }
@@ -54,7 +54,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     }));
     
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="link.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !value || changeInProgress || labels.length < 1 }}>
@@ -65,7 +65,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           onChangeStart={() => setChangeInProgress(true)}
           selected={labels.map(label => ({ locale: label.locale, value: label.labelValue }))} />
 
-        <StencilStyles.Select label='link.type'
+        <Burger.Select label='link.type'
           selected={type}
           onChange={setType}
 
@@ -75,18 +75,18 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             { id: 'phone', value: <FormattedMessage id={'link.type.phone'} /> }
           ]} />
 
-        <StencilStyles.TextField label='value' helperText='link.composer.valuehelper'
+        <Burger.TextField label='value' helperText='link.composer.valuehelper'
           required
           value={value}
           onChange={setValue} />
 
         <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
-          <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
-          <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+          <Burger.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+          <Burger.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
           <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main" }} /><Typography variant="caption" sx={{ ml: 1 }}><FormattedMessage id="add.allarticles.link.help" /></Typography>
         </Box>
 
-        <StencilStyles.SelectMultiple label='article.select'
+        <Burger.SelectMultiple label='article.select'
           multiline
           onChange={setArticleId}
           selected={articleId}
@@ -95,14 +95,14 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           items={articles.map(article => ({
             id: article.id,
             value: (<>
-              <StencilStyles.Checkbox checked={articleId.includes(article.id) ? true : false} />
+              <Burger.Checkbox checked={articleId.includes(article.id) ? true : false} />
               <ListItemText primary={article.value} />
             </>)
           })
           
           )} />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

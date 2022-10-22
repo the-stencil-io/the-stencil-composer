@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { Tabs, Tab, Box, TabProps, TabsProps } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import { FormattedMessage } from 'react-intl';
-
+import Burger from '@the-wrench-io/react-burger';
 import FlipToFrontOutlinedIcon from '@mui/icons-material/FlipToFrontOutlined';
 import ArticleOutlinedIcon from '@mui/icons-material/ArticleOutlined';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -40,11 +40,17 @@ const StyledTabs = styled(Tabs)<TabsProps>(({ theme }) => ({
 const Toolbar: React.FC<{}> = () => {
   const { enqueueSnackbar } = useSnackbar();
   const composer = Composer.useComposer();
-  const layout = Composer.useLayout();
-  const drawerOpen = layout.session.drawer;
-  const layoutActions = layout.actions;
-  const tabs = layout.session.tabs;
-  const active = tabs.length ? tabs[layout.session.history.open] : undefined;
+  const tabsCtx = Burger.useTabs();
+  const drawerCtx = Burger.useDrawer();
+  const secondaryCtx = Burger.useSecondary();
+  
+  const drawerOpen = drawerCtx.session.drawer;
+  const tabsActions = tabsCtx.actions;
+  const secondaryActions = secondaryCtx.actions;
+  
+  
+
+  const active = tabsCtx.session.tabs.length ? tabsCtx.session.tabs[tabsCtx.session.history.open] : undefined;
   const article = active ? composer.site.articles[active.id] : undefined;
   const articlePagesView = active?.data?.nav?.type === "ARTICLE_PAGES";
   const unsavedPages = Object.values(composer.session.pages).filter(p => !p.saved);
@@ -69,19 +75,19 @@ const Toolbar: React.FC<{}> = () => {
 
 
     } else if (newValue === 'toolbar.activities') {
-      layoutActions.handleTabAdd({ id: 'newItem', label: "Activities" });
+      tabsActions.handleTabAdd({ id: 'newItem', label: "Activities" });
 
     } else if (newValue === 'toolbar.articles') {
-      layoutActions.handleSecondary("toolbar.articles")
+      secondaryCtx.actions.handleSecondary("toolbar.articles")
 
     } else if (newValue === 'toolbar.search') {
-      layoutActions.handleSecondary("toolbar.search")
+      secondaryCtx.actions.handleSecondary("toolbar.search")
 
     } else if (newValue === 'toolbar.import') {
-      layoutActions.handleTabAdd({ id: 'import', label: 'Import' })
+      tabsActions.handleTabAdd({ id: 'import', label: 'Import' })
 
     } else if (newValue === 'toolbar.expand') {
-      layoutActions.handleDrawerOpen(!drawerOpen)
+      drawerCtx.actions.handleDrawerOpen(!drawerOpen)
     }
   };
 
@@ -89,9 +95,9 @@ const Toolbar: React.FC<{}> = () => {
   // open dashboard
   React.useLayoutEffect(() => {
     console.log("init toolbar");
-    layoutActions.handleSecondary("toolbar.articles")
-    layoutActions.handleTabAdd({ id: 'newItem', label: "Activities" });
-  }, [layoutActions]);
+    secondaryActions.handleSecondary("toolbar.articles")
+    tabsActions.handleTabAdd({ id: 'newItem', label: "Activities" });
+  }, [tabsActions, secondaryActions]);
 
   const saveSx = unsavedPages.length ? { color: "explorerItem.contrastText" } : undefined;
 
@@ -101,7 +107,7 @@ const Toolbar: React.FC<{}> = () => {
         <StyledTabs orientation="vertical"
           onChange={handleChange}
           sx={{ borderRight: 1, borderColor: 'explorerItem.dark' }}
-          value={layout.session.secondary}>
+          value={secondaryCtx.session.secondary}>
 
           <StyledTab value='toolbar.activities' icon={<DashboardIcon />} />
           <StyledTab value='toolbar.save'

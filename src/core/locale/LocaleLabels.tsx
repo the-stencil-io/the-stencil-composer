@@ -11,7 +11,7 @@ import CheckIcon from '@mui/icons-material/Check';
 
 import { FormattedMessage, useIntl } from 'react-intl';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 
 
@@ -88,7 +88,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
 
 
   const editField = edit ? (
-    <StencilStyles.TextField
+    <Burger.TextField
       label="sitelocale.label.table.editLocaleValue"
       value={edit.value}
       onEnter={() => handleEditEnd()}

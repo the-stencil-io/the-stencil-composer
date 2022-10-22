@@ -3,7 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 
@@ -30,14 +30,14 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
 
   const valid = pageId && articleId && newLocale;
   return (
-    <StencilStyles.Dialog open={true} onClose={props.onClose}
+    <Burger.Dialog open={true} onClose={props.onClose}
       backgroundColor="uiElements.main" 
       title="pages.change"
       submit={{ title: "button.update", onClick: handleUpdate, disabled: !valid }}>
 
       <>
         <FormattedMessage id='pages.change.info' />
-        <StencilStyles.Select
+        <Burger.Select
           selected={pageId}
           onChange={setPageId}
           label='pages.edit.selectpage'
@@ -46,7 +46,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
             value: site.locales[articlePage.body.locale].body.value
           }))}
         />
-        <StencilStyles.Select
+        <Burger.Select
           selected={newLocale}
           onChange={setNewLocale}
           label='pages.edit.selectTargetLocale'
@@ -56,7 +56,7 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
           }))}
         />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

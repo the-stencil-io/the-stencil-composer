@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 
 import { FormattedMessage } from 'react-intl';
 
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../../context';
 
 import { LinkOptions } from './LinkOptions';
@@ -22,20 +22,20 @@ const LinkItem: React.FC<{ linkId: StencilClient.LinkId }> = ({ linkId }) => {
 
   return (
     <>
-      <StencilStyles.TreeItem
+      <Burger.TreeItem
         nodeId={link.id}
         labelText={workflowName.name}
         labelcolor="explorerItem"
         labelIcon={LinkIcon}
         >
 
-        <StencilStyles.TreeItem nodeId={link.id + 'options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
+        <Burger.TreeItem nodeId={link.id + 'options-nested'} labelText={<FormattedMessage id="options" />} labelIcon={EditIcon}>
           <LinkOptions link={link} />
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
 
 
         {/** Article options */}
-        <StencilStyles.TreeItem nodeId={link.id + 'articles-nested'}
+        <Burger.TreeItem nodeId={link.id + 'articles-nested'}
           labelText={<FormattedMessage id="articles" />}
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${link.body.articles.length}`}
@@ -44,9 +44,9 @@ const LinkItem: React.FC<{ linkId: StencilClient.LinkId }> = ({ linkId }) => {
           {link.body.articles.map((id => session.getArticleView(id))).map(view => (
             <ArticleItem key={view.article.id} articleId={view.article.id} nodeId={`${link.id}-${view.article.id}-nested`}/>
           ))}
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
 
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>)
 }
 

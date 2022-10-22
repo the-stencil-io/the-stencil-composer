@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 
@@ -40,7 +40,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
   const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (
-    <StencilStyles.Dialog open={true} onClose={props.onClose}
+    <Burger.Dialog open={true} onClose={props.onClose}
       backgroundColor="uiElements.main"
       title="newpage.title"
       //titleArgs={{articleId ? name: articleName : undefined}}
@@ -48,7 +48,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
       <>
         <FormattedMessage id='newpage.info' />
 
-        <StencilStyles.Select
+        <Burger.Select
           selected={articleId}
           onChange={setArticleId}
           label='article.name'
@@ -58,14 +58,14 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
             value: `${article.body.parentId ? site.articles[article.body.parentId].body.name + "/" : ""}${article.body.name}`
           }))}
         />
-        <StencilStyles.Select
+        <Burger.Select
           selected={locale}
           onChange={setLocale}
           label='locale'
           items={locales.map((locale) => ({ id: locale.id, value: locale.body.value }))}
         />
         {templates.length > 0 ?
-          <StencilStyles.Select
+          <Burger.Select
             selected={template}
             onChange={setTemplate}
             label='template'
@@ -75,7 +75,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
           : null}
 
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

@@ -5,8 +5,9 @@ import StencilClient from './client';
 import Toolbar from './Toolbar';
 import { Composer } from './context';
 import messages from '../intl';
-import Layout from '../layout';
+
 import { SnackbarProvider } from 'notistack';
+import Burger from '@the-wrench-io/react-burger';
 
 interface StencilComposerProps {
   service: StencilClient.Service,
@@ -19,22 +20,27 @@ const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) =>
     return (<div>Content editing locked by deployment.</div>)
   }
 
+  const composer: Burger.App<Composer.ContextType> = {
+    id: "stencil-composer",
+    components: { primary: Main, secondary: Secondary, toolbar: Toolbar },
+    state: [
+      (children: React.ReactNode, restorePoint?: Burger.AppState<Composer.ContextType>) => (<>{children}</>),
+      () => ({})
+    ]
+  };
+
+
   return (
     <SnackbarProvider maxSnack={3}>
-      <Layout.Provider drawerOpen={true}>
-        <Composer.Provider service={service} >
-          <Layout.Container
-            main={<Main />}
-            secondary={<Secondary />}
-            toolbar={<Toolbar />} />
-        </Composer.Provider>
-      </Layout.Provider>
+      <Composer.Provider service={service} >
+        <Burger.Provider children={[composer]} secondary="toolbar.articles" drawerOpen />
+      </Composer.Provider>
     </SnackbarProvider>
   );
 }
 
 export type { StencilComposerProps };
-export { StencilComposer, StencilClient, messages, Layout };
+export { StencilComposer, StencilClient, messages };
 export * from './client/store';
 export * from './themes/siteTheme';
 export * from './Main';

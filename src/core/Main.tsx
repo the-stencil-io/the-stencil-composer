@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-
+import Burger from '@the-wrench-io/react-burger';
 import {
   ActivitiesView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
   ReleasesView, LocalesView, ReleaseGraph, TemplatesView
@@ -12,7 +12,7 @@ import { Composer } from './context';
 const root = { height: `100%`, padding: 1, backgroundColor: "mainContent.main" };
 
 const Main: React.FC<{}> = () => {
-  const layout = Composer.useLayout();
+  const layout = Burger.useTabs();
   const site = Composer.useSite();
   const tabs = layout.session.tabs;
   const active = tabs.length ? tabs[layout.session.history.open] : undefined;

@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 interface NewArticlePageProps {
@@ -44,7 +44,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
   const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (
-    <StencilStyles.Dialog open={open ? true : false} onClose={onClose}
+    <Burger.Dialog open={open ? true : false} onClose={onClose}
       backgroundColor="uiElements.main"
       title="newpage.title"
       titleArgs={{ name: articleName }}
@@ -54,7 +54,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
           <FormattedMessage id='newpage.article.info' values={{ article: article.body.name, locale: open.body.value }} />
         </Typography>
         {templates.length > 0 ?
-          <StencilStyles.Select
+          <Burger.Select
             selected={template}
             onChange={setTemplate}
             label='template'
@@ -63,7 +63,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
           />
           : null}
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

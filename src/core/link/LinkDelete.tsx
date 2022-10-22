@@ -5,7 +5,7 @@ import { DialogContentText } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 interface LinkDeleteProps {
@@ -28,14 +28,14 @@ const LinkDelete: React.FC<LinkDeleteProps> = ({ linkId, onClose }) => {
   const message = <FormattedMessage id="snack.link.deletedMessage" />
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="link.delete.title"
       submit={{ title: "link.delete.title", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="link.delete" />
       </DialogContentText>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 export { LinkDelete }

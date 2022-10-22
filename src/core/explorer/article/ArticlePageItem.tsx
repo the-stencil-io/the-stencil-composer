@@ -4,9 +4,7 @@ import { Box, Typography, Theme, useTheme } from "@mui/material";
 import LeftEditIcon from "@mui/icons-material/BorderLeft";
 import RightEditIcon from "@mui/icons-material/BorderRight";
 
-//import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
-
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer } from '../../context';
 
 
@@ -44,7 +42,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
   
 
   return (
-    <StencilStyles.TreeItemRoot
+    <Burger.TreeItemRoot
       nodeId={nodeId}
       onClick={onLeftEdit}
       style={{

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 interface ReleaseDeleteProps {
@@ -26,13 +26,13 @@ const ReleaseDelete: React.FC<ReleaseDeleteProps> = ({ id, onClose }) => {
   }
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="release.delete.title"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
       <DialogContentText>
         <FormattedMessage id="release.delete.desc" />
       </DialogContentText>
-    </StencilStyles.Dialog>);
+    </Burger.Dialog>);
 };
 export { ReleaseDelete };

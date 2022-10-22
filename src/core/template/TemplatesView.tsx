@@ -9,12 +9,12 @@ import { FormattedMessage } from 'react-intl';
 
 import { TemplateComposer, TemplateDelete, TemplateEdit } from './';
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 
 const TemplatesView: React.FC<{}> = () => {
-  const layout = Composer.useLayout();
+  const layout = Burger.useTabs();
   const { site } = Composer.useComposer();
   const templates = Object.values(site.templates);
 
@@ -40,8 +40,8 @@ const TemplatesView: React.FC<{}> = () => {
           </Box>
           <Box flexGrow={1} />
           <Box>
-            <StencilStyles.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
-            <StencilStyles.PrimaryButton label={"button.create"} onClick={() => setTemplateComposer(true)} />
+            <Burger.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
+            <Burger.PrimaryButton label={"button.create"} onClick={() => setTemplateComposer(true)} />
           </Box>
         </Box>
 

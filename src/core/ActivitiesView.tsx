@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 
 import { FormattedMessage, useIntl } from 'react-intl';
-import StencilStyles from './styles';
+import Burger from '@the-wrench-io/react-burger';
 
 import { ArticleComposer } from './article';
 import { LinkComposer } from './link';
@@ -17,7 +17,7 @@ import { NewPage } from './page';
 import { MigrationComposer } from './migration';
 import { TemplateComposer } from './template';
 
-import { Composer, StencilClient, Layout } from './context';
+import { Composer, StencilClient } from './context';
 
 
 interface CardData {
@@ -35,10 +35,10 @@ interface CardData {
 
 type CardType = "release" | "article" | "page" | "link" | "workflow" | "locale" | "migration" | "templates";
 
-const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Session.ContextType) => CardData[] = (_site, theme, layout) => ([
+const createCards: (site: StencilClient.Site, theme: Theme, tabs: Burger.TabsActions) => CardData[] = (_site, theme, tabs) => ([
   {
     composer: (handleClose) => (<ArticleComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'articles', label: "Articles" }),
+    onView: () => tabs.handleTabAdd({ id: 'articles', label: "Articles" }),
     title: "activities.article.title",
     desc: "activities.article.desc",
     color: theme.palette.article?.main,
@@ -58,7 +58,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   },
   {
     composer: (handleClose) => (<LinkComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'links', label: "Links" }),
+    onView: () => tabs.handleTabAdd({ id: 'links', label: "Links" }),
     title: "activities.link.title",
     desc: "activities.link.desc",
     color: theme.palette.link?.main,
@@ -69,7 +69,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<WorkflowComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'workflows', label: "Workflows" }),
+    onView: () => tabs.handleTabAdd({ id: 'workflows', label: "Workflows" }),
     title: "services",
     desc: "services.desc",
     color: theme.palette.workflow?.main,
@@ -80,7 +80,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<LocaleComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'locales', label: "Locales" }),
+    onView: () => tabs.handleTabAdd({ id: 'locales', label: "Locales" }),
     title: "activities.locale.title",
     desc: "activities.locale.desc",
     color: theme.palette.locale?.main,
@@ -91,7 +91,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
   {
     composer: (handleClose) => (<ReleaseComposer onClose={handleClose} />),
-    onView: () => layout.actions.handleTabAdd({ id: 'releases', label: "Releases" }),
+    onView: () => tabs.handleTabAdd({ id: 'releases', label: "Releases" }),
     title: "activities.release.title",
     desc: "activities.release.desc",
     color: theme.palette.release?.main,
@@ -102,7 +102,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
   },
   {
     composer: (handleClose) => <TemplateComposer onClose={handleClose}/>,
-    onView: () => layout.actions.handleTabAdd({ id: 'templates', label: "Templates" }),
+    onView: () => tabs.handleTabAdd({ id: 'templates', label: "Templates" }),
     title: "activities.templates.title",
     desc: "activities.templates.desc",
     color: theme.palette.release?.main,
@@ -125,7 +125,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, layout: Layout.Sessi
 
 const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (props) => {
   const title = useIntl().formatMessage({ id: props.data.title })
-  const layout = Composer.useLayout();
+  const tabs = Burger.useTabs();
   return (
 
     <Card sx={{
@@ -152,14 +152,14 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
       
       <CardActions sx={{ alignSelf: "flex-end" }}>
         <Box display="flex">
-          {props.data.buttonViewAll && props.data.onView ? <StencilStyles.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
+          {props.data.buttonViewAll && props.data.onView ? <Burger.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
           {props.data.buttonTertiary && props.data.onView ?
-            <StencilStyles.SecondaryButton label="button.releasegraph" onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })}
+            <Burger.SecondaryButton label="button.releasegraph" onClick={() => tabs.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })}
               sx={{
                 color: "uiElements.main",
                 alignSelf: 'center',
               }} /> : null}
-          <StencilStyles.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
+          <Burger.PrimaryButton onClick={props.onCreate} label={props.data.buttonCreate} />
         </Box>
       </CardActions>
     </Card>
@@ -170,12 +170,12 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
 //card view for all CREATE views
 const ActivitiesView: React.FC<{}> = () => {
   const theme = useTheme();
-  const layout = Composer.useLayout();
+  const { actions } = Burger.useTabs();
   const { site } = Composer.useComposer();
 
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
-  const cards = React.useMemo(() => createCards(site, theme, layout), [site, theme, layout]);
+  const cards = React.useMemo(() => createCards(site, theme, actions), [site, theme, actions]);
 
   return (
     <>

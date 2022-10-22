@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 import ConstructionIcon from '@mui/icons-material/Construction';
 import { FormattedMessage } from 'react-intl';
 
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../../context';
 import { ArticleOptions } from './ArticleOptions';
 import ArticlePageItem from './ArticlePageItem';
@@ -25,7 +25,7 @@ function WorkflowItem(props: {
 }) {
 
   return (
-    <StencilStyles.TreeItemRoot
+    <Burger.TreeItemRoot
       nodeId={props.nodeId}
       onClick={props.onClick}
       label={
@@ -51,7 +51,7 @@ interface LinkItemProps {
 
 const LinkItem: React.FC<LinkItemProps> = (props) => {
   return (
-    <StencilStyles.TreeItemRoot
+    <Burger.TreeItemRoot
       nodeId={props.nodeId}
       onClick={props.onClick}
       label={
@@ -97,18 +97,18 @@ const ArticleItem: React.FC<{
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      <StencilStyles.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText"}>
+      <Burger.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText"}>
 
         {/** Article options */
-          options ? (<StencilStyles.TreeItem nodeId={article.id + 'article-options-nested'}
+          options ? (<Burger.TreeItem nodeId={article.id + 'article-options-nested'}
             labelText={<FormattedMessage id="options" />}
             labelIcon={EditIcon}>
             <ArticleOptions article={article} />
-          </StencilStyles.TreeItem>) : null
+          </Burger.TreeItem>) : null
         }
 
         {/** Pages */}
-        <StencilStyles.TreeItem nodeId={article.id + 'pages-nested'}
+        <Burger.TreeItem nodeId={article.id + 'pages-nested'}
           labelText={<FormattedMessage id="pages" />}
           labelIcon={FolderOutlinedIcon}
           labelInfo={`${pages.length}`}
@@ -117,11 +117,11 @@ const ArticleItem: React.FC<{
             saved={isPageSaved(pageView)}
             article={view}
             page={pageView} />))}
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
 
 
         {/** Workflows options */
-          options ? (<StencilStyles.TreeItem nodeId={article.id + 'workflows-nested'}
+          options ? (<Burger.TreeItem nodeId={article.id + 'workflows-nested'}
             labelText={<FormattedMessage id="services" />}
             labelIcon={FolderOutlinedIcon}
             labelInfo={`${workflows.length}`}
@@ -138,11 +138,11 @@ const ArticleItem: React.FC<{
                 nodeId={view.workflow.id}
 
                 onClick={() => options.setEditWorkflow(view.workflow.id)} />))}
-          </StencilStyles.TreeItem>) : null
+          </Burger.TreeItem>) : null
         }
 
         {/** Links options */
-          options ? (<StencilStyles.TreeItem nodeId={article.id + 'links-nested'}
+          options ? (<Burger.TreeItem nodeId={article.id + 'links-nested'}
             labelText={<FormattedMessage id="links" />}
             labelIcon={FolderOutlinedIcon}
             labelInfo={`${links.length}`}
@@ -157,11 +157,11 @@ const ArticleItem: React.FC<{
                 nodeId={view.link.id}
                 onClick={() => options.setEditLink(view.link.id)} />)
               )}
-          </StencilStyles.TreeItem>) : null
+          </Burger.TreeItem>) : null
 
         }
 
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>)
 }
 

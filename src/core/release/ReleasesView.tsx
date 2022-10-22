@@ -9,14 +9,14 @@ import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import { FormattedMessage } from 'react-intl';
 import fileDownload from 'js-file-download'
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 import { ReleaseComposer, ReleaseDelete } from './';
 
 
 const ReleasesView: React.FC<{}> = () => {
   const { site, service } = Composer.useComposer();
-  const layout = Composer.useLayout();
+  const layout = Burger.useTabs();
   const releases = Object.values(site.releases);
   const [releaseComposer, setReleaseComposer] = React.useState(false);
 
@@ -42,9 +42,9 @@ const ReleasesView: React.FC<{}> = () => {
           </Box>
           <Box flexGrow={1} />
           <Box>
-            <StencilStyles.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
-            <StencilStyles.SecondaryButton label={"button.releasegraph"} onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })} sx={{ marginRight: 1 }} />
-            <StencilStyles.PrimaryButton label={"button.create"} onClick={() => setReleaseComposer(true)} />
+            <Burger.SecondaryButton label={"button.cancel"} onClick={() => layout.actions.handleTabCloseCurrent()} sx={{ marginRight: 1 }} />
+            <Burger.SecondaryButton label={"button.releasegraph"} onClick={() => layout.actions.handleTabAdd({ id: 'graph', label: "Release Graph" })} sx={{ marginRight: 1 }} />
+            <Burger.PrimaryButton label={"button.create"} onClick={() => setReleaseComposer(true)} />
           </Box>
         </Box>
 

@@ -14,7 +14,7 @@ import Paper from '@mui/material/Paper';
 import { FormattedMessage, useIntl } from 'react-intl';
 
 import { LocalesOverview } from './LocalesOverview';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 
 
@@ -56,7 +56,7 @@ const LocalesView: React.FC<{}> = () => {
 
   return (<>
     { editLocale ?
-      (<StencilStyles.Dialog open={true} onClose={() => setEditLocale(undefined)}
+      (<Burger.Dialog open={true} onClose={() => setEditLocale(undefined)}
         backgroundColor="uiElements.main" title={editLocale.body.enabled === true ? "locale.disable.title" : "locale.enable.title"}
         submit={{
           title: editLocale.body.enabled ? "button.disable" : "button.enable",
@@ -67,7 +67,7 @@ const LocalesView: React.FC<{}> = () => {
         <DialogContentText>
           {editLocale.body.enabled ? <FormattedMessage id="locale.disable" /> : <FormattedMessage id="locale.enable" />}
         </DialogContentText>
-      </StencilStyles.Dialog>) : null
+      </Burger.Dialog>) : null
     }
 
     <Box sx={{ paddingBottom: 1, m: 2 }}>
@@ -95,7 +95,7 @@ const LocalesView: React.FC<{}> = () => {
                   <TableRow key={locale.id} hover>
                     <TableCell align="left">{locale.body.value}</TableCell>
                     <TableCell>
-                      <StencilStyles.Switch
+                      <Burger.Switch
                         checked={locale.body.enabled}
                         onChange={() => setEditLocale(locale)}
                         label={undefined}

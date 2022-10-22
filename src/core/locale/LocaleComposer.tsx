@@ -3,8 +3,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
-
+import Burger from '@the-wrench-io/react-burger';
 
 const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
@@ -26,17 +25,17 @@ const LocaleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const locales: StencilClient.Locale[] = Object.values(site.locales).map(l => l.body.value);
   
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="locale.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !locale || locales.includes(locale) || locale.length !== 2 }}>
 
-      <StencilStyles.TextField label='locale.composer.placeholder' helperText='locale.composer.helper' placeholder="en"
+      <Burger.TextField label='locale.composer.placeholder' helperText='locale.composer.helper' placeholder="en"
         required
         value={locale}
         onChange={setLocale}
       />
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

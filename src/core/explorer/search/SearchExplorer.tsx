@@ -17,7 +17,7 @@ import ConstructionIcon from '@mui/icons-material/Construction';
 import { ArticleEdit } from '../../article';
 import { WorkflowEdit } from '../../workflow/';
 import { LinkEdit } from '../../link/';
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../../context';
 
 
@@ -85,26 +85,26 @@ const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.Searc
       continue;
     }
 
-    items.push(<StencilStyles.TreeItem
+    items.push(<Burger.TreeItem
       onClick={() => setLinkEditOpen(true)}
       key={items.length}
       nodeId={`${view.link.id}-${items.length}-nested`}
       labelText={<span>{label.locale.body.value} - {match}</span>}
       labelcolor="page"
     >
-    </StencilStyles.TreeItem>);
+    </Burger.TreeItem>);
   }
   return (
     <>
       { linkEditOpen ? <LinkEdit linkId={view.link.id} onClose={() => setLinkEditOpen(false)} /> : null}
 
-      <StencilStyles.TreeItem
+      <Burger.TreeItem
         nodeId={view.link.id}
         labelText={view.link.body.value}
         labelcolor="link"
         labelIcon={LinkIcon}>
         {items}
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>)
 }
 
@@ -121,27 +121,27 @@ const WorkflowItem: React.FC<{ view: Composer.WorkflowView, searchResult: Compos
 
     items.push(
       <>
-        <StencilStyles.TreeItem
+        <Burger.TreeItem
           onClick={() => setWorkflowEditOpen(true)}
           key={items.length}
           nodeId={`${view.workflow.id}-${items.length}-nested`}
           labelText={<span>{label.locale.body.value} - {match}</span>}
           labelcolor="page"
         >
-        </StencilStyles.TreeItem>
+        </Burger.TreeItem>
       </>);
   }
   return (
     <>
       {workflowEditOpen ? <WorkflowEdit workflowId={view.workflow.id} onClose={() => setWorkflowEditOpen(false)} /> : null}
 
-      <StencilStyles.TreeItem
+      <Burger.TreeItem
         nodeId={view.workflow.id}
         labelText={<span>{findMatch(view.workflow.body.value, keyword, true)}</span>}
         labelcolor="workflow"
         labelIcon={view.workflow.body.devMode ? ConstructionIcon : AccountTreeOutlinedIcon}>
         {items}
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>)
 }
 
@@ -170,14 +170,14 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
         }
 
         items.push(
-          <StencilStyles.TreeItem
+          <Burger.TreeItem
             onClick={() => onLeftEdit(pageView.page)}
             key={index++}
             nodeId={`${pageView.page.id}-${lineIndex}-nested`}
             labelText={<span>{pageView.locale.body.value}.md ({lineIndex}) - {match}</span>}
             labelcolor="page"
           >
-          </StencilStyles.TreeItem>);
+          </Burger.TreeItem>);
         lineIndex++;
       }
     }
@@ -187,12 +187,12 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
 
   if (items.length > 0) {
     const articleEditButton: React.ReactElement =
-      <StencilStyles.TreeItemOption nodeId={article.id + 'edit-nested'}
+      <Burger.TreeItemOption nodeId={article.id + 'edit-nested'}
         color='article'
         icon={EditIcon}
         onClick={() => setArticleEditOpen(true)}
         labelText={<FormattedMessage id="article.edit.title" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
     items = [articleEditButton, ...items];
   }
@@ -201,7 +201,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
     <>
       { articleEditOpen ? <ArticleEdit articleId={view.article.id} onClose={() => setArticleEditOpen(false)} /> : null}
 
-      <StencilStyles.TreeItem
+      <Burger.TreeItem
         key={index++}
         nodeId={view.article.id}
         labelText={<span>{findMatch(`${view.article.body.name}`, keyword, true)}</span>}
@@ -214,7 +214,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
           }
         }}>
         {items}
-      </StencilStyles.TreeItem>
+      </Burger.TreeItem>
     </>
   )
 }

@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl';
 import { useSnackbar } from 'notistack';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 interface TemplateDeleteProps {
@@ -31,7 +31,7 @@ const TemplateDelete: React.FC<TemplateDeleteProps> = ({ templateId, onClose }) 
 
 
   return (
-    <StencilStyles.Dialog onClose={onClose} open={true}
+    <Burger.Dialog onClose={onClose} open={true}
       title={"template.delete"}
       backgroundColor="uiElements.main"
       submit={{ title: 'button.delete', disabled: false, onClick: handleDelete, }}
@@ -39,7 +39,7 @@ const TemplateDelete: React.FC<TemplateDeleteProps> = ({ templateId, onClose }) 
       <>
         <FormattedMessage id='template.delete.message' />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

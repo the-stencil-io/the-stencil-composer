@@ -1,8 +1,9 @@
 import React from 'react';
-import { ListItemText, Box, IconButton, Popover, Typography, Tooltip, ListItem } from '@mui/material';
+import { Box, IconButton, Popover, Typography, Tooltip, ListItem } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
+
 import { Composer, StencilClient } from '../context';
 import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
 import { FormattedMessage } from 'react-intl';
@@ -85,12 +86,12 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main" title="article.composer.title"
       submit={{ title: "article.create", onClick: handleCreate, disabled: !name }}>
       <>
 
-        <StencilStyles.Select label="article.composer.parent"
+        <Burger.Select label="article.composer.parent"
           helperText={"article.parent.helper"}
           selected={parentId}
           onChange={setParentId}
@@ -104,7 +105,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         />
         <Box display='flex'>
           <Box>
-            <StencilStyles.NumberField label="article.order" helperText='article.composer.orderhelper'
+            <Burger.NumberField label="article.order" helperText='article.composer.orderhelper'
               onChange={setOrder}
               value={order}
               placeholder={400}
@@ -114,12 +115,12 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             <OrderNumberTooltip />
           </Box>
         </Box>
-        <StencilStyles.TextField label="article.name" required
+        <Burger.TextField label="article.name" required
           value={name}
           onChange={setName}
         />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

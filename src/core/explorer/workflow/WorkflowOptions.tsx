@@ -5,8 +5,7 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 import { WorkflowDelete } from '../../workflow/WorkflowDelete';
 import { WorkflowEdit } from '../../workflow';
 import { StencilClient } from '../../context';
-import StencilStyles from '../../styles';
-
+import Burger from '@the-wrench-io/react-burger';
 
 const WorkflowOptions: React.FC<{workflow: StencilClient.Workflow}> = ({ workflow }) => {
 
@@ -19,20 +18,20 @@ const WorkflowOptions: React.FC<{workflow: StencilClient.Workflow}> = ({ workflo
       { dialogOpen === 'WorkflowDelete' ? <WorkflowDelete workflow={workflow} onClose={handleDialogClose} /> : null}
 
       
-      <StencilStyles.TreeItemOption nodeId={workflow.id + 'workflow.edit'}
+      <Burger.TreeItemOption nodeId={workflow.id + 'workflow.edit'}
         icon={EditIcon}
         color='workflow'
         onClick={() => setDialogOpen('WorkflowEdit')}
         labelText={<FormattedMessage id="services.edit" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
       
             
-      <StencilStyles.TreeItemOption nodeId={workflow.id + 'workflow.delete'}
+      <Burger.TreeItemOption nodeId={workflow.id + 'workflow.delete'}
         icon={DeleteOutlineOutlinedIcon}
         color='workflow'
         onClick={() => setDialogOpen('WorkflowDelete')}
         labelText={<FormattedMessage id="services.delete" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
     </>
   );
 }

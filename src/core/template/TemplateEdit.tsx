@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 import MDEditor from '@uiw/react-md-editor';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 
 
@@ -44,7 +44,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
   //const templates: StencilClient.Template[] = Object.values(site.templates);
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       title={"template.edit"}
       backgroundColor={"uiElements.main"}
       submit={{ title: "button.update", disabled: !name || !content, onClick: handleUpdate }}
@@ -53,11 +53,11 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
       <>
         <Typography variant="body2" ><FormattedMessage id={"template.description"} /></Typography>
 
-        <StencilStyles.TextField label='template.name' helperText='template.name.desc'
+        <Burger.TextField label='template.name' helperText='template.name.desc'
           value={name}
           onChange={setName} />
 
-        <StencilStyles.Select label='template.type'
+        <Burger.Select label='template.type'
           selected={templateType}
           onChange={setTemplateType as any}
           helperText={"template.page.desc"}
@@ -66,7 +66,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
           ]} />
 
 
-        <StencilStyles.TextField label='template.desc' helperText='template.description.desc'
+        <Burger.TextField label='template.desc' helperText='template.description.desc'
           value={description}
           onChange={setDescription} />
 
@@ -81,7 +81,7 @@ const TemplateEdit: React.FC<TemplateEditProps> = ({ onClose, templateId }) => {
           </Box>
         </Box>
       </>
-    </StencilStyles.Dialog >
+    </Burger.Dialog >
   );
 }
 

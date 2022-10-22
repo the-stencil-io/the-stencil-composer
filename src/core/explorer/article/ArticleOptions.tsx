@@ -9,7 +9,7 @@ import { WorkflowComposer } from '../../workflow';
 import { ArticleEdit, ArticleDelete } from '../../article';
 import { NewPage, PageEdit, PageDelete } from '../../page';
 import { Composer, StencilClient } from '../../context';
-import StencilStyles from '../../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 interface ArticleOptionsProps {
   article: StencilClient.Article,
@@ -34,66 +34,66 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'WorkflowComposer' ? <WorkflowComposer onClose={handleDialogClose} /> : null}
 
       {/** Article options */}
-      <StencilStyles.TreeItemOption nodeId={article.id + 'edit-nested'}
+      <Burger.TreeItemOption nodeId={article.id + 'edit-nested'}
         color='article'
         icon={EditIcon}
         onClick={() => setDialogOpen('ArticleEdit')}
         labelText={<FormattedMessage id="article.edit.title" />}>
-      </StencilStyles.TreeItemOption>
-      <StencilStyles.TreeItemOption nodeId={article.id + 'delete-nested'}
+      </Burger.TreeItemOption>
+      <Burger.TreeItemOption nodeId={article.id + 'delete-nested'}
         color='article'
         icon={DeleteOutlineOutlinedIcon}
         onClick={() => setDialogOpen('ArticleDelete')}
         labelText={<FormattedMessage id="article.delete.title" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
       {/** Page options */}
-      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.add'}
+      <Burger.TreeItemOption nodeId={article.id + 'pages.add'}
         color='page'
         icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('NewPage')}
         labelText={<FormattedMessage id="pages.add" />}>
-      </StencilStyles.TreeItemOption>
-      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.change'}
+      </Burger.TreeItemOption>
+      <Burger.TreeItemOption nodeId={article.id + 'pages.change'}
         color='page'
         icon={EditIcon}
         onClick={() => setDialogOpen('PageEdit')}
         labelText={<FormattedMessage id="pages.change" />}>
-      </StencilStyles.TreeItemOption>
-      <StencilStyles.TreeItemOption nodeId={article.id + 'pages.delete'}
+      </Burger.TreeItemOption>
+      <Burger.TreeItemOption nodeId={article.id + 'pages.delete'}
         color='page'
         icon={DeleteOutlineOutlinedIcon}
         onClick={() => setDialogOpen('PageDelete')}
         labelText={<FormattedMessage id="pages.delete" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
-      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.workflows'}
+      <Burger.TreeItemOption nodeId={article.id + 'resource.create.workflows'}
         color='workflow'
         icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('WorkflowComposer')}
         labelText={<FormattedMessage id="services.add" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
-      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.workflows'}
+      <Burger.TreeItemOption nodeId={article.id + 'resource.edit.workflows'}
         color='workflow'
         icon={EditIcon}
         onClick={() => handleInTab({ article, type: "ARTICLE_WORKFLOWS" })}
         labelText={<FormattedMessage id="services.change" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
-      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.create.links'}
+      <Burger.TreeItemOption nodeId={article.id + 'resource.create.links'}
         color='link'
         icon={AddCircleOutlineIcon}
         onClick={() => setDialogOpen('LinkComposer')}
         labelText={<FormattedMessage id="link.create" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
-      <StencilStyles.TreeItemOption nodeId={article.id + 'resource.edit.links'}
+      <Burger.TreeItemOption nodeId={article.id + 'resource.edit.links'}
         color='link'
         icon={EditIcon}
         onClick={() => handleInTab({ article, type: "ARTICLE_LINKS" })}
         labelText={<FormattedMessage id="links.change" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
     </>
   );

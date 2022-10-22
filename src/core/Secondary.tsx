@@ -2,9 +2,8 @@ import React from 'react';
 import { Tabs, Tab, Box, TabProps, TabsProps, TextFieldProps, TextField, alpha } from '@mui/material';
 import { styled } from "@mui/material/styles";
 import { useIntl } from 'react-intl';
-
+import Burger from '@the-wrench-io/react-burger';
 import { ArticleExplorer, WorkflowExplorer, LinkExplorer, SearchExplorer } from './explorer';
-import { Composer } from './context';
 
 
 const StyledTab = styled(Tab)<TabProps>(({ theme }) => ({
@@ -89,10 +88,10 @@ const SecondaryExplorer: React.FC<{}> = () => {
 
 
 const Secondary: React.FC<{}> = () => {
-  const layout = Composer.useLayout();
+  const {session} = Burger.useSecondary();
 
   let component = <></>;
-  if (layout.session.secondary === 'toolbar.search') {
+  if (session.secondary === 'toolbar.search') {
     component = (<SearchExplorer />)
   } else {
     component = <SecondaryExplorer />;

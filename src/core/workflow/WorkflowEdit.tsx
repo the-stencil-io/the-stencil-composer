@@ -7,7 +7,7 @@ import WarningAmberRoundedIcon from '@mui/icons-material/WarningAmberRounded';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { LocaleLabels } from '../locale';
 
 
@@ -60,7 +60,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
     }));
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="services.edit"
       submit={{ title: "button.apply", onClick: handleCreate, disabled: !technicalname || changeInProgress || labels.length < 1 }}>
@@ -74,13 +74,13 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
 
           <Box display="flex">
             <Box flexGrow={1}>
-              <StencilStyles.TextField label='services.technicalname' helperText='services.technicalname.description'
+              <Burger.TextField label='services.technicalname' helperText='services.technicalname.description'
                 required
                 value={technicalname}
                 onChange={setTechnicalname} />
             </Box>
             <Box maxWidth="50%" sx={{ ml: 1 }}>
-              <StencilStyles.Switch
+              <Burger.Switch
                 checked={devMode ? devMode : false}
                 onChange={setDevMode}
                 helperText={"services.devmode.helper"}
@@ -89,7 +89,7 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
             </Box>
           </Box>
 
-          <StencilStyles.SelectMultiple label='composer.select.article'
+          <Burger.SelectMultiple label='composer.select.article'
             multiline
             onChange={setArticleId}
             selected={articleId}
@@ -98,22 +98,22 @@ const WorkflowEdit: React.FC<WorkflowEditProps> = ({ onClose, workflowId }) => {
             items={articles.map((article) => ({
               id: article.id,
               value: (<>
-                <StencilStyles.Checkbox checked={articleId.indexOf(article.id) > -1} />
+                <Burger.Checkbox checked={articleId.indexOf(article.id) > -1} />
                 <ListItemText primary={article.value} />
               </>
               )
             }))}
           />
           <Box display="flex" alignItems="center" sx={{ mt: 1, mb: 1 }}>
-            <StencilStyles.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
-            <StencilStyles.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
+            <Burger.SecondaryButton label={"allarticles"} onClick={() => setArticleId(Object.keys(site.articles))} />
+            <Burger.SecondaryButton label={"allarticles.individual"} onClick={() => setArticleId([])} />
             <WarningAmberRoundedIcon sx={{ ml: 3, color: "warning.main" }} /><Typography variant="caption" sx={{ ml: 1 }}>
               <FormattedMessage id="add.allarticles.service.help" />
             </Typography>
           </Box>
         </Paper>
       </>
-    </StencilStyles.Dialog >
+    </Burger.Dialog >
   );
 
 }

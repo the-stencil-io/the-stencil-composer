@@ -2048,6 +2048,11 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
+"@the-wrench-io/react-burger@^1.0.37":
+  version "1.0.37"
+  resolved "https://registry.yarnpkg.com/@the-wrench-io/react-burger/-/react-burger-1.0.37.tgz#f7ecc882332a72a7cff64aa56e21acbe061075b1"
+  integrity sha512-zAqIrsyhN29cBGBuPPlpD7XzaMLl0IaMtPnAJkH6z9FX0UnFZ+GH0XXZNe1wWUCwf2vzJl7xvrw3NSSw4bk6EA==
+
 "@tootallnate/once@1":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@tootallnate/once/-/once-1.1.2.tgz#ccb91445360179a04e7fe6aff78c00ffc1eeaf82"

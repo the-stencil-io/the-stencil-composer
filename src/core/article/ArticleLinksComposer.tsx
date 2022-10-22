@@ -1,8 +1,8 @@
 import React from 'react';
 import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
+import Burger from '@the-wrench-io/react-burger';
 
-import StencilStyles from '../styles';
 import { Composer, StencilClient } from '../context';
 
 
@@ -10,7 +10,7 @@ import { Composer, StencilClient } from '../context';
 const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site, session } = Composer.useComposer();
-  const layout = Composer.useLayout();
+  const tabs = Burger.useTabs();
   const view = session.getArticleView(props.articleId);
 
 
@@ -31,7 +31,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
     };
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
-      .then(() => layout.actions.handleTabCloseCurrent())
+      .then(() => tabs.actions.handleTabCloseCurrent())
     enqueueSnackbar(message, { variant: 'success' });
   }
   const message = <FormattedMessage id="snack.link.editedMessage" />
@@ -39,7 +39,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
 
   return (
     <>
-      <StencilStyles.TransferList
+      <Burger.TransferList
         title="articlelinks"
         titleArgs={{ name: articleName }}
         searchTitle="link.search.title"
@@ -54,7 +54,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
         selected={view.links.map(l => l.link.id)}
         cancel={{
           label: 'button.cancel',
-          onClick: () => layout.actions.handleTabCloseCurrent()
+          onClick: () => tabs.actions.handleTabCloseCurrent()
         }}
         submit={{
           label: "button.apply",

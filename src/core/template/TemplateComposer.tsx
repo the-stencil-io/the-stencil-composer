@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 import MDEditor from '@uiw/react-md-editor';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 
 
@@ -38,7 +38,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
   const message = <FormattedMessage id="snack.template.createdMessage" />
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       title={"template.create"}
       backgroundColor={"uiElements.main"}
       submit={{ title: "button.add", disabled: !name || !content, onClick: handleCreate }}
@@ -47,11 +47,11 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
       <>
         <Typography variant="body2" ><FormattedMessage id={"template.description"} /></Typography>
 
-        <StencilStyles.TextField label='template.name' helperText='template.name.desc'
+        <Burger.TextField label='template.name' helperText='template.name.desc'
           value={name}
           onChange={setName} />
 
-        <StencilStyles.Select label='template.type'
+        <Burger.Select label='template.type'
           selected={templateType}
           onChange={setTemplateType}
           helperText={"template.page.desc"}
@@ -61,7 +61,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
           ]} />
 
 
-        <StencilStyles.TextField label='template.desc' helperText='template.description.desc'
+        <Burger.TextField label='template.desc' helperText='template.description.desc'
           value={description}
           onChange={setDescription} />
 
@@ -76,7 +76,7 @@ const TemplateComposer: React.FC<TemplateComposerProps> = ({ onClose }) => {
           </Box>
         </Box>
       </>
-    </StencilStyles.Dialog >
+    </Burger.Dialog >
   );
 }
 

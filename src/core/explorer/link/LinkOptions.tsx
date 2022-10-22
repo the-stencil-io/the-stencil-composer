@@ -6,8 +6,7 @@ import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined
 import { LinkDelete } from '../../link/LinkDelete';
 import { LinkEdit } from '../../link';
 import { StencilClient } from '../../context';
-import StencilStyles from '../../styles';
-
+import Burger from '@the-wrench-io/react-burger';
 
 const LinkOptions: React.FC<{ link: StencilClient.Link }> = ({ link }) => {
 
@@ -19,20 +18,20 @@ const LinkOptions: React.FC<{ link: StencilClient.Link }> = ({ link }) => {
       { dialogOpen === 'LinkEdit' ? <LinkEdit linkId={link.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'LinkDelete' ? <LinkDelete linkId={link.id} onClose={handleDialogClose} /> : null}
 
-      <StencilStyles.TreeItemOption nodeId={link.id + 'link.edit'}
+      <Burger.TreeItemOption nodeId={link.id + 'link.edit'}
         color='link'
         icon={EditIcon}
         onClick={() => setDialogOpen('LinkEdit')}
         labelText={<FormattedMessage id="link.edit.title" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
 
 
-      <StencilStyles.TreeItemOption nodeId={link.id + 'link.delete'}
+      <Burger.TreeItemOption nodeId={link.id + 'link.delete'}
         color='link'
         icon={DeleteOutlineOutlinedIcon}
         onClick={() => setDialogOpen('LinkDelete')}
         labelText={<FormattedMessage id="link.delete.title" />}>
-      </StencilStyles.TreeItemOption>
+      </Burger.TreeItemOption>
     </>
   );
 }

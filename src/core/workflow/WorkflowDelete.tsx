@@ -5,7 +5,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 interface WorkflowDeleteProps {
   workflow: StencilClient.Workflow,
@@ -27,7 +27,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
   const message = <FormattedMessage id="snack.workflow.deletedMessage" />
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="services.delete"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: false }}>
@@ -35,7 +35,7 @@ const WorkflowDelete: React.FC<WorkflowDeleteProps> = ({ workflow, onClose }) =>
       <DialogContentText>
         <FormattedMessage id="services.delete.desc" />
       </DialogContentText>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 export { WorkflowDelete }

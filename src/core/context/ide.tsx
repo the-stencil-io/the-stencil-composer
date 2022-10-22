@@ -1,7 +1,8 @@
 import React from 'react';
 
 import { useTheme } from '@mui/material';
-import { StencilClient, Layout } from '../';
+import Burger from '@the-wrench-io/react-burger';
+import { StencilClient } from '../';
 import { ReducerDispatch, Reducer } from './Reducer';
 import { SessionData, ImmutableTabData } from './SessionData';
 
@@ -47,7 +48,7 @@ declare namespace Composer {
     withNav(nav: Nav): TabData;
   }
 
-  interface Tab extends Layout.Session.Tab<TabData> {
+  interface Tab extends Burger.TabSession<TabData> {
 
   }
 
@@ -179,13 +180,8 @@ namespace Composer {
     return result.session;
   }
 
-  export const useLayout = () => {
-    const layout = Layout.useContext();
-    return layout;
-  }
-
   export const useNav = () => {
-    const layout = useLayout();
+    const layout = Burger.useTabs();
 
 
     const handleInTab = (props: { article: StencilClient.Article, type: Composer.NavType, locale?: string | null, secondary?: boolean }) => {
@@ -247,7 +243,7 @@ namespace Composer {
   };
 }
 
-const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article, type }) => {
+const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Composer.NavType }> = ({ article }) => {
   const theme = useTheme();
   const { isArticleSaved } = Composer.useComposer();
   const saved = isArticleSaved(article);

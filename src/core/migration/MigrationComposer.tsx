@@ -2,7 +2,7 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer } from '../context';
 
 const MigrationComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
@@ -32,15 +32,15 @@ const MigrationComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
   
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main" title="toolbar.import"
       submit={{ title: "imports.import.action", onClick: handleCreate, disabled: loading || !file }}>
       <>
         <div>{file}</div>
-        <StencilStyles.FileField value='' onChange={setFile} label="imports.select" />
+        <Burger.FileField value='' onChange={setFile} label="imports.select" />
 
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
 
 
   );

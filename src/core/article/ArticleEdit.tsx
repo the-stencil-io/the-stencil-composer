@@ -2,7 +2,7 @@ import React from 'react';
 import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
 
 
@@ -48,20 +48,20 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
       sx: article.body.parentId ? selectSub : undefined
     }));
 
-  return (<StencilStyles.Dialog open={true} onClose={onClose}
+  return (<Burger.Dialog open={true} onClose={onClose}
     backgroundColor="uiElements.main"
     title="article.edit.title"
     submit={{ title: "button.update", onClick: handleUpdate, disabled: !name }}>
     <>
-      <StencilStyles.Select label="article.edit.parent" onChange={setParentId}
+      <Burger.Select label="article.edit.parent" onChange={setParentId}
         selected={parentId ? parentId : ''}
         items={articles}
         empty={{ id: "", label: "article.composer.parent.unselected" }}
       />
-      <StencilStyles.NumberField label="order" helperText="article.edit.orderhelper" placeholder={100} value={order} onChange={setOrder} />
-      <StencilStyles.TextField label="article.name" required value={name} onChange={setName} />
+      <Burger.NumberField label="order" helperText="article.edit.orderhelper" placeholder={100} value={order} onChange={setOrder} />
+      <Burger.TextField label="article.name" required value={name} onChange={setName} />
     </>
-  </StencilStyles.Dialog>);
+  </Burger.Dialog>);
 }
 
 export { ArticleEdit }

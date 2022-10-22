@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 const PageDelete: React.FC<{ onClose: () => void, articleId: StencilClient.ArticleId }> = (props) => {
@@ -23,13 +23,13 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: StencilClient.Artic
   const message = <FormattedMessage id="snack.page.deletedMessage" />
   const articlePages: StencilClient.Page[] = Object.values(site.pages).filter(p => p.body.article === props.articleId);
   return (
-    <StencilStyles.Dialog open={true} onClose={props.onClose}
+    <Burger.Dialog open={true} onClose={props.onClose}
       backgroundColor="uiElements.main"
       title="pages.delete"
       submit={{ title: "button.delete", onClick: handleDelete, disabled: !pageId }}>
       <>
         <FormattedMessage id='pages.delete.message' />
-        <StencilStyles.Select
+        <Burger.Select
           selected={pageId}
           onChange={setPageId}
           label='pages.edit.selectpage'
@@ -39,7 +39,7 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: StencilClient.Artic
           }))}
         />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 

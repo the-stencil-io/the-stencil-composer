@@ -4,7 +4,7 @@ import { useSnackbar } from 'notistack';
 import { Typography } from '@mui/material';
 import { FormattedMessage } from 'react-intl';
 import { Composer, StencilClient } from '../context';
-import StencilStyles from '../styles';
+import Burger from '@the-wrench-io/react-burger';
 
 
 
@@ -30,7 +30,7 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const message = <FormattedMessage id="snack.release.createdMessage" />
 
   return (
-    <StencilStyles.Dialog open={true} onClose={onClose}
+    <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main"
       title="release.composer.title"
       submit={{ title: "button.create", onClick: handleCreate, disabled: !name || site.contentType === 'EMPTY' }}>
@@ -45,10 +45,10 @@ const ReleaseComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           borderColor: 'error.main'
         }}>
           <FormattedMessage id={'site.content.empty'} /></Typography> : null}
-        <StencilStyles.TextField label='release.composer.label' onChange={setName} value={name} />
-        <StencilStyles.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note} />
+        <Burger.TextField label='release.composer.label' onChange={setName} value={name} />
+        <Burger.TextField label='release.composer.note' helperText='release.composer.helper' onChange={setNote} value={note} />
       </>
-    </StencilStyles.Dialog>
+    </Burger.Dialog>
   );
 }
 
