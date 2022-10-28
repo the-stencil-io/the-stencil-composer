@@ -251,7 +251,12 @@ const en = {
   'release.composer.helper': 'Optional additional information for future reference',
   'release.desc': 'View all releases and download all site content in JSON format. For more detailed information on specific releases and their content, view the Graph.',
   'release.delete.title': 'Delete release',
-  'release.delete.desc': 'Delete this release permanently from site data?'
+  'release.delete.desc': 'Delete this release permanently from site data?',
+  'releases.view.note': 'Release notes',
+  'releases.view.tag': 'Release version name',
+  'releases.view.created': 'Date and time',
+  'releases.view.download': 'JSON download',
+  
 };
 
 export default en;

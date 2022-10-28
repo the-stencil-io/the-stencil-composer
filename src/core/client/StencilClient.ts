@@ -187,7 +187,7 @@ declare namespace StencilClient {
 
   interface Service {
     getSite(): Promise<Site>,
-    getReleaseContent(release: Release): Promise<{}>,
+    getReleaseContent(releaseId: string): Promise<{}>,
 
     create(): CreateBuilder;
     delete(): DeleteBuilder;
