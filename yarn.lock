@@ -2048,10 +2048,12 @@
   dependencies:
     defer-to-connect "^1.0.1"
 
-"@the-wrench-io/react-burger@^1.0.37":
-  version "1.0.37"
-  resolved "https://registry.yarnpkg.com/@the-wrench-io/react-burger/-/react-burger-1.0.37.tgz#f7ecc882332a72a7cff64aa56e21acbe061075b1"
-  integrity sha512-zAqIrsyhN29cBGBuPPlpD7XzaMLl0IaMtPnAJkH6z9FX0UnFZ+GH0XXZNe1wWUCwf2vzJl7xvrw3NSSw4bk6EA==
+"@the-wrench-io/react-burger@^1.0.40":
+  version "1.0.40"
+  resolved "https://registry.yarnpkg.com/@the-wrench-io/react-burger/-/react-burger-1.0.40.tgz#3d290b2c77fce17ba6e399568bbd6c37ae63055a"
+  integrity sha512-j1mujRJdCqH8CCQaykwLHV9LfvKSiX/P1aYbiqUDjjwMlWyVqtp4H4uUN18AXvTM9MpYVArFcfP03fbHfGTrXQ==
+  dependencies:
+    moment "^2.29.4"
 
 "@tootallnate/once@1":
   version "1.1.2"
@@ -9661,6 +9663,11 @@ mkdirp@^1.0.3, mkdirp@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
   integrity sha512-vVqVZQyf3WLx2Shd0qJ9xuvqgAyKPLAiqITEtqW0oIUjzo3PePDd6fW9iFz30ef7Ysp/oiWqbhszeGWW2T6Gzw==
+
+moment@^2.29.4:
+  version "2.29.4"
+  resolved "https://registry.yarnpkg.com/moment/-/moment-2.29.4.tgz#3dbe052889fe7c1b2ed966fcb3a77328964ef108"
+  integrity sha512-5LC9SOxjSc2HF6vO2CyuTDNivEdoz2IvyJJGj6X8DJ0eFyfszE0QiEd+iXmBvUP3WHxSjFH/vIsA0EN00cgr8w==
 
 move-concurrently@^1.0.1:
   version "1.0.1"
