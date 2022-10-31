@@ -27,8 +27,8 @@ const createService = (init: { store?: StencilClient.Store, config?: StencilClie
 
   return {
     getSite,
-    async getReleaseContent(release: StencilClient.Release): Promise<{}> {
-      return backend.fetch(`/releases/${release.id}`, { method: "GET" }).then((data) => data as any);
+    async getReleaseContent(releaseId: StencilClient.ReleaseId): Promise<{}> {
+      return backend.fetch(`/releases/${releaseId}`, { method: "GET" }).then((data) => data as any);
     },
     create: () => new CreateBuilderImpl(backend),
     update: () => new UpdateBuilderImpl(backend),

@@ -1,7 +1,7 @@
 import React from 'react';
 import {
-  Box, Typography, IconButton, Table, TableBody,
-  TableCell, TableContainer, TableRow, TableHead, Paper, Card
+  Box, Typography, IconButton,
+  TableCell, TableRow, Card
 } from '@mui/material';
 import GetAppIcon from '@mui/icons-material/GetApp';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
@@ -10,23 +10,15 @@ import { FormattedMessage } from 'react-intl';
 import fileDownload from 'js-file-download'
 
 import Burger from '@the-wrench-io/react-burger';
-import { Composer, StencilClient } from '../context';
+import { Composer } from '../context';
 import { ReleaseComposer, ReleaseDelete } from './';
 
 
 const ReleasesView: React.FC<{}> = () => {
-  const { site, service } = Composer.useComposer();
+  const { site } = Composer.useComposer();
   const layout = Burger.useTabs();
   const releases = Object.values(site.releases);
   const [releaseComposer, setReleaseComposer] = React.useState(false);
-
-  const onDownload = (release: StencilClient.Release) => {
-    service.getReleaseContent(release).then(content => {
-      const data = JSON.stringify(content, null, 2);
-      console.log(data);
-      fileDownload(data, release.body.name + '.json');
-    })
-  }
 
   return (
     <>
@@ -54,29 +46,7 @@ const ReleasesView: React.FC<{}> = () => {
             <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}>
               <FormattedMessage id="releases" />
             </Typography>
-
-            <TableContainer component={Paper}>
-              <Table size="small">
-                <TableHead>
-                  <TableRow sx={{ p: 1 }}>
-                    <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="tag" /></TableCell>
-                    <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="created" /></TableCell>
-                    <TableCell align="left" sx={{ fontWeight: 'bold' }}><FormattedMessage id="release.composer.note" /></TableCell>
-                    <TableCell align="center" sx={{ fontWeight: 'bold' }}><FormattedMessage id="download" /></TableCell>
-                    <TableCell align="center" sx={{ fontWeight: 'bold' }}><FormattedMessage id="delete" /></TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {releases.map(r => ({ id: new Date(r.body.created as string), body: r }))
-                    .sort(({ id: a }, { id: b }) => a > b ? -1 : a < b ? 1 : 0)
-                    .map((release, index) => (
-                      <Row key={index}
-                        release={release.body}
-                        onDownload={() => onDownload(release.body)}
-                      />))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+            <Burger.ReleaseTable releases={releases} tableRowComponent={Row} />
           </Card>
         </Box>
       </Box>
@@ -85,8 +55,16 @@ const ReleasesView: React.FC<{}> = () => {
 }
 
 
-const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> = ({ release, onDownload }) => {
+const Row: React.FC<{ release: Burger.Release }> = ({ release }) => {
   const [releaseDeleteOpen, setReleaseDeleteOpen] = React.useState(false);
+  const { service } = Composer.useComposer();
+
+  const onDownload = (releaseId: string) => {
+    service.getReleaseContent(releaseId).then(content => {
+      const data = JSON.stringify(content, null, 2);
+      fileDownload(data, release.body.name + '.json');
+    })  
+  }
 
   return (
     <>
@@ -94,10 +72,10 @@ const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> 
 
       <TableRow key={release.id}>
         <TableCell align="left" >{release.body.name}</TableCell>
-        <TableCell align="left">{release.body.created}</TableCell>
+        <TableCell align="left"><Burger.DateTimeFormatter timestamp={release.body.created} /></TableCell>
         <TableCell align="left">{release.body.note}</TableCell>
         <TableCell align="center" >
-          <IconButton onClick={onDownload} sx={{ color: 'uiElements.main' }}><GetAppIcon /> </IconButton>
+          <IconButton onClick={() => onDownload(release.id)} sx={{ color: 'uiElements.main' }}><GetAppIcon /> </IconButton>
         </TableCell>
         <TableCell align="center" >
           <IconButton onClick={() => setReleaseDeleteOpen(true)} sx={{ color: 'error.main' }}><DeleteOutlineIcon /> </IconButton>
@@ -108,7 +86,3 @@ const Row: React.FC<{ release: StencilClient.Release, onDownload: () => void }> 
 }
 
 export { ReleasesView }
-
-
-
-
