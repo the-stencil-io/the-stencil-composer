@@ -72,7 +72,7 @@ const Row: React.FC<{ release: Burger.Release }> = ({ release }) => {
 
       <TableRow key={release.id}>
         <TableCell align="left" >{release.body.name}</TableCell>
-        <TableCell align="left">{release.body.created}</TableCell>
+        <TableCell align="left"><Burger.DateTimeFormatter timestamp={release.body.created} /></TableCell>
         <TableCell align="left">{release.body.note}</TableCell>
         <TableCell align="center" >
           <IconButton onClick={() => onDownload(release.id)} sx={{ color: 'uiElements.main' }}><GetAppIcon /> </IconButton>
