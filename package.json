@@ -66,7 +66,7 @@
     ]
   },
   "dependencies": {
-    "@the-wrench-io/react-burger": "^1.0.37",
+    "@the-wrench-io/react-burger": "^1.0.40",
     "d3": "^7.1.1",
     "js-file-download": "^0.4.12",
     "notistack": "^2.0.3"

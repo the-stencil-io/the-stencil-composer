@@ -12,7 +12,6 @@ import fileDownload from 'js-file-download'
 import Burger from '@the-wrench-io/react-burger';
 import { Composer } from '../context';
 import { ReleaseComposer, ReleaseDelete } from './';
-import { ReleasesTableBurger } from './ReleasesTable';
 
 
 const ReleasesView: React.FC<{}> = () => {
@@ -47,7 +46,7 @@ const ReleasesView: React.FC<{}> = () => {
             <Typography variant="h4" sx={{ p: 2, backgroundColor: "table.main" }}>
               <FormattedMessage id="releases" />
             </Typography>
-            <ReleasesTableBurger.ReleasesTable releases={releases} tableRowComponent={Row} />
+            <Burger.ReleaseTable releases={releases} tableRowComponent={Row} />
           </Card>
         </Box>
       </Box>
@@ -56,7 +55,7 @@ const ReleasesView: React.FC<{}> = () => {
 }
 
 
-const Row: React.FC<{ release: ReleasesTableBurger.Release }> = ({ release }) => {
+const Row: React.FC<{ release: Burger.Release }> = ({ release }) => {
   const [releaseDeleteOpen, setReleaseDeleteOpen] = React.useState(false);
   const { service } = Composer.useComposer();
 
