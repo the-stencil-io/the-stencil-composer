@@ -55,8 +55,3 @@ Comment out StencilClient.mock();
 
 * /the-stencil-composer    
  `yarn start`
-
-
-
-
-
