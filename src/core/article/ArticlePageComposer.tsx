@@ -3,6 +3,7 @@ import { Box, useTheme } from '@mui/material';
 
 import MDEditor, { ICommand, commands, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Composer, StencilClient } from '../context';
+import { useSnackbar } from 'notistack';
 
 
 const templateCommand = (template: StencilClient.Template): ICommand => ({
@@ -67,6 +68,9 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
   const { actions, session } = Composer.useComposer();
   const { site } = session;
   const view = session.getArticleView(articleId);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+
+  const [snackbarVisible, setSnackbarVisible] = React.useState(false);
 
   const page1 = [...view.pages.map(p => p.page)]
     .filter(p => p.body.locale === locale1).pop() as StencilClient.Page;
@@ -78,6 +82,16 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
   const value2 = page2 ? (session.pages[page2.id] ? session.pages[page2.id].value : page2.body.content) : undefined;
 
   const handleChange1 = (value: string | undefined) => {
+    var regex = /# \w/gy;
+    var containsTitle = regex.test(value || '');
+    if (!containsTitle) {
+      if (!snackbarVisible) {
+        enqueueSnackbar('Please add a title to the page', { variant: 'warning', persist: true });
+      }
+    } else {
+      setSnackbarVisible(false);
+      closeSnackbar();
+    }
     actions.handlePageUpdate(page1.id, value ? value : "");
   }
 
