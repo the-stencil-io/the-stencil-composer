@@ -114,7 +114,8 @@ const createMock = (): StencilClient.Service => {
     },
     create: () => new MockCreateBuilder(),
     update: () => new MockUpdateBuilder(),
-    delete: () => new MockDeleteBuilder()
+    delete: () => new MockDeleteBuilder(),
+    version: () => new MockVersionBuilder(),
   } as any;
 }
 
@@ -202,6 +203,12 @@ class MockDeleteBuilder implements StencilClient.DeleteBuilder {
   }
 }
 
+class MockVersionBuilder implements StencilClient.VersionBuilder {
+  async version(): Promise<string> {
+    const date = new Date().toLocaleDateString("en-GB");
+    return "mock; " + date;
+  }
+}
 
 const toRecord = (entities: { id: string }[]): Record<string, any> => {
   const result: Record<string, any> = {};
