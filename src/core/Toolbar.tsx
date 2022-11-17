@@ -56,6 +56,7 @@ const Toolbar: React.FC<{}> = () => {
   const unsavedPages = Object.values(composer.session.pages).filter(p => !p.saved);
   const unsavedArticlePages: Composer.PageUpdate[] = (article ? unsavedPages.filter(p => !p.saved).filter(p => p.origin.body.article === article.id) : []);
 
+  const [devMode, setDevMode] = React.useState<boolean>(true);
 
   const message = <FormattedMessage id="snack.page.savedMessage" />
 
@@ -65,7 +66,7 @@ const Toolbar: React.FC<{}> = () => {
       if (unsavedArticlePages.length === 0) {
         return;
       }
-      const update: StencilClient.PageMutator[] = unsavedArticlePages.map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value }));
+      const update: StencilClient.PageMutator[] = unsavedArticlePages.map(p => ({ pageId: p.origin.id, locale: p.origin.body.locale, content: p.value, devMode }));
       composer.service.update().pages(update).then(success => {
         enqueueSnackbar(message, {variant: 'success'});
         composer.actions.handlePageUpdateRemove(success.map(p => p.id));
