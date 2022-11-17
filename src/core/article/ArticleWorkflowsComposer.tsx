@@ -14,6 +14,7 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site, session } = Composer.useComposer();
   const layout = Burger.useTabs();
+  const [devMode, setDevMode] = React.useState<boolean>(true);
 
   const view = session.getArticleView(props.articleId);
   const workflows: StencilClient.Workflow[] = Object.values(site.workflows)
@@ -29,7 +30,8 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
       parentId: article.body.parentId,
       order: article.body.order,
       workflows: [...selectedWorkflows],
-      links: undefined
+      links: undefined,
+      devMode,
     };
     console.log("saving selected services" + selectedWorkflows);
     service.update().article(entity)

@@ -70,9 +70,10 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [name, setName] = React.useState("");
   const [order, setOrder] = React.useState(0);
   const [parentId, setParentId] = React.useState("");
+  const [devMode, setDevMode] = React.useState<boolean>(true);
     
   const handleCreate = () => {
-    const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order };
+    const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order, devMode };
     console.log("entity", entity)
 
     service.create().article(entity).then(success => {
@@ -119,6 +120,14 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           value={name}
           onChange={setName}
         />
+        <Box maxWidth="50%" sx={{ ml: 1 }}>
+          <Burger.Switch
+            checked={devMode}
+            helperText="services.devmode.helper"
+            label="services.devmode"
+            onChange={setDevMode}
+          />
+        </Box>
       </>
     </Burger.Dialog>
   );

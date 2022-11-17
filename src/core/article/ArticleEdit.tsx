@@ -4,6 +4,7 @@ import { FormattedMessage } from 'react-intl';
 
 import Burger from '@the-wrench-io/react-burger';
 import { Composer, StencilClient } from '../context';
+import { Box } from '@mui/material';
 
 
 const selectSub = { ml: 2, color: "article.dark" }
@@ -17,11 +18,12 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
   const [name, setName] = React.useState(article.body.name);
   const [order, setOrder] = React.useState(article.body.order);
   const [parentId, setParentId] = React.useState(article.body.parentId);
+  const [devMode, setDevMode] = React.useState(article.body.devMode);
 
   const message = <FormattedMessage id="snack.article.editedMessage" />
 
   const handleUpdate = () => {
-    const entity: StencilClient.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined, workflows: undefined };
+    const entity: StencilClient.ArticleMutator = { articleId: article.id, name, parentId, order, links: undefined, workflows: undefined, devMode };
     service.update().article(entity).then(_success => {
       enqueueSnackbar(message, {variant: 'success'});
       onClose();
@@ -60,6 +62,14 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
       />
       <Burger.NumberField label="order" helperText="article.edit.orderhelper" placeholder={100} value={order} onChange={setOrder} />
       <Burger.TextField label="article.name" required value={name} onChange={setName} />
+      <Box maxWidth="50%" sx={{ ml: 1 }}>
+        <Burger.Switch
+          checked={devMode ? devMode : false}
+          helperText="services.devmode.helper"
+          label="services.devmode"
+          onChange={setDevMode}
+        />
+      </Box>
     </>
   </Burger.Dialog>);
 }

@@ -47,6 +47,7 @@ interface LinkItemProps {
   nodeId: string;
   children?: React.ReactChild;
   onClick: () => void;
+  devMode?: boolean;
 }
 
 const LinkItem: React.FC<LinkItemProps> = (props) => {
@@ -56,7 +57,7 @@ const LinkItem: React.FC<LinkItemProps> = (props) => {
       onClick={props.onClick}
       label={
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
+          <Box component={props.devMode ? ConstructionIcon : LinkIcon} color="link.main" sx={{ pl: 1, mr: 1 }} />
           <Typography align="left" maxWidth="300px" noWrap={true} variant="body2"
             sx={{ fontWeight: "inherit", flexGrow: 1 }}
           >
@@ -97,7 +98,7 @@ const ArticleItem: React.FC<{
   const articleName = session.getArticleName(view.article.id);
   return (
     <>
-      <Burger.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText"}>
+      <Burger.TreeItem nodeId={nodeId ? nodeId : article.id} labelText={articleName.name} labelIcon={article.body.devMode ? ConstructionIcon : ArticleOutlinedIcon} labelcolor={saved ? "explorerItem" : "explorerItem.contrastText"}>
 
         {/** Article options */
           options ? (<Burger.TreeItem nodeId={article.id + 'article-options-nested'}
@@ -155,7 +156,8 @@ const ArticleItem: React.FC<{
               .map(view => (<LinkItem key={view.link.id}
                 labelText={session.getLinkName(view.link.id).name}
                 nodeId={view.link.id}
-                onClick={() => options.setEditLink(view.link.id)} />)
+                onClick={() => options.setEditLink(view.link.id)} 
+                devMode={view.link.body.devMode} />)
               )}
           </Burger.TreeItem>) : null
 
