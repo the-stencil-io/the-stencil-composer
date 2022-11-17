@@ -1,5 +1,5 @@
 import React from 'react';
-import { Typography } from '@mui/material';
+import { Typography, Box } from '@mui/material';
 import { useSnackbar } from 'notistack';
 
 import { FormattedMessage } from 'react-intl';
@@ -20,6 +20,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
+  const [devMode, setDevMode] = React.useState<boolean>(true);
 
   if (!open) {
     return null;
@@ -27,7 +28,7 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
 
   const handleCreate = () => {
     // const content = template ? site.templates[template].body.content : undefined;
-    const entity: StencilClient.CreatePage = { articleId: article.id, locale: open.id };
+    const entity: StencilClient.CreatePage = { articleId: article.id, locale: open.id, devMode };
     service.create().page(entity)
       .then(success => actions.handleLoadSite().then(() => success))
       .then(success => {
@@ -62,6 +63,14 @@ const NewArticlePage: React.FC<NewArticlePageProps> = ({ article, open, onClose,
             items={templates.map((template) => ({ id: template.id, value: template.body.name }))}
           />
           : null}
+        <Box maxWidth="50%" sx={{ ml: 1 }}>
+          <Burger.Switch
+            checked={devMode ? devMode : false}
+            helperText="services.devmode.helper"
+            label="services.devmode"
+            onChange={setDevMode}
+          />
+        </Box>
       </>
     </Burger.Dialog>
   );
