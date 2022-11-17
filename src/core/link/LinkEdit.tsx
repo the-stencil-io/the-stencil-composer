@@ -32,9 +32,11 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
   //const locales = labels.map(l => l.locale);
   //const articles: StencilClient.Article[] = locales ? session.getArticlesForLocales(locales) : Object.values(site.articles);
 
+  const [devMode, setDevMode] = React.useState(link.body.devMode);
+
 
   const handleUpdate = () => {
-    const entity: StencilClient.LinkMutator = { linkId: link.id, type: contentType, articles: articleId, labels, value };
+    const entity: StencilClient.LinkMutator = { linkId: link.id, type: contentType, articles: articleId, labels, value, devMode };
     console.log("entity", entity)
     service.update().link(entity).then(success => {
       enqueueSnackbar(message, { variant: 'success' });
@@ -106,6 +108,14 @@ const LinkEdit: React.FC<LinkEditProps> = ({ linkId, onClose }) => {
         }
         ))}
       />
+      <Box maxWidth="50%" sx={{ ml: 1 }}>
+        <Burger.Switch
+          checked={devMode ? devMode : false}
+          helperText="services.devmode.helper"
+          label="services.devmode"
+          onChange={setDevMode}
+        />
+      </Box>
     </>
   </Burger.Dialog>
   );
