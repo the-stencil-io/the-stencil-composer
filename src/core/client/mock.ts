@@ -204,9 +204,9 @@ class MockDeleteBuilder implements StencilClient.DeleteBuilder {
 }
 
 class MockVersionBuilder implements StencilClient.VersionBuilder {
-  async version(): Promise<string> {
+  async version(): Promise<StencilClient.VersionEntity> {
     const date = new Date().toLocaleDateString("en-GB");
-    return "mock; " + date;
+    return { version: "mock", built: date.toString() };
   }
 }
 

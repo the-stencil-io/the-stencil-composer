@@ -135,7 +135,7 @@ class VersionBuilderImpl implements StencilClient.VersionBuilder {
   constructor(backend: StencilClient.Store) {
     this._backend = backend;
   }
-  async version(): Promise<string> {
+  async version(): Promise<StencilClient.VersionEntity> {
     return this._backend.fetch(`/version`, { method: "GET" }).then((data) => data as any)
   }
 }

@@ -267,7 +267,11 @@ declare namespace StencilClient {
     template(template: TemplateMutator): Promise<Template>;
   }
   interface VersionBuilder {
-    version(): Promise<string>;
+    version(): Promise<VersionEntity>;
+  }
+  interface VersionEntity {
+    version: string;
+    built: string;
   }
   interface Store {
     fetch<T>(path: string, init?: RequestInit): Promise<T>;
