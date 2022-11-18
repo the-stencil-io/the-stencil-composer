@@ -7,7 +7,7 @@ import EditIcon from '@mui/icons-material/ModeEdit';
 import { LinkComposer } from '../../link';
 import { WorkflowComposer } from '../../workflow';
 import { ArticleEdit, ArticleDelete } from '../../article';
-import { NewPage, PageEdit, PageDelete, PageEditDev } from '../../page';
+import { NewPage, PageEdit, PageDelete, PageEditDevMode } from '../../page';
 import { Composer, StencilClient } from '../../context';
 import Burger from '@the-wrench-io/react-burger';
 
@@ -19,7 +19,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
 
   const [dialogOpen, setDialogOpen] = React.useState<undefined | 'ArticleEdit' | 'NewPage' | 'PageEdit' | 'PageEditDev' | 'PageDelete' | 'ArticleDelete' | 'LinkComposer' | 'WorkflowComposer'>(undefined);
 
-
+  const { site } = Composer.useComposer();
   const handleDialogClose = () => setDialogOpen(undefined);
   const { handleInTab } = Composer.useNav();
 
@@ -28,7 +28,7 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
       { dialogOpen === 'ArticleEdit' ? <ArticleEdit articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'NewPage' ? <NewPage articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageEdit' ? <PageEdit articleId={article.id} onClose={handleDialogClose} /> : null}
-      { dialogOpen === 'PageEditDev' ? <PageEditDev articleId={article.id} onClose={handleDialogClose} /> : null}
+      { dialogOpen === 'PageEditDev' ? <PageEditDevMode articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'PageDelete' ? <PageDelete articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'ArticleDelete' ? <ArticleDelete articleId={article.id} onClose={handleDialogClose} /> : null}
       { dialogOpen === 'LinkComposer' ? <LinkComposer onClose={handleDialogClose} /> : null}
@@ -61,12 +61,12 @@ const ArticleOptions: React.FC<ArticleOptionsProps> = ({ article }) => {
         onClick={() => setDialogOpen('PageEdit')}
         labelText={<FormattedMessage id="pages.change" />}>
       </Burger.TreeItemOption>
-      <Burger.TreeItemOption nodeId={article.id + 'pages.devmode'}
+      {Object.values(site.pages).filter(p => p.body.article === article.id).length > 0 && <Burger.TreeItemOption nodeId={article.id + 'pages.change.devmode'}
         color='page'
         icon={EditIcon}
         onClick={() => setDialogOpen('PageEditDev')}
-        labelText={<FormattedMessage id="pages.devmode" />}>
-      </Burger.TreeItemOption>
+        labelText={<FormattedMessage id="pages.change.devmode" />}>
+      </Burger.TreeItemOption>}
       <Burger.TreeItemOption nodeId={article.id + 'pages.delete'}
         color='page'
         icon={DeleteOutlineOutlinedIcon}
