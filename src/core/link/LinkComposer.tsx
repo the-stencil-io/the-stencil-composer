@@ -105,8 +105,8 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           <Box maxWidth="50%" sx={{ ml: 1 }}>
             <Burger.Switch
               checked={devMode}
-              helperText="services.devmode.helper"
-              label="services.devmode"
+              helperText="link.devmode.helper"
+              label="link.devmode"
               onChange={setDevMode}
             />
           </Box>

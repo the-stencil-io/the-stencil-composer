@@ -78,8 +78,8 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
         <Box maxWidth="50%" sx={{ ml: 1 }}>
           <Burger.Switch
             checked={devMode ? devMode : false}
-            helperText="services.devmode.helper"
-            label="services.devmode"
+            helperText="pages.devmode.helper"
+            label="pages.devmode"
             onChange={setDevMode}
           />
         </Box>

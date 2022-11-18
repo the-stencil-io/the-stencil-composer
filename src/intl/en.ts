@@ -167,7 +167,7 @@ const en = {
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
-  'article.devmode.helper': 'If Development mode is active, this page will only appear in the development environment for testing. It will not be included in production releases.',
+  'article.devmode.helper': 'If Development mode is active, this article will only appear in the development environment for testing. It will not be included in production releases.',
   'article.devmode': 'Development mode',
 
   'articleservices': 'Article services: {name}',

@@ -65,8 +65,8 @@ const ArticleEdit: React.FC<{ articleId: StencilClient.ArticleId, onClose: () =>
       <Box maxWidth="50%" sx={{ ml: 1 }}>
         <Burger.Switch
           checked={devMode ? devMode : false}
-          helperText="services.devmode.helper"
-          label="services.devmode"
+          helperText="article.devmode.helper"
+          label="article.devmode"
           onChange={setDevMode}
         />
       </Box>

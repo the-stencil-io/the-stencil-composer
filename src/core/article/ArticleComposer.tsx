@@ -123,8 +123,8 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
         <Box maxWidth="50%" sx={{ ml: 1 }}>
           <Burger.Switch
             checked={devMode}
-            helperText="services.devmode.helper"
-            label="services.devmode"
+            helperText="article.devmode.helper"
+            label="article.devmode"
             onChange={setDevMode}
           />
         </Box>
