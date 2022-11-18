@@ -2,19 +2,19 @@ import StencilClient from './';
 
 const articles: StencilClient.Article[] = [
   { id: "a1", body: { order: 100, name: "residence", } },
-  { id: "a1.1", body: { order: 100, parentId: "a1", name: "utilities" } },
-  { id: "a1.2", body: { order: 200, parentId: "a1", name: "new_address" } },
-  { id: "a1.3", body: { order: 300, parentId: "a1", name: "renovation" } },
-  { id: "a1.4", body: { order: 400, parentId: "a1", name: "new_home_construction" } },
-  { id: "a1.5", body: { order: 500, parentId: "a1", name: "social_housing" } },
+  { id: "a1.1", body: { order: 120, parentId: "a1", name: "utilities" } },
+  { id: "a1.2", body: { order: 140, parentId: "a1", name: "new_address" } },
+  { id: "a1.3", body: { order: 160, parentId: "a1", name: "renovation" } },
+  { id: "a1.4", body: { order: 180, parentId: "a1", name: "new_home_construction" } },
+  { id: "a1.5", body: { order: 200, parentId: "a1", name: "social_housing" } },
 
 
-  { id: "a2", body: { order: 200, name: "health_services", } },
-  { id: "a2.1", body: { order: 100, parentId: "a2", name: "hospitals" } },
-  { id: "a2.2", body: { order: 200, parentId: "a2", name: "emergency_care" } },
-  { id: "a2.3", body: { order: 300, parentId: "a2", name: "specialist_services" } },
-  { id: "a2.4", body: { order: 400, parentId: "a2", name: "elder_care" } },
-  { id: "a2.5", body: { order: 500, parentId: "a2", name: "mental_health" } },
+  { id: "a2", body: { order: 300, name: "health_services", } },
+  { id: "a2.1", body: { order: 320, parentId: "a2", name: "hospitals" } },
+  { id: "a2.2", body: { order: 340, parentId: "a2", name: "emergency_care" } },
+  { id: "a2.3", body: { order: 360, parentId: "a2", name: "specialist_services" } },
+  { id: "a2.4", body: { order: 380, parentId: "a2", name: "elder_care" } },
+  { id: "a2.5", body: { order: 400, parentId: "a2", name: "mental_health" } },
 ];
 
 const pages: StencilClient.Page[] = [

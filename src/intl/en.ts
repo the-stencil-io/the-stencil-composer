@@ -167,10 +167,11 @@ const en = {
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
+  'article.edit.orderhelper.invalid': 'Order number cannot be negative and must be different from existing article order numbers.', 
 
   'articleservices': 'Article services: {name}',
   'articlelinks': 'Article links: {name}',
-  'article.composer.orderhelper': 'The lower the number, the higher up this article will appear in your portal UI Topic Menu.  Example: 000 will be the first Topic menu item, while 999 will be the last.',
+  'article.composer.orderhelper': 'The lower the number, the higher up this article will appear in the portal UI Topic Menu. Ex: 000 will be first, while 999 will be last.',
   'allarticles': 'Select all articles',
   'allarticles.individual': 'De-select all articles',
   'add.allarticles.link.help': 'This link will be added to (or removed from) all articles. Any previous link-article associations will be lost once this change has been applied',
