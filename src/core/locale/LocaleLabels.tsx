@@ -150,7 +150,7 @@ const LocaleLabels: React.FC<LocaleLabelsProps> = (props) => {
           </TableCell>
           <TableCell align="right">
             <IconButton sx={{ color: 'uiElements.main' }}
-              disabled={(edit && edit.locale !== row.locale) ? true : false}
+              disabled={(edit && edit.locale !== row.locale || edit && edit.value.length === 0) ? true : false}
               onClick={() => {
                 if (edit) {
                   handleEditEnd()
