@@ -10,10 +10,14 @@ const PageDelete: React.FC<{ onClose: () => void, articleId: StencilClient.Artic
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
   const [pageId, setPageId] = React.useState('');
-
+  const tabs = Burger.useTabs();
 
   const handleDelete = () => {
+    var pageTab = tabs.session.tabs.find(tab => tab.id === props.articleId)
     service.delete().page(pageId).then(_success => {
+      if (pageTab) {
+        tabs.actions.handleTabClose(pageTab);
+      }
       enqueueSnackbar(message, { variant: 'warning' });
       props.onClose();
       actions.handleLoadSite();
