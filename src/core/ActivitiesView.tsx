@@ -19,6 +19,7 @@ import { TemplateComposer } from './template';
 
 import { Composer, StencilClient } from './context';
 
+import version from './version';
 
 interface CardData {
   type: CardType;
@@ -172,10 +173,20 @@ const ActivitiesView: React.FC<{}> = () => {
   const theme = useTheme();
   const { actions } = Burger.useTabs();
   const { site } = Composer.useComposer();
+  const { service } = Composer.useComposer();
 
   const [open, setOpen] = React.useState<number>();
   const handleClose = () => setOpen(undefined);
   const cards = React.useMemo(() => createCards(site, theme, actions), [site, theme, actions]);
+
+  const [coreVersion, setCoreVersion] = React.useState<string>();
+  const [coreVersionDate, setCoreVersionDate] = React.useState<string>();
+
+  service.version().version().then((version) => {
+    console.log(version);
+    setCoreVersion(version.version);
+    setCoreVersionDate(version.built);
+  });
 
   return (
     <>
@@ -192,7 +203,12 @@ const ActivitiesView: React.FC<{}> = () => {
         {open === undefined ? null : (cards[open].composer(handleClose))}
         {cards.map((card, index) => (<ActivitiesViewItem key={index} data={card} onCreate={() => setOpen(index)} />))}
       </Box>
-
+      <Typography variant="caption" sx={{ pt: 1 }} display={'flex'} flexDirection={'column'} alignItems={'center'}>
+          <FormattedMessage id={"activities.version.composer"} values={{ version: version.tag, date: version.built}}/>
+          <Typography variant="caption" sx={{ pt: 1 }} >
+            <FormattedMessage id={"activities.version.core"} values={{ version: coreVersion, date: coreVersionDate}}/>
+          </Typography>
+      </Typography>
     </>
   );
 }

@@ -22,6 +22,9 @@ readonly local PROJECT_VERSION_NEXT=$(node -e "console.log(require('./package.js
 
 # Log
 echo "Project version: '${PROJECT_VERSION}' next: '${PROJECT_VERSION_NEXT}'"
+NEWLINE=$'\n'
+DATE=$(date +"%d/%m/%Y")
+echo "const version = {tag: '${PROJECT_VERSION_NEXT}', built: '${DATE}'};${NEWLINE}export default version;" > ./src/core/version.ts
 
 # Tag and publish
 yarn install
