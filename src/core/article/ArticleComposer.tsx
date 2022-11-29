@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, IconButton, Popover, Typography, Tooltip, ListItem } from '@mui/material';
+import { Box, IconButton, Popover, Typography, Tooltip, ListItem, Slider, Stack } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import { useSnackbar } from 'notistack';
 
 import Burger from '@the-wrench-io/react-burger';
@@ -10,6 +11,9 @@ import { FormattedMessage } from 'react-intl';
 
 const DUMMY_ID = "none-selected"
 
+const StyledSlider = styled(Slider)(({ theme }) => ({
+  color: theme.palette.uiElements.main,
+}));
 
 const OrderNumberTooltip: React.FC<{}> = () => {
   const { session } = Composer.useComposer();
@@ -28,7 +32,7 @@ const OrderNumberTooltip: React.FC<{}> = () => {
 
   return (<>
     <Tooltip title={<FormattedMessage id="article.order.view" />}>
-      <IconButton sx={{ ml: 2, color: 'uiElements.main' }}  onClick={handlePopover}>
+      <IconButton sx={{ ml: 2, mt: 2, color: 'uiElements.main' }}  onClick={handlePopover}>
         <PageviewOutlinedIcon fontSize="large" />
       </IconButton>
     </Tooltip>
@@ -51,7 +55,6 @@ const OrderNumberTooltip: React.FC<{}> = () => {
       <Typography variant='body2' sx={{ p: 1 }}>
         {session.articles
           .map(view => view.article)
-          .sort((l0, l1) => l0.body.order - l1.body.order)
           .map(({ id, body }) => (
            <ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark', pb: 1,  } : {pb: 1} }>{`${body.order} - ${body.name}`}</ListItem>
           ))}
@@ -68,9 +71,22 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { service, actions, session } = Composer.useComposer();
   const { enqueueSnackbar } = useSnackbar();
   const [name, setName] = React.useState("");
-  const [order, setOrder] = React.useState(0);
   const [parentId, setParentId] = React.useState("");
-    
+  const [error, setError] = React.useState<string | undefined>(undefined);
+
+  const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
+  
+  let marks = session.articles.map(view => view.article).map(({ id, body }) => ({ value: body.order, label: body.name }));
+  const min = Math.min(...marks.map(({ value }) => value));
+  const max = Math.max(...marks.map(({ value }) => value));
+  const mid = Math.round((max - min) / 2);
+
+  const initialValue = marks.map(({ value }) => value).includes(mid) ? mid + 1 : mid;
+
+  const [order, setOrder] = React.useState(initialValue);
+
+  marks = [...marks].concat({ value: order, label: name });
+
   const handleCreate = () => {
     const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order };
     console.log("entity", entity)
@@ -83,12 +99,16 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
     });
   }
 
-  const message = <FormattedMessage id="snack.article.createdMessage" values={{ name }} />
+  const validInput = order > 0 && !session.articles.map(view => view.article).map(article => article.body.order).includes(order);
+
+  React.useEffect(() => {
+    setError(validInput ? undefined : "article.edit.orderhelper.invalid")
+  }, [order])
 
   return (
     <Burger.Dialog open={true} onClose={onClose}
       backgroundColor="uiElements.main" title="article.composer.title"
-      submit={{ title: "article.create", onClick: handleCreate, disabled: !name }}>
+      submit={{ title: "article.create", onClick: handleCreate, disabled: !name || error !== undefined }}>
       <>
 
         <Burger.Select label="article.composer.parent"
@@ -103,22 +123,37 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value: (<ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark' } : undefined }>{`${body.order} - ${body.name}`}</ListItem>)
             }))}
         />
-        <Box display='flex'>
-          <Box>
-            <Burger.NumberField label="article.order" helperText='article.composer.orderhelper'
+        <Burger.TextField label="article.name" required
+          value={name}
+          onChange={setName}
+        />
+        <Box display={'flex'}>
+          <Box sx={{ width: '90%' }}>
+            <Burger.NumberField label="article.order" helperText={error ? error : 'article.composer.orderhelper'}
               onChange={setOrder}
               value={order}
-              placeholder={400}
+              placeholder={mid}
+              error={error !== undefined}
             />
           </Box>
           <Box sx={{width: '10%'}}>
             <OrderNumberTooltip />
           </Box>
         </Box>
-        <Burger.TextField label="article.name" required
-          value={name}
-          onChange={setName}
-        />
+        <Stack sx={{ height: 100*marks.length }} spacing={1} direction="row">
+          <StyledSlider
+            orientation="vertical"
+            defaultValue={mid}
+            valueLabelDisplay="on"
+            marks={marks}
+            track={false}
+            min={0}
+            max={max+max*0.5}
+            step={1}
+            value={order}
+            onChange={(event, value) => setOrder(value as number)}
+          />
+        </Stack>
       </>
     </Burger.Dialog>
   );
