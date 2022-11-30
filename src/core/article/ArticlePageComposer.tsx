@@ -82,13 +82,17 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
   const value1 = session.pages[page1.id] ? session.pages[page1.id].value : page1.body.content;
   const value2 = page2 ? (session.pages[page2.id] ? session.pages[page2.id].value : page2.body.content) : undefined;
 
+  const articleName = session.getArticleName(articleId);
+  const locale1Name = view.pages.filter(p => p.page.body.locale === locale1).pop()?.locale.body.value;
+  const locale2Name = view.pages.filter(p => p.page.body.locale === locale2).pop()?.locale.body.value;
+
   const handleChange1 = (value: string | undefined) => {
     var regex = /# \w/gy;
     var containsTitle = regex.test(value || '');
     if (!containsTitle) {
       if (!snackbar1) {
-        var snackbarId = enqueueSnackbar('Please add a title to the page' , { variant: 'warning', persist: true });
-        setSnackbar1(snackbarId);
+        var snackbarId1 = enqueueSnackbar('Please add a title to ' + locale1Name + ' in ' + articleName.name, { variant: 'warning', persist: true });
+        setSnackbar1(snackbarId1);
       }
     } else {
       setSnackbar1(undefined);
@@ -114,8 +118,8 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
     var containsTitle = regex.test(value || '');
     if (!containsTitle) {
       if (!snackbar2) {
-        var snackbarId = enqueueSnackbar('Please add a title to the page', { variant: 'warning', persist: true });
-        setSnackbar2(snackbarId);
+        var snackbarId2 = enqueueSnackbar('Please add a title to ' + locale2Name + ' in ' + articleName.name, { variant: 'warning', persist: true });
+        setSnackbar2(snackbarId2);
       }
     } else {
       setSnackbar2(undefined);
