@@ -102,7 +102,7 @@ const LinkItem: React.FC<{ view: Composer.LinkView, searchResult: Composer.Searc
         nodeId={view.link.id}
         labelText={view.link.body.value}
         labelcolor="link"
-        labelIcon={LinkIcon}>
+        labelIcon={view.link.body.devMode ? ConstructionIcon : LinkIcon}>
         {items}
       </Burger.TreeItem>
     </>)
@@ -206,7 +206,7 @@ const ArticleItem: React.FC<{ view: Composer.ArticleView, searchResult: Composer
         nodeId={view.article.id}
         labelText={<span>{findMatch(`${view.article.body.name}`, keyword, true)}</span>}
         labelcolor="page"
-        labelIcon={ArticleOutlinedIcon}
+        labelIcon={view.article.body.devMode ? ConstructionIcon : ArticleOutlinedIcon}
         onClick={() => {
           if (items.length === 0) {
             setArticleEditOpen(true)

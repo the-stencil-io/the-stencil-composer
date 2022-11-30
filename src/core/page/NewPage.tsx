@@ -5,6 +5,7 @@ import { FormattedMessage } from 'react-intl';
 
 import { Composer, StencilClient } from '../context';
 import Burger from '@the-wrench-io/react-burger';
+import { Box } from '@mui/material';
 
 
 
@@ -14,12 +15,13 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
   const [locale, setLocale] = React.useState('');
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
   const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
+  const [devMode, setDevMode] = React.useState<boolean>(false);
   const { handleInTab } = Composer.useNav();
 
   const handleCreate = () => {
 
     const content = template ? site.templates[template].body.content : undefined;
-    const entity: StencilClient.CreatePage = { articleId, locale, content };
+    const entity: StencilClient.CreatePage = { articleId, locale, content, devMode };
     service.create().page(entity).then(success => {
       enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
@@ -73,7 +75,14 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
             items={templates.map((template) => ({ id: template.id, value: template.body.name }))}
           />
           : null}
-
+        <Box maxWidth="50%" sx={{ ml: 1 }}>
+          <Burger.Switch
+            checked={devMode ? devMode : false}
+            helperText="pages.devmode.helper"
+            label="pages.devmode"
+            onChange={setDevMode}
+          />
+        </Box>
       </>
     </Burger.Dialog>
   );

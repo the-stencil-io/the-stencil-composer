@@ -21,9 +21,10 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [changeInProgress, setChangeInProgress] = React.useState(false);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
   //const articles: StencilClient.Article[] = Object.values(site.articles);
+  const [devMode, setDevMode] = React.useState<boolean>(false);
 
   const handleCreate = () => {
-    const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels };
+    const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels, devMode };
     service.create().link(entity).then(success => {
       enqueueSnackbar(message, { variant: 'success' });
       console.log(success)
@@ -101,6 +102,14 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
           })
           
           )} />
+          <Box maxWidth="50%" sx={{ ml: 1 }}>
+            <Burger.Switch
+              checked={devMode}
+              helperText="link.devmode.helper"
+              label="link.devmode"
+              onChange={setDevMode}
+            />
+          </Box>
       </>
     </Burger.Dialog>
   );

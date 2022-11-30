@@ -3,6 +3,7 @@ import { Box, Typography, Theme, useTheme } from "@mui/material";
 
 import LeftEditIcon from "@mui/icons-material/BorderLeft";
 import RightEditIcon from "@mui/icons-material/BorderRight";
+import ConstructionIcon from '@mui/icons-material/Construction';
 
 import Burger from '@the-wrench-io/react-burger';
 import { Composer } from '../../context';
@@ -10,7 +11,7 @@ import { Composer } from '../../context';
 
 
 
-const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saved?: boolean}> = (props) => {
+const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.PageView, saved?: boolean }> = (props) => {
 
   const theme = useTheme<Theme>();
   const localeIconColor = theme.palette.page.main;
@@ -39,7 +40,14 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       handleInTab({ article, type: "ARTICLE_PAGES", locale: page.body.locale, secondary })
     }
   }
-  
+
+  const icon = () => {
+    if (page.body.devMode && page.body.devMode === true) {
+      return <ConstructionIcon />
+    } else {
+      return <LeftEditIcon />
+    }
+  }
 
   return (
     <Burger.TreeItemRoot
@@ -51,7 +59,7 @@ const ArticlePageItem: React.FC<{ article: Composer.ArticleView, page: Composer.
       label={
 
         <Box sx={{ display: "flex", alignItems: "center", p: 0.5, pr: 0 }}>
-          <Box component={LeftEditIcon} color={props.saved === false ? 
+          <Box component={icon} color={props.saved === false ? 
             "explorerItem.contrastText": 
             (nav?.value === page.body.locale ? localeIconColor : "inherit")} />
           

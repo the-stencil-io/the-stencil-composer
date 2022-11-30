@@ -6,7 +6,6 @@ import { Composer, StencilClient } from '../context';
 import Burger from '@the-wrench-io/react-burger';
 
 
-
 const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.ArticleId }> = (props) => {
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
@@ -16,14 +15,14 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
   const [newLocale, setNewLocale] = React.useState('');
 
   const handleUpdate = () => {
-    const entity: StencilClient.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content };
+    const entity: StencilClient.PageMutator = { locale: newLocale, pageId, content: site.pages[pageId].body.content, devMode: site.pages[pageId].body.devMode };
     service.update().pages([entity]).then(_success => {
       enqueueSnackbar(message, { variant: 'success' });
       props.onClose();
       actions.handleLoadSite();
     })
   }
-  const message = <FormattedMessage id="snack.page.editedMessage" />
+  const message = <FormattedMessage id="snack.page.savedMessage" />
   const articlePages: StencilClient.Page[] = Object.values(site.pages).filter(p => p.body.article === articleId);
   const usedLocales: StencilClient.LocaleId[] = articlePages.map(articlePage => articlePage.body.locale)
   const unusedLocales: StencilClient.SiteLocale[] = Object.values(site.locales).filter(siteLocale => !usedLocales.includes(siteLocale.id));
@@ -60,4 +59,4 @@ const PageEdit: React.FC<{ onClose: () => void, articleId: StencilClient.Article
   );
 }
 
-export { PageEdit }
+export { PageEdit };

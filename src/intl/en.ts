@@ -170,6 +170,8 @@ const en = {
   'article.edit.title': 'Edit article',
   'article.edit.parent': 'Parent article',
   'article.edit.orderhelper': 'Three-digit number for ordering purposes',
+  'article.devmode.helper': 'If Development mode is active, this article will only appear in the development environment for testing. It will not be included in production releases.',
+  'article.devmode': 'Development mode',
 
   'articleservices': 'Article services: {name}',
   'articlelinks': 'Article links: {name}',
@@ -216,6 +218,8 @@ const en = {
   'resource.edit.links': 'Edit links',
   'links.change': 'Change existing links',
   'link.create': 'Create new link',
+  'link.devmode.helper': 'If Development mode is active, this link will only appear in the development environment for testing. It will not be included in production releases.',
+  'link.devmode': 'Development mode',
 
   'locale.create': 'Create locale',
   'locale.disable.title': 'Disable this locale?',
@@ -241,6 +245,10 @@ const en = {
   'pages.add': 'Add a page',
   'pages.change': 'Change a page locale',
   'pages.change.info': 'Select a page from this Article and enter a new value for its locale.',
+  'pages.change.devmode': "Change a page's development mode",
+  'pages.change.devmode.info': 'Select a page from this Article and change its development mode.',
+  'pages.devmode.helper': 'If Development mode is active, this page will only appear in the development environment for testing. It will not be included in production releases.',
+  'pages.devmode': 'Development mode',
   'pages.delete': 'Delete a page',
   'pages.delete.message': 'Select a page to delete from this Article.',
   'pages.options': 'Page options',

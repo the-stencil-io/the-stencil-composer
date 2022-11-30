@@ -13,7 +13,6 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   const tabs = Burger.useTabs();
   const view = session.getArticleView(props.articleId);
 
-
   const links: StencilClient.Link[] = Object.values(site.links)
     .map((w) => ({ w, name: session.getLinkName(w.id)?.name }))
     .sort((a, b) => a.name.localeCompare(b.name))
@@ -27,7 +26,8 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
       parentId: article.body.parentId,
       order: article.body.order,
       links: [...selectedLinks],
-      workflows: undefined
+      workflows: undefined,
+      devMode: article.body.devMode
     };
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())

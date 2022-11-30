@@ -29,7 +29,8 @@ const ArticleWorkflowsComposer: React.FC<{ articleId: StencilClient.ArticleId }>
       parentId: article.body.parentId,
       order: article.body.order,
       workflows: [...selectedWorkflows],
-      links: undefined
+      links: undefined,
+      devMode: article.body.devMode
     };
     console.log("saving selected services" + selectedWorkflows);
     service.update().article(entity)

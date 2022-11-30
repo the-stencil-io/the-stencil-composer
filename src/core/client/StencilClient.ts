@@ -51,7 +51,8 @@ declare namespace StencilClient {
     body: {
       article: ArticleId,
       locale: Locale,
-      content: LocalisedMarkdown
+      content: LocalisedMarkdown,
+      devMode?: boolean
     }
   }
 
@@ -59,6 +60,7 @@ declare namespace StencilClient {
     pageId: PageId,
     locale: Locale;
     content: LocalisedContent;
+    devMode: boolean | undefined;
   }
 
   interface Template {
@@ -75,7 +77,7 @@ declare namespace StencilClient {
     id: TemplateId,
     type: TemplateType,
     name: string,
-    description: string
+    description: string,
     content: string,
   }
 
@@ -85,6 +87,7 @@ declare namespace StencilClient {
       parentId?: ArticleId,
       name: string,
       order: number,
+      devMode?: boolean,
     }
   }
 
@@ -95,6 +98,7 @@ declare namespace StencilClient {
     order: number,
     links: LinkId[] | undefined,
     workflows: WorkflowId[] | undefined,
+    devMode: boolean | undefined,
   }
 
   interface Release {
@@ -146,6 +150,7 @@ declare namespace StencilClient {
       contentType: LinkType,
       value: string, //url, phone number
       labels: LocaleLabel[],
+      devMode?: boolean,
     }
   }
 
@@ -161,6 +166,7 @@ declare namespace StencilClient {
     value: string,
     articles: ArticleId[] | undefined,
     labels: LocaleLabel[] | undefined,
+    devMode: boolean | undefined
   }
 
   interface Workflow {
@@ -199,6 +205,7 @@ declare namespace StencilClient {
     parentId?: ArticleId;
     name: string;
     order: number;
+    devMode: boolean | undefined;
   }
 
   interface CreateLocale {
@@ -207,7 +214,8 @@ declare namespace StencilClient {
   interface CreatePage {
     articleId: ArticleId;
     locale: LocaleId;
-    content?: string
+    content?: string;
+    devMode: boolean | undefined;
   }
   interface CreateTemplate {
     type: "page" | string;
@@ -221,13 +229,14 @@ declare namespace StencilClient {
     value: string;
     labels: LocaleLabel[];
     articles: ArticleId[];
+    devMode: boolean | undefined;
   }
 
   interface CreateWorkflow {
     value: string;
     labels: LocaleLabel[];
     articles: ArticleId[];
-    devMode: boolean | undefined
+    devMode: boolean | undefined;
   }
   interface CreateRelease {
     name: string,
