@@ -20,7 +20,7 @@ const PageEditDevMode: React.FC<{ onClose: () => void, articleId: StencilClient.
   
     React.useEffect(() => {
       setDevMode(site.pages[pageId].body.devMode || false);
-    }, [pageId]);
+    }, [pageId, site.pages]);
   
     const handleUpdate = () => {
       const entity: StencilClient.PageMutator = { locale: site.pages[pageId].body.locale, pageId, content: site.pages[pageId].body.content, devMode };
