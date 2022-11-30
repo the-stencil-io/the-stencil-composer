@@ -1,76 +1,33 @@
 import React from 'react';
-import { Box, IconButton, Popover, Typography, Tooltip, ListItem, Slider, Stack } from '@mui/material';
-import { styled } from '@mui/material/styles';
-import { useSnackbar } from 'notistack';
-
-import Burger from '@the-wrench-io/react-burger';
 
 import { Composer, StencilClient } from '../context';
-import PageviewOutlinedIcon from '@mui/icons-material/PageviewOutlined';
+import Burger from '@the-wrench-io/react-burger';
+import { useSnackbar } from 'notistack';
 import { FormattedMessage } from 'react-intl';
+
+import { Box, Divider, ListItem, Theme, Typography } from '@mui/material';
+import { TreeView, TreeItem } from '@mui/lab';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import { createStyles, makeStyles } from '@mui/styles';
 
 const DUMMY_ID = "none-selected"
 
-const StyledSlider = styled(Slider)(({ theme }) => ({
-  color: theme.palette.uiElements.main,
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    treeItem: {
+      backgroundColor: '#d3d3d3',
+    },
+    treeItemGeneric: {
+    },
 }));
-
-const OrderNumberTooltip: React.FC<{}> = () => {
-  const { session } = Composer.useComposer();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-
-
-  const handlePopover = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handlePopoverClose = () => {
-    setAnchorEl(null);
-  };
-
-  const open = Boolean(anchorEl);
-
-  return (<>
-    <Tooltip title={<FormattedMessage id="article.order.view" />}>
-      <IconButton sx={{ ml: 2, mt: 2, color: 'uiElements.main' }}  onClick={handlePopover}>
-        <PageviewOutlinedIcon fontSize="large" />
-      </IconButton>
-    </Tooltip>
-
-    <Popover
-      sx={{ ml: 2 }}
-      open={open}
-      onClose={handlePopoverClose}
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: 'top',
-        horizontal: 'right',
-      }}
-      transformOrigin={{
-        vertical: 'center',
-        horizontal: 'left',
-      }}
-    >
-
-      <Typography variant='body2' sx={{ p: 1 }}>
-        {session.articles
-          .map(view => view.article)
-          .map(({ id, body }) => (
-           <ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark', pb: 1,  } : {pb: 1} }>{`${body.order} - ${body.name}`}</ListItem>
-          ))}
-      </Typography>
-    </Popover>
-  </>
-  )
-
-}
-
 
 const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
 
+  const classes = useStyles();
   const { service, actions, session } = Composer.useComposer();
   const { enqueueSnackbar } = useSnackbar();
-  const [name, setName] = React.useState("");
+  const [name, setName] = React.useState("New Article Name");
   const [parentId, setParentId] = React.useState("");
   const [error, setError] = React.useState<string | undefined>(undefined);
 
@@ -110,7 +67,6 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
       backgroundColor="uiElements.main" title="article.composer.title"
       submit={{ title: "article.create", onClick: handleCreate, disabled: !name || error !== undefined }}>
       <>
-
         <Burger.Select label="article.composer.parent"
           helperText={"article.parent.helper"}
           selected={parentId}
@@ -123,37 +79,43 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
               value: (<ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark' } : undefined }>{`${body.order} - ${body.name}`}</ListItem>)
             }))}
         />
-        <Burger.TextField label="article.name" required
-          value={name}
-          onChange={setName}
-        />
-        <Box display={'flex'}>
-          <Box sx={{ width: '90%' }}>
-            <Burger.NumberField label="article.order" helperText={error ? error : 'article.composer.orderhelper'}
+        <Box display={'flex'} justifyContent={'space-between'}>
+          <Box sx={{ width: '78%' }}>
+            <Burger.TextField label="article.name" required
+              value={name}
+              onChange={setName}
+            />
+          </Box>
+          <Box sx={{ width: '20%' }}>
+            <Burger.NumberField label="article.order"
               onChange={setOrder}
               value={order}
               placeholder={mid}
               error={error !== undefined}
             />
           </Box>
-          <Box sx={{width: '10%'}}>
-            <OrderNumberTooltip />
-          </Box>
         </Box>
-        <Stack sx={{ height: 100*marks.length }} spacing={1} direction="row">
-          <StyledSlider
-            orientation="vertical"
-            defaultValue={mid}
-            valueLabelDisplay="on"
-            marks={marks}
-            track={false}
-            min={0}
-            max={max+max*0.5}
-            step={1}
-            value={order}
-            onChange={(event, value) => setOrder(value as number)}
-          />
-        </Stack>
+        <Divider sx={{ mt: 2, mb: 1 }} />
+        <Typography variant="caption" sx={{ mt: 2, mb: 1 }}><FormattedMessage id='article.composer.orderhelper' /></Typography>
+        <Divider sx={{ mb: 2, mt: 1 }} />
+        <TreeView
+          defaultCollapseIcon={<ExpandMoreIcon />}
+          defaultExpandIcon={<ChevronRightIcon />}
+        >
+          {session.articles
+            .map(view => view.article)
+            .filter(article => article.body.parentId === null)
+            .concat({ id: DUMMY_ID, body: { name , order, parentId } })
+            .sort((a, b) => a.body.order - b.body.order)
+            .map(({ id, body }) => (
+              <TreeItem key={id} nodeId={id} label={`${body.order} - ${body.name}`} className={id === DUMMY_ID ? classes.treeItem : classes.treeItemGeneric}>
+                {session.articles
+                  .map(view => view.article)
+                  .filter(article => article.body.parentId === id)
+                  .map(({ id, body }) => (<TreeItem key={id} nodeId={id} label={`${body.order} - ${body.name}`} />))}
+              </TreeItem>
+            ))}
+        </TreeView>
       </>
     </Burger.Dialog>
   );
