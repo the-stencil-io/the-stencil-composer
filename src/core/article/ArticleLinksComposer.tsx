@@ -12,7 +12,6 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
   const { service, actions, site, session } = Composer.useComposer();
   const tabs = Burger.useTabs();
   const view = session.getArticleView(props.articleId);
-  const [devMode, setDevMode] = React.useState<boolean>(true);
 
   const links: StencilClient.Link[] = Object.values(site.links)
     .map((w) => ({ w, name: session.getLinkName(w.id)?.name }))
@@ -28,7 +27,7 @@ const ArticleLinksComposer: React.FC<{ articleId: StencilClient.ArticleId }> = (
       order: article.body.order,
       links: [...selectedLinks],
       workflows: undefined,
-      devMode,
+      devMode: article.body.devMode
     };
     service.update().article(entity)
       .then(_success => actions.handleLoadSite())
