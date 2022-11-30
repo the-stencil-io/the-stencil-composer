@@ -100,7 +100,7 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
             .map(view => view.article)
             .map(({ id, body }) => ({
               id,
-              value: (<ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark' } : undefined }>{`${body.order} - ${body.name}`}</ListItem>)
+              value: (<Box sx={ body.parentId ? { ml: 2, color: 'article.dark' } : undefined }>{`${body.order} - ${body.name}`}</Box>)
             }))}
         />
         <Box display='flex'>
