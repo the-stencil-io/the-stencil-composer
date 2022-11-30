@@ -53,7 +53,7 @@ const OrderNumberTooltip: React.FC<{}> = () => {
           .map(view => view.article)
           .sort((l0, l1) => l0.body.order - l1.body.order)
           .map(({ id, body }) => (
-           <ListItem sx={ body.parentId ? { ml: 2, color: 'article.dark', pb: 1,  } : {pb: 1} }>{`${body.order} - ${body.name}`}</ListItem>
+           <ListItem key={id} sx={ body.parentId ? { ml: 2, color: 'article.dark', pb: 1,  } : {pb: 1} }>{`${body.order} - ${body.name}`}</ListItem>
           ))}
       </Typography>
     </Popover>
@@ -70,11 +70,10 @@ const ArticleComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [name, setName] = React.useState("");
   const [order, setOrder] = React.useState(0);
   const [parentId, setParentId] = React.useState("");
-  const [devMode, setDevMode] = React.useState<boolean>(true);
+  const [devMode, setDevMode] = React.useState<boolean>(false);
     
   const handleCreate = () => {
     const entity: StencilClient.CreateArticle = { name, parentId: parentId && parentId !== DUMMY_ID ? parentId : undefined, order, devMode };
-    console.log("entity", entity)
 
     service.create().article(entity).then(success => {
       console.log(success)

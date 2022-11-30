@@ -21,7 +21,7 @@ const LinkComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const [changeInProgress, setChangeInProgress] = React.useState(false);
   const [articleId, setArticleId] = React.useState<StencilClient.ArticleId[]>([]);
   //const articles: StencilClient.Article[] = Object.values(site.articles);
-  const [devMode, setDevMode] = React.useState<boolean>(true);
+  const [devMode, setDevMode] = React.useState<boolean>(false);
 
   const handleCreate = () => {
     const entity: StencilClient.CreateLink = { type, value, articles: articleId, labels, devMode };

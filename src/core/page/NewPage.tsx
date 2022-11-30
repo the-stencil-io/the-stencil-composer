@@ -15,7 +15,7 @@ const NewPage: React.FC<{ onClose: () => void, articleId?: StencilClient.Article
   const [locale, setLocale] = React.useState('');
   const [template, setTemplate] = React.useState<StencilClient.TemplateId | ''>('');
   const [articleId, setArticleId] = React.useState(props.articleId ? props.articleId : '');
-  const [devMode, setDevMode] = React.useState<boolean>(true);
+  const [devMode, setDevMode] = React.useState<boolean>(false);
   const { handleInTab } = Composer.useNav();
 
   const handleCreate = () => {

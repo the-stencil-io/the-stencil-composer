@@ -14,7 +14,7 @@ const WorkflowComposer: React.FC<{ onClose: () => void }> = ({ onClose }) => {
   const { enqueueSnackbar } = useSnackbar();
   const { service, actions, site } = Composer.useComposer();
 
-  const [devMode, setDevMode] = React.useState<boolean>(true);
+  const [devMode, setDevMode] = React.useState<boolean>(false);
 
   let articleSelectOpen: boolean | undefined;
 
