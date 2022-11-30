@@ -87,6 +87,7 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
     if (!containsTitle) {
       if (!snackbarVisible) {
         enqueueSnackbar('Please add a title to the page', { variant: 'warning', persist: true });
+        setSnackbarVisible(true);
       }
     } else {
       setSnackbarVisible(false);
