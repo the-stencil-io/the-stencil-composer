@@ -3,7 +3,7 @@ import { Box, useTheme } from '@mui/material';
 
 import MDEditor, { ICommand, commands, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Composer, StencilClient } from '../context';
-import { useSnackbar } from 'notistack';
+import { SnackbarKey, useSnackbar } from 'notistack';
 
 
 const templateCommand = (template: StencilClient.Template): ICommand => ({
@@ -70,7 +70,8 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
   const view = session.getArticleView(articleId);
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-  const [snackbarVisible, setSnackbarVisible] = React.useState(false);
+  const [snackbar1, setSnackbar1] = React.useState<SnackbarKey | undefined>(undefined);
+  const [snackbar2, setSnackbar2] = React.useState<SnackbarKey | undefined>(undefined);
 
   const page1 = [...view.pages.map(p => p.page)]
     .filter(p => p.body.locale === locale1).pop() as StencilClient.Page;
@@ -85,13 +86,13 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
     var regex = /# \w/gy;
     var containsTitle = regex.test(value || '');
     if (!containsTitle) {
-      if (!snackbarVisible) {
-        enqueueSnackbar('Please add a title to the page', { variant: 'warning', persist: true });
-        setSnackbarVisible(true);
+      if (!snackbar1) {
+        var snackbarId = enqueueSnackbar('Please add a title to the page' , { variant: 'warning', persist: true });
+        setSnackbar1(snackbarId);
       }
     } else {
-      setSnackbarVisible(false);
-      closeSnackbar();
+      setSnackbar1(undefined);
+      closeSnackbar(snackbar1);
     }
     actions.handlePageUpdate(page1.id, value ? value : "");
   }
@@ -109,6 +110,17 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
   }
 
   const handleChange2 = (value: string | undefined) => {
+    var regex = /# \w/gy;
+    var containsTitle = regex.test(value || '');
+    if (!containsTitle) {
+      if (!snackbar2) {
+        var snackbarId = enqueueSnackbar('Please add a title to the page', { variant: 'warning', persist: true });
+        setSnackbar2(snackbarId);
+      }
+    } else {
+      setSnackbar2(undefined);
+      closeSnackbar(snackbar2);
+    }
     actions.handlePageUpdate(page2.id, value ? value : "");
   }
 
