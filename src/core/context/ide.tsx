@@ -115,6 +115,9 @@ declare namespace Composer {
     workflows: WorkflowView[];
     children: Composer.ArticleView[];
     displayOrder: number;
+    getPageById(pageId: StencilClient.PageId): PageView;
+    getPageByLocaleId(localeId: StencilClient.LocaleId): PageView;
+    findPageByLocaleId(localeId: StencilClient.LocaleId): PageView | undefined;
   }
 
   interface PageView {
@@ -247,7 +250,6 @@ const ArticleTabIndicator: React.FC<{ article: StencilClient.Article, type: Comp
   const theme = useTheme();
   const { isArticleSaved } = Composer.useComposer();
   const saved = isArticleSaved(article);
-  console.log("INDICATOR", saved);
   return <span style={{
     paddingLeft: "5px",
     fontSize: '30px',
