@@ -90,6 +90,7 @@ const en = {
   'snack.page.createdMessage': 'Page created successfully',
   'snack.page.deletedMessage': 'Page deleted',
   'snack.page.savedMessage': 'Page changes saved',
+  'snack.page.missingTitle': 'Please add a title to {locale} in {articleName}',
 
   'snack.link.createdMessage': 'Link created successfully',
   'snack.link.deletedMessage': 'Link deleted',

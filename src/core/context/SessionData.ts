@@ -502,6 +502,23 @@ class ImmutableArticleView implements Composer.ArticleView {
   get canCreate(): StencilClient.SiteLocale[] { return this._canCreate };
   get links(): Composer.LinkView[] { return this._links };
   get workflows(): Composer.WorkflowView[] { return this._workflows };
+  getPageById(id: StencilClient.PageId): Composer.PageView {
+    const found = this._pages.find(p => p.page.id === id);
+    if(!found) {
+      throw new Error(`No page with page id: {id}!`);
+    }
+    return found;
+  }
+  getPageByLocaleId(id: StencilClient.LocaleId): Composer.PageView {
+    const found = this.findPageByLocaleId(id);
+    if(!found) {
+      throw new Error(`No page with locale id: {id}!`);
+    }
+    return found;
+  }
+  findPageByLocaleId(id: StencilClient.LocaleId): Composer.PageView | undefined {
+    return this._pages.find(p => p.page.body.locale === id);
+  }
 }
 
 class ImmutablePageView implements Composer.PageView {

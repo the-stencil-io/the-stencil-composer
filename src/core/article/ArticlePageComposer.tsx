@@ -3,15 +3,37 @@ import { Box, useTheme } from '@mui/material';
 
 import MDEditor, { ICommand, commands, TextState, TextAreaTextApi } from '@uiw/react-md-editor';
 import { Composer, StencilClient } from '../context';
-import { SnackbarKey, useSnackbar } from 'notistack';
+import { useSnackbar } from 'notistack';
+import { FormattedMessage } from 'react-intl';
 
+
+const regexp_starts_with = new RegExp('^# .');
+
+const isValidTitle = (value?: string) => {
+  if(!value) {
+    return false;
+  }
+  if(regexp_starts_with.test(value)) {
+    return true;
+  }
+  
+  const start = value.indexOf("# ");
+  if(start < 0) {
+    return false;
+  }
+  
+  const cleaned = start === 0 ? 
+    value : 
+    value.substring(0, start).replaceAll("\n", "") + value.substring(start);
+  return regexp_starts_with.test(cleaned); 
+}
 
 const templateCommand = (template: StencilClient.Template): ICommand => ({
   name: 'templates' + template.id,
   keyCommand: 'templates' + template.id,
   buttonProps: { 'aria-label': template.body.name, title: template.body.name },
   icon: <div style={{ fontSize: 18, padding: 10, textAlign: 'left' }}>{template.body.name} - {template.body.description}</div>,
-  execute: (state: TextState, api: TextAreaTextApi) => {
+  execute: (_state: TextState, api: TextAreaTextApi) => {
     api.replaceSelection(template.body.content);
   },
 });
@@ -66,45 +88,54 @@ type PageComposerProps = {
 const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, locale2 }) => {
   const theme = useTheme();
   const { actions, session } = Composer.useComposer();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [errors, setErrors] = React.useState(new Set<StencilClient.PageId>());
+
   const { site } = session;
   const view = session.getArticleView(articleId);
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const [snackbar1, setSnackbar1] = React.useState<SnackbarKey | undefined>(undefined);
-  const [snackbar2, setSnackbar2] = React.useState<SnackbarKey | undefined>(undefined);
-
-  const page1 = [...view.pages.map(p => p.page)]
-    .filter(p => p.body.locale === locale1).pop() as StencilClient.Page;
-
-  const page2 = [...view.pages.map(p => p.page)]
-    .filter(p => p.body.locale === locale2).pop() as StencilClient.Page | undefined;
+  const page1 = view.getPageByLocaleId(locale1).page;
+  const page2 = locale2 ? view.getPageByLocaleId(locale2).page : undefined;
 
   const value1 = session.pages[page1.id] ? session.pages[page1.id].value : page1.body.content;
   const value2 = page2 ? (session.pages[page2.id] ? session.pages[page2.id].value : page2.body.content) : undefined;
-
   const articleName = session.getArticleName(articleId);
-  const locale1Name = view.pages.filter(p => p.page.body.locale === locale1).pop()?.locale.body.value;
-  const locale2Name = view.pages.filter(p => p.page.body.locale === locale2).pop()?.locale.body.value;
 
-  const handleChange1 = (value: string | undefined) => {
-    var regex = /# \w/gy;
-    var containsTitle = regex.test(value || '');
-    if (!containsTitle) {
-      if (!snackbar1) {
-        var snackbarId1 = enqueueSnackbar('Please add a title to ' + locale1Name + ' in ' + articleName.name, { variant: 'warning', persist: true });
-        setSnackbar1(snackbarId1);
-      }
-    } else {
-      setSnackbar1(undefined);
-      closeSnackbar(snackbar1);
+  const handleChange = (props: {page?: StencilClient.Page, value?: string}) => {
+    const {page, value} = props;
+    if(!page) {
+      return;
     }
-    actions.handlePageUpdate(page1.id, value ? value : "");
+    actions.handlePageUpdate(page.id, value ? value : "");
+    
+    // validate
+    const containsTitle = isValidTitle(value);
+    
+    // everything ok
+    if(containsTitle) {
+      closeSnackbar(page.id);
+      const next = new Set<StencilClient.PageId>(errors);
+      next.delete(page.id)
+      setErrors(next);
+      return;
+    }
+    
+    // already reported
+    if(errors.has(page.id)) {
+      return;
+    }
+
+    //there is an error
+    const locale = view.getPageById(page.id).locale.body.value;
+    const error = <FormattedMessage id={'snack.page.missingTitle'} values={{locale, articleName: articleName.name}}/>;
+    setErrors(new Set<StencilClient.PageId>(errors).add(page.id));
+    enqueueSnackbar(error, { variant: 'warning', persist: true, key: page.id });
+    
   }
 
   if (value2 === undefined || !page2) {
     return (
       <div>
-        <MDEditor key={1} value={value1} onChange={handleChange1} toolbarHeight={40}
+        <MDEditor key={1} value={value1} onChange={(value) => handleChange({page: page1, value})} toolbarHeight={40}
           commands={getMdCommands(session.site.locales[page1.body.locale], theme.palette.page.main, site)}
           textareaProps={{ placeholder: '# Title' }}
           height={800}
@@ -113,25 +144,10 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
     );
   }
 
-  const handleChange2 = (value: string | undefined) => {
-    var regex = /# \w/gy;
-    var containsTitle = regex.test(value || '');
-    if (!containsTitle) {
-      if (!snackbar2) {
-        var snackbarId2 = enqueueSnackbar('Please add a title to ' + locale2Name + ' in ' + articleName.name, { variant: 'warning', persist: true });
-        setSnackbar2(snackbarId2);
-      }
-    } else {
-      setSnackbar2(undefined);
-      closeSnackbar(snackbar2);
-    }
-    actions.handlePageUpdate(page2.id, value ? value : "");
-  }
-
   return (
     <Box display="flex" flexDirection="row" flexWrap="wrap">
       <Box flex="1" sx={{ paddingRight: 1 }}>
-        <MDEditor key={2} value={value1} onChange={handleChange1}
+        <MDEditor key={2} value={value1} onChange={(value) => handleChange({page: page1, value})}
           commands={getMdCommands(session.site.locales[page1.body.locale], theme.palette.page.main, site)}
           textareaProps={{ placeholder: '# Title' }}
           height={800}
@@ -139,7 +155,7 @@ const ArticlePageComposer: React.FC<PageComposerProps> = ({ articleId, locale1, 
 
       </Box>
       <Box flex="1">
-        <MDEditor key={3} value={value2} onChange={handleChange2}
+        <MDEditor key={3} value={value2} onChange={(value) => handleChange({page: page2, value})}
           commands={getMdCommands(session.site.locales[page2.body.locale], theme.palette.page.dark, site)}
           textareaProps={{ placeholder: '# Title' }}
           height={800}
