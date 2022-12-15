@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Main } from './Main';
 import { Secondary } from './Secondary';
@@ -14,6 +15,7 @@ interface StencilComposerProps {
   locked?: boolean;
 };
 
+
 const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) => {
 
   if (locked === true) {
@@ -28,9 +30,8 @@ const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) =>
       () => ({})
     ]
   };
-
-  //@ts-nocheck
   return (
+    /* @ts-ignore */
     <SnackbarProvider maxSnack={3}>
       <Composer.Provider service={service} >
         <Burger.Provider children={[composer]} secondary="toolbar.articles" drawerOpen />
