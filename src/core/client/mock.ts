@@ -41,8 +41,8 @@ const pages: StencilClient.Page[] = [
 ];
 
 const links: StencilClient.Link[] = [
-  { id: "l1", body: { articles: ["a1", "a2", "a2.4"], contentType: "internal", value: "http://www.housing-sipoo.fi/fi", labels: [{ locale: "l1", labelValue: "new housing developments" }] } },
-  { id: "l2", body: { articles: ["a1"], contentType: "internal", value: "http://www.housing-sipoo.fi/en", labels: [{ locale: "l3", labelValue: "new housing developments" }] } },
+  { id: "l1", body: { articles: ["a1", "a2", "a2.4"], contentType: "internal", value: "http://www.housing-good-municipality.fi/fi", labels: [{ locale: "l1", labelValue: "new housing developments" }] } },
+  { id: "l2", body: { articles: ["a1"], contentType: "internal", value: "http://www.housing-good-municipality.fi/en", labels: [{ locale: "l3", labelValue: "new housing developments" }] } },
   { id: "l3", body: { articles: ["a1"], contentType: "external", value: "http://www.finland.fi", labels: [{ locale: "l1", labelValue: "move to finland" }] } },
   { id: "l4", body: { articles: ["a1"], contentType: "phone", value: "+664-5277-7733", labels: [{ locale: "l3", labelValue: "office phone" }] } },
   { id: "l5", body: { articles: ["a1"], contentType: "phone", value: "+664-4321-1223", labels: [{ locale: "l1", labelValue: "päätilintarkastajan puhelin" }] } },
