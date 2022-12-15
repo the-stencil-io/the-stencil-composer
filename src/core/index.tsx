@@ -29,7 +29,7 @@ const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) =>
     ]
   };
 
-
+  //@ts-nocheck
   return (
     <SnackbarProvider maxSnack={3}>
       <Composer.Provider service={service} >
