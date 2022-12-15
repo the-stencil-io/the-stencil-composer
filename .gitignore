@@ -27,3 +27,4 @@ yarn-error.log*
 
 validations-improvements.md
 /TopicModel.json
+/.yarn/
