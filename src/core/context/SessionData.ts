@@ -700,4 +700,4 @@ class ImmutableWorkflowSearchEntry implements Composer.SearchDataEntry {
 }
 
 
-export { SessionData, ImmutableTabData };
+export { SessionData, ImmutableTabData, SiteCache };

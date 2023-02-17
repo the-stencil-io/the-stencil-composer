@@ -42,11 +42,11 @@ const StencilComposer: React.FC<StencilComposerProps> = ({ service, locked }) =>
 
 export type { StencilComposerProps };
 export { StencilComposer, StencilClient, messages };
+export { SiteCache, SessionData } from './context'
 export * from './client/store';
 export * from './Main';
 export * from './Secondary';
 export * from './ActivitiesView';
-
 export * from './page';
 export * from './link';
 export * from './workflow';
