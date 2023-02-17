@@ -18,7 +18,6 @@ git config --global user.email "$BOT_EMAIL";
 # yarn
 corepack enable
 yarn set version 3.1.1
-YARN_ENABLE_IMMUTABLE_INSTALLS=false
 echo "Current yarn version: $(yarn -v), running install and build"
 
 # resolve versions
@@ -30,7 +29,7 @@ echo "Project version: '${PROJECT_VERSION}'"
 git commit -am "release: update version.ts"
 yarn install
 yarn build
-
+cat yarn.lock
 
 # Publish and Tag
 git tag -a ${PROJECT_VERSION} -m "release: '${PROJECT_VERSION}'"
