@@ -18,10 +18,8 @@ git config --global user.email "$BOT_EMAIL";
 # yarn
 corepack enable
 yarn set version 3.1.1
+YARN_ENABLE_IMMUTABLE_INSTALLS=false
 echo "Current yarn version: $(yarn -v), running install and build"
-
-yarn install
-git commit -am "release: update version.ts"
 
 # resolve versions
 readonly local PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
