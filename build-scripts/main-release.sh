@@ -30,23 +30,3 @@ git commit -am "release: update version.ts"
 yarn install
 yarn build
 cat yarn.lock
-
-# Publish and Tag
-git tag -a ${PROJECT_VERSION} -m "release: '${PROJECT_VERSION}'"
-yarn npm publish --access public
-git push origin --tags
-
-# Next
-git update-index --assume-unchanged .yarnrc.yml
-yarn plugin import version
-yarn version patch
-
-git commit -am "release ${PROJECT_VERSION_NEXT}"
-git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
-git push origin --tags
-git push origin main
-
-readonly local PROJECT_VERSION_NEXT=$(node -e "console.log(require('./package.json').version);")
-git commit -am "release: '${PROJECT_VERSION_NEXT}'"
-git push origin main
-echo "Released: '${PROJECT_VERSION}', now: '${PROJECT_VERSION_NEXT}'"
