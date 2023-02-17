@@ -20,6 +20,9 @@ corepack enable
 yarn set version 3.1.1
 echo "Current yarn version: $(yarn -v), running install and build"
 
+yarn install
+git commit -am "release: update version.ts"
+
 # resolve versions
 readonly local PROJECT_VERSION=$(node -e "console.log(require('./package.json').version);")
 NEWLINE=$'\n'
