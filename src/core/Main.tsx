@@ -3,8 +3,13 @@ import { Box } from '@mui/material';
 import Burger from '@the-wrench-io/react-burger';
 import {
   ActivitiesView, ArticlePageComposer, ArticleWorkflowsComposer, ArticleLinksComposer, WorkflowsView,
-  ReleasesView, LocalesView, ReleaseGraph, TemplatesView
+  ReleasesView, LocalesView, ReleaseGraph,
 } from './';
+
+import {
+  TemplatesView
+} from './template';
+
 
 import { Composer } from './context';
 
