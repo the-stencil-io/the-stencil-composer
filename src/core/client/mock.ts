@@ -105,6 +105,12 @@ const getSite = async (): Promise<StencilClient.Site> => {
     templates: toRecord(templates),
   };
 }
+
+const version = async (): Promise<StencilClient.VersionEntity> => {
+  const date = new Date().toLocaleDateString("en-GB");
+  return { version: "mock", built: date.toString() };
+}
+
 const createMock = (): StencilClient.Service => {
 
   return {
@@ -115,7 +121,7 @@ const createMock = (): StencilClient.Service => {
     create: () => new MockCreateBuilder(),
     update: () => new MockUpdateBuilder(),
     delete: () => new MockDeleteBuilder(),
-    version: () => new MockVersionBuilder(),
+    version
   } as any;
 }
 
@@ -200,13 +206,6 @@ class MockDeleteBuilder implements StencilClient.DeleteBuilder {
   async linkArticlePage(link: StencilClient.LinkId, article: StencilClient.ArticleId, locale: StencilClient.Locale): Promise<void> {
     const body = { link, article, locale };
     console.log("delete link article", body);
-  }
-}
-
-class MockVersionBuilder implements StencilClient.VersionBuilder {
-  async version(): Promise<StencilClient.VersionEntity> {
-    const date = new Date().toLocaleDateString("en-GB");
-    return { version: "mock", built: date.toString() };
   }
 }
 

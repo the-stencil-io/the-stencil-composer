@@ -24,6 +24,8 @@ const createService = (init: { store?: StencilClient.Store, config?: StencilClie
       return result;
     })
 
+  const version: () => Promise<StencilClient.VersionEntity> = async () => backend.fetch(`/version`, { method: "GET" })
+    .then((data) => data as any);
 
   return {
     getSite,
@@ -33,7 +35,7 @@ const createService = (init: { store?: StencilClient.Store, config?: StencilClie
     create: () => new CreateBuilderImpl(backend),
     update: () => new UpdateBuilderImpl(backend),
     delete: () => new DeleteBuilderImpl(backend),
-    version: () => new VersionBuilderImpl(backend)
+    version
   };
 }
 
@@ -127,16 +129,6 @@ class DeleteBuilderImpl implements StencilClient.DeleteBuilder {
   }
   async template(init: StencilClient.TemplateId): Promise<void> {
     return this._backend.fetch(`/templates/${init}`, { method: "DELETE" }).then((data) => data as any)
-  }
-}
-
-class VersionBuilderImpl implements StencilClient.VersionBuilder {
-  private _backend: StencilClient.Store;
-  constructor(backend: StencilClient.Store) {
-    this._backend = backend;
-  }
-  async version(): Promise<StencilClient.VersionEntity> {
-    return this._backend.fetch(`/version`, { method: "GET" }).then((data) => data as any)
   }
 }
 
