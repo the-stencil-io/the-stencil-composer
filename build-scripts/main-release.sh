@@ -46,6 +46,4 @@ git tag -a ${PROJECT_VERSION_NEXT} -m "release ${PROJECT_VERSION_NEXT}"
 git push origin --tags
 git push origin main
 
-git commit -am "release: '${PROJECT_VERSION_NEXT}'"
-git push origin main
 echo "Released: '${PROJECT_VERSION}', now: '${PROJECT_VERSION_NEXT}'"
