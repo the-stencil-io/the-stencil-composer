@@ -19,7 +19,7 @@ import { TemplateComposer } from './template';
 
 import { Composer, StencilClient } from './context';
 
-import version from './version';
+import composerVersion from './version';
 
 interface CardData {
   type: CardType;
@@ -102,7 +102,7 @@ const createCards: (site: StencilClient.Site, theme: Theme, tabs: Burger.TabsAct
     buttonTertiary: "button.releasegraph"
   },
   {
-    composer: (handleClose) => <TemplateComposer onClose={handleClose}/>,
+    composer: (handleClose) => <TemplateComposer onClose={handleClose} />,
     onView: () => tabs.handleTabAdd({ id: 'templates', label: "Templates" }),
     title: "activities.templates.title",
     desc: "activities.templates.desc",
@@ -150,7 +150,7 @@ const ActivitiesViewItem: React.FC<{ data: CardData, onCreate: () => void }> = (
         <Typography color="mainContent.contrastText" variant="body2"><FormattedMessage id={props.data.desc} /></Typography>
       </CardContent>
       <Divider />
-      
+
       <CardActions sx={{ alignSelf: "flex-end" }}>
         <Box display="flex">
           {props.data.buttonViewAll && props.data.onView ? <Burger.SecondaryButton onClick={props.data.onView} label={props.data.buttonViewAll} /> : <Box />}
@@ -179,19 +179,19 @@ const ActivitiesView: React.FC<{}> = () => {
   const handleClose = () => setOpen(undefined);
   const cards = React.useMemo(() => createCards(site, theme, actions), [site, theme, actions]);
 
-  const [coreVersion, setCoreVersion] = React.useState<string>();
-  const [coreVersionDate, setCoreVersionDate] = React.useState<string>();
+  const [coreVersion, setCoreVersion] = React.useState<{ version: string, built: string }>();
 
-  service.version().version().then((version) => {
-    console.log(version);
-    setCoreVersion(version.version);
-    setCoreVersionDate(version.built);
-  });
+  React.useEffect(() => {
+    service.version().then((version) => {
+      console.log("core version", version, "composer version", composerVersion);
+      setCoreVersion(version);
+    });
+  }, [service]);
 
   return (
     <>
       <Typography variant="h3" fontWeight="bold" sx={{ p: 1, m: 1 }}><FormattedMessage id={"activities.title"} />
-        <Typography variant="body2" sx={{pt: 1}}><FormattedMessage id={"activities.desc"} /></Typography>
+        <Typography variant="body2" sx={{ pt: 1 }}><FormattedMessage id={"activities.desc"} /></Typography>
       </Typography>
       <Box sx={{
         margin: 1,
@@ -204,10 +204,10 @@ const ActivitiesView: React.FC<{}> = () => {
         {cards.map((card, index) => (<ActivitiesViewItem key={index} data={card} onCreate={() => setOpen(index)} />))}
       </Box>
       <Typography variant="caption" sx={{ pt: 1 }} display={'flex'} flexDirection={'column'} alignItems={'center'}>
-          <FormattedMessage id={"activities.version.composer"} values={{ version: version.tag, date: version.built}}/>
-          <Typography variant="caption" sx={{ pt: 1 }} >
-            <FormattedMessage id={"activities.version.core"} values={{ version: coreVersion, date: coreVersionDate}}/>
-          </Typography>
+        <FormattedMessage id={"activities.version.composer"} values={{ version: composerVersion.tag, date: composerVersion.built }} />
+        <Typography variant="caption" sx={{ pt: 1 }} >
+          <FormattedMessage id={"activities.version.core"} values={{ version: coreVersion?.version, date: coreVersion?.built }} />
+        </Typography>
       </Typography>
     </>
   );

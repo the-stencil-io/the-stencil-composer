@@ -198,7 +198,12 @@ declare namespace StencilClient {
     create(): CreateBuilder;
     delete(): DeleteBuilder;
     update(): UpdateBuilder;
-    version(): VersionBuilder;
+    version(): Promise<VersionEntity>;
+  }
+
+  interface VersionEntity {
+    version: string;
+    built: string;
   }
 
   interface CreateArticle {
@@ -275,13 +280,7 @@ declare namespace StencilClient {
     workflow(workflow: WorkflowMutator): Promise<Workflow>;
     template(template: TemplateMutator): Promise<Template>;
   }
-  interface VersionBuilder {
-    version(): Promise<VersionEntity>;
-  }
-  interface VersionEntity {
-    version: string;
-    built: string;
-  }
+
   interface Store {
     fetch<T>(path: string, init?: RequestInit): Promise<T>;
   }
